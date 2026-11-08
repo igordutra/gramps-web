@@ -28,7 +28,6 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
           /* Material's FAB is a large saturated disc with a heavy shadow.
              A modern action button is smaller, softer and matches the
              density of the rest of the toolbar. */
-          --md-fab-container-shape: var(--md-sys-shape-corner-large);
           --md-fab-container-height: var(--grampsjs-space-48);
           --md-fab-container-width: var(--grampsjs-space-48);
           --md-fab-icon-size: var(--grampsjs-icon-size-medium);

@@ -180,6 +180,11 @@ export const SHAPE_SCALE = {
   // Material's default is 9999px (a pill). Gramps is a dense research tool:
   // a small radius reads as "document" rather than "consumer app".
   '--md-sys-shape-corner-full': '8px',
+  // The floating action button is a DISC. It cannot use corner-full,
+  // because the app overrides that with an 8px radius for the sake of
+  // the panels and cards — and a percentage radius is the only way to
+  // say "a circle" without naming a size.
+  '--grampsjs-fab-container-shape': '50%',
 }
 
 export const TYPE_SCALE = {
@@ -316,6 +321,13 @@ export const ELEVATION_SCALE = {
  * aliases.
  */
 export const COMPONENT_SCALE = {
+  /*
+   * The floating action button's shape. This used to be set in each
+   * view that has one, at the app's corner-large, which made a disc
+   * read as a rounded square — and it was set in five places, so it
+   * could not be changed in one. The theme owns it now.
+   */
+  '--md-fab-container-shape': 'var(--grampsjs-fab-container-shape)',
   /*
    * Material's per-component shape tokens.
    *
