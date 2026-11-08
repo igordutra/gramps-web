@@ -186,12 +186,24 @@ export class GrampsJs extends LitElement {
         }
 
         mwc-drawer {
-          --mdc-drawer-width: 230px;
+          --mdc-drawer-width: 240px;
           --mdc-typography-headline6-font-family: var(
             --grampsjs-heading-font-family
           );
           --mdc-typography-headline6-font-weight: 400;
           --mdc-typography-headline6-font-size: 19px;
+          /* The drawer had no surface of its own, so it inherited the page
+             canvas and read as an empty grey strip beside the app. A
+             distinct plane with a hairline edge makes it a sidebar. */
+          --mdc-drawer-surface-color: var(
+            --md-sys-color-surface-container-lowest
+          );
+          --mdc-drawer-width: 240px;
+        }
+
+        mwc-drawer::part(drawer) {
+          border-right: 1px solid var(--md-sys-color-outline-variant);
+          background-color: var(--md-sys-color-surface-container-lowest);
         }
 
         mwc-drawer[open]:not([type='modal']) {

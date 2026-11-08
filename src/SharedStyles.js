@@ -7,11 +7,16 @@ export const sharedStyles = css`
     --grampsjs-heading-font-family: 'Inter var', 'Gramps Symbols', sans-serif;
     --grampsjs-mono-font-family: 'Commit Mono', monospace;
     --md-ref-typeface-plain: 'Inter var', 'Gramps Symbols', sans-serif;
-    --grampsjs-body-font-size: 17px;
+    --grampsjs-body-font-size: 16px;
     font-size: var(--grampsjs-body-font-size);
     font-family: var(--grampsjs-body-font-family);
-    --grampsjs-body-font-weight: 340;
+    /* 340 is too light to read comfortably at 16px on a layered surface;
+       400 is the modern default body weight. */
+    --grampsjs-body-font-weight: 400;
     font-weight: var(--grampsjs-body-font-weight);
+    /* Slightly tighter tracking on body copy reads as considered rather
+       than default-browser. */
+    letter-spacing: -0.005em;
     --mdc-typography-font-family: var(--grampsjs-body-font-family);
     --md-sys-typescale-headline-small-font: var(--grampsjs-heading-font-family);
     --md-sys-typescale-headline-medium-font: var(
@@ -21,8 +26,8 @@ export const sharedStyles = css`
     --md-sys-typescale-body-small-font: var(--grampsjs-body-font-family);
     --md-sys-typescale-body-medium-font: var(--grampsjs-body-font-family);
     --md-sys-typescale-body-large-font: var(--grampsjs-body-font-family);
-    --md-primary-tab-label-text-weight: 425;
-    --md-primary-tab-label-text-size: 16px;
+    --md-primary-tab-label-text-weight: 500;
+    --md-primary-tab-label-text-size: 15px;
     --md-primary-tab-active-indicator-height: 3px;
     --md-divider-thickness: 0px;
     --md-list-item-leading-space: 16px;
@@ -31,8 +36,8 @@ export const sharedStyles = css`
   }
 
   md-list-item {
-    --md-list-item-label-text-weight: var(--grampsjs-body-font-weight);
-    --md-list-item-label-text-size: 17px;
+    --md-list-item-label-text-weight: 450;
+    --md-list-item-label-text-size: 15px;
     --md-list-item-supporting-text-color: var(--grampsjs-body-font-color-50);
     --md-list-item-trailing-supporting-text-color: var(
       --grampsjs-body-font-color-60
@@ -53,7 +58,8 @@ export const sharedStyles = css`
   h2,
   h3,
   h4 {
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: -0.015em;
     font-family: var(--grampsjs-heading-font-family);
     color: var(--grampsjs-color-shade-40);
   }

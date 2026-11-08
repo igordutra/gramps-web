@@ -22,7 +22,9 @@ class GrampsjsChatPrompt extends GrampsjsAppStateMixin(LitElement) {
 
         md-outlined-text-field {
           flex: 1;
-          --md-outlined-text-field-container-shape: 28px;
+          --md-outlined-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
           --md-outlined-text-field-input-text-placeholder-color: var(
             --grampsjs-color-shade-120
           );

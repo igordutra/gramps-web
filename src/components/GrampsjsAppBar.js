@@ -38,10 +38,15 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
           --mdc-typography-headline6-font-family: var(
             --grampsjs-heading-font-family
           );
-          --mdc-typography-headline6-font-weight: 550;
+          --mdc-typography-headline6-font-weight: 600;
           --mdc-typography-headline6-font-size: 17px;
           --mdc-theme-primary: var(--grampsjs-top-app-bar-background-color);
           --mdc-theme-on-primary: var(--grampsjs-top-app-bar-font-color);
+          /* Hairline rule instead of an elevation shadow: the bar reads as
+             a distinct plane without the heaviness of a drop shadow. */
+          border-bottom: 1px solid
+            var(--grampsjs-top-app-bar-border-color, transparent);
+          box-shadow: none;
         }
 
         mwc-top-app-bar.edit {

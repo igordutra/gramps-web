@@ -49,6 +49,15 @@ export class GrampsjsViewBlog extends GrampsjsStaleDataMixin(GrampsjsView) {
           position: fixed;
           bottom: 32px;
           right: 32px;
+          /* Material's FAB is a large saturated disc with a heavy shadow.
+             A modern action button is smaller, softer and matches the
+             density of the rest of the toolbar. */
+          --md-fab-container-shape: var(--md-sys-shape-corner-large);
+          --md-fab-container-height: 48px;
+          --md-fab-container-width: 48px;
+          --md-fab-icon-size: 22px;
+          --md-fab-container-elevation: 2;
+          --md-fab-container-shadow-color: rgba(15, 23, 42, 0.18);
         }
       `,
     ]

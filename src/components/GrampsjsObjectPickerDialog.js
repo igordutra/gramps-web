@@ -69,7 +69,9 @@ class GrampsjsObjectPickerDialog extends GrampsjsAppStateMixin(LitElement) {
         }
 
         md-filled-text-field {
-          --md-filled-text-field-container-shape: 12px;
+          --md-filled-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
           --md-filled-text-field-active-indicator-color: transparent;
           --md-filled-text-field-hover-active-indicator-color: transparent;
           --md-filled-text-field-focus-active-indicator-color: transparent;

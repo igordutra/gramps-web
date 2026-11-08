@@ -30,8 +30,12 @@ export class GrampsjsFilterParam extends GrampsjsAppStateMixin(LitElement) {
         md-outlined-text-field,
         md-outlined-select {
           width: 100%;
-          --md-outlined-text-field-container-shape: 8px;
-          --md-outlined-select-text-field-container-shape: 8px;
+          --md-outlined-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
+          --md-outlined-select-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
         }
 
         label.checkbox {
@@ -42,7 +46,9 @@ export class GrampsjsFilterParam extends GrampsjsAppStateMixin(LitElement) {
         }
 
         grampsjs-form-select-type {
-          --md-filled-select-text-field-container-shape: 8px;
+          --md-filled-select-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
         }
       `,
     ]

@@ -146,8 +146,17 @@ body {
 }
 
 :root[data-theme='light'] {
-  --grampsjs-top-app-bar-background-color: var(--mdc-theme-primary);
-  --grampsjs-top-app-bar-font-color: var(--mdc-theme-on-primary);
+  /* A solid saturated brand bar across the top is the single strongest
+     "2015 admin template" signal in the light theme. The dark theme
+     already uses a surface-coloured bar; this aligns light with it, and
+     moves the brand colour to where it earns its keep — the primary
+     action, the active tab, the focus ring. */
+  --grampsjs-top-app-bar-background-color: var(
+    --md-sys-color-surface-container-lowest
+  );
+  --grampsjs-top-app-bar-font-color: var(--md-sys-color-on-surface);
+  /* A hairline separates the bar from the canvas without a heavy shadow. */
+  --grampsjs-top-app-bar-border-color: var(--md-sys-color-outline-variant);
   --grampsjs-body-font-color: rgba(0, 0, 0, 0.8);
   --grampsjs-body-font-color-0: rgba(0, 0, 0, 0);
   --grampsjs-body-font-color-2: rgba(0, 0, 0, 0.02);

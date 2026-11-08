@@ -40,7 +40,7 @@ export class GrampsjsPerson extends GrampsjsObject {
           border-radius: 50%;
           background: transparent;
           color: var(--mdc-theme-secondary);
-          --md-text-button-container-shape: 50%;
+          --md-text-button-container-shape: var(--md-sys-shape-corner-full);
           --grampsjs-button-color: var(--mdc-theme-secondary);
           box-sizing: border-box;
         }

@@ -116,7 +116,6 @@
   "Continue with %s": "Continue with %s",
   "Signing in...": "Signing in...",
   "Account Source": "Account Source",
-  "filter": "filter",
   "Properties": "Properties",
   "unconfirmed": "unconfirmed",
   "disabled": "disabled",
@@ -488,5 +487,7 @@
   "Try again": "Try again",
   "Back to login": "Back to login",
   "E-mail address": "E-mail address",
-  "Full name": "Full name"
+  "Full name": "Full name",
+  "Filter": "Filter",
+  "filter": "Filter"
 }

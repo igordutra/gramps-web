@@ -43,7 +43,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           gap: 0.75em;
           border-top: 1px solid var(--grampsjs-body-font-color-10);
           grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-          padding: 10px 0;
+          padding: 12px 0;
         }
 
         tbody tr:last-child {
@@ -56,16 +56,23 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           padding: 0 10px;
           border: none;
           position: relative;
-          font-size: 16px;
+          font-size: 15px;
+          line-height: 1.5;
         }
 
+        /* The narrow-viewport card layout repeats the column name above
+           every value. Set it as a small uppercase caption rather than a
+           second line of body text: it is a label, not data. */
         tbody td::before {
           content: attr(data-label);
           display: block;
-          margin-bottom: 5px;
-          font-size: 14px;
+          margin-bottom: 3px;
+          font-size: 11px;
+          line-height: 1.4;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
           color: var(--grampsjs-body-font-color-50);
-          font-weight: 400;
+          font-weight: 600;
         }
 
         table.linked tbody tr {
@@ -93,10 +100,12 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         table.wide thead th {
           text-align: left;
-          padding: 14px 16px;
-          font-size: 14px;
+          padding: 12px 16px;
+          font-size: 11px;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
           color: var(--grampsjs-body-font-color-60);
-          font-weight: 500;
+          font-weight: 600;
           vertical-align: middle;
           white-space: nowrap;
           position: sticky;

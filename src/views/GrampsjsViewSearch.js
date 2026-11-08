@@ -43,7 +43,9 @@ export class GrampsjsViewSearch extends GrampsjsView {
       super.styles,
       css`
         md-outlined-text-field#search-field {
-          --md-outlined-text-field-container-shape: 28px;
+          --md-outlined-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
           --md-outlined-text-field-input-text-size: 22px;
           --md-outlined-text-field-input-text-weight: var(
             --grampsjs-body-font-weight

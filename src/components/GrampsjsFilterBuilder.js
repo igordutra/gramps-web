@@ -64,7 +64,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
           max-width: 95vw;
           height: min(800px, 90vh);
           max-height: 90vh;
-          --md-dialog-container-shape: 16px;
+          --md-dialog-container-shape: var(--md-sys-shape-corner-large);
         }
 
         @media (max-width: 600px) {
@@ -82,7 +82,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
         }
 
         md-filter-chip {
-          --md-filter-chip-container-shape: 8px;
+          --md-filter-chip-container-shape: var(--md-sys-shape-corner-small);
           --md-filter-chip-label-text-color: var(--md-sys-color-primary);
           --md-filter-chip-hover-label-text-color: var(--md-sys-color-primary);
           --md-filter-chip-focus-label-text-color: var(--md-sys-color-primary);
@@ -203,7 +203,9 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
 
         .picker-header md-outlined-text-field {
           flex: 1;
-          --md-outlined-text-field-container-shape: 8px;
+          --md-outlined-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
         }
 
         summary {
