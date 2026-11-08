@@ -16,7 +16,21 @@ export const DEFAULT_PRIMARY = '#6d4c41'
  * not the brand. A deep, desaturated slate-teal sits beside the brown as a
  * cool counterweight instead of a competing hue.
  */
-export const DEFAULT_SECONDARY = '#3f5f6b'
+/**
+ * The second accent.
+ *
+ * It used to be a slate teal, which put the app's floating action
+ * buttons — Material's SECONDARY variant — in a colour that read as
+ * unrelated to the primary rather than as a second accent of the same
+ * palette. A tonal ramp fixes the hue distance at seed time, so the
+ * seed is where the choice has to be made.
+ *
+ * Indigo ink: the colour of old ink and blueprints. It is far enough
+ * from the warm brown to read as its own accent, close enough in
+ * lightness to sit beside it, and unlike a teal or a blue-grey it has
+ * a specific identity rather than a default one.
+ */
+export const DEFAULT_SECONDARY = '#2e3566'
 
 /**
  * The themes the app offers.
@@ -79,7 +93,9 @@ export const THEMES = {
   blueprint: {
     label: 'Blueprint',
     primary: '#1d4ed8',
-    secondary: '#0f766e',
+    // the same ink family as the Archive style, a shade bluer, so the
+    // two styles stay distinct without the button going teal
+    secondary: '#2b3a6b',
     // Square corners throughout: this theme is about the grid.
     shape: {
       '--md-sys-shape-corner-none': '0px',
