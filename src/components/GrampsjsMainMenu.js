@@ -11,6 +11,8 @@ import {
   Bell,
   BellRinging,
   BookmarkSimple,
+  CaretLeft,
+  CaretRight,
   ClockCounterClockwise,
   Dna,
   DownloadSimple,
@@ -28,12 +30,36 @@ import {
 } from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
+import {fireEvent} from '../util.js'
 import './GrampsjsIcon.js'
+import './GrampsjsTooltip.js'
 
 const selectedColor = 'var(--grampsjs-color-icon-selected)'
 const defaultColor = 'var(--grampsjs-color-icon-default)'
 
 class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
+  static get properties() {
+    return {
+      editMode: {type: Boolean},
+      editTitle: {type: String},
+      editDialogContent: {type: String},
+      saveButton: {type: Boolean},
+      unreadCount: {type: Number},
+      rail: {type: Boolean},
+    }
+  }
+
+  constructor() {
+    super()
+    this.editMode = false
+    this.editTitle = ''
+    this.editDialogContent = ''
+    this.saveButton = false
+    this.unreadCount = 0
+    this.rail = false
+    this._boundHandleNotifications = this._handleNotificationsChanged.bind(this)
+  }
+
   static get styles() {
     return [
       sharedStyles,
@@ -86,28 +112,53 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
           text-align: center;
           box-sizing: border-box;
         }
+
+        /*
+         * The icon rail.
+         *
+         * Collapsed, the drawer is 56px wide and the labels are out of
+         * the way — but they are not taken away. They are clipped, so
+         * they still name the item for a screen reader, and the
+         * tooltip shows them on hover.
+         *
+         * The icon lands 16px from the drawer's edge, which in a 56px
+         * rail puts its centre exactly in the middle of the rail, so
+         * nothing has to be nudged into place.
+         */
+        .nav-label {
+          white-space: nowrap;
+        }
+
+        .nav-label.visually-hidden {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          margin: -1px;
+          padding: 0;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        /*
+         * The unread count becomes a dot in the rail: there is no room
+         * for a number, but the count stays in the accessibility tree.
+         */
+        .rail .unread-badge {
+          min-width: 8px;
+          width: 8px;
+          height: 8px;
+          padding: 0;
+          font-size: 0;
+          line-height: 8px;
+        }
+
+        .rail-toggle {
+          cursor: pointer;
+        }
       `,
     ]
-  }
-
-  static get properties() {
-    return {
-      editMode: {type: Boolean},
-      editTitle: {type: String},
-      editDialogContent: {type: String},
-      saveButton: {type: Boolean},
-      unreadCount: {type: Number},
-    }
-  }
-
-  constructor() {
-    super()
-    this.editMode = false
-    this.editTitle = ''
-    this.editDialogContent = ''
-    this.saveButton = false
-    this.unreadCount = 0
-    this._boundHandleNotifications = this._handleNotificationsChanged.bind(this)
   }
 
   connectedCallback() {
@@ -140,6 +191,66 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
     ></grampsjs-icon>`
   }
 
+  /**
+   * One navigation row.
+   *
+   * The label is wrapped in a span so that the rail can hide it
+   * without taking it away from a screen reader, and so that the
+   * tooltip shows the item's own name rather than a second copy of
+   * it that could drift out of step.
+   */
+  _navItem(href, icon, label, selected) {
+    return html`<md-list-item
+      role="none"
+      type="link"
+      href="${href}"
+      ?selected="${selected}"
+    >
+      ${this._icon(icon, selected)}
+      <span class="nav-label ${this.rail ? 'visually-hidden' : ''}"
+        >${label}</span
+      >
+      ${this.rail
+        ? html`<grampsjs-tooltip .appState="${this.appState}"
+            >${label}</grampsjs-tooltip
+          >`
+        : ''}
+    </md-list-item>`
+  }
+
+  /**
+   * The row that switches between the full drawer and the rail.
+   */
+  _renderRailToggle() {
+    // On a small screen the drawer is a modal overlay, so a rail would
+    // be a rail of nothing.
+    if (this.appState.screenSize === 'small') {
+      return ''
+    }
+    const label = this.rail ? this._('Expand menu') : this._('Collapse menu')
+    return html`<md-divider inset></md-divider>
+      <md-list-item
+        role="none"
+        type="button"
+        class="rail-toggle"
+        @click="${this._handleToggleRail}"
+      >
+        ${this._icon(this.rail ? CaretRight : CaretLeft, false)}
+        <span class="nav-label ${this.rail ? 'visually-hidden' : ''}"
+          >${label}</span
+        >
+        ${this.rail
+          ? html`<grampsjs-tooltip .appState="${this.appState}"
+              >${label}</grampsjs-tooltip
+            >`
+          : ''}
+      </md-list-item>`
+  }
+
+  _handleToggleRail() {
+    fireEvent(this, 'nav:rail-toggle', {rail: !this.rail})
+  }
+
   render() {
     const p = this.appState.path.page
     const listsPages = [
@@ -152,148 +263,74 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
       'repositories',
       'notes',
     ]
-    return html` <md-list role="list">
-      <md-list-item
-        type="link"
-        role="none"
-        href="/"
-        ?selected="${p === 'home'}"
-      >
-        ${this._icon(House, p === 'home')} ${this._('Home')}
-      </md-list-item>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/blog"
-        ?selected="${p === 'blog'}"
-      >
-        ${this._icon(Rss, p === 'blog')} ${this._('Blog')}
-      </md-list-item>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/tree"
-        ?selected="${p === 'tree'}"
-      >
-        ${this._icon(TreeStructure, p === 'tree')} ${this._('Family Tree')}
-      </md-list-item>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/timeline"
-        ?selected="${p === 'timeline'}"
-      >
-        ${this._icon(ChartLineUp, p === 'timeline')} ${this._('Timeline')}
-      </md-list-item>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/map"
-        ?selected="${p === 'map'}"
-      >
-        ${this._icon(MapTrifold, p === 'map')} ${this._('Map')}
-      </md-list-item>
+    return html` <md-list role="list" class="${this.rail ? 'rail' : ''}">
+      ${this._navItem('/', House, this._('Home'), p === 'home')}
+      ${this._navItem('/blog', Rss, this._('Blog'), p === 'blog')}
+      ${this._navItem(
+        '/tree',
+        TreeStructure,
+        this._('Family Tree'),
+        p === 'tree'
+      )}
+      ${this._navItem(
+        '/timeline',
+        ChartLineUp,
+        this._('Timeline'),
+        p === 'timeline'
+      )}
+      ${this._navItem('/map', MapTrifold, this._('Map'), p === 'map')}
       ${this.appState.frontendConfig.hideDNALink
         ? ''
-        : html`
-            <md-list-item
-              role="none"
-              type="link"
-              href="/dna-matches"
-              ?selected="${['dna-matches', 'dna-chromosome', 'ydna'].includes(
-                p
-              )}"
-            >
-              ${this._icon(
-                Dna,
-                ['dna-matches', 'dna-chromosome', 'ydna'].includes(p)
-              )}
-              ${this._('DNA')}
-            </md-list-item>
-          `}
-      <md-list-item
-        role="none"
-        type="link"
-        href="/people"
-        ?selected="${listsPages.includes(p)}"
-      >
-        ${this._icon(ListBullets, listsPages.includes(p))} ${this._('Lists')}
-      </md-list-item>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/medialist"
-        ?selected="${p === 'medialist'}"
-      >
-        ${this._icon(Image, p === 'medialist')} ${this._('Media')}
-      </md-list-item>
+        : this._navItem(
+            '/dna-matches',
+            Dna,
+            this._('DNA'),
+            ['dna-matches', 'dna-chromosome', 'ydna'].includes(p)
+          )}
+      ${this._navItem(
+        '/people',
+        ListBullets,
+        this._('Lists'),
+        listsPages.includes(p)
+      )}
+      ${this._navItem('/medialist', Image, this._('Media'), p === 'medialist')}
       ${this.canUseChat
-        ? html`
-            <md-list-item
-              role="none"
-              type="link"
-              href="/chat"
-              ?selected="${p === 'chat'}"
-            >
-              ${this._icon(Sparkle, p === 'chat')} ${this._('Assistant')}
-            </md-list-item>
-          `
+        ? this._navItem('/chat', Sparkle, this._('Assistant'), p === 'chat')
         : ''}
       <md-divider inset></md-divider>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/recent"
-        ?selected="${p === 'recent'}"
-      >
-        ${this._icon(ClockCounterClockwise, p === 'recent')}
-        ${this._('History')}
-      </md-list-item>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/bookmarks"
-        ?selected="${p === 'bookmarks'}"
-      >
-        ${this._icon(BookmarkSimple, p === 'bookmarks')} ${this._('_Bookmarks')}
-      </md-list-item>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/tasks"
-        ?selected="${p === 'tasks'}"
-      >
-        ${this._icon(ListChecks, p === 'tasks')} ${this._('Tasks')}
-      </md-list-item>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/reports"
-        ?selected="${p === 'reports'}"
-      >
-        ${this._icon(FileArrowDown, p === 'reports')}
-        ${this._('_Reports').replace('_', '')}
-      </md-list-item>
-      <md-list-item
-        role="none"
-        type="link"
-        href="/export"
-        ?selected="${p === 'export'}"
-      >
-        ${this._icon(DownloadSimple, p === 'export')} ${this._('Export')}
-      </md-list-item>
+      ${this._navItem(
+        '/recent',
+        ClockCounterClockwise,
+        this._('History'),
+        p === 'recent'
+      )}
+      ${this._navItem(
+        '/bookmarks',
+        BookmarkSimple,
+        this._('_Bookmarks').replace('_', ''),
+        p === 'bookmarks'
+      )}
+      ${this._navItem('/tasks', ListChecks, this._('Tasks'), p === 'tasks')}
+      ${this._navItem(
+        '/reports',
+        FileArrowDown,
+        this._('_Reports').replace('_', ''),
+        p === 'reports'
+      )}
+      ${this._navItem(
+        '/export',
+        DownloadSimple,
+        this._('Export'),
+        p === 'export'
+      )}
       <md-divider inset></md-divider>
       ${this.appState.permissions.canViewPrivate
-        ? html`
-            <md-list-item
-              role="none"
-              type="link"
-              href="/revisions"
-              ?selected="${p === 'revisions'}"
-            >
-              ${this._icon(GitCommit, p === 'revisions')} ${this._('Revisions')}
-            </md-list-item>
-          `
+        ? this._navItem(
+            '/revisions',
+            GitCommit,
+            this._('Revisions'),
+            p === 'revisions'
+          )
         : ''}
       <md-list-item
         role="none"
@@ -305,13 +342,21 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
           this.unreadCount > 0 ? BellRinging : Bell,
           p === 'notifications'
         )}
-        ${this._('Notifications')}
+        <span class="nav-label ${this.rail ? 'visually-hidden' : ''}"
+          >${this._('Notifications')}</span
+        >
+        ${this.rail
+          ? html`<grampsjs-tooltip .appState="${this.appState}"
+              >${this._('Notifications')}</grampsjs-tooltip
+            >`
+          : ''}
         ${this.unreadCount > 0
           ? html`<span class="unread-badge" slot="end"
               >${this.unreadCount}</span
             >`
           : ''}
       </md-list-item>
+      ${this._renderRailToggle()}
     </md-list>`
   }
 }

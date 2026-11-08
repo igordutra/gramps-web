@@ -18,6 +18,14 @@ export class GrampsjsIcon extends LitElement {
           justify-content: center;
           width: var(--grampsjs-icon-width, 24px);
           height: var(--grampsjs-icon-height, 24px);
+          /*
+           * An icon does not shrink. As a flex item its default was
+           * flex: 0 1 auto, so in a row with no room for it — the
+           * navigation rail, where the label is out of the way — it
+           * was squeezed from 24px to 7px and the glyph came out as a
+           * smudge. An icon is a fixed size or it is nothing.
+           */
+          flex: none;
         }
 
         svg {

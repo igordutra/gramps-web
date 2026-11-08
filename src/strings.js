@@ -1115,6 +1115,8 @@ export const grampsStrings = [
   'Cannot delete place.',
   'This place is currently referenced by another place. First remove the places it contains.',
   'Actions',
+  'Collapse menu',
+  'Expand menu',
   'Size',
   'Delete %s?',
   'Make Backup...',

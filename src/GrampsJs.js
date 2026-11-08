@@ -9,6 +9,7 @@ import {PAGE_TITLES} from './pageTitles.js'
 import {installRouter} from 'pwa-helpers/router.js'
 import {
   getSettings,
+  updateSettings,
   getTreeConfig,
   getTreeId,
   getTreeFromToken,
@@ -122,6 +123,24 @@ export class GrampsJs extends LitElement {
     this._searchIndexBuilding = false
     this._drawerWasOpen = false
     this._metadataConfirmed = false
+    // The navigation rail is remembered per browser, like the theme.
+    this._navRail = getSettings().navRail === true
+  }
+
+  /**
+   * Whether the drawer is a rail right now.
+   *
+   * A rail is only for a drawer that sits beside the content. On a
+   * small screen the drawer is a modal overlay, so there is nothing
+   * to make room for.
+   */
+  get _railActive() {
+    return this._navRail && this.appState.screenSize !== 'small'
+  }
+
+  _handleToggleRail(e) {
+    this._navRail = e.detail.rail
+    updateSettings({navRail: this._navRail})
   }
 
   get canUseChat() {
@@ -203,6 +222,23 @@ export class GrampsJs extends LitElement {
 
         mwc-drawer[open]:not([type='modal']) {
           --mdc-top-app-bar-width: calc(100% - var(--mdc-drawer-width, 256px));
+        }
+
+        /*
+         * The icon rail.
+         *
+         * A collapsed drawer gives the content back the width the
+         * drawer was taking, which is the whole point of it: the tree
+         * charts, the map and the object lists all want every pixel.
+         *
+         * The rule is scoped to the screen because printing wants the
+         * drawer gone entirely, and a bare class rule would outrank
+         * the media query's.
+         */
+        @media screen {
+          mwc-drawer.rail {
+            --mdc-drawer-width: 56px;
+          }
         }
 
         md-linear-progress {
@@ -614,10 +650,14 @@ export class GrampsJs extends LitElement {
       <mwc-drawer
         type="${this.appState.screenSize !== 'small' ? 'dismissible' : 'modal'}"
         id="app-drawer"
+        class="${this._railActive ? 'rail' : ''}"
         ?open="${this.appState.screenSize !== 'small'}"
       >
         <div>
-          <grampsjs-main-menu .appState="${this.appState}"></grampsjs-main-menu>
+          <grampsjs-main-menu
+            .appState="${this.appState}"
+            .rail="${this._railActive}"
+          ></grampsjs-main-menu>
         </div>
         <div slot="appContent">
           <grampsjs-app-bar
@@ -753,6 +793,7 @@ export class GrampsJs extends LitElement {
       this.loadingState = LOADING_STATE_NO_TREE
     })
     this.addEventListener('drawer:toggle', this._toggleDrawer)
+    this.addEventListener('nav:rail-toggle', e => this._handleToggleRail(e))
     window.addEventListener('keydown', event => this._handleKey(event))
     window.addEventListener('resize', () => this._updateScrollbarWidth())
     // The drawer opening or closing changes the column width, so watch it
