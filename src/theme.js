@@ -1059,6 +1059,10 @@ export const MATERIAL_PRIMITIVES = {
   '--grampsjs-tab-height-with-icon': '64px',
   '--grampsjs-menu-item-height': '48px',
   '--grampsjs-list-item-height': '56px',
+  // the size a field's VALUE is drawn at. The text field reads this
+  // through Material's own override point; the select does not, so it
+  // reads it from the host (see SharedStyles.js).
+  '--grampsjs-field-value-size': 'var(--md-sys-typescale-body-medium-size)',
   '--grampsjs-list-item-height-two-line': '72px',
   '--grampsjs-fab-size': '56px',
   '--grampsjs-fab-size-small': '40px',

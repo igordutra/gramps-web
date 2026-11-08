@@ -62,6 +62,19 @@ export const sharedStyles = css`
     border: 0;
   }
 
+  /*
+   * Material's select renders its SELECTED text by inheritance from
+   * its host: it has no override point for it, so the token that sizes
+   * a text field's value does not reach it. The select would then
+   * follow the app's body font size, and the select and the text
+   * field beside it would be a pixel apart. The host's own font-size
+   * is set from the same token the text field uses, so the two agree
+   * and both follow the theme.
+   */
+  md-outlined-select {
+    font-size: var(--grampsjs-field-value-size);
+  }
+
   md-list-item {
     --md-list-item-label-text-weight: var(
       --md-sys-typescale-label-large-weight
