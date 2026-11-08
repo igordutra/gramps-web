@@ -207,9 +207,6 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         .mobile-sort md-menu {
           --md-menu-item-one-line-container-height: var(--grampsjs-space-48);
-          --md-menu-item-selected-container-color: var(
-            --md-sys-color-secondary-container
-          );
         }
 
         /* Narrow (card) mode: pull checkbox out of grid flow, pin to left */

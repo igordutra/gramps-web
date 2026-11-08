@@ -166,6 +166,18 @@ export const DEFAULT_THEME = 'archive'
  * place, and lets the app's own components reference them instead of
  * hard-coding pixel values.
  */
+/**
+ * The app's own selection treatment: a quiet neutral fill and the
+ * accent for the label. Deliberately NOT a Material container colour —
+ * the stock secondary-container is a pale lavender, and that is what
+ * made the dropdowns look like Material.
+ */
+export const SELECTION_SCALE = {
+  '--grampsjs-selected-container-color':
+    'var(--md-sys-color-primary-container)',
+  '--grampsjs-selected-label-text-color': 'var(--md-sys-color-primary)',
+}
+
 export const SHAPE_SCALE = {
   '--md-sys-shape-corner-none': '0px',
   '--md-sys-shape-corner-extra-small': '2px',
@@ -321,6 +333,23 @@ export const ELEVATION_SCALE = {
  * aliases.
  */
 export const COMPONENT_SCALE = {
+  /*
+   * The SELECTED row of a menu or a dropdown.
+   *
+   * Material fills it with the SECONDARY container colour, and
+   * Material's own fallback for that role is #e8def8 — the lavender
+   * of the stock Material 3 palette. With a brown primary and an
+   * indigo secondary the role resolves to a pale periwinkle, which is
+   * exactly the "stock Material" look in a dropdown.
+   *
+   * The app marks a selected row the way it marks selection
+   * everywhere else: a quiet neutral fill, no coloured wash, and the
+   * label in the app's own accent.
+   */
+  '--md-menu-item-selected-container-color':
+    'var(--grampsjs-selected-container-color)',
+  '--md-menu-item-selected-label-text-color':
+    'var(--grampsjs-selected-label-text-color)',
   /*
    * The floating action button's shape. This used to be set in each
    * view that has one, at the app's corner-large, which made a disc
@@ -1225,6 +1254,7 @@ export function applyColors(
     ...ELEVATION_SCALE,
     ...MATERIAL_PRIMITIVES,
     ...MATERIAL_SCALE,
+    ...SELECTION_SCALE,
     ...DENSITY_SCALE,
     ...COMPONENT_SCALE,
     ...(theme.shape ?? {}),
