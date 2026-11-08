@@ -176,12 +176,12 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
            below the first button of the bar */
         #selected-person {
           position: absolute;
-          top: 60px;
+          top: var(--grampsjs-space-56);
           left: 0;
           z-index: 1;
           display: inline-flex;
           align-items: center;
-          gap: 12px;
+          gap: var(--grampsjs-space-12);
           max-width: min(360px, 80vw);
           height: 48px;
           padding: 0 8px 0 9px;

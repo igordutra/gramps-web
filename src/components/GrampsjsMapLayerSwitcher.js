@@ -39,7 +39,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           background: var(--md-sys-color-surface-container-high);
           border-radius: var(--md-sys-shape-corner-extra-large);
           box-shadow: var(--md-sys-elevation-level2);
-          padding: 2px;
+          padding: var(--grampsjs-space-2);
           display: flex;
           align-items: center;
           position: relative;
@@ -72,7 +72,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           max-height: calc(100vh - 260px);
           overflow-y: auto;
           box-sizing: border-box;
-          padding: 12px;
+          padding: var(--grampsjs-space-12);
           background: var(--md-sys-color-surface-container-high);
           color: var(--md-sys-color-on-surface);
           border-radius: var(--md-sys-shape-corner-2xl);
@@ -82,13 +82,13 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
 
         .styles {
           display: flex;
-          gap: 8px;
+          gap: var(--grampsjs-space-8);
         }
 
         .style-card {
           flex: 1;
           min-width: 0;
-          padding: 4px;
+          padding: var(--grampsjs-space-4);
           border: 2px solid transparent;
           border-radius: var(--md-sys-shape-corner-extra-large);
           background: none;
@@ -140,7 +140,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         .row {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: var(--grampsjs-space-12);
           padding: 6px 0;
           cursor: pointer;
         }
@@ -192,7 +192,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         .opacity {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: var(--grampsjs-space-8);
           margin-top: calc(-1 * var(--grampsjs-space-8));
           padding: 0 0 4px 52px;
         }

@@ -1,4 +1,4 @@
-import {exportPalette} from './palette.js'
+import {resolveExportPalette} from './palette.js'
 
 // Space around the chart in an exported SVG, in pixels
 const exportMargin = 20
@@ -58,7 +58,7 @@ export async function chartSvgDocument(
   chart.update(layout, {
     ...options,
     interactive: false,
-    palette: exportPalette,
+    palette: resolveExportPalette(),
     getImageUrl: node => dataUris.get(urls.get(node)) ?? '',
     duration: 0,
     bboxWidth: 0,
@@ -94,7 +94,7 @@ export async function chartSvgDocument(
   background.setAttribute('y', y)
   background.setAttribute('width', width)
   background.setAttribute('height', height)
-  background.setAttribute('fill', exportPalette.background)
+  background.setAttribute('fill', resolveExportPalette().background)
   svg.prepend(background)
   const markup = new XMLSerializer().serializeToString(svg)
   return `<?xml version="1.0" encoding="UTF-8"?>\n${markup}\n`

@@ -67,7 +67,7 @@ export class GrampsjsViewMap extends GrampsjsStaleDataMixin(GrampsjsView) {
 
         .wikidata-hint {
           position: absolute;
-          bottom: 44px;
+          bottom: var(--grampsjs-space-40);
           left: 50%;
           transform: translateX(-50%);
           z-index: 1;

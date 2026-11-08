@@ -75,7 +75,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
         tbody td::before {
           content: attr(data-label);
           display: block;
-          margin-bottom: 3px;
+          margin-bottom: var(--grampsjs-space-2);
           font-size: var(--md-sys-typescale-label-small-size);
           line-height: 1.4;
           letter-spacing: 0.04em;
@@ -109,7 +109,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         table.wide thead th {
           text-align: left;
-          padding: 14px 20px;
+          padding: var(--grampsjs-space-16) var(--grampsjs-space-20);
           font-size: var(--md-sys-typescale-label-small-size);
           letter-spacing: 0.04em;
           text-transform: uppercase;
@@ -128,9 +128,10 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
         th .sort-header {
           display: inline-flex;
           align-items: center;
-          gap: 4px;
-          margin: -4px -6px;
-          padding: 4px 6px;
+          gap: var(--grampsjs-space-4);
+          margin: calc(-1 * var(--grampsjs-space-4))
+            calc(-1 * var(--grampsjs-space-4));
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-4);
           border: none;
           border-radius: var(--md-sys-shape-corner-small);
           background: none;
@@ -178,7 +179,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         table.wide tbody td {
           display: table-cell;
-          padding: 14px 20px;
+          padding: var(--grampsjs-space-16) var(--grampsjs-space-20);
           border: none;
           font-size: var(--md-sys-typescale-body-medium-size);
         }
@@ -200,8 +201,8 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         .mobile-sort {
           position: relative;
-          margin-top: 5px;
-          margin-bottom: 15px;
+          margin-top: var(--grampsjs-space-4);
+          margin-bottom: var(--grampsjs-space-16);
         }
 
         .mobile-sort md-menu {
@@ -214,7 +215,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
         /* Narrow (card) mode: pull checkbox out of grid flow, pin to left */
         table:not(.wide) tbody tr:has(td.col-select) {
           position: relative;
-          padding-left: 48px;
+          padding-left: var(--grampsjs-space-48);
         }
 
         table:not(.wide) tbody td.col-select {
@@ -243,7 +244,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         table.wide td.col-select {
           width: 48px;
-          padding: 4px;
+          padding: var(--grampsjs-space-4);
           vertical-align: middle;
           text-align: center;
         }
@@ -251,14 +252,15 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
         .narrow-select-all {
           display: flex;
           align-items: center;
-          gap: 8px;
-          padding: 4px 4px 4px 8px;
+          gap: var(--grampsjs-space-8);
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-4)
+            var(--grampsjs-space-4) var(--grampsjs-space-8);
           font-size: var(--md-sys-typescale-label-large-size);
           color: var(--grampsjs-body-font-color-70);
         }
 
         .narrow-select-all + table {
-          margin-top: 12px;
+          margin-top: var(--grampsjs-space-12);
         }
 
         tbody tr.selected {

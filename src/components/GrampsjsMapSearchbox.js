@@ -98,7 +98,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           display: flex;
           flex-wrap: nowrap;
           align-items: center;
-          gap: 6px;
+          gap: var(--grampsjs-space-4);
           height: 28px;
           padding: 0 4px;
           overflow-x: auto;
@@ -117,8 +117,9 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         #filter-pills {
           display: flex;
           flex-wrap: wrap;
-          gap: 6px;
-          padding: 12px 16px 4px;
+          gap: var(--grampsjs-space-4);
+          padding: var(--grampsjs-space-12) var(--grampsjs-space-16)
+            var(--grampsjs-space-4);
           position: sticky;
           top: 0;
           background: var(--md-sys-color-surface-container-high);
@@ -128,9 +129,9 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         .chip {
           display: inline-flex;
           align-items: center;
-          gap: 4px;
+          gap: var(--grampsjs-space-4);
           border-radius: var(--md-sys-shape-corner-full);
-          padding: 6px 14px;
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-16);
           font-size: var(--md-sys-typescale-label-medium-size);
           font-weight: 500;
           font-family: inherit;
@@ -158,8 +159,8 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
 
         .filter-dot {
           position: absolute;
-          top: 9px;
-          right: 9px;
+          top: var(--grampsjs-space-8);
+          right: var(--grampsjs-space-8);
           width: 8px;
           height: 8px;
           border-radius: 50%;
@@ -170,7 +171,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         .chip-close {
           font-size: var(--md-sys-typescale-body-medium-size);
           line-height: 1;
-          margin-left: 2px;
+          margin-left: var(--grampsjs-space-2);
           opacity: 0.7;
         }
 
@@ -199,7 +200,8 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           font-size: 0.8em;
           color: var(--md-sys-color-on-surface-variant);
           text-align: right;
-          padding: 6px 16px 10px;
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-16)
+            var(--grampsjs-space-12);
           opacity: 0.6;
         }
 
@@ -210,7 +212,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .panel-section {
-          padding: 15px 20px;
+          padding: var(--grampsjs-space-16) var(--grampsjs-space-20);
         }
 
         .hidden {
@@ -223,8 +225,8 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
 
         @media (max-width: 512px) {
           #container {
-            left: 12px;
-            right: 12px;
+            left: var(--grampsjs-space-12);
+            right: var(--grampsjs-space-12);
             top: 68px;
             width: auto;
             z-index: 4;

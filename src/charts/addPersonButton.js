@@ -18,7 +18,7 @@ export function appendAddPersonButton(
     .attr('class', 'add-person-btn')
     .attr('transform', `translate(${cx}, ${cy})`)
     .style('cursor', 'pointer')
-    .style('filter', 'drop-shadow(0 1px 3px rgba(0,0,0,0.45))')
+    .style('filter', 'drop-shadow(0 1px 3px var(--grampsjs-shadow-color))')
     .on('click', function (event, d) {
       fireEvent(this, 'add-new-person-relation', {handle: getHandle(d)})
       event.stopPropagation()

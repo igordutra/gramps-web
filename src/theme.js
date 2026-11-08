@@ -222,6 +222,9 @@ export const SPACE_SCALE = {
   '--grampsjs-space-24': '24px',
   '--grampsjs-space-32': '32px',
   '--grampsjs-space-40': '40px',
+  '--grampsjs-space-48': '48px',
+  '--grampsjs-space-56': '56px',
+  '--grampsjs-space-64': '64px',
   // Page gutter: the breathing room between the window edge and content.
   '--grampsjs-page-gutter': '24px',
   // Gutter for the narrow layout, where 24px would eat the content.
