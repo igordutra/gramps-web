@@ -163,13 +163,24 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
           margin-bottom: 16px;
         }
 
+        /*
+         * The date part fields.
+         *
+         * They are sized in em, so the width follows the field's own
+         * font size. The month field was 5em, which was not enough for
+         * the word "Month" — the label was ellipsised to "Mo…". The
+         * width now fits the longest label it has to carry.
+         */
         .row .year {
-          width: 6.5em;
+          width: 7em;
         }
 
-        .row .month,
+        .row .month {
+          width: 7em;
+        }
+
         .row .day {
-          width: 5em;
+          width: 5.5em;
         }
 
         input[type='date'] {

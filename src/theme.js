@@ -280,42 +280,178 @@ export const ELEVATION_SCALE = {
  */
 export const COMPONENT_SCALE = {
   // --- shape ---------------------------------------------------------
+  /*
+   * Material's per-component shape tokens.
+   *
+   * The four CORNER tokens are named separately because they have
+   * SEPARATE fallback chains, and the chains do not agree:
+   *
+   *   container-shape-start-start  -> corner-extra-small   (4px)
+   *   container-shape-start-end    -> corner-extra-small   (4px)
+   *   container-shape-end-end      -> corner-NONE          (0px)
+   *   container-shape-end-start    -> corner-NONE          (0px)
+   *
+   * So a field that inherits the shape scale gets a ROUNDED top and a
+   * SQUARE bottom — the "angular" look. Setting only the container-shape
+   * token does not fix it: the end corners never consult it. Each of
+   * the four has to be set, and they are set here to the same value so
+   * the field is uniformly rounded.
+   *
+   * Note the token names: the PUBLIC ones are
+   * `--md-<variant>-text-field-*` and `--md-<variant>-select-text-field-*`.
+   * The `--md-<variant>-field-*` names are the component's INTERNAL
+   * aliases, which it assigns on its own `:host` rule — a value set on
+   * the document root loses to that and has no effect at all.
+   */
   '--md-filled-text-field-container-shape': 'var(--md-sys-shape-corner-small)',
+  '--md-filled-text-field-container-shape-start-start':
+    'var(--md-sys-shape-corner-small)',
+  '--md-filled-text-field-container-shape-start-end':
+    'var(--md-sys-shape-corner-small)',
+  '--md-filled-text-field-container-shape-end-end':
+    'var(--md-sys-shape-corner-small)',
+  '--md-filled-text-field-container-shape-end-start':
+    'var(--md-sys-shape-corner-small)',
+
   '--md-outlined-text-field-container-shape':
     'var(--md-sys-shape-corner-small)',
+  '--md-outlined-text-field-container-shape-start-start':
+    'var(--md-sys-shape-corner-small)',
+  '--md-outlined-text-field-container-shape-start-end':
+    'var(--md-sys-shape-corner-small)',
+  '--md-outlined-text-field-container-shape-end-end':
+    'var(--md-sys-shape-corner-small)',
+  '--md-outlined-text-field-container-shape-end-start':
+    'var(--md-sys-shape-corner-small)',
+
   '--md-filled-select-text-field-container-shape':
     'var(--md-sys-shape-corner-small)',
+  '--md-filled-select-text-field-container-shape-start-start':
+    'var(--md-sys-shape-corner-small)',
+  '--md-filled-select-text-field-container-shape-start-end':
+    'var(--md-sys-shape-corner-small)',
+  '--md-filled-select-text-field-container-shape-end-end':
+    'var(--md-sys-shape-corner-small)',
+  '--md-filled-select-text-field-container-shape-end-start':
+    'var(--md-sys-shape-corner-small)',
+
   '--md-outlined-select-text-field-container-shape':
     'var(--md-sys-shape-corner-small)',
-  // The field is the inner part of a text field or a select; it carries
-  // its own shape token as well as the wrapper's.
-  '--md-filled-field-container-shape': 'var(--md-sys-shape-corner-small)',
-  '--md-outlined-field-container-shape': 'var(--md-sys-shape-corner-small)',
+  '--md-outlined-select-text-field-container-shape-start-start':
+    'var(--md-sys-shape-corner-small)',
+  '--md-outlined-select-text-field-container-shape-start-end':
+    'var(--md-sys-shape-corner-small)',
+  '--md-outlined-select-text-field-container-shape-end-end':
+    'var(--md-sys-shape-corner-small)',
+  '--md-outlined-select-text-field-container-shape-end-start':
+    'var(--md-sys-shape-corner-small)',
+
+  /*
+   * The field's OWN aliases.
+   *
+   * These are the tokens the `md-filled-field` element reads. A text
+   * field assigns them on its own host rule — so for a text field a
+   * root-level value loses and has no effect — but the SELECT does not
+   * assign them, so the select's inner field inherits them from the
+   * root. They therefore have to be set for the select, and they have
+   * to MATCH the text field's own values, or the two controls in the
+   * same row come out different heights.
+   */
+  '--md-filled-field-top-space': '15px',
+  '--md-filled-field-bottom-space': '15px',
+  '--md-filled-field-with-label-top-space': '6px',
+  '--md-filled-field-with-label-bottom-space': '6px',
+  '--md-outlined-field-top-space': '15px',
+  '--md-outlined-field-bottom-space': '15px',
+  '--md-outlined-field-with-label-top-space': '6px',
+  '--md-outlined-field-with-label-bottom-space': '6px',
+
   // --- label typography ----------------------------------------------
   // A field label is a label, not body text: it matches the label scale
-  // the rest of the interface uses.
-  '--md-filled-field-label-text-size':
+  // the rest of the interface uses. These are the PUBLIC token names;
+  // the `--md-*-field-label-text-*` aliases are set on the component's
+  // own host rule and a root-level value loses to them.
+  '--md-filled-text-field-label-text-size':
     'var(--md-sys-typescale-label-large-size)',
-  '--md-outlined-field-label-text-size':
+  '--md-filled-text-field-label-text-weight':
+    'var(--md-sys-typescale-label-large-weight)',
+  '--md-filled-text-field-label-text-font': 'var(--md-ref-typeface-plain)',
+  '--md-filled-text-field-label-text-populated-size':
+    'var(--md-sys-typescale-label-medium-size)',
+  '--md-filled-text-field-label-text-populated-line-height':
+    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
+
+  '--md-outlined-text-field-label-text-size':
     'var(--md-sys-typescale-label-large-size)',
-  '--md-filled-field-label-text-weight':
+  '--md-outlined-text-field-label-text-weight':
     'var(--md-sys-typescale-label-large-weight)',
-  '--md-outlined-field-label-text-weight':
+  '--md-outlined-text-field-label-text-font': 'var(--md-ref-typeface-plain)',
+  '--md-outlined-text-field-label-text-populated-size':
+    'var(--md-sys-typescale-label-medium-size)',
+  '--md-outlined-text-field-label-text-populated-line-height':
+    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
+
+  '--md-filled-select-text-field-label-text-size':
+    'var(--md-sys-typescale-label-large-size)',
+  '--md-filled-select-text-field-label-text-weight':
     'var(--md-sys-typescale-label-large-weight)',
-  '--md-filled-field-label-text-font': 'var(--md-ref-typeface-plain)',
-  '--md-outlined-field-label-text-font': 'var(--md-ref-typeface-plain)',
+  '--md-filled-select-text-field-label-text-font':
+    'var(--md-ref-typeface-plain)',
+  '--md-filled-select-text-field-label-text-populated-size':
+    'var(--md-sys-typescale-label-medium-size)',
+  '--md-filled-select-text-field-label-text-populated-line-height':
+    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
+
+  '--md-outlined-select-text-field-label-text-size':
+    'var(--md-sys-typescale-label-large-size)',
+  '--md-outlined-select-text-field-label-text-weight':
+    'var(--md-sys-typescale-label-large-weight)',
+  '--md-outlined-select-text-field-label-text-font':
+    'var(--md-ref-typeface-plain)',
+  '--md-outlined-select-text-field-label-text-populated-size':
+    'var(--md-sys-typescale-label-medium-size)',
+  '--md-outlined-select-text-field-label-text-populated-line-height':
+    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
+
   // --- density -------------------------------------------------------
-  // Material's field is 56px tall, which is taller than every other
-  // control in the app. A research tool wants the same density as its
-  // buttons.
-  '--md-filled-field-top-space': '12px',
-  '--md-filled-field-bottom-space': '12px',
-  '--md-outlined-field-top-space': '12px',
-  '--md-outlined-field-bottom-space': '12px',
-  '--md-filled-text-field-top-space': '12px',
-  '--md-filled-text-field-bottom-space': '12px',
-  '--md-outlined-text-field-top-space': '12px',
-  '--md-outlined-text-field-bottom-space': '12px',
+  /*
+   * Material's field is 56px tall, which is taller than every other
+   * control in the app. A research tool wants the same density as its
+   * buttons.
+   *
+   * The height of a field is its TOP space + its BOTTOM space + the
+   * content line, so the spaces are what set it.
+   *
+   * A field WITH a label and a field WITHOUT one are different: the
+   * labelled one adds the label's own line to the content, so its
+   * spaces are smaller. Material keeps the two the same height by
+   * giving the labelled field 8px of space and the unlabelled field
+   * 16px. These values keep that parity while shrinking both:
+   *
+   *   labelled:   6 + 18 (the label line) + 6 + 24 (the content) = 54
+   *   unlabelled: 15 + 24 (the content)                   + 15 = 54
+   *
+   * The select has no label — its heading is a separate element — so
+   * it takes the unlabelled path, and the two controls in the same row
+   * have to come out the same height.
+   */
+  '--md-filled-text-field-top-space': '15px',
+  '--md-filled-text-field-bottom-space': '15px',
+  '--md-filled-text-field-with-label-top-space': '6px',
+  '--md-filled-text-field-with-label-bottom-space': '6px',
+  '--md-outlined-text-field-top-space': '15px',
+  '--md-outlined-text-field-bottom-space': '15px',
+  '--md-outlined-text-field-with-label-top-space': '6px',
+  '--md-outlined-text-field-with-label-bottom-space': '6px',
+  '--md-filled-select-text-field-top-space': '15px',
+  '--md-filled-select-text-field-bottom-space': '15px',
+  '--md-filled-select-text-field-with-label-top-space': '6px',
+  '--md-filled-select-text-field-with-label-bottom-space': '6px',
+  '--md-outlined-select-text-field-top-space': '15px',
+  '--md-outlined-select-text-field-bottom-space': '15px',
+  '--md-outlined-select-text-field-with-label-top-space': '6px',
+  '--md-outlined-select-text-field-with-label-bottom-space': '6px',
+
   // --- segmented control (the tree type bar) -------------------------
   // The toggle was the last control still drawn as a 999px pill while
   // every other control in the app uses the shape scale. It now takes
