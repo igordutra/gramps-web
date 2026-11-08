@@ -53,7 +53,9 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
         }
 
         md-list {
-          --md-list-item-label-text-size: 0.95em;
+          --md-list-item-label-text-size: var(
+            --md-sys-typescale-label-large-size
+          );
           --md-list-item-supporting-text-color: var(
             --grampsjs-body-font-color-60
           );

@@ -17,7 +17,7 @@ import {
   MapPinPlus,
   Tag,
   Textbox,
-  TreeStructure,
+  ChartLineUp,
   UserCircleGear,
   UserMinus,
   UserPlus,
@@ -174,7 +174,7 @@ export class GrampsjsViewRevisions extends GrampsjsStaleDataMixin(
             )
           : html`<grampsjs-icon
               slot="end"
-              path="${TreeStructure}"
+              path="${ChartLineUp}"
               color="var(--grampsjs-body-font-color-45)"
             ></grampsjs-icon>`}
         <div slot="supporting-text">

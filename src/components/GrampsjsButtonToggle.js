@@ -12,8 +12,12 @@ export class GrampsjsButtonToggle extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       css`
         md-filter-chip {
-          --md-filter-chip-label-text-size: 13px;
-          --md-filter-chip-label-text-weight: 400;
+          --md-filter-chip-label-text-size: var(
+            --md-sys-typescale-label-medium-size
+          );
+          --md-filter-chip-label-text-weight: var(
+            --md-sys-typescale-label-large-weight
+          );
           --md-filter-chip-outline-width: 0px;
           --md-filter-chip-label-text-color: var(--md-sys-color-primary);
           --md-filter-chip-hover-label-text-color: var(--md-sys-color-primary);

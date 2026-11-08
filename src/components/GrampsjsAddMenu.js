@@ -61,7 +61,9 @@ class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
           --md-menu-item-disabled-opacity: 0.6;
           --md-menu-item-one-line-container-height: 32px;
           --md-menu-item-label-text-size: 14px;
-          --md-menu-item-label-text-weight: 400;
+          --md-menu-item-label-text-weight: var(
+            --md-sys-typescale-label-large-weight
+          );
         }
       `,
     ]

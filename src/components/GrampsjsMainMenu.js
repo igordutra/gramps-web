@@ -24,6 +24,7 @@ import {
   Rss,
   Sparkle,
   TreeStructure,
+  ChartLineUp,
 } from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -39,14 +40,25 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
       css`
         md-list-item {
           --md-list-item-label-text-color: var(--grampsjs-color-drawer-text);
-          --md-list-item-label-text-size: 1rem;
-          --md-list-item-label-text-weight: 400;
+          --md-list-item-label-text-size: var(
+            --md-sys-typescale-label-large-size
+          );
+          --md-list-item-label-text-weight: var(
+            --md-sys-typescale-label-large-weight
+          );
           --md-list-item-one-line-container-height: 40px;
         }
 
         md-list-item[selected] {
           --md-list-item-label-text-color: var(--grampsjs-color-icon-selected);
-          --md-list-item-label-text-weight: 500;
+          /*
+           * The selected row is the one emphasis in the drawer, so it
+           * takes the scale's heavier headline weight rather than the
+           * label weight.
+           */
+          --md-list-item-label-text-weight: var(
+            --md-sys-typescale-headline-small-weight
+          );
         }
 
         md-divider {
@@ -150,7 +162,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
         href="/timeline"
         ?selected="${p === 'timeline'}"
       >
-        ${this._icon(TreeStructure, p === 'timeline')} ${this._('Timeline')}
+        ${this._icon(ChartLineUp, p === 'timeline')} ${this._('Timeline')}
       </md-list-item>
       <md-list-item type="link" href="/map" ?selected="${p === 'map'}">
         ${this._icon(MapTrifold, p === 'map')} ${this._('Map')}

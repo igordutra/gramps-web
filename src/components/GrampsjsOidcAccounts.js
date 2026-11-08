@@ -61,7 +61,9 @@ export class GrampsjsOidcAccounts extends GrampsjsAppStateMixin(LitElement) {
         }
 
         md-list-item {
-          --md-list-item-label-text-size: 1rem;
+          --md-list-item-label-text-size: var(
+            --md-sys-typescale-label-large-size
+          );
           --md-list-item-supporting-text-color: var(
             --md-sys-color-on-surface-variant
           );

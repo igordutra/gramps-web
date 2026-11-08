@@ -57,7 +57,9 @@ MAPPING = {
     "mdiChurch": "church",
     "mdiCof": "cross",
     "mdiCoffin": "cross",
-    "mdiGraveStone": "tree-structure",
+    # A grave stone is not a tree. Mapping it onto the family tree's
+    # glyph meant a burial was drawn as a branching diagram.
+    "mdiGraveStone": "flower",
     "mdiPassport": "identification-card",
     "mdiSchool": "chalkboard-teacher",
     "mdiGavel": "gavel",
@@ -67,8 +69,11 @@ MAPPING = {
     "mdiBarn": "barn",
     "mdiDna": "dna",
     "mdiFamilyTree": "tree-structure",
-    "mdiTimelineOutline": "tree-structure",
-    "mdiTimelineQuestionOutline": "tree-structure",
+    # A timeline is a line running through time, not a tree. Mapping the
+    # timeline icons onto the family tree's glyph put the same picture
+    # beside two different menu entries.
+    "mdiTimelineOutline": "chart-line-up",
+    "mdiTimelineQuestionOutline": "chart-line-up",
     "mdiSignRealEstate": "house-line",
     "mdiRoad": "road-horizon",
     "mdiFerry": "boat",

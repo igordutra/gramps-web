@@ -11,6 +11,7 @@ import {
   Globe,
   MapTrifold,
   TreeStructure,
+  ChartLineUp,
   UserPlus,
 } from '../icons/phosphor.js'
 import {GrampsjsObject} from './GrampsjsObject.js'
@@ -283,7 +284,7 @@ export class GrampsjsPerson extends GrampsjsObject {
       },
       {
         label: 'Show on timeline',
-        path: TreeStructure,
+        path: ChartLineUp,
         handler: this._handleTimelineButtonClick,
       },
       {

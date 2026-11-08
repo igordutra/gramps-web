@@ -32,7 +32,9 @@ export class GrampsjsViewRevision extends GrampsjsView {
       super.styles,
       css`
         md-list-item {
-          --md-list-item-label-text-weight: 350;
+          --md-list-item-label-text-weight: var(
+            --md-sys-typescale-label-large-weight
+          );
           --md-list-item-label-text-size: 17px;
           --md-list-item-supporting-text-color: var(
             --grampsjs-body-font-color-50

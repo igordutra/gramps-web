@@ -8,7 +8,9 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       css`
         md-list.toc-list {
-          --md-list-item-label-text-weight: 400;
+          --md-list-item-label-text-weight: var(
+            --md-sys-typescale-label-large-weight
+          );
           --md-list-item-label-text-size: 14px;
           --md-list-item-label-text-color: var(
             --md-sys-color-on-surface-variant
@@ -20,7 +22,15 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
         }
 
         md-list-item.active {
-          --md-list-item-label-text-weight: 600;
+          /*
+           * The active row is the one emphasis in the list, so it is
+           * set from the scale's HEADLINE weight rather than the label
+           * weight — a heavier step on the scale, not a number written
+           * down here.
+           */
+          --md-list-item-label-text-weight: var(
+            --md-sys-typescale-headline-small-weight
+          );
         }
 
         h3 {

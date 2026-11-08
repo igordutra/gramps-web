@@ -26,8 +26,10 @@ export const sharedStyles = css`
     --md-sys-typescale-body-small-font: var(--grampsjs-body-font-family);
     --md-sys-typescale-body-medium-font: var(--grampsjs-body-font-family);
     --md-sys-typescale-body-large-font: var(--grampsjs-body-font-family);
-    --md-primary-tab-label-text-weight: 500;
-    --md-primary-tab-label-text-size: 15px;
+    --md-primary-tab-label-text-weight: var(
+      --md-sys-typescale-label-large-weight
+    );
+    --md-primary-tab-label-text-size: var(--md-sys-typescale-label-large-size);
     --md-primary-tab-active-indicator-height: 3px;
     --md-divider-thickness: 0px;
     --md-list-item-leading-space: 16px;
@@ -54,8 +56,10 @@ export const sharedStyles = css`
   }
 
   md-list-item {
-    --md-list-item-label-text-weight: 450;
-    --md-list-item-label-text-size: 15px;
+    --md-list-item-label-text-weight: var(
+      --md-sys-typescale-label-large-weight
+    );
+    --md-list-item-label-text-size: var(--md-sys-typescale-label-large-size);
     --md-list-item-supporting-text-color: var(--grampsjs-body-font-color-50);
     --md-list-item-trailing-supporting-text-color: var(
       --grampsjs-body-font-color-60

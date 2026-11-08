@@ -3,7 +3,7 @@ import {html, css} from 'lit'
 import '@material/web/button/outlined-button.js'
 import '@material/web/iconbutton/icon-button.js'
 
-import {PencilSimple, TreeStructure} from '../icons/phosphor.js'
+import {ChartLineUp, PencilSimple} from '../icons/phosphor.js'
 import {GrampsjsObject} from './GrampsjsObject.js'
 import './GrampsjsFormEditEventDetails.js'
 import './GrampsjsFormEditTitle.js'
@@ -124,7 +124,7 @@ export class GrampsjsEvent extends GrampsjsObject {
               <md-outlined-button @click="${this._handleTimelineButtonClick}">
                 ${this._('Show on timeline')}
                 <grampsjs-icon
-                  path="${TreeStructure}"
+                  path="${ChartLineUp}"
                   color="currentColor"
                   slot="icon"
                 ></grampsjs-icon>
