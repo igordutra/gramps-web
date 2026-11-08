@@ -1011,6 +1011,16 @@ export const MATERIAL_SCALE = {
  * the shape / type / space scales because each one belongs to
  * a different concern.
  */
+
+/**
+ * The primitives the Material tokens above point at.
+ *
+ * These are the design system's own decisions about state
+ * layers, disabled states, elevation levels, icon sizes,
+ * strokes and density. They are declared here rather than in
+ * the shape / type / space scales because each one belongs to
+ * a different concern.
+ */
 export const MATERIAL_PRIMITIVES = {
   '--grampsjs-state-hover-opacity': '0.05',
   '--grampsjs-state-press-opacity': '0.09',
@@ -1067,6 +1077,19 @@ export const MATERIAL_PRIMITIVES = {
   '--grampsjs-switch-track-height': '32px',
   '--grampsjs-slider-handle-size': '20px',
   '--grampsjs-slider-label-height': '28px',
+  '--grampsjs-space-0': '0px',
+  '--grampsjs-icon-size-xs': '14px',
+  '--grampsjs-divider-color': 'var(--grampsjs-body-font-color-30)',
+  '--grampsjs-dialog-shape': '0',
+  '--grampsjs-dialog-inline-size': 'min(1200px, 95vw)',
+  '--grampsjs-menu-item-disabled-opacity': '0.6',
+  '--grampsjs-icon-button-opacity': '1',
+  '--grampsjs-list-item-two-line-row-height': '80px',
+  '--grampsjs-list-item-three-line-row-height': '96px',
+  '--grampsjs-tab-indicator-shape':
+    'var(--md-sys-shape-corner-extra-small) var(--md-sys-shape-corner-extra-small) 0 0',
+  '--grampsjs-progress-stroke': '14',
+  '--grampsjs-progress-stroke-large': '18',
 }
 
 /**
