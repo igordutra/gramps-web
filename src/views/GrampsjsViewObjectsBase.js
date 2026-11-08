@@ -44,14 +44,12 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
         md-fab {
           position: fixed;
           /* The button belongs to the content column, not to the window.
-             The column ends one page margin short of the viewport edge and
-             the page scrollbar sits outside it, so the button is inset by
-             the margin plus its own gutter — otherwise it hangs over the
-             panel edge and into the scrollbar. */
+             The column now reaches the viewport edge and the page scrollbar
+             sits outside it, so the button is inset by the page gutter plus
+             the scrollbar width — otherwise it hangs into the scrollbar. */
           bottom: var(--grampsjs-space-24, 24px);
           right: calc(
-            var(--grampsjs-page-margin-inline, 40px) +
-              var(--grampsjs-space-24, 24px) +
+            var(--grampsjs-page-gutter, 24px) +
               var(--grampsjs-scrollbar-width, 0px)
           );
           /* Material's FAB is a large saturated disc with a heavy shadow.
@@ -62,7 +60,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
           --md-fab-container-width: 48px;
           --md-fab-icon-size: 22px;
           --md-fab-container-elevation: 2;
-          --md-fab-container-shadow-color: rgba(15, 23, 42, 0.18);
+          --md-fab-container-shadow-color: var(--grampsjs-shadow-color);
         }
 
         .hidden {

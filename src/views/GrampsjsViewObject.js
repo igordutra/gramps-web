@@ -93,14 +93,12 @@ export class GrampsjsViewObject extends GrampsjsView {
         md-fab {
           position: fixed;
           /* The button belongs to the content column, not to the window.
-             The column ends one page margin short of the viewport edge and
-             the page scrollbar sits outside it, so the button is inset by
-             the margin plus its own gutter — otherwise it hangs over the
-             panel edge and into the scrollbar. */
+             The column now reaches the viewport edge and the page scrollbar
+             sits outside it, so the button is inset by the page gutter plus
+             the scrollbar width — otherwise it hangs into the scrollbar. */
           bottom: var(--grampsjs-space-24, 24px);
           right: calc(
-            var(--grampsjs-page-margin-inline, 40px) +
-              var(--grampsjs-space-24, 24px) +
+            var(--grampsjs-page-gutter, 24px) +
               var(--grampsjs-scrollbar-width, 0px)
           );
         }

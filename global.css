@@ -180,7 +180,7 @@ body {
   --grampsjs-body-font-color-87: rgba(0, 0, 0, 0.87);
   --grampsjs-body-font-color-90: rgba(0, 0, 0, 0.9);
   --grampsjs-body-font-color-100: rgba(0, 0, 0, 1);
-  --grampsjs-color-shade-40: rgb(40, 40, 40);
+  --grampsjs-color-shade-40: var(--md-sys-color-on-surface);
   --grampsjs-color-shade-120: rgb(120, 120, 120);
   --grampsjs-color-shade-200: rgb(200, 200, 200);
   --grampsjs-color-shade-220: rgb(220, 220, 220);
@@ -188,24 +188,46 @@ body {
   --grampsjs-color-shade-240: rgb(240, 240, 240);
   --grampsjs-color-shade-255: rgb(255, 255, 255);
   --grampsjs-color-monospace: rgba(125, 0, 0, 0.8);
-  --grampsjs-color-drawer-text: #444;
-  --grampsjs-color-icon-default: #9e9e9e;
-  --grampsjs-color-icon-selected: #393939;
-  --grampsjs-color-skeleton-background: #eee;
-  --grampsjs-color-skeleton-base: #ececec;
-  --grampsjs-color-skeleton-shine: #f5f5f5;
-  --grampsjs-color-revision-deleted-background-red: #ffebe9;
-  --grampsjs-color-revision-added-background-green: #dafbe1;
-  --grampsjs-color-revision-moved-background-blue: #ddf4ff;
-  --grampsjs-color-revision-moved-font: #888;
-  --grampsjs-color-revision-error-background: #f00;
-  --grampsjs-color-revision-error-font: #fff;
+  /* The drawer text was a fixed #444 and the icons a fixed #9e9e9e /
+     #393939. Those are the on-surface and on-surface-variant roles of
+     the Material palette, so they are named rather than written down —
+     which is what lets the dark theme and the seed colours reach them.
+
+     The default (inactive) icon is a MUTED grey, deliberately lighter
+     than the label beside it, so it is mixed from the palette rather
+     than taken straight from on-surface-variant. */
+  --grampsjs-color-drawer-text: var(--md-sys-color-on-surface-variant);
+  --grampsjs-color-icon-default: color-mix(
+    in srgb,
+    var(--md-sys-color-on-surface-variant) 60%,
+    var(--md-sys-color-surface)
+  );
+  --grampsjs-color-icon-selected: var(--md-sys-color-on-surface);
+  --grampsjs-color-skeleton-background: var(--md-sys-color-surface-container);
+  --grampsjs-color-skeleton-base: var(--md-sys-color-surface-container);
+  --grampsjs-color-skeleton-shine: var(--md-sys-color-surface-container-low);
+  --grampsjs-color-revision-deleted-background-red: var(
+    --md-sys-color-error-container
+  );
+  --grampsjs-color-revision-added-background-green: var(
+    --md-sys-color-primary-container
+  );
+  --grampsjs-color-revision-moved-background-blue: var(
+    --md-sys-color-surface-container-high
+  );
+  --grampsjs-color-revision-moved-font: var(--md-sys-color-on-surface-variant);
+  --grampsjs-color-revision-error-background: var(--md-sys-color-error);
+  --grampsjs-color-revision-error-font: var(--md-sys-color-on-error);
   --grampsjs-color-icon-background: rgba(0, 0, 0, 0.25);
   --grampsjs-color-icon: #fff;
-  --grampsjs-color-ytree-expand-background: #eee;
-  --grampsjs-color-ytree-expand-font: #555;
-  --grampsjs-color-ytree-default-person-icon-background: #bbb;
-  --grampsjs-note-color: #333;
+  --grampsjs-color-ytree-expand-background: var(
+    --md-sys-color-surface-container
+  );
+  --grampsjs-color-ytree-expand-font: var(--md-sys-color-on-surface);
+  --grampsjs-color-ytree-default-person-icon-background: var(
+    --md-sys-color-surface-container
+  );
+  --grampsjs-note-color: var(--md-sys-color-on-surface);
   --grampsjs-note-highlight-strength: 45%;
   /* GOQL syntax highlighting, after VS Code's Light+ theme */
   --grampsjs-color-code-keyword: #0000ff;
@@ -252,7 +274,7 @@ body {
   --grampsjs-body-font-color-87: rgba(255, 255, 255, 0.87);
   --grampsjs-body-font-color-90: rgba(255, 255, 255, 0.9);
   --grampsjs-body-font-color-100: rgba(255, 255, 255, 1);
-  --grampsjs-color-shade-40: rgb(215, 215, 215);
+  --grampsjs-color-shade-40: var(--md-sys-color-on-surface);
   --grampsjs-color-shade-120: rgb(135, 135, 135);
   --grampsjs-color-shade-200: rgb(55, 55, 55);
   --grampsjs-color-shade-220: rgb(35, 35, 35);
@@ -263,18 +285,28 @@ body {
   --grampsjs-chart-link: rgb(117, 117, 117);
   --grampsjs-color-shade-255: rgb(0, 0, 0);
   --grampsjs-color-monospace: rgba(255, 100, 100, 0.85);
-  --grampsjs-color-drawer-text: #bbb;
-  --grampsjs-color-icon-default: #616161;
-  --grampsjs-color-icon-selected: #c6c6c6;
-  --grampsjs-color-skeleton-background: #222;
-  --grampsjs-color-skeleton-base: #232323;
-  --grampsjs-color-skeleton-shine: #1a1a1a;
-  --grampsjs-color-revision-deleted-background-red: rgba(248, 81, 73, 0.3);
-  --grampsjs-color-revision-added-background-green: rgba(46, 160, 67, 0.15);
-  --grampsjs-color-revision-moved-background-blue: rgba(56, 139, 253, 0.1);
-  --grampsjs-color-revision-moved-font: #777;
-  --grampsjs-color-revision-error-background: #f00;
-  --grampsjs-color-revision-error-font: #fff;
+  --grampsjs-color-drawer-text: var(--md-sys-color-on-surface-variant);
+  --grampsjs-color-icon-default: color-mix(
+    in srgb,
+    var(--md-sys-color-on-surface-variant) 60%,
+    var(--md-sys-color-surface)
+  );
+  --grampsjs-color-icon-selected: var(--md-sys-color-on-surface);
+  --grampsjs-color-skeleton-background: var(--md-sys-color-surface-container);
+  --grampsjs-color-skeleton-base: var(--md-sys-color-surface-container);
+  --grampsjs-color-skeleton-shine: var(--md-sys-color-surface-container-low);
+  --grampsjs-color-revision-deleted-background-red: var(
+    --md-sys-color-error-container
+  );
+  --grampsjs-color-revision-added-background-green: var(
+    --md-sys-color-primary-container
+  );
+  --grampsjs-color-revision-moved-background-blue: var(
+    --md-sys-color-surface-container-high
+  );
+  --grampsjs-color-revision-moved-font: var(--md-sys-color-on-surface-variant);
+  --grampsjs-color-revision-error-background: var(--md-sys-color-error);
+  --grampsjs-color-revision-error-font: var(--md-sys-color-on-error);
   --grampsjs-color-icon-background: rgba(255, 255, 255, 0.15);
   --grampsjs-color-icon: rgba(255, 255, 255, 0.6);
   --grampsjs-color-ytree-expand-background: var(
@@ -284,7 +316,7 @@ body {
   --grampsjs-color-ytree-default-person-icon-background: var(
     --md-sys-color-surface-container
   );
-  --grampsjs-note-color: #ccc;
+  --grampsjs-note-color: var(--md-sys-color-on-surface);
   --grampsjs-note-highlight-strength: 30%;
   /* keep tag colors readable on dark surfaces (see tagColorToCss) */
   --grampsjs-tag-lightness-min: 0.7;

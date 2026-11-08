@@ -49,8 +49,12 @@ export const SHAPE_SCALE = {
 export const TYPE_SCALE = {
   '--md-sys-typescale-label-large-font':
     '"Inter var", "Gramps Symbols", sans-serif',
-  '--md-sys-typescale-label-large-size': '0.875rem',
-  '--md-sys-typescale-label-large-weight': '500',
+  // The label scale is the scale every control's text comes from: button
+  // labels, field labels, tab labels. It was left at Material's stock
+  // 14px/500, which is why a button and a field label read smaller than
+  // the 16px body text around them. 15px/450 matches the list rows.
+  '--md-sys-typescale-label-large-size': '0.9375rem',
+  '--md-sys-typescale-label-large-weight': '450',
   '--md-sys-typescale-label-large-line-height': '1.25rem',
   '--md-sys-typescale-label-medium-font':
     '"Inter var", "Gramps Symbols", sans-serif',
@@ -110,6 +114,15 @@ export const SPACE_SCALE = {
   '--grampsjs-page-gutter': '24px',
   // Gutter for the narrow layout, where 24px would eat the content.
   '--grampsjs-page-gutter-compact': '12px',
+  // The vertical half of the page gutter. A page's first row of content
+  // sits closer to the top edge than to the sides, which is what a
+  // document layout does; the two are separate tokens so a view can
+  // differ on either axis.
+  '--grampsjs-page-gutter-block': '16px',
+  // Gap between the two columns of the dashboard. The columns used to
+  // touch, because the rule that gave the first one its padding was
+  // dead (see GrampsjsViewDashboard).
+  '--grampsjs-column-gap': '32px',
 }
 
 export const ELEVATION_SCALE = {
@@ -121,6 +134,80 @@ export const ELEVATION_SCALE = {
   '--md-sys-elevation-level3': '0 4px 16px rgba(15, 23, 42, 0.1)',
   '--md-sys-elevation-level4': '0 8px 24px rgba(15, 23, 42, 0.12)',
   '--md-sys-elevation-level5': '0 12px 32px rgba(15, 23, 42, 0.14)',
+  // The shadow colour itself, for the components that take a colour
+  // rather than a whole shadow. It was written down in five files.
+  '--grampsjs-shadow-color': 'rgba(15, 23, 42, 0.18)',
+}
+
+/**
+ * Per-component shape and type overrides.
+ *
+ * Material v2 does NOT read the shape scale directly for form controls.
+ * Each component consults its own override point, and each one has a
+ * DIFFERENT fallback chain — which is why the token layer reached the
+ * buttons but not the fields:
+ *
+ *   filled text field -> --md-filled-text-field-container-shape
+ *                       -> --md-sys-shape-corner-none (0px) for the end
+ *                          corners, --md-sys-shape-corner-extra-small for
+ *                          the start corners
+ *   filled select    -> --md-filled-select-text-field-container-shape
+ *                       -> corner-extra-small / corner-none
+ *
+ * So a filled field resolved to a 2px top and a 0px bottom — the square,
+ * "angular" bottom edge the operator saw. Setting the sys scale alone
+ * cannot fix that; the per-component token has to be set, and the only
+ * place that owns it is here.
+ *
+ * The label typography has the same problem: a field label resolves
+ * through --md-filled-field-label-text-size, not through the type scale
+ * directly.
+ */
+export const COMPONENT_SCALE = {
+  // --- shape ---------------------------------------------------------
+  '--md-filled-text-field-container-shape': 'var(--md-sys-shape-corner-small)',
+  '--md-outlined-text-field-container-shape':
+    'var(--md-sys-shape-corner-small)',
+  '--md-filled-select-text-field-container-shape':
+    'var(--md-sys-shape-corner-small)',
+  '--md-outlined-select-text-field-container-shape':
+    'var(--md-sys-shape-corner-small)',
+  // The field is the inner part of a text field or a select; it carries
+  // its own shape token as well as the wrapper's.
+  '--md-filled-field-container-shape': 'var(--md-sys-shape-corner-small)',
+  '--md-outlined-field-container-shape': 'var(--md-sys-shape-corner-small)',
+  // --- label typography ----------------------------------------------
+  // A field label is a label, not body text: it matches the label scale
+  // the rest of the interface uses.
+  '--md-filled-field-label-text-size':
+    'var(--md-sys-typescale-label-large-size)',
+  '--md-outlined-field-label-text-size':
+    'var(--md-sys-typescale-label-large-size)',
+  '--md-filled-field-label-text-weight':
+    'var(--md-sys-typescale-label-large-weight)',
+  '--md-outlined-field-label-text-weight':
+    'var(--md-sys-typescale-label-large-weight)',
+  '--md-filled-field-label-text-font': 'var(--md-ref-typeface-plain)',
+  '--md-outlined-field-label-text-font': 'var(--md-ref-typeface-plain)',
+  // --- density -------------------------------------------------------
+  // Material's field is 56px tall, which is taller than every other
+  // control in the app. A research tool wants the same density as its
+  // buttons.
+  '--md-filled-field-top-space': '12px',
+  '--md-filled-field-bottom-space': '12px',
+  '--md-outlined-field-top-space': '12px',
+  '--md-outlined-field-bottom-space': '12px',
+  '--md-filled-text-field-top-space': '12px',
+  '--md-filled-text-field-bottom-space': '12px',
+  '--md-outlined-text-field-top-space': '12px',
+  '--md-outlined-text-field-bottom-space': '12px',
+  // --- segmented control (the tree type bar) -------------------------
+  // The toggle was the last control still drawn as a 999px pill while
+  // every other control in the app uses the shape scale. It now takes
+  // its radius, hover strength and gap from tokens like the rest.
+  '--grampsjs-pill-toggle-radius': 'var(--md-sys-shape-corner-full)',
+  '--grampsjs-pill-toggle-hover-opacity': '5%',
+  '--grampsjs-pill-toggle-gap': 'var(--grampsjs-space-8)',
 }
 
 /**
@@ -220,6 +307,7 @@ export function applyColors(
     ...SPACE_SCALE,
     ...ELEVATION_SCALE,
     ...DENSITY_SCALE,
+    ...COMPONENT_SCALE,
   })) {
     root.style.setProperty(name, value)
   }

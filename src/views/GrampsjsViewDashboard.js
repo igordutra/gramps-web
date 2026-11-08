@@ -38,15 +38,28 @@ export class GrampsjsViewDashboard extends GrampsjsView {
     return [
       super.styles,
       css`
-        .column {
-          float: left;
-          width: 50%;
-          overflow-x: hidden;
+        /*
+         * The two columns of the dashboard.
+         *
+         * They used to be two floated 50%-wide blocks with a
+         * "padding-right: 2em" on the first one — but the rule that gave
+         * that padding was ".column:first-child", and the home-page block
+         * is rendered before the first column, so ".column" was never
+         * ":first-child". The padding never applied and the columns
+         * touched.
+         *
+         * A grid with an explicit gap states the intent directly: two
+         * equal columns with a gutter between them.
+         */
+        .columns {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          column-gap: var(--grampsjs-column-gap, 32px);
+          align-items: start;
         }
 
-        .column:first-child {
-          width: calc(50% - 2em);
-          padding-right: 2em;
+        .column {
+          min-width: 0;
         }
 
         .column > div {
@@ -97,10 +110,8 @@ export class GrampsjsViewDashboard extends GrampsjsView {
         }
 
         @media screen and (max-width: 768px) {
-          .column,
-          .column:first-child {
-            width: 100%;
-            padding-right: 0;
+          .columns {
+            grid-template-columns: minmax(0, 1fr);
           }
 
           .home-page-block-combined {
@@ -233,66 +244,69 @@ export class GrampsjsViewDashboard extends GrampsjsView {
   renderContent() {
     return html`
       ${this._renderHomePageBlock()}
-      <div class="column">
-        ${this._renderGetStarted()}
-        ${this.appState.dbInfo?.object_counts?.people || this.homePersonGrampsId
-          ? html`
-              <div>
-                <grampsjs-home-person
-                  id="homeperson"
-                  .appState="${this.appState}"
-                  .homePersonDetails=${this.homePersonDetails}
-                  .homePersonMissing=${this.homePersonMissing}
-                  .homePersonGrampsId=${this.homePersonGrampsId}
-                >
-                </grampsjs-home-person>
-              </div>
-            `
-          : ''}
-        ${this.appState.dbInfo?.object_counts?.events
-          ? html`
-              <div>
-                <grampsjs-view-anniversaries
-                  id="anniversaries"
-                  .appState="${this.appState}"
-                >
-                </grampsjs-view-anniversaries>
-              </div>
-            `
-          : ''}
-        ${this._treeIsEmpty
-          ? ''
-          : html`
-              <div>
-                <grampsjs-view-recently-changed
-                  id="recently-changed"
-                  .appState="${this.appState}"
-                >
-                </grampsjs-view-recently-changed>
-              </div>
-            `}
-      </div>
-      <div class="column">
-        ${this._renderHomePageImage()}
-        ${this._treeIsEmpty
-          ? ''
-          : html`
-              <div>
-                <grampsjs-view-recent-blog-posts
-                  id="recent-blog"
-                  .appState="${this.appState}"
-                >
-                </grampsjs-view-recent-blog-posts>
-              </div>
-              <div>
-                <grampsjs-statistics
-                  .data="${this.dbInfo?.object_counts || {}}"
-                  id="statistics"
-                  .appState="${this.appState}"
-                >
-                </grampsjs-statistics>
-              </div>
-            `}
+      <div class="columns">
+        <div class="column">
+          ${this._renderGetStarted()}
+          ${this.appState.dbInfo?.object_counts?.people ||
+          this.homePersonGrampsId
+            ? html`
+                <div>
+                  <grampsjs-home-person
+                    id="homeperson"
+                    .appState="${this.appState}"
+                    .homePersonDetails=${this.homePersonDetails}
+                    .homePersonMissing=${this.homePersonMissing}
+                    .homePersonGrampsId=${this.homePersonGrampsId}
+                  >
+                  </grampsjs-home-person>
+                </div>
+              `
+            : ''}
+          ${this.appState.dbInfo?.object_counts?.events
+            ? html`
+                <div>
+                  <grampsjs-view-anniversaries
+                    id="anniversaries"
+                    .appState="${this.appState}"
+                  >
+                  </grampsjs-view-anniversaries>
+                </div>
+              `
+            : ''}
+          ${this._treeIsEmpty
+            ? ''
+            : html`
+                <div>
+                  <grampsjs-view-recently-changed
+                    id="recently-changed"
+                    .appState="${this.appState}"
+                  >
+                  </grampsjs-view-recently-changed>
+                </div>
+              `}
+        </div>
+        <div class="column">
+          ${this._renderHomePageImage()}
+          ${this._treeIsEmpty
+            ? ''
+            : html`
+                <div>
+                  <grampsjs-view-recent-blog-posts
+                    id="recent-blog"
+                    .appState="${this.appState}"
+                  >
+                  </grampsjs-view-recent-blog-posts>
+                </div>
+                <div>
+                  <grampsjs-statistics
+                    .data="${this.dbInfo?.object_counts || {}}"
+                    id="statistics"
+                    .appState="${this.appState}"
+                  >
+                  </grampsjs-statistics>
+                </div>
+              `}
+        </div>
       </div>
     `
   }

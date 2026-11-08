@@ -12,14 +12,30 @@ export class GrampsjsView extends GrampsjsAppStateMixin(LitElement) {
     return [
       sharedStyles,
       css`
+        /*
+         * The page gutter.
+         *
+         * This used to be a margin of 25px/40px around a white panel, so
+         * every page showed a grey band of canvas around its content and
+         * the table then added a second gutter of its own on the inside —
+         * 64px from the window edge to the first table cell.
+         *
+         * The gutter is now padding on the view itself, so the content
+         * plane reaches the pane edge and there is exactly one gutter
+         * between the window edge and the content.
+         */
         :host {
-          margin: 25px var(--grampsjs-page-margin-inline, 40px);
+          display: block;
+          margin: 0;
+          padding: var(--grampsjs-page-gutter, 24px);
+          padding-top: var(--grampsjs-page-gutter-block, 16px);
           background-color: var(--md-sys-color-surface);
         }
 
         @media (max-width: 768px) {
           :host {
-            margin: 25px 20px;
+            padding: var(--grampsjs-page-gutter-compact, 12px);
+            padding-top: var(--grampsjs-page-gutter-compact, 12px);
             --grampsjs-page-margin-inline: 20px;
           }
         }

@@ -62,6 +62,14 @@ export const sharedStyles = css`
     );
     --md-list-item-trailing-supporting-text-size: 0.875rem;
     --md-list-item-trailing-supporting-text-weight: 380;
+    /* A list item of type "link" renders an <a> inside Material's shadow
+       root. The label is coloured by --md-list-item-label-text-color, but
+       the anchor itself keeps the user agent's default link colour
+       (rgb(0,0,238)) unless the host sets one — so any content in the
+       row that is not the label inherited the browser's blue. Setting the
+       colour on the host reaches the anchor, and the label still wins
+       through its own token. */
+    color: var(--md-sys-color-on-surface);
   }
 
   label {
@@ -201,7 +209,7 @@ export const sharedStyles = css`
   .avatar.skeleton {
     width: 44px;
     height: 44px;
-    border-radius: 22px;
+    border-radius: var(--md-sys-shape-corner-2xl);
   }
 
   .float-right {
@@ -261,7 +269,7 @@ export const sharedStyles = css`
       var(--grampsjs-color-skeleton-base) 33%
     );
     opacity: 0.8;
-    border-radius: 3px;
+    border-radius: var(--md-sys-shape-corner-extra-small);
     background-size: 200% 100%;
     animation: 1.5s shine linear infinite;
   }
@@ -281,14 +289,14 @@ export const sharedStyles = css`
 
   .card {
     padding: 1em 1em;
-    border-radius: 16px;
+    border-radius: var(--md-sys-shape-corner-2xl);
     background-color: var(--grampsjs-color-shade-230);
   }
 
   .alert {
     background-color: var(--grampsjs-alert-background-color);
     border-left: 4px solid var(--grampsjs-alert-border-color);
-    border-radius: 5px;
+    border-radius: var(--md-sys-shape-corner-small);
     padding: 0.8em 1em;
     font-size: 0.8em;
     color: var(--grampsjs-body-font-color);
@@ -348,7 +356,7 @@ export const sharedStyles = css`
   .monospace {
     font-family: var(--grampsjs-mono-font-family);
     border: 1px solid var(--grampsjs-body-font-color-15);
-    border-radius: 5px;
+    border-radius: var(--md-sys-shape-corner-small);
     background-color: var(--grampsjs-body-font-color-5);
     padding: 0.3em;
     font-size: 0.9em;

@@ -107,8 +107,22 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
       iconButtonColorStyles,
       listAvatarStyles,
       css`
+        /*
+         * The tree page runs edge to edge.
+         *
+         * The chart is a canvas, not a document: it should use the whole
+         * pane. It used to fight the view's 40px margin with negative
+         * margins of its own, which left the chart 40px wider than the
+         * type bar that controls it — the chart started at x=240 while
+         * the bar started at x=280.
+         *
+         * The view now carries the gutter as padding, so the chart simply
+         * extends past that padding to reach the pane edge, and the type
+         * bar keeps the same gutter as every other page.
+         */
         .with-margin {
-          margin: 25px 40px;
+          padding: var(--grampsjs-page-gutter-block, 16px)
+            var(--grampsjs-page-gutter, 24px) 0;
         }
 
         /* The chart switcher, 40px high like Material 3 segmented buttons,
@@ -122,7 +136,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
         #controls {
           position: absolute;
           background-color: var(--md-sys-color-surface-container-low);
-          border-radius: 16px;
+          border-radius: var(--md-sys-shape-corner-large);
           z-index: 1;
           /* The first icon is centred below the first icon of the switcher */
           padding: 0 10px 0 5px;
@@ -137,15 +151,13 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
 
         #chart {
           height: calc(100vh - 153px);
-          margin-left: -40px;
-          margin-right: -40px;
-          margin-bottom: -25px;
+          margin: 0 calc(-1 * var(--grampsjs-page-gutter, 24px)) -1px;
         }
 
         @media (max-width: 768px) {
           #chart {
-            margin-left: -20px;
-            margin-right: -20px;
+            margin-right: calc(-1 * var(--grampsjs-page-gutter-compact, 12px));
+            margin-left: calc(-1 * var(--grampsjs-page-gutter-compact, 12px));
           }
         }
 
@@ -174,7 +186,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
           height: 48px;
           padding: 0 8px 0 9px;
           border: none;
-          border-radius: 24px;
+          border-radius: var(--md-sys-shape-corner-3xl);
           background-color: var(--md-sys-color-surface-container-low);
           color: var(--grampsjs-body-font-color);
           font: inherit;
@@ -258,14 +270,12 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
         md-fab {
           position: fixed;
           /* The button belongs to the content column, not to the window.
-             The column ends one page margin short of the viewport edge and
-             the page scrollbar sits outside it, so the button is inset by
-             the margin plus its own gutter — otherwise it hangs over the
-             panel edge and into the scrollbar. */
+             The column now reaches the viewport edge and the page scrollbar
+             sits outside it, so the button is inset by the page gutter plus
+             the scrollbar width — otherwise it hangs into the scrollbar. */
           bottom: var(--grampsjs-space-24, 24px);
           right: calc(
-            var(--grampsjs-page-margin-inline, 40px) +
-              var(--grampsjs-space-24, 24px) +
+            var(--grampsjs-page-gutter, 24px) +
               var(--grampsjs-scrollbar-width, 0px)
           );
           /* Material's FAB is a large saturated disc with a heavy shadow.
@@ -276,7 +286,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
           --md-fab-container-width: 48px;
           --md-fab-icon-size: 22px;
           --md-fab-container-elevation: 2;
-          --md-fab-container-shadow-color: rgba(15, 23, 42, 0.18);
+          --md-fab-container-shadow-color: var(--grampsjs-shadow-color);
         }
       `,
     ]

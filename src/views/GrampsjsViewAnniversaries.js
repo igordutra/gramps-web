@@ -28,7 +28,7 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
         .years {
           height: 38px;
           width: 38px;
-          border-radius: 19px;
+          border-radius: var(--md-sys-shape-corner-2xl);
           /* The badge was the primary colour at 60% opacity with white
              text, which is only a 2.9:1 contrast. A pale tint of the same
              hue with the primary colour as the label keeps the soft look

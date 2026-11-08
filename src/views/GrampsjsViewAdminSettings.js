@@ -82,7 +82,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
           font-size: 16px;
           padding: 0 1.4em;
           border: 1px solid var(--grampsjs-alert-error-font-color);
-          border-radius: 8px;
+          border-radius: var(--md-sys-shape-corner-medium);
         }
 
         .danger-zone-row {

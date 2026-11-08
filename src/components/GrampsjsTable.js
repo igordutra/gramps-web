@@ -28,8 +28,12 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         .table-container {
           /* The table sat flush against the panel edge, so the first
-             column read as cramped. A gutter gives the whole table room. */
-          padding: 0 var(--grampsjs-page-gutter, 24px);
+             column read as cramped. A gutter gives the whole table room.
+
+             The view now owns the page gutter (see GrampsjsView), so the
+             table must not add a second one — that is what put the first
+             cell 64px from the window edge. */
+          padding: 0;
         }
 
         table {
@@ -128,7 +132,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           margin: -4px -6px;
           padding: 4px 6px;
           border: none;
-          border-radius: 4px;
+          border-radius: var(--md-sys-shape-corner-small);
           background: none;
           color: inherit;
           font: inherit;
