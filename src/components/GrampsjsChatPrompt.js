@@ -38,9 +38,9 @@ class GrampsjsChatPrompt extends GrampsjsAppStateMixin(LitElement) {
           margin-top: 9px;
           margin-bottom: 9px;
           margin-right: 0;
-          --md-filled-icon-button-icon-size: 22px;
-          --md-filled-icon-button-state-layer-height: 66px;
-          --md-filled-icon-button-state-layer-width: 66px;
+          --md-filled-icon-button-icon-size: var(--grampsjs-icon-size-medium);
+          --md-filled-icon-button-state-layer-height: var(--grampsjs-space-64);
+          --md-filled-icon-button-state-layer-width: var(--grampsjs-space-64);
         }
       `,
     ]

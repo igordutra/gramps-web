@@ -60,7 +60,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
         }
 
         md-divider {
-          --md-divider-thickness: 1px;
+          --md-divider-thickness: var(--grampsjs-outline-width);
           --md-divider-color: var(--grampsjs-body-font-color-10);
         }
 
@@ -126,7 +126,9 @@ export class GrampsjsViewRevision extends GrampsjsView {
         .undo-button {
           margin-top: 0.2em;
           flex-shrink: 0;
-          --md-filled-button-hover-container-elevation: 0;
+          --md-filled-button-hover-container-elevation: var(
+            --grampsjs-elevation-level-0
+          );
         }
 
         .dialog-warning {
@@ -361,7 +363,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
                 ${this._forceRequired
                   ? html`
                       <md-filled-button
-                        style="--md-filled-button-container-color: var(--md-sys-color-error); --md-filled-button-label-text-color: var(--md-sys-color-on-error); --md-filled-button-hover-container-elevation: 0;"
+                        style="--md-filled-button-container-color: var(--md-sys-color-error); --md-filled-button-label-text-color: var(--md-sys-color-on-error); --md-filled-button-hover-container-elevation: var(--grampsjs-elevation-level-0);"
                         @click="${() => this._handleUndoConfirm(true)}"
                         ?disabled="${this._undoInProgress}"
                       >

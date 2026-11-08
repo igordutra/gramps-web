@@ -64,8 +64,10 @@ export class GrampsjsBreadcrumbs extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .breadcrumb .action-buttons md-icon-button {
-          --md-icon-button-icon-size: 16px;
-          --md-icon-button-disabled-icon-opacity: 1;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-small);
+          --md-icon-button-disabled-icon-opacity: var(
+            --grampsjs-icon-button-disabled-opacity
+          );
           opacity: 1;
           height: 28px;
           width: 28px;
@@ -73,14 +75,14 @@ export class GrampsjsBreadcrumbs extends GrampsjsAppStateMixin(LitElement) {
 
         .breadcrumb .action-buttons grampsjs-share-url,
         .breadcrumb .action-buttons grampsjs-bookmark-button {
-          --md-icon-button-icon-size: 16px;
-          --md-icon-button-state-layer-width: 28px;
-          --md-icon-button-state-layer-height: 28px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-small);
+          --md-icon-button-state-layer-width: var(--grampsjs-space-24);
+          --md-icon-button-state-layer-height: var(--grampsjs-space-24);
           position: relative;
         }
 
         .breadcrumb .action-buttons grampsjs-bookmark-button {
-          --md-icon-button-icon-size: 17px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-small);
         }
       `,
     ]

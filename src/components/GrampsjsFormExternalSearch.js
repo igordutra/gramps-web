@@ -223,7 +223,7 @@ class GrampsjsFormExternalSearch extends GrampsjsObjectForm {
           margin-bottom: 0.5em;
         }
         md-icon-button {
-          --md-icon-button-icon-size: 18px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size);
           width: 32px;
           height: 32px;
         }

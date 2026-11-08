@@ -318,7 +318,7 @@ export class GrampsjsObject extends GrampsjsAppStateMixin(LitElement) {
         }
 
         div.bottom-bar-content md-icon-button {
-          --md-icon-button-icon-size: 22px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
           width: 34px;
           height: 34px;
         }

@@ -52,7 +52,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
           --md-list-item-label-text-weight: var(
             --md-sys-typescale-body-large-weight
           );
-          --md-list-item-one-line-container-height: 40px;
+          --md-list-item-one-line-container-height: var(--grampsjs-space-40);
         }
 
         md-list-item[selected] {
@@ -67,8 +67,8 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
         }
 
         md-divider {
-          --md-divider-thickness: 1px;
-          --md-divider-color: rgba(0, 0, 0, 0.12);
+          --md-divider-thickness: var(--grampsjs-outline-width);
+          --md-divider-color: var(--grampsjs-divider-color);
           padding: 0 20px;
           margin: 4px 0;
         }

@@ -88,8 +88,8 @@ export class GrampsjsPerson extends GrampsjsObject {
         }
 
         p.button-list.icon-only md-outlined-icon-button {
-          --md-outlined-icon-button-container-width: 48px;
-          --md-outlined-icon-button-container-height: 48px;
+          --md-outlined-icon-button-container-width: var(--grampsjs-space-48);
+          --md-outlined-icon-button-container-height: var(--grampsjs-space-48);
         }
 
         @container (min-width: 600px) {

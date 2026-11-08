@@ -37,10 +37,10 @@ export const sharedStyles = css`
       --md-sys-typescale-title-small-weight
     );
     --md-primary-tab-label-text-size: var(--md-sys-typescale-title-small-size);
-    --md-primary-tab-active-indicator-height: 3px;
-    --md-divider-thickness: 0px;
-    --md-list-item-leading-space: 16px;
-    --md-list-item-trailing-space: 16px;
+    --md-primary-tab-active-indicator-height: var(--grampsjs-space-2);
+    --md-divider-thickness: var(--grampsjs-space-0);
+    --md-list-item-leading-space: var(--grampsjs-space-16);
+    --md-list-item-trailing-space: var(--grampsjs-space-16);
     --mdc-list-side-padding: 16px;
   }
 
@@ -178,7 +178,7 @@ export const sharedStyles = css`
   }
 
   .linkicon {
-    --md-icon-size: 15px;
+    --md-icon-size: var(--grampsjs-icon-size-xs);
     margin-right: 8px;
     position: relative;
     bottom: -1px;
@@ -410,8 +410,8 @@ export const sharedStyles = css`
   @media (max-width: 768px) {
     :host {
       font-size: 16px;
-      --md-list-item-leading-space: 8px;
-      --md-list-item-trailing-space: 8px;
+      --md-list-item-leading-space: var(--grampsjs-space-8);
+      --md-list-item-trailing-space: var(--grampsjs-space-8);
       --mdc-list-side-padding: 8px;
     }
 
@@ -439,9 +439,13 @@ export const sharedStyles = css`
   /* Hover state layer for clickable list items in view mode */
   md-list:not(.activatable):not(.toc-list) md-list-item[type='button'] {
     --md-list-item-hover-state-layer-color: var(--md-sys-color-on-surface);
-    --md-list-item-hover-state-layer-opacity: 0.08;
+    --md-list-item-hover-state-layer-opacity: var(
+      --grampsjs-state-hover-opacity
+    );
     --md-list-item-pressed-state-layer-color: var(--md-sys-color-on-surface);
-    --md-list-item-pressed-state-layer-opacity: 0.12;
+    --md-list-item-pressed-state-layer-opacity: var(
+      --grampsjs-state-press-opacity
+    );
   }
 `
 
@@ -473,11 +477,15 @@ export const personListItemStyles = [
   css`
     /* Roomier rows than the Material defaults */
     md-list-item {
-      --md-list-item-one-line-container-height: 64px;
-      --md-list-item-two-line-container-height: 80px;
-      --md-list-item-three-line-container-height: 96px;
-      --md-list-item-top-space: 12px;
-      --md-list-item-bottom-space: 12px;
+      --md-list-item-one-line-container-height: var(--grampsjs-space-64);
+      --md-list-item-two-line-container-height: var(
+        --grampsjs-list-item-two-line-row-height
+      );
+      --md-list-item-three-line-container-height: var(
+        --grampsjs-list-item-three-line-row-height
+      );
+      --md-list-item-top-space: var(--grampsjs-space-12);
+      --md-list-item-bottom-space: var(--grampsjs-space-12);
     }
 
     /* Cursor for clickable items in view mode */
@@ -676,8 +684,8 @@ export const appBarIconButtonStyles = [
   css`
     md-icon-button {
       --grampsjs-icon-button-color: currentColor;
-      --md-icon-button-state-layer-width: 48px;
-      --md-icon-button-state-layer-height: 48px;
+      --md-icon-button-state-layer-width: var(--grampsjs-space-48);
+      --md-icon-button-state-layer-height: var(--grampsjs-space-48);
     }
   `,
 ]

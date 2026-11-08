@@ -82,7 +82,7 @@ export class GrampsjsViewRevisions extends GrampsjsStaleDataMixin(
         }
 
         md-divider {
-          --md-divider-thickness: 1px;
+          --md-divider-thickness: var(--grampsjs-outline-width);
           --md-divider-color: var(--grampsjs-body-font-color-10);
         }
 

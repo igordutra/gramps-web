@@ -68,7 +68,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
         }
 
         #filteroff {
-          --md-icon-button-icon-size: 20px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
         }
 
         #input-goql-container {

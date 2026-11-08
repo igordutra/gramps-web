@@ -20,8 +20,8 @@ export class GrampsjsEvents extends GrampsjsEditableList {
       ...super.styles,
       css`
         md-list-item {
-          --md-list-item-top-space: 16px;
-          --md-list-item-bottom-space: 16px;
+          --md-list-item-top-space: var(--grampsjs-space-16);
+          --md-list-item-bottom-space: var(--grampsjs-space-16);
         }
       `,
     ]

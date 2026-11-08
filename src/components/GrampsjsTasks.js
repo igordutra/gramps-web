@@ -103,7 +103,7 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
         /* the icon stays where it is without the button, and the button
         doesn't make the row taller */
         .status-icon md-icon-button {
-          --md-icon-button-icon-size: 20px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
           margin: -10px 0 -10px -10px;
         }
 

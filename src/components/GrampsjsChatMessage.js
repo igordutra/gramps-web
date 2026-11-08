@@ -188,7 +188,7 @@ class GrampsjsChatMessage extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .avatar md-icon {
-          --md-icon-size: 20px;
+          --md-icon-size: var(--grampsjs-icon-size-medium);
           position: relative;
           top: 3px;
         }

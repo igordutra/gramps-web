@@ -24,8 +24,8 @@ export class GrampsjsViewReports extends GrampsjsView {
         }
 
         md-divider {
-          --md-divider-thickness: 1px;
-          --md-divider-color: rgba(0, 0, 0, 0.12);
+          --md-divider-thickness: var(--grampsjs-outline-width);
+          --md-divider-color: var(--grampsjs-divider-color);
         }
       `,
     ]

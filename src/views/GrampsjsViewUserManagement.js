@@ -17,9 +17,9 @@ export class GrampsjsViewUserManagement extends GrampsjsStaleDataMixin(
       super.styles,
       css`
         grampsjs-share-url {
-          --md-icon-button-icon-size: 18px;
-          --md-icon-button-state-layer-width: 32px;
-          --md-icon-button-state-layer-height: 32px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size);
+          --md-icon-button-state-layer-width: var(--grampsjs-space-32);
+          --md-icon-button-state-layer-height: var(--grampsjs-space-32);
           position: relative;
           top: -5px;
           color: var(--grampsjs-body-font-color-40);

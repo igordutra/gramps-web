@@ -24,7 +24,7 @@ class GrampsjsConnectedDnaMatchTable extends GrampsjsConnectedComponent {
   renderLoading() {
     return html`<md-circular-progress
       indeterminate
-      style="--md-circular-progress-size: 24px;
+      style="--md-circular-progress-size: var(--grampsjs-icon-size-large);
         --md-circular-progress-active-indicator-width: 15; margin: -2px;"
     ></md-circular-progress>`
   }

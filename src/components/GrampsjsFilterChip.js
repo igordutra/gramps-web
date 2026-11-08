@@ -37,9 +37,9 @@ export class GrampsjsFilterChip extends GrampsjsAppStateMixin(LitElement) {
 
         .chip md-icon-button {
           margin-left: 4px;
-          --md-icon-button-icon-size: 14px;
-          --md-icon-button-state-layer-width: 18px;
-          --md-icon-button-state-layer-height: 18px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-xs);
+          --md-icon-button-state-layer-width: var(--grampsjs-space-16);
+          --md-icon-button-state-layer-height: var(--grampsjs-space-16);
         }
 
         .monospace {

@@ -23,8 +23,8 @@ export class GrampsjsShareUrl extends GrampsjsAppStateMixin(LitElement) {
 
         md-icon-button {
           --grampsjs-icon-button-color: currentColor;
-          --md-icon-button-state-layer-width: 28px;
-          --md-icon-button-state-layer-height: 28px;
+          --md-icon-button-state-layer-width: var(--grampsjs-space-24);
+          --md-icon-button-state-layer-height: var(--grampsjs-space-24);
           position: relative;
         }
       `,

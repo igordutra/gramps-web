@@ -47,19 +47,21 @@ class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
       appBarIconButtonStyles,
       css`
         md-menu {
-          --md-divider-thickness: 1px;
+          --md-divider-thickness: var(--grampsjs-outline-width);
           --md-divider-color: var(--grampsjs-body-font-color-30);
         }
 
         md-menu-item {
-          --md-menu-item-top-space: 0px;
-          --md-menu-item-bottom-space: 0px;
-          --md-menu-item-one-line-container-height: 48px;
+          --md-menu-item-top-space: var(--grampsjs-space-0);
+          --md-menu-item-bottom-space: var(--grampsjs-space-0);
+          --md-menu-item-one-line-container-height: var(--grampsjs-space-48);
         }
 
         md-menu-item.header {
-          --md-menu-item-disabled-opacity: 0.6;
-          --md-menu-item-one-line-container-height: 32px;
+          --md-menu-item-disabled-opacity: var(
+            --grampsjs-menu-item-disabled-opacity
+          );
+          --md-menu-item-one-line-container-height: var(--grampsjs-space-32);
           /*
            * A menu item is a small control. Upstream wrote 14px; the
            * size is the body-small step.

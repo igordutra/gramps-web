@@ -73,12 +73,12 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
             max-width: 100vw;
             height: 100%;
             max-height: 100%;
-            --md-dialog-container-shape: 0;
+            --md-dialog-container-shape: var(--grampsjs-dialog-shape);
           }
         }
 
         md-icon-button {
-          --md-icon-button-icon-size: 20px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
         }
 
         md-filter-chip {

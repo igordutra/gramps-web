@@ -12,8 +12,12 @@ export class GrampsjsFormNewNote extends GrampsjsNewObjectTagsMixin(
       super.styles,
       css`
         md-dialog {
-          --md-dialog-container-max-inline-size: min(1200px, 95vw);
-          --md-dialog-container-min-inline-size: min(1200px, 95vw);
+          --md-dialog-container-max-inline-size: var(
+            --grampsjs-dialog-inline-size
+          );
+          --md-dialog-container-min-inline-size: var(
+            --grampsjs-dialog-inline-size
+          );
           max-block-size: 95vh;
         }
       `,

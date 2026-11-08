@@ -59,9 +59,9 @@ export class GrampsjsTableBase extends GrampsjsAppStateMixin(LitElement) {
         }
 
         td md-icon-button {
-          --md-icon-button-icon-size: 20px;
-          --md-icon-button-state-layer-width: 36px;
-          --md-icon-button-state-layer-height: 36px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
+          --md-icon-button-state-layer-width: var(--grampsjs-space-32);
+          --md-icon-button-state-layer-height: var(--grampsjs-space-32);
           margin: -2px 0px;
         }
 
@@ -85,9 +85,9 @@ export class GrampsjsTableBase extends GrampsjsAppStateMixin(LitElement) {
           }
 
           td md-icon-button {
-            --md-icon-button-icon-size: 18px;
-            --md-icon-button-state-layer-width: 33px;
-            --md-icon-button-state-layer-height: 33px;
+            --md-icon-button-icon-size: var(--grampsjs-icon-size);
+            --md-icon-button-state-layer-width: var(--grampsjs-space-32);
+            --md-icon-button-state-layer-height: var(--grampsjs-space-32);
           }
         }
       `,

@@ -69,7 +69,7 @@ class GrampsjsObjectPickerDialog extends GrampsjsAppStateMixin(LitElement) {
           min-width: min(860px, 95vw);
           max-height: 85vh;
           --md-list-container-color: var(--md-sys-color-surface-container-high);
-          --md-dialog-content-block-start-space: 12px;
+          --md-dialog-content-block-start-space: var(--grampsjs-space-12);
         }
 
         md-filled-text-field {

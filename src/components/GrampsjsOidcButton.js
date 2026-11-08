@@ -19,7 +19,7 @@ class GrampsjsOidcButton extends LitElement {
 
         md-outlined-button {
           width: 100%;
-          --md-outlined-button-container-height: 44px;
+          --md-outlined-button-container-height: var(--grampsjs-space-40);
         }
 
         grampsjs-icon {
@@ -27,7 +27,7 @@ class GrampsjsOidcButton extends LitElement {
         }
 
         md-circular-progress {
-          --md-circular-progress-size: 22px;
+          --md-circular-progress-size: var(--grampsjs-icon-size-medium);
           --md-circular-progress-active-indicator-width: 18;
           width: 22px;
           height: 22px;

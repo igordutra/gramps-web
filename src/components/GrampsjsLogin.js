@@ -123,10 +123,10 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
 
         .button-container md-outlined-button {
           --md-outlined-button-container-height: var(--button-height);
-          --md-outlined-button-leading-space: 8px;
-          --md-outlined-button-trailing-space: 8px;
-          --md-outlined-button-top-space: 0px;
-          --md-outlined-button-bottom-space: 0px;
+          --md-outlined-button-leading-space: var(--grampsjs-space-8);
+          --md-outlined-button-trailing-space: var(--grampsjs-space-8);
+          --md-outlined-button-top-space: var(--grampsjs-space-0);
+          --md-outlined-button-bottom-space: var(--grampsjs-space-0);
           min-height: var(--button-height);
           max-height: var(--button-height);
         }
@@ -137,12 +137,16 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
 
         .button-container md-filled-button {
           --md-filled-button-container-height: var(--button-height);
-          --md-filled-button-leading-space: 8px;
-          --md-filled-button-trailing-space: 8px;
-          --md-filled-button-with-leading-icon-leading-space: 8px;
-          --md-filled-button-with-leading-icon-trailing-space: 8px;
-          --md-filled-button-top-space: 0px;
-          --md-filled-button-bottom-space: 0px;
+          --md-filled-button-leading-space: var(--grampsjs-space-8);
+          --md-filled-button-trailing-space: var(--grampsjs-space-8);
+          --md-filled-button-with-leading-icon-leading-space: var(
+            --grampsjs-space-8
+          );
+          --md-filled-button-with-leading-icon-trailing-space: var(
+            --grampsjs-space-8
+          );
+          --md-filled-button-top-space: var(--grampsjs-space-0);
+          --md-filled-button-bottom-space: var(--grampsjs-space-0);
           min-height: var(--button-height);
           max-height: var(--button-height);
         }
@@ -174,7 +178,7 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
         }
 
         md-filled-button md-circular-progress {
-          --md-circular-progress-size: 22px;
+          --md-circular-progress-size: var(--grampsjs-icon-size-medium);
           --md-circular-progress-active-indicator-width: 18;
           --md-circular-progress-active-indicator-color: var(
             --md-sys-color-on-primary

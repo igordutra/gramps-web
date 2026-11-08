@@ -347,7 +347,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .draft-banner md-icon-button {
-          --md-icon-button-icon-size: 18px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size);
           --grampsjs-icon-button-color: var(--grampsjs-body-font-color-40);
         }
       `,

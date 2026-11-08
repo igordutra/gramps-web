@@ -187,14 +187,14 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
         }
 
         .verify-option-bool md-switch {
-          --md-switch-track-height: 22px;
-          --md-switch-track-width: 38px;
-          --md-switch-handle-height: 16px;
-          --md-switch-handle-width: 16px;
-          --md-switch-selected-handle-height: 16px;
-          --md-switch-selected-handle-width: 16px;
-          --md-switch-pressed-handle-height: 18px;
-          --md-switch-pressed-handle-width: 18px;
+          --md-switch-track-height: var(--grampsjs-space-20);
+          --md-switch-track-width: var(--grampsjs-space-40);
+          --md-switch-handle-height: var(--grampsjs-icon-size-small);
+          --md-switch-handle-width: var(--grampsjs-icon-size-small);
+          --md-switch-selected-handle-height: var(--grampsjs-icon-size-small);
+          --md-switch-selected-handle-width: var(--grampsjs-icon-size-small);
+          --md-switch-pressed-handle-height: var(--grampsjs-icon-size);
+          --md-switch-pressed-handle-width: var(--grampsjs-icon-size);
         }
       `,
     ]

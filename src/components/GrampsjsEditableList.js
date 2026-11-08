@@ -33,8 +33,8 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
       css`
         md-list.activatable,
         md-list.activatable > * {
-          --md-ripple-hover-opacity: 0;
-          --md-ripple-pressed-opacity: 0;
+          --md-ripple-hover-opacity: var(--grampsjs-state-hover-opacity);
+          --md-ripple-pressed-opacity: var(--grampsjs-state-press-opacity);
         }
 
         md-list.activatable > * {

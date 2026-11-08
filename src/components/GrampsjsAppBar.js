@@ -65,7 +65,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .action-icon-wrapper md-circular-progress {
-          --md-circular-progress-size: 24px;
+          --md-circular-progress-size: var(--grampsjs-icon-size-large);
           --md-circular-progress-active-indicator-width: 14;
           --md-circular-progress-active-indicator-color: var(
             --grampsjs-top-app-bar-font-color

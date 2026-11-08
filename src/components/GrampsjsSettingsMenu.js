@@ -41,14 +41,14 @@ class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
       appBarIconButtonStyles,
       css`
         md-menu {
-          --md-divider-thickness: 1px;
+          --md-divider-thickness: var(--grampsjs-outline-width);
           --md-divider-color: var(--grampsjs-body-font-color-30);
         }
 
         md-menu-item {
-          --md-menu-item-top-space: 0px;
-          --md-menu-item-bottom-space: 0px;
-          --md-menu-item-one-line-container-height: 56px;
+          --md-menu-item-top-space: var(--grampsjs-space-0);
+          --md-menu-item-bottom-space: var(--grampsjs-space-0);
+          --md-menu-item-one-line-container-height: var(--grampsjs-space-56);
           --icon-color: var(--grampsjs-body-font-color-35);
         }
         md-menu-item.red {
@@ -56,7 +56,7 @@ class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
           --icon-color: var(--grampsjs-logout-font-color);
         }
         md-menu {
-          --md-divider-thickness: 1px;
+          --md-divider-thickness: var(--grampsjs-outline-width);
           --md-divider-color: var(--grampsjs-body-font-color-30);
         }
       `,

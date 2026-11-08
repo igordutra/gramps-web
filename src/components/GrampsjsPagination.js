@@ -42,7 +42,9 @@ class GrampsjsPagination extends GrampsjsAppStateMixin(LitElement) {
           --md-icon-button-disabled-icon-color: var(
             --grampsjs-body-font-color-20
           );
-          --md-icon-button-disabled-icon-opacity: 1;
+          --md-icon-button-disabled-icon-opacity: var(
+            --grampsjs-icon-button-disabled-opacity
+          );
         }
       `,
     ]

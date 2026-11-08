@@ -23,7 +23,7 @@ export class GrampsjsButtonToggle extends GrampsjsAppStateMixin(LitElement) {
           --md-filter-chip-label-text-weight: var(
             --md-sys-typescale-body-small-weight
           );
-          --md-filter-chip-outline-width: 0px;
+          --md-filter-chip-outline-width: var(--grampsjs-space-0);
           --md-filter-chip-label-text-color: var(--md-sys-color-primary);
           --md-filter-chip-hover-label-text-color: var(--md-sys-color-primary);
           --md-filter-chip-focus-label-text-color: var(--md-sys-color-primary);

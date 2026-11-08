@@ -22,7 +22,7 @@ export class GrampsjsSysinfo extends GrampsjsAppStateMixin(LitElement) {
         }
 
         div.copy md-icon-button {
-          --md-icon-button-icon-size: 16px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-small);
           float: right;
         }
       `,

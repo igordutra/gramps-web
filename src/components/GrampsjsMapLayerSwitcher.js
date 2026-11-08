@@ -59,7 +59,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .button md-icon-button {
-          --md-icon-button-icon-size: 18px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size);
           width: 32px;
           height: 32px;
         }
@@ -204,22 +204,22 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         .opacity md-slider {
           flex: 1;
           min-width: 0;
-          --md-slider-handle-height: 16px;
-          --md-slider-handle-width: 16px;
-          --md-slider-active-track-height: 3px;
-          --md-slider-inactive-track-height: 3px;
+          --md-slider-handle-height: var(--grampsjs-icon-size-small);
+          --md-slider-handle-width: var(--grampsjs-icon-size-small);
+          --md-slider-active-track-height: var(--grampsjs-space-2);
+          --md-slider-inactive-track-height: var(--grampsjs-space-2);
         }
 
         md-switch {
           flex: none;
-          --md-switch-track-height: 22px;
-          --md-switch-track-width: 38px;
-          --md-switch-handle-height: 16px;
-          --md-switch-handle-width: 16px;
-          --md-switch-selected-handle-height: 16px;
-          --md-switch-selected-handle-width: 16px;
-          --md-switch-pressed-handle-height: 18px;
-          --md-switch-pressed-handle-width: 18px;
+          --md-switch-track-height: var(--grampsjs-space-20);
+          --md-switch-track-width: var(--grampsjs-space-40);
+          --md-switch-handle-height: var(--grampsjs-icon-size-small);
+          --md-switch-handle-width: var(--grampsjs-icon-size-small);
+          --md-switch-selected-handle-height: var(--grampsjs-icon-size-small);
+          --md-switch-selected-handle-width: var(--grampsjs-icon-size-small);
+          --md-switch-pressed-handle-height: var(--grampsjs-icon-size);
+          --md-switch-pressed-handle-width: var(--grampsjs-icon-size);
         }
 
         @media (max-width: 512px) {

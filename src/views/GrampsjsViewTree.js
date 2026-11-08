@@ -169,7 +169,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
 
         #controls md-icon-button,
         #controls grampsjs-svg-download-button {
-          --md-icon-button-icon-size: 26px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-large);
         }
 
         /* Below the controls bar, in the same colours, with the avatar centred
@@ -260,7 +260,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
 
         #usage-menu {
           min-width: 13em;
-          --md-menu-item-one-line-container-height: 48px;
+          --md-menu-item-one-line-container-height: var(--grampsjs-space-48);
         }
 
         #menu-controls md-filled-text-field {
@@ -282,10 +282,10 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
              A modern action button is smaller, softer and matches the
              density of the rest of the toolbar. */
           --md-fab-container-shape: var(--md-sys-shape-corner-large);
-          --md-fab-container-height: 48px;
-          --md-fab-container-width: 48px;
-          --md-fab-icon-size: 22px;
-          --md-fab-container-elevation: 2;
+          --md-fab-container-height: var(--grampsjs-space-48);
+          --md-fab-container-width: var(--grampsjs-space-48);
+          --md-fab-icon-size: var(--grampsjs-icon-size-medium);
+          --md-fab-container-elevation: var(--grampsjs-elevation-level-2);
           --md-fab-container-shadow-color: var(--grampsjs-shadow-color);
         }
       `,

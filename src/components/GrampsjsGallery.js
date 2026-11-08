@@ -74,9 +74,9 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .tile-overlay md-icon-button {
-          --md-icon-button-container-width: 32px;
-          --md-icon-button-container-height: 32px;
-          --md-icon-button-icon-size: 18px;
+          --md-icon-button-container-width: var(--grampsjs-space-32);
+          --md-icon-button-container-height: var(--grampsjs-space-32);
+          --md-icon-button-icon-size: var(--grampsjs-icon-size);
           background: rgba(255, 255, 255, 0.5);
           border-radius: 50%;
         }

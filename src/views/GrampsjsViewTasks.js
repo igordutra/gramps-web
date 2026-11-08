@@ -29,10 +29,10 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
              A modern action button is smaller, softer and matches the
              density of the rest of the toolbar. */
           --md-fab-container-shape: var(--md-sys-shape-corner-large);
-          --md-fab-container-height: 48px;
-          --md-fab-container-width: 48px;
-          --md-fab-icon-size: 22px;
-          --md-fab-container-elevation: 2;
+          --md-fab-container-height: var(--grampsjs-space-48);
+          --md-fab-container-width: var(--grampsjs-space-48);
+          --md-fab-icon-size: var(--grampsjs-icon-size-medium);
+          --md-fab-container-elevation: var(--grampsjs-elevation-level-2);
           --md-fab-container-shadow-color: var(--grampsjs-shadow-color);
         }
       `,

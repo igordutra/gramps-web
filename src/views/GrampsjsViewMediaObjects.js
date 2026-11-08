@@ -53,9 +53,11 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
         .sort-control md-filled-select {
           min-width: 180px;
           --md-filled-select-text-field-container-color: transparent;
-          --md-filled-select-text-field-container-height: 40px;
-          --md-filled-select-text-field-top-space: 0px;
-          --md-filled-select-text-field-bottom-space: 0px;
+          --md-filled-select-text-field-container-height: var(
+            --grampsjs-space-40
+          );
+          --md-filled-select-text-field-top-space: var(--grampsjs-space-0);
+          --md-filled-select-text-field-bottom-space: var(--grampsjs-space-0);
         }
 
         /* Gallery (grid) view */

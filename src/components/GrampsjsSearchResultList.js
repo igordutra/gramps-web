@@ -22,7 +22,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
       listAvatarStyles,
       css`
         md-icon-button {
-          --md-icon-button-icon-size: 20px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
         }
 
         md-list.activatable md-list-item:hover {

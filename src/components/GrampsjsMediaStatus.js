@@ -36,7 +36,7 @@ export class GrampsjsMediaStatus extends GrampsjsConnectedComponent {
         }
 
         md-circular-progress {
-          --md-circular-progress-size: 24px;
+          --md-circular-progress-size: var(--grampsjs-icon-size-large);
           --md-circular-progress-active-indicator-width: 15;
           margin: -2px;
           --md-circular-progress-active-indicator-color: var(

@@ -45,7 +45,7 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .reorder-buttons md-icon-button {
-          --md-icon-button-icon-size: 20px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
           width: 34px;
           height: 34px;
         }
@@ -57,9 +57,9 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .edit-buttons > md-icon-button {
-          --md-icon-button-icon-size: 24px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-large);
           --md-icon-button-icon-color: var(--mdc-theme-secondary);
-          --md-icon-button-icon-opacity: 1;
+          --md-icon-button-icon-opacity: var(--grampsjs-icon-button-opacity);
           width: 40px;
           height: 40px;
         }

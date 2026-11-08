@@ -23,9 +23,9 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
             --md-sys-color-on-surface-variant
           );
           --md-list-item-hover-state-layer-color: var(--md-sys-color-surface);
-          --md-list-item-top-space: 0px;
-          --md-list-item-bottom-space: 0px;
-          --md-list-item-one-line-container-height: 40px;
+          --md-list-item-top-space: var(--grampsjs-space-0);
+          --md-list-item-bottom-space: var(--grampsjs-space-0);
+          --md-list-item-one-line-container-height: var(--grampsjs-space-40);
         }
 
         md-list-item.active {
