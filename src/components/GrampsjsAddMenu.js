@@ -60,9 +60,15 @@ class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
         md-menu-item.header {
           --md-menu-item-disabled-opacity: 0.6;
           --md-menu-item-one-line-container-height: 32px;
-          --md-menu-item-label-text-size: 14px;
+          /*
+           * A menu item is a small control. Upstream wrote 14px; the
+           * size is the body-small step.
+           */
+          --md-menu-item-label-text-size: var(
+            --md-sys-typescale-body-small-size
+          );
           --md-menu-item-label-text-weight: var(
-            --md-sys-typescale-label-large-weight
+            --md-sys-typescale-body-small-weight
           );
         }
       `,

@@ -8,10 +8,17 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       css`
         md-list.toc-list {
+          /*
+           * The table of contents is a quiet index beside the record, so
+           * its entries are the smallest text in the app. Upstream wrote
+           * 14px at 400; the size and the weight are the body-small step.
+           */
           --md-list-item-label-text-weight: var(
-            --md-sys-typescale-label-large-weight
+            --md-sys-typescale-body-small-weight
           );
-          --md-list-item-label-text-size: 14px;
+          --md-list-item-label-text-size: var(
+            --md-sys-typescale-body-small-size
+          );
           --md-list-item-label-text-color: var(
             --md-sys-color-on-surface-variant
           );
@@ -23,13 +30,11 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
 
         md-list-item.active {
           /*
-           * The active row is the one emphasis in the list, so it is
-           * set from the scale's HEADLINE weight rather than the label
-           * weight — a heavier step on the scale, not a number written
-           * down here.
+           * The active row is the one emphasis in the list, so it takes
+           * a heavier weight than the rows around it.
            */
           --md-list-item-label-text-weight: var(
-            --md-sys-typescale-headline-small-weight
+            --md-sys-typescale-title-small-weight
           );
         }
 

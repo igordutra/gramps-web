@@ -57,7 +57,22 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
         }
 
         md-filled-select {
-          --md-filled-select-text-field-input-text-font-size: 24px;
+          /*
+           * The DNA selector is the largest control on the page, so its
+           * text is a headline step.
+           *
+           * The token this used to name,
+           * "--md-filled-select-text-field-input-text-font-size", is not
+           * one Material reads, so the override did nothing at all and
+           * the select rendered at the default size. The token Material
+           * reads is "input-text-size".
+           */
+          --md-filled-select-text-field-input-text-size: var(
+            --md-sys-typescale-headline-medium-size
+          );
+          --md-filled-select-text-field-input-text-weight: var(
+            --md-sys-typescale-headline-medium-weight
+          );
           margin-bottom: 30px;
         }
       `,

@@ -181,6 +181,14 @@ export const TYPE_SCALE = {
   '--md-sys-typescale-body-small-size': '0.8125rem',
   '--md-sys-typescale-body-medium-size': '0.9375rem',
   '--md-sys-typescale-body-large-size': '1.0625rem',
+  // The body steps carry no weight of their own in Material, so they fall
+  // back to the reference weight. The app uses the body sizes for the
+  // text that is READ rather than acted on — a revision list, a menu
+  // item — and it wanted those lighter than a label, so the weights are
+  // declared here and the body steps are used for their size.
+  '--md-sys-typescale-body-small-weight': '400',
+  '--md-sys-typescale-body-medium-weight': '400',
+  '--md-sys-typescale-body-large-weight': '400',
   // Headings get tighter tracking and heavier weight than Material's
   // defaults: a modern interface separates levels by weight and spacing,
   // not only by size.

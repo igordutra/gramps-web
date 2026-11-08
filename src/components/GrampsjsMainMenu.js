@@ -40,11 +40,17 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
       css`
         md-list-item {
           --md-list-item-label-text-color: var(--grampsjs-color-drawer-text);
+          /*
+           * The drawer is the app's primary navigation, so its rows are
+           * one step larger than a list row's. Upstream wrote 1rem at
+           * 400; 1rem is the body-large step, and the body weight is the
+           * lighter of the two.
+           */
           --md-list-item-label-text-size: var(
-            --md-sys-typescale-label-large-size
+            --md-sys-typescale-body-large-size
           );
           --md-list-item-label-text-weight: var(
-            --md-sys-typescale-label-large-weight
+            --md-sys-typescale-body-large-weight
           );
           --md-list-item-one-line-container-height: 40px;
         }
@@ -53,11 +59,10 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
           --md-list-item-label-text-color: var(--grampsjs-color-icon-selected);
           /*
            * The selected row is the one emphasis in the drawer, so it
-           * takes the scale's heavier headline weight rather than the
-           * label weight.
+           * takes a heavier weight than the rows around it.
            */
           --md-list-item-label-text-weight: var(
-            --md-sys-typescale-headline-small-weight
+            --md-sys-typescale-title-small-weight
           );
         }
 

@@ -26,10 +26,17 @@ export const sharedStyles = css`
     --md-sys-typescale-body-small-font: var(--grampsjs-body-font-family);
     --md-sys-typescale-body-medium-font: var(--grampsjs-body-font-family);
     --md-sys-typescale-body-large-font: var(--grampsjs-body-font-family);
+    /*
+     * The tab bar is navigation, so its labels carry more weight than the
+     * list rows below them. Upstream wrote 15px at 500 — the label size
+     * with a heavier weight. The size and the weight are taken from the
+     * SAME step here, which is what the scale requires: title-small is
+     * the step whose weight reads as navigation.
+     */
     --md-primary-tab-label-text-weight: var(
-      --md-sys-typescale-label-large-weight
+      --md-sys-typescale-title-small-weight
     );
-    --md-primary-tab-label-text-size: var(--md-sys-typescale-label-large-size);
+    --md-primary-tab-label-text-size: var(--md-sys-typescale-title-small-size);
     --md-primary-tab-active-indicator-height: 3px;
     --md-divider-thickness: 0px;
     --md-list-item-leading-space: 16px;
@@ -64,8 +71,18 @@ export const sharedStyles = css`
     --md-list-item-trailing-supporting-text-color: var(
       --grampsjs-body-font-color-60
     );
-    --md-list-item-trailing-supporting-text-size: 0.875rem;
-    --md-list-item-trailing-supporting-text-weight: 380;
+    /*
+     * The trailing text is the quietest text in a row. Material's own
+     * list item uses the label-small step for it, and the app's label-
+     * small step is 12px — which is also the size upstream wrote as
+     * 0.875rem.
+     */
+    --md-list-item-trailing-supporting-text-size: var(
+      --md-sys-typescale-label-small-size
+    );
+    --md-list-item-trailing-supporting-text-weight: var(
+      --md-sys-typescale-label-small-weight
+    );
     /* A list item of type "link" renders an <a> inside Material's shadow
        root. The label is coloured by --md-list-item-label-text-color, but
        the anchor itself keeps the user agent's default link colour

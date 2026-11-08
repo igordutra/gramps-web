@@ -32,10 +32,19 @@ export class GrampsjsViewRevision extends GrampsjsView {
       super.styles,
       css`
         md-list-item {
+          /*
+           * The revision list reads as a log rather than as a set of
+           * controls, so its text is LARGER than a list row's but LIGHTER
+           * — a body weight, not a label weight. Upstream wrote 17px at
+           * 350; the size is the body-large step and the weight is the
+           * body weight, which is the same relationship on the scale.
+           */
           --md-list-item-label-text-weight: var(
-            --md-sys-typescale-label-large-weight
+            --md-sys-typescale-body-large-weight
           );
-          --md-list-item-label-text-size: 17px;
+          --md-list-item-label-text-size: var(
+            --md-sys-typescale-body-large-size
+          );
           --md-list-item-supporting-text-color: var(
             --grampsjs-body-font-color-50
           );
