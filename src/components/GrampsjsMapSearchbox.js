@@ -40,27 +40,35 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
     return [
       sharedStyles,
       css`
+        /*
+         * The search panel floats over the map.
+         *
+         * It was a fixed 380px wide and pinned 20px from the left, so on
+         * a 320px phone it ran 92px past the edge of the screen and the
+         * page scrolled sideways. It now takes the space it can have and
+         * leaves a margin on both sides.
+         */
         #container {
           position: absolute;
-          left: 20px;
+          left: var(--grampsjs-space-20);
+          right: var(--grampsjs-space-20);
           top: 90px;
           z-index: 999;
-          width: 380px;
+          max-width: 380px;
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: var(--grampsjs-space-8);
         }
 
         #searchbar {
           background-color: var(--md-sys-color-surface-container-high);
           border-radius: var(--md-sys-shape-corner-full);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.08);
+          box-shadow: var(--md-sys-elevation-level2);
           display: flex;
           align-items: center;
-          padding: 0 4px 0 16px;
+          padding: 0 var(--grampsjs-space-4) 0 var(--grampsjs-space-16);
           height: 48px;
-          gap: 4px;
+          gap: var(--grampsjs-space-4);
         }
 
         #searchfield {

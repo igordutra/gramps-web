@@ -185,8 +185,8 @@ class GrampsjsMap extends GrampsjsAppStateMixin(LitElement) {
         /* Out of the flow, so the switcher adds no height below the map. */
         .map-layerswitcher {
           position: absolute;
-          left: 10px;
-          bottom: 10px;
+          left: var(--grampsjs-space-8);
+          bottom: var(--grampsjs-space-8);
           z-index: 1;
         }
 
@@ -194,7 +194,7 @@ class GrampsjsMap extends GrampsjsAppStateMixin(LitElement) {
           border-radius: 12px !important;
         }
         .maplibregl-ctrl-bottom-right {
-          right: 8px;
+          right: var(--grampsjs-space-8);
         }
         .grampsjs-place-tooltip .maplibregl-popup-content {
           padding: 4px 12px;

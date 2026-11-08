@@ -48,8 +48,8 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         /* Shown while any overlay is on. */
         .dot {
           position: absolute;
-          top: 5px;
-          right: 5px;
+          top: var(--grampsjs-space-4);
+          right: var(--grampsjs-space-4);
           width: 8px;
           height: 8px;
           border-radius: 50%;
@@ -66,7 +66,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
 
         #panel {
           position: absolute;
-          bottom: calc(100% + 8px);
+          bottom: calc(100% + var(--grampsjs-space-8));
           left: 0;
           width: 300px;
           max-height: calc(100vh - 260px);
@@ -116,7 +116,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
 
         .style-label {
           display: block;
-          margin-top: 4px;
+          margin-top: var(--grampsjs-space-4);
           font-size: var(--md-sys-typescale-label-medium-size);
           font-weight: 500;
         }
@@ -193,7 +193,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           display: flex;
           align-items: center;
           gap: 8px;
-          margin-top: -8px;
+          margin-top: calc(-1 * var(--grampsjs-space-8));
           padding: 0 0 4px 52px;
         }
 
@@ -225,9 +225,9 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         @media (max-width: 512px) {
           #panel {
             position: fixed;
-            left: 8px;
-            right: 8px;
-            bottom: 8px;
+            left: var(--grampsjs-space-8);
+            right: var(--grampsjs-space-8);
+            bottom: var(--grampsjs-space-8);
             width: auto;
             max-height: 70vh;
           }

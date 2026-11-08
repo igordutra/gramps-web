@@ -53,9 +53,16 @@ export class GrampsjsViewMap extends GrampsjsStaleDataMixin(GrampsjsView) {
     return [
       super.styles,
       css`
+        /*
+         * The map fills the pane.
+         *
+         * The view now carries the page gutter as padding, so the map has
+         * to cancel it rather than set a margin of its own: the map's
+         * canvas reaches the pane edge and the controls float inside it.
+         */
         :host {
-          margin: 0;
-          margin-top: -4px;
+          padding: 0;
+          margin-top: calc(-1 * var(--grampsjs-page-gutter-block, 16px));
         }
 
         .wikidata-hint {
@@ -64,7 +71,7 @@ export class GrampsjsViewMap extends GrampsjsStaleDataMixin(GrampsjsView) {
           left: 50%;
           transform: translateX(-50%);
           z-index: 1;
-          padding: 4px 12px;
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-12);
           border-radius: var(--md-sys-shape-corner-full);
           font-size: var(--md-sys-typescale-label-medium-size);
           background: var(--md-sys-color-surface-container-high);
