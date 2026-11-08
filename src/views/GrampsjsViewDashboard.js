@@ -19,7 +19,6 @@ import {
 export class GrampsjsViewDashboard extends GrampsjsView {
   static get properties() {
     return {
-      dbInfo: {type: Object},
       homePersonDetails: {type: Object},
       homePersonMissing: {type: Boolean},
       homePersonGrampsId: {type: String},
@@ -28,7 +27,6 @@ export class GrampsjsViewDashboard extends GrampsjsView {
 
   constructor() {
     super()
-    this.dbInfo = {}
     this.homePersonDetails = {}
     this.homePersonMissing = false
     this.homePersonGrampsId = ''
@@ -299,7 +297,7 @@ export class GrampsjsViewDashboard extends GrampsjsView {
                 </div>
                 <div>
                   <grampsjs-statistics
-                    .data="${this.dbInfo?.object_counts || {}}"
+                    .data="${this.appState.dbInfo?.object_counts || {}}"
                     id="statistics"
                     .appState="${this.appState}"
                   >
