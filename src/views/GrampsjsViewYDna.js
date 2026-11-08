@@ -22,7 +22,7 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
         md-outlined-text-field {
           width: 100%;
           resize: both;
-          min-width: 300px;
+          min-width: min(300px, 100%);
         }
 
         .raw-data {

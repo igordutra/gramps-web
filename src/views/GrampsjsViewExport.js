@@ -59,14 +59,14 @@ export class GrampsjsViewExport extends GrampsjsView {
 
       ${this.data.length === 0
         ? html`<md-outlined-select
-            style="min-width:30em;"
+            style="min-width:min(30em, 100%);"
             aria-label="${this._('Export')}"
             disabled
           ></md-outlined-select>`
         : html`
             <md-outlined-select
               @change=${this._handleSelect}
-              style="min-width:30em;"
+              style="min-width:min(30em, 100%);"
               aria-label="${this._('Export')}"
             >
               ${this.data.map(

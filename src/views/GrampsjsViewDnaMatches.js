@@ -30,6 +30,12 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
 
         .select-row md-outlined-select {
           margin-bottom: 0;
+          /* The select is sized by the LONGEST option, and a person's
+             name is long, so it pushes the row past the edge of a
+             phone. min-width: 0 lets a flex item shrink below its
+             content. */
+          flex: 1 1 0;
+          min-width: 0;
         }
       `,
     ]

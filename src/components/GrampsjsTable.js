@@ -51,6 +51,18 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           display: grid;
           gap: 0.75em;
           border-top: 1px solid var(--grampsjs-body-font-color-10);
+          /*
+           * A grid item's default min-width is auto, which means it
+           * cannot be smaller than its longest unbreakable string — an
+           * e-mail address, a URL, a long identifier. The card then
+           * refuses to shrink below it and the whole content pane
+           * scrolls sideways: 211px of it on the Manage users page at
+           * 320px.
+           *
+           * A min-width of 0 lets the item shrink, and the content
+           * inside it wraps or is clipped by the line clamp.
+           */
+          grid-template-columns: minmax(0, 1fr);
           grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
           padding: 16px 0;
         }
@@ -184,7 +196,13 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           font-size: var(--md-sys-typescale-body-medium-size);
         }
 
+        tbody td {
+          min-width: 0;
+          overflow-wrap: break-word;
+        }
+
         tbody td > .cell-content {
+          min-width: 0;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 3;

@@ -30,6 +30,58 @@ export class GrampsjsUsers extends GrampsjsTableBase {
     return [
       super.styles,
       css`
+        /*
+         * The users table is its own table, not the shared one, so it
+         * never picked up the card layout: six columns stayed side by
+         * side and the table was 519px wide on a 320px screen, which
+         * pushed the whole content pane sideways. On a narrow viewport
+         * it becomes cards, the way the other lists do.
+         */
+        @media (max-width: 600px) {
+          table {
+            width: 100%;
+          }
+
+          thead {
+            display: none;
+          }
+
+          tbody tr {
+            display: grid;
+            gap: var(--grampsjs-space-8);
+            border-top: 1px solid var(--grampsjs-body-font-color-10);
+            padding: var(--grampsjs-space-12) 0;
+          }
+
+          tbody td {
+            display: block;
+            padding: 0;
+            min-width: 0;
+            overflow-wrap: break-word;
+          }
+
+          tbody td::before {
+            content: attr(data-label);
+            display: block;
+            margin-bottom: var(--grampsjs-space-2);
+            font-size: var(--md-sys-typescale-label-small-size);
+            line-height: 1.4;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--grampsjs-body-font-color-50);
+            font-weight: 600;
+          }
+
+          tbody td.actions {
+            display: flex;
+            justify-content: flex-end;
+          }
+
+          tbody td.actions::before {
+            content: none;
+          }
+        }
+
         .filter-bar {
           display: flex;
           flex-wrap: wrap;
@@ -124,12 +176,18 @@ export class GrampsjsUsers extends GrampsjsTableBase {
         ${filtered.map(
           (obj, index) => html`
             <tr>
-              <td>${obj.name}</td>
-              <td>${obj.full_name}</td>
-              <td>${obj.email}</td>
-              <td>${this._(userRoles[obj.role])}</td>
-              <td>${obj.account_source || this._('Password')}</td>
-              <td>
+              <td data-label="${this._('Username: ').replace(':', '')}">
+                ${obj.name}
+              </td>
+              <td data-label="${this._('Full Name')}">${obj.full_name}</td>
+              <td data-label="${this._('E-mail')}">${obj.email}</td>
+              <td data-label="${this._('Role')}">
+                ${this._(userRoles[obj.role])}
+              </td>
+              <td data-label="${this._('Account Source')}">
+                ${obj.account_source || this._('Password')}
+              </td>
+              <td class="actions">
                 <md-icon-button
                   class="edit"
                   aria-label="${this._('Edit user')}"
