@@ -37,8 +37,8 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
 
         .button {
           background: var(--md-sys-color-surface-container-high);
-          border-radius: 12px;
-          box-shadow: 0 1px 4px var(--grampsjs-body-font-color-20);
+          border-radius: var(--md-sys-shape-corner-extra-large);
+          box-shadow: var(--md-sys-elevation-level2);
           padding: 2px;
           display: flex;
           align-items: center;
@@ -54,7 +54,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           height: 8px;
           border-radius: 50%;
           background: var(--md-sys-color-primary);
-          box-shadow: 0 0 0 2px var(--md-sys-color-surface-container-high);
+          box-shadow: var(--md-sys-elevation-level2);
           pointer-events: none;
         }
 
@@ -75,9 +75,9 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           padding: 12px;
           background: var(--md-sys-color-surface-container-high);
           color: var(--md-sys-color-on-surface);
-          border-radius: 16px;
-          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-          font-size: 14px;
+          border-radius: var(--md-sys-shape-corner-2xl);
+          box-shadow: var(--md-sys-elevation-level2);
+          font-size: var(--md-sys-typescale-label-large-size);
         }
 
         .styles {
@@ -90,7 +90,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           min-width: 0;
           padding: 4px;
           border: 2px solid transparent;
-          border-radius: 12px;
+          border-radius: var(--md-sys-shape-corner-extra-large);
           background: none;
           color: inherit;
           font: inherit;
@@ -111,25 +111,25 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           width: 100%;
           height: 56px;
           object-fit: cover;
-          border-radius: 8px;
+          border-radius: var(--md-sys-shape-corner-medium);
         }
 
         .style-label {
           display: block;
           margin-top: 4px;
-          font-size: 13px;
+          font-size: var(--md-sys-typescale-label-medium-size);
           font-weight: 500;
         }
 
         .style-year {
           display: block;
-          font-size: 12px;
+          font-size: var(--md-sys-typescale-label-small-size);
           color: var(--md-sys-color-on-surface-variant);
         }
 
         h3 {
           margin: 16px 0 4px;
-          font-size: 12px;
+          font-size: var(--md-sys-typescale-label-small-size);
           font-weight: 500;
           letter-spacing: 0.04em;
           text-transform: uppercase;
@@ -149,7 +149,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           flex: none;
           width: 40px;
           height: 40px;
-          border-radius: 8px;
+          border-radius: var(--md-sys-shape-corner-medium);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -167,7 +167,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           height: 14px;
           border-radius: 50%;
           border: 2px solid #ffffff;
-          box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+          box-shadow: var(--md-sys-elevation-level2);
         }
 
         .text {
@@ -184,7 +184,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .sub {
-          font-size: 12px;
+          font-size: var(--md-sys-typescale-label-small-size);
           color: var(--md-sys-color-on-surface-variant);
         }
 

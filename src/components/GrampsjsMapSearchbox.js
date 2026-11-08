@@ -53,7 +53,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
 
         #searchbar {
           background-color: var(--md-sys-color-surface-container-high);
-          border-radius: 9999px;
+          border-radius: var(--md-sys-shape-corner-full);
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.08);
           display: flex;
@@ -69,7 +69,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           border: none;
           background: transparent;
           outline: none;
-          font-size: 16px;
+          font-size: var(--md-sys-typescale-body-large-size);
           font-family: inherit;
           color: var(--md-sys-color-on-surface);
           caret-color: var(--md-sys-color-primary);
@@ -121,9 +121,9 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           display: inline-flex;
           align-items: center;
           gap: 4px;
-          border-radius: 9999px;
+          border-radius: var(--md-sys-shape-corner-full);
           padding: 6px 14px;
-          font-size: 13px;
+          font-size: var(--md-sys-typescale-label-medium-size);
           font-weight: 500;
           font-family: inherit;
           cursor: pointer;
@@ -160,7 +160,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .chip-close {
-          font-size: 15px;
+          font-size: var(--md-sys-typescale-body-medium-size);
           line-height: 1;
           margin-left: 2px;
           opacity: 0.7;
@@ -168,14 +168,14 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
 
         #panel {
           background-color: var(--md-sys-color-surface-container-high);
-          border-radius: 18px;
+          border-radius: var(--md-sys-shape-corner-2xl);
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.08);
           overflow-x: hidden;
           overflow-y: auto;
           scrollbar-width: thin;
           max-height: calc(100vh - 240px);
-          font-size: 14px;
+          font-size: var(--md-sys-typescale-label-large-size);
           line-height: 20px;
         }
 
@@ -249,7 +249,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
             border: none;
             cursor: pointer;
             background: var(--md-sys-color-surface-container-high);
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--md-sys-elevation-level2);
             display: flex;
             align-items: center;
             justify-content: center;

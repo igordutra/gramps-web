@@ -65,11 +65,11 @@ export class GrampsjsViewMap extends GrampsjsStaleDataMixin(GrampsjsView) {
           transform: translateX(-50%);
           z-index: 1;
           padding: 4px 12px;
-          border-radius: 9999px;
-          font-size: 13px;
+          border-radius: var(--md-sys-shape-corner-full);
+          font-size: var(--md-sys-typescale-label-medium-size);
           background: var(--md-sys-color-surface-container-high);
           color: var(--md-sys-color-on-surface);
-          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: var(--md-sys-elevation-level2);
           white-space: nowrap;
           pointer-events: none;
         }

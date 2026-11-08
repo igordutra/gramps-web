@@ -223,12 +223,12 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          font-size: 14px;
+          font-size: var(--md-sys-typescale-label-large-size);
           font-weight: 500;
         }
 
         #selected-person .gramps-id {
-          font-size: 12px;
+          font-size: var(--md-sys-typescale-label-small-size);
           color: var(--grampsjs-body-font-color-50);
         }
 

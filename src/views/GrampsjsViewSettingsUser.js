@@ -26,11 +26,17 @@ import {
   apiGetOIDCConfig,
   storeAuthToken,
   storeRefreshToken,
-  TREE_CONFIG_PRIMARY_COLOR,
-  TREE_CONFIG_SECONDARY_COLOR,
+  getTreeConfig,
 } from '../api.js'
 import {fireEvent} from '../util.js'
-import {applyScheme, DEFAULT_PRIMARY, DEFAULT_SECONDARY} from '../theme.js'
+import {
+  applyScheme,
+  resolveTheme,
+  DEFAULT_PRIMARY,
+  DEFAULT_SECONDARY,
+  DEFAULT_THEME,
+  THEMES,
+} from '../theme.js'
 import {DEFAULT_TREE_VIEW, TREE_VIEWS} from '../treeDefaults.js'
 import {
   SYMBOL_SET_DEFAULT,
@@ -166,6 +172,8 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
         ${this.renderLangSelect()}
         <h3>${this._('Select theme')}</h3>
         ${this.renderThemeSelect()}
+        <h3>${this._('Select style')}</h3>
+        ${this.renderStyleSelect()}
         <h3>${this._('Genealogical symbols')}</h3>
         ${this.renderSymbolsSelect()}
         <h3>${this._('Family tree preferences')}</h3>
@@ -272,19 +280,67 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
     `
   }
 
+  /**
+   * The style picker.
+   *
+   * A theme here is a whole design language, not a hue: it carries the
+   * shape, type, spacing and density scales as well as the seed colours.
+   * Switching one must change the whole interface, which is the only way
+   * to know the token layer is really in charge of the rendering.
+   */
+  renderStyleSelect() {
+    const style = this.appState.settings.style ?? DEFAULT_THEME
+    return html`
+      <md-filled-select
+        id="select-style"
+        label="${this._('Style')}"
+        @change="${this._handleStyleSelected}"
+      >
+        ${Object.entries(THEMES).map(
+          ([id, theme]) => html`
+            <md-select-option value="${id}" ?selected="${style === id}"
+              >${this._(theme.label)}</md-select-option
+            >
+          `
+        )}
+      </md-filled-select>
+    `
+  }
+
+  _handleStyleSelected(event) {
+    const style = event.target.value
+    if (!(style in THEMES)) return
+    this.appState.updateSettings({style})
+    const resolved = resolveTheme(style, getTreeConfig())
+    try {
+      applyScheme(
+        resolved.primary,
+        resolved.secondary,
+        this.appState.settings.theme,
+        resolved.name
+      )
+    } catch {
+      applyScheme(
+        DEFAULT_PRIMARY,
+        DEFAULT_SECONDARY,
+        this.appState.settings.theme,
+        DEFAULT_THEME
+      )
+    }
+  }
+
   _handleThemeSelected(event) {
     const theme = event.target.value
     this.appState.updateSettings({theme})
+    // Changing the light/dark mode must keep the chosen STYLE: the two
+    // are independent axes — a square-cornered theme stays square in
+    // dark mode.
+    const style = this.appState.settings.style ?? DEFAULT_THEME
+    const resolved = resolveTheme(style, getTreeConfig())
     try {
-      applyScheme(
-        this.appState.treeConfig?.[TREE_CONFIG_PRIMARY_COLOR] ||
-          DEFAULT_PRIMARY,
-        this.appState.treeConfig?.[TREE_CONFIG_SECONDARY_COLOR] ||
-          DEFAULT_SECONDARY,
-        theme
-      )
+      applyScheme(resolved.primary, resolved.secondary, theme, resolved.name)
     } catch {
-      applyScheme(DEFAULT_PRIMARY, DEFAULT_SECONDARY, theme)
+      applyScheme(DEFAULT_PRIMARY, DEFAULT_SECONDARY, theme, DEFAULT_THEME)
     }
   }
 

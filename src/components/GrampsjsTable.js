@@ -65,7 +65,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           padding: 0 14px;
           border: none;
           position: relative;
-          font-size: 15px;
+          font-size: var(--md-sys-typescale-body-medium-size);
           line-height: 1.5;
         }
 
@@ -76,7 +76,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           content: attr(data-label);
           display: block;
           margin-bottom: 3px;
-          font-size: 11px;
+          font-size: var(--md-sys-typescale-label-small-size);
           line-height: 1.4;
           letter-spacing: 0.04em;
           text-transform: uppercase;
@@ -110,7 +110,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
         table.wide thead th {
           text-align: left;
           padding: 14px 20px;
-          font-size: 11px;
+          font-size: var(--md-sys-typescale-label-small-size);
           letter-spacing: 0.04em;
           text-transform: uppercase;
           color: var(--grampsjs-body-font-color-60);
@@ -122,7 +122,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           z-index: 1;
           background-color: var(--md-sys-color-background);
           /* Collapsed borders don't move with stuck cells */
-          box-shadow: inset 0 -1px 0 var(--grampsjs-body-font-color-20);
+          box-shadow: var(--md-sys-elevation-level2);
         }
 
         th .sort-header {
@@ -180,7 +180,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           display: table-cell;
           padding: 14px 20px;
           border: none;
-          font-size: 15px;
+          font-size: var(--md-sys-typescale-body-medium-size);
         }
 
         tbody td > .cell-content {
@@ -253,7 +253,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           align-items: center;
           gap: 8px;
           padding: 4px 4px 4px 8px;
-          font-size: 14px;
+          font-size: var(--md-sys-typescale-label-large-size);
           color: var(--grampsjs-body-font-color-70);
         }
 

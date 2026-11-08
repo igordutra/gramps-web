@@ -7,6 +7,7 @@ import {
   argbFromHex,
   hexFromArgb,
 } from '@material/material-color-utilities'
+import {TREE_CONFIG_PRIMARY_COLOR, TREE_CONFIG_SECONDARY_COLOR} from './api.js'
 
 export const DEFAULT_PRIMARY = '#6d4c41'
 /**
@@ -16,6 +17,117 @@ export const DEFAULT_PRIMARY = '#6d4c41'
  * cool counterweight instead of a competing hue.
  */
 export const DEFAULT_SECONDARY = '#3f5f6b'
+
+/**
+ * The themes the app offers.
+ *
+ * A theme is a named bundle: a seed pair, a colour scheme, and the scales
+ * that give it its character. The scales are what separate one theme from
+ * another — two themes with the same seeds and different shape and density
+ * read as different products, and a theme that only changed the hue would
+ * prove nothing about whether the token layer is really in charge.
+ *
+ * The colours are applied from the seed through Material's tonal palette,
+ * so a theme states its intent with two hexes and lets the palette do the
+ * rest. The scales are literal custom properties.
+ */
+export const THEMES = {
+  archive: {
+    label: 'Archive',
+    primary: DEFAULT_PRIMARY,
+    secondary: DEFAULT_SECONDARY,
+    // The document-like default: a small radius, an airy gutter, and a
+    // soft wide shadow. This reads as a research tool rather than a
+    // consumer app.
+    shape: {
+      '--md-sys-shape-corner-none': '0px',
+      '--md-sys-shape-corner-extra-small': '2px',
+      '--md-sys-shape-corner-small': '4px',
+      '--md-sys-shape-corner-medium': '6px',
+      '--md-sys-shape-corner-large': '8px',
+      '--md-sys-shape-corner-extra-large': '12px',
+      '--md-sys-shape-corner-xl': '14px',
+      '--md-sys-shape-corner-2xl': '16px',
+      '--md-sys-shape-corner-3xl': '20px',
+      '--md-sys-shape-corner-4xl': '24px',
+      '--md-sys-shape-corner-full': '8px',
+    },
+    space: {
+      '--grampsjs-page-gutter': '24px',
+      '--grampsjs-page-gutter-compact': '12px',
+      '--grampsjs-page-gutter-block': '16px',
+      '--grampsjs-column-gap': '32px',
+    },
+    density: {
+      '--md-filled-button-container-height': '34px',
+      '--md-outlined-button-container-height': '34px',
+      '--md-text-button-container-height': '34px',
+      '--md-elevated-button-container-height': '34px',
+    },
+  },
+
+  /**
+   * A deliberately different theme, to prove the token layer is real.
+   *
+   * It is not "the same app in another colour": the corners are square
+   * rather than softly rounded, the type is larger and heavier, the
+   * gutter is wider, the controls are shorter and denser, and the
+   * elevation is a hard offset rather than a soft shadow. If every one of
+   * those reaches the rendered interface, the theme is applied through
+   * the scales and not by a handful of hand-written rules.
+   */
+  blueprint: {
+    label: 'Blueprint',
+    primary: '#1d4ed8',
+    secondary: '#0f766e',
+    // Square corners throughout: this theme is about the grid.
+    shape: {
+      '--md-sys-shape-corner-none': '0px',
+      '--md-sys-shape-corner-extra-small': '0px',
+      '--md-sys-shape-corner-small': '0px',
+      '--md-sys-shape-corner-medium': '0px',
+      '--md-sys-shape-corner-large': '0px',
+      '--md-sys-shape-corner-extra-large': '0px',
+      '--md-sys-shape-corner-xl': '0px',
+      '--md-sys-shape-corner-2xl': '0px',
+      '--md-sys-shape-corner-3xl': '0px',
+      '--md-sys-shape-corner-4xl': '0px',
+      '--md-sys-shape-corner-full': '0px',
+    },
+    type: {
+      '--md-sys-typescale-label-large-size': '1rem',
+      '--md-sys-typescale-label-large-weight': '600',
+      '--md-sys-typescale-body-medium-size': '1rem',
+      '--md-sys-typescale-body-large-size': '1.125rem',
+      '--md-sys-typescale-title-medium-size': '1.125rem',
+      '--md-sys-typescale-title-large-size': '1.5rem',
+      '--md-sys-typescale-headline-small-weight': '700',
+      '--md-sys-typescale-headline-medium-weight': '700',
+      '--md-sys-typescale-headline-large-weight': '700',
+    },
+    space: {
+      '--grampsjs-page-gutter': '32px',
+      '--grampsjs-page-gutter-compact': '16px',
+      '--grampsjs-page-gutter-block': '24px',
+      '--grampsjs-column-gap': '48px',
+    },
+    density: {
+      '--md-filled-button-container-height': '30px',
+      '--md-outlined-button-container-height': '30px',
+      '--md-text-button-container-height': '30px',
+      '--md-elevated-button-container-height': '30px',
+    },
+    elevation: {
+      '--md-sys-elevation-level1': '2px 2px 0 0 rgba(15, 23, 42, 0.12)',
+      '--md-sys-elevation-level2': '3px 3px 0 0 rgba(15, 23, 42, 0.14)',
+      '--md-sys-elevation-level3': '4px 4px 0 0 rgba(15, 23, 42, 0.16)',
+      '--md-sys-elevation-level4': '5px 5px 0 0 rgba(15, 23, 42, 0.18)',
+      '--md-sys-elevation-level5': '6px 6px 0 0 rgba(15, 23, 42, 0.2)',
+    },
+  },
+}
+
+export const DEFAULT_THEME = 'archive'
 
 /**
  * Design-token scales that Gramps Web does not currently define.
@@ -269,7 +381,8 @@ function toKebabCase(str) {
 export function applyColors(
   primaryHex = DEFAULT_PRIMARY,
   secondaryHex = DEFAULT_SECONDARY,
-  isDark = false
+  isDark = false,
+  themeName = DEFAULT_THEME
 ) {
   const primaryHct = Hct.fromInt(argbFromHex(primaryHex))
   const secondaryHct = Hct.fromInt(argbFromHex(secondaryHex))
@@ -297,10 +410,13 @@ export function applyColors(
   })
 
   const root = document.documentElement
+  const theme = THEMES[themeName] ?? THEMES[DEFAULT_THEME]
 
   // Shape / type / space / elevation scales. These are theme-independent
   // (they do not derive from the seed colour), so they are written on every
-  // call rather than living in CSS.
+  // call rather than living in CSS. A theme's own scales are written LAST,
+  // so they win over the defaults — that is what makes a second theme
+  // actually different rather than merely another hue.
   for (const [name, value] of Object.entries({
     ...SHAPE_SCALE,
     ...TYPE_SCALE,
@@ -308,6 +424,11 @@ export function applyColors(
     ...ELEVATION_SCALE,
     ...DENSITY_SCALE,
     ...COMPONENT_SCALE,
+    ...(theme.shape ?? {}),
+    ...(theme.type ?? {}),
+    ...(theme.space ?? {}),
+    ...(theme.elevation ?? {}),
+    ...(theme.density ?? {}),
   })) {
     root.style.setProperty(name, value)
   }
@@ -377,12 +498,34 @@ export function applyColors(
   )
 }
 
+/**
+ * Resolve a theme name to the seed pair and colour scheme to apply.
+ *
+ * A tree may override the seed colours through the tree config; a named
+ * theme supplies its own. The tree's colours win, because an administrator
+ * who picked a colour for their tree means it.
+ */
+export function resolveTheme(themeName, treeConfig = {}) {
+  const theme = THEMES[themeName] ?? THEMES[DEFAULT_THEME]
+  return {
+    name: themeName in THEMES ? themeName : DEFAULT_THEME,
+    primary:
+      treeConfig[TREE_CONFIG_PRIMARY_COLOR] || theme.primary || DEFAULT_PRIMARY,
+    secondary:
+      treeConfig[TREE_CONFIG_SECONDARY_COLOR] ||
+      theme.secondary ||
+      DEFAULT_SECONDARY,
+  }
+}
+
 export function applyScheme(
   primaryHex = DEFAULT_PRIMARY,
   secondaryHex = DEFAULT_SECONDARY,
-  theme
+  theme,
+  themeName = DEFAULT_THEME
 ) {
   const isDark = getCurrentTheme(theme) === 'dark'
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light')
-  applyColors(primaryHex, secondaryHex, isDark)
+  document.documentElement.setAttribute('data-style', themeName)
+  applyColors(primaryHex, secondaryHex, isDark, themeName)
 }
