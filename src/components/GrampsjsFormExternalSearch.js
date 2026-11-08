@@ -368,7 +368,7 @@ class GrampsjsFormExternalSearch extends GrampsjsObjectForm {
 
   _renderWebsiteList(visibleWebUrls) {
     return html`
-      <md-list>
+      <md-list role="list">
         ${visibleWebUrls.map(web => this._renderWebsiteItem(web))}
       </md-list>
     `

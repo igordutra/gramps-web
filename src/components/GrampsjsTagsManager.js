@@ -9,7 +9,7 @@ import {GrampsjsTableBase} from './GrampsjsTableBase.js'
 import './GrampsjsIcon.js'
 import './GrampsjsFormString.js'
 import {fireEvent} from '../util.js'
-import {tagColorToCss, colorForPicker} from '../color.js'
+import {tagColorToCss, colorForPicker, readableOnLight} from '../color.js'
 
 export class GrampsjsTagsManager extends GrampsjsTableBase {
   static get styles() {
@@ -79,7 +79,9 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
               <thead>
                 <tr>
                   <th>${this._('Tags')}</th>
-                  <th></th>
+                  <th>
+                    <span class="visually-hidden">${this._('Actions')}</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -90,7 +92,7 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
                         <span
                           class="tag-chip"
                           style="
-                            --tag-color: ${tagColorToCss(tag.color, 0.9)};
+                            --tag-color: ${readableOnLight(tag.color)};
                             --tag-color-bg: ${tagColorToCss(tag.color, 0.12)};
                           "
                           >${tag.name}</span

@@ -46,6 +46,25 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
           align-items: center;
           flex-wrap: wrap;
           gap: 8px 12px;
+          /*
+           * The toolbar row mixed a 34px button, a 40px icon button
+           * and a 54px select, each centred on its own height, so the
+           * row was ragged and the controls looked like they belonged
+           * to different applications.
+           *
+           * Every control in the row is now the same height, and that
+           * height is a step of the space scale. The select is the one
+           * that needed telling: a field's height comes from the
+           * spacing around its content, not from the container height
+           * the app uses for buttons, so it is the field's spacing
+           * that is set here.
+           */
+          --md-outlined-field-top-space: var(--grampsjs-space-8);
+          --md-outlined-field-bottom-space: var(--grampsjs-space-8);
+          --md-filled-button-container-height: var(--grampsjs-space-40);
+          --md-outlined-button-container-height: var(--grampsjs-space-40);
+          --md-text-button-container-height: var(--grampsjs-space-40);
+          --md-elevated-button-container-height: var(--grampsjs-space-40);
           /* The toolbar sat flush against the panel edges. Give it the same
              gutter the table uses so the two read as one system. */
           padding: var(--grampsjs-space-12, 12px)
@@ -205,7 +224,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
                   path="${Funnel}"
                   color="currentColor"
                 ></grampsjs-icon>
-                ${this._('filter')}
+                ${this._('Filter')}
               </md-filled-button>
             `
           : html`
@@ -215,7 +234,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
                   path="${Funnel}"
                   color="currentColor"
                 ></grampsjs-icon>
-                ${this._('filter')}
+                ${this._('Filter')}
               </md-outlined-button>
             `}
         <md-icon-button

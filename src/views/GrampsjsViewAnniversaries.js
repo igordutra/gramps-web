@@ -53,10 +53,10 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
 
   renderLoading() {
     return html`<h2>${this._('Anniversaries')}</h2>
-      <md-list>
+      <md-list role="list">
         ${Array(2).fill(
           html`
-            <md-list-item type="button" noninteractive>
+            <md-list-item type="button" noninteractive role="presentation">
               <span slot="headline" class="skeleton" style="width:15em;"
                 >&nbsp;</span
               >
@@ -91,6 +91,7 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
     }
     return html`
       <md-list-item
+        role="none"
         type="button"
         @click="${() => this._handleClick(event)}"
         @keydown="${this._handleKeyDown}"

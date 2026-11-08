@@ -97,7 +97,10 @@ export class GrampsjsTreeQuotas extends GrampsjsConnectedComponent {
         <tr>
           <th>${this._('Number of people')}</th>
           <td class="progress">
-            <md-linear-progress value="${progressPeople}"></md-linear-progress>
+            <md-linear-progress
+              value="${progressPeople}"
+              aria-label="${this._('Number of people')}"
+            ></md-linear-progress>
           </td>
           <td class="numbers">
             ${Math.round(100 * progressPeople)}%
@@ -107,7 +110,10 @@ export class GrampsjsTreeQuotas extends GrampsjsConnectedComponent {
         <tr>
           <th>${this._('Total size of media objects')}</th>
           <td class="progress">
-            <md-linear-progress value="${progressMedia}"></md-linear-progress>
+            <md-linear-progress
+              value="${progressMedia}"
+              aria-label="${this._('Total size of media objects')}"
+            ></md-linear-progress>
           </td>
           <td class="numbers">
             ${Math.round(100 * progressMedia)}%

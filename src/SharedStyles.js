@@ -220,7 +220,9 @@ export const sharedStyles = css`
 
   dt {
     font-size: 14px;
-    color: var(--grampsjs-body-font-color-50);
+    /* 50% black on white is 3.94:1, under the 4.5:1 that 14px text
+       needs. 60% is 5.74:1 and still reads as a label. */
+    color: var(--grampsjs-body-font-color-60);
     font-weight: 400;
     margin-bottom: 0.2em;
   }

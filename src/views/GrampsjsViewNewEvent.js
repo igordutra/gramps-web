@@ -98,7 +98,7 @@ export class GrampsjsViewNewEvent extends GrampsjsNewEventMixin(
 
       ${this._participants.length
         ? html`
-            <md-list>
+            <md-list role="list">
               ${this._participants.map(
                 (p, i) => html`
                   <md-list-item type="text">

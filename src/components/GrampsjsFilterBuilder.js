@@ -515,7 +515,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
             ></grampsjs-icon>
             <span class="category">${category}</span>
           </summary>
-          <md-list>
+          <md-list role="list">
             ${rules.map(
               ruleInfo => html`
                 <md-list-item

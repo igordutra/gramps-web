@@ -142,7 +142,7 @@ export class GrampsjsOidcAccounts extends GrampsjsAppStateMixin(LitElement) {
           </p>`
         : html`
             ${this._accounts.length
-              ? html`<md-list>
+              ? html`<md-list role="list">
                   ${this._accounts.map(account => this._renderAccount(account))}
                 </md-list>`
               : html`<p>

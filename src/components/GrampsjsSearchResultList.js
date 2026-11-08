@@ -51,6 +51,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
       selectable: {type: Boolean},
       linked: {type: Boolean},
       metaIcon: {type: String},
+      metaLabel: {type: String},
       date: {type: Boolean},
       noSep: {type: Boolean},
       loading: {type: Boolean},
@@ -86,7 +87,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
       >
         ${this.data.length === 0 && this.textEmpty
           ? html`
-              <md-list-item type="text">
+              <md-list-item type="text" role="presentation">
                 <span>${this.textEmpty}</span>
               </md-list-item>
             `
@@ -112,6 +113,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
                     <md-icon-button
                       @click="${e => this._handleMetaClick(e, obj)}"
                       slot="end"
+                      aria-label="${this.metaLabel ?? this._('Edit')}"
                     >
                       <grampsjs-icon path="${this.metaIcon}"></grampsjs-icon>
                     </md-icon-button>
@@ -143,10 +145,10 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
   renderLoading() {
     const type = this.selectable || this.linked ? 'button' : 'text'
     return html`
-      <md-list>
+      <md-list role="list">
         ${Array(this.numberLoading).fill(
           html`
-            <md-list-item type="${type}">
+            <md-list-item type="${type}" role="none">
               <span class="skeleton" style="width:15em;">&nbsp;</span>
               <span slot="supporting-text" class="skeleton" style="width:10em;"
                 >&nbsp;</span

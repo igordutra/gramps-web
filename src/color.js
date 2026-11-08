@@ -94,3 +94,61 @@ export function hex6ToHex12(hex6) {
   }
   return null
 }
+
+/* The relative luminance of a colour, per WCAG 2. */
+function luminance(r, g, b) {
+  const channel = v => {
+    const c = v / 255
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+  }
+  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b)
+}
+
+/* The contrast ratio between two colours, per WCAG 2. */
+export function contrastRatio(colorA, colorB) {
+  const a = luminance(...colorA)
+  const b = luminance(...colorB)
+  const lighter = Math.max(a, b)
+  const darker = Math.min(a, b)
+  return (lighter + 0.05) / (darker + 0.05)
+}
+
+/* The channels of a colour, or null if it cannot be read. */
+function channelsOf(color) {
+  const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color ?? '')
+  if (!match) {
+    return null
+  }
+  return [
+    parseInt(match[1], 16),
+    parseInt(match[2], 16),
+    parseInt(match[3], 16),
+  ]
+}
+
+/*
+ * Darken a colour until it can be read on a light background.
+ *
+ * A tag's colour is the user's own choice, and it is used as the
+ * chip's label. But a label nobody can read is not a colour anybody
+ * can use: the tag colours Gramps ships with sit between 3.4:1 and
+ * 4.4:1 against their own tint, and 14px text needs 4.5:1.
+ *
+ * The colour is kept as the chip's tint and darkened only for the
+ * label, so the tag still looks like the tag.
+ */
+export function readableOnLight(color, ratio = 4.5) {
+  const channels = channelsOf(color)
+  if (!channels) {
+    return color
+  }
+  const background = [255, 255, 255]
+  let darkened = channels
+  for (let step = 0; step < 21; step += 1) {
+    if (contrastRatio(darkened, background) >= ratio) {
+      break
+    }
+    darkened = darkened.map(c => Math.round(c * 0.9))
+  }
+  return `rgb(${darkened[0]}, ${darkened[1]}, ${darkened[2]})`
+}

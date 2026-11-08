@@ -150,7 +150,7 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
       </p>
       ${entries.length
         ? html`
-            <md-list>
+            <md-list role="list">
               ${entries.map(entry => this._renderEntry(entry))}
             </md-list>
           `

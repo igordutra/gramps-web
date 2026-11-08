@@ -112,7 +112,7 @@ class GrampsjsFormEditMapLayer extends GrampsjsNominatimSearchMixin(
         value="${this._getLogWidth()}"
         min="-6.9"
         max="5.2"
-        step="0.1"
+        step="0.001"
         @input="${this._handleScaleSlider}"
       ></md-slider>
       ${this._('Opacity')}<br />

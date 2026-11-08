@@ -170,7 +170,9 @@ export class GrampsjsUsers extends GrampsjsTableBase {
             <th>${this._('E-mail')}</th>
             <th>${this._('Role')}</th>
             <th>${this._('Account Source')}</th>
-            <th></th>
+            <th>
+              <span class="visually-hidden">${this._('Actions')}</span>
+            </th>
           </tr>
         </thead>
         ${filtered.map(
@@ -340,6 +342,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           download="grampsweb-export-users.json"
           href="${this._downloadUrl}"
           id="downloadanchor"
+          aria-label="${this._('Download')}"
           >&nbsp;</a
         >
       </p>

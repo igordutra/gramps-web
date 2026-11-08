@@ -127,7 +127,7 @@ export class GrampsjsViewRevisions extends GrampsjsStaleDataMixin(
     return html`${this.renderPageHeading()}
       <h2>${this._('Revision History')}</h2>
 
-      <md-list>
+      <md-list role="list">
         <md-divider></md-divider>
         ${this._data.map(txn => this._renderTransaction(txn))}
       </md-list>

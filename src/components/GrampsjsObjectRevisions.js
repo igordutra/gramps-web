@@ -85,7 +85,7 @@ export class GrampsjsObjectRevisions extends GrampsjsAppStateMixin(LitElement) {
       return this._loading ? html`` : this._renderLastChange()
     }
     return html`
-      <md-list>
+      <md-list role="list">
         ${this._data.map(change => this._renderChange(change))}
       </md-list>
       ${this._renderFooter()}
