@@ -780,7 +780,7 @@ describe('isKeyEventInInput', () => {
       [element('OPTION')],
       [element('MD-DIALOG')],
       // A select and a menu are entered through the elements inside them
-      [element('LI'), element('MD-FILLED-SELECT')],
+      [element('LI'), element('MD-OUTLINED-SELECT')],
       [element('LI'), element('MD-MENU')],
     ]
     paths.forEach(path =>

@@ -3,9 +3,9 @@ Element for selecting a Gramps type
 */
 
 import {css, html, LitElement} from 'lit'
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 
@@ -105,11 +105,11 @@ class GrampsjsFormSelectType extends GrampsjsAppStateMixin(LitElement) {
 
   #renderLoading() {
     return html`
-      <md-filled-select
+      <md-outlined-select
         style="width:100%"
         label="${this._('Loading items...')}"
         disabled
-      ></md-filled-select>
+      ></md-outlined-select>
     `
   }
 
@@ -117,7 +117,7 @@ class GrampsjsFormSelectType extends GrampsjsAppStateMixin(LitElement) {
     return html`
       ${!this._hasCustomType
         ? html`
-            <md-filled-select
+            <md-outlined-select
               style="width:100%"
               ?disabled="${this.disabled}"
               ?error="${this.#error}"
@@ -138,10 +138,10 @@ class GrampsjsFormSelectType extends GrampsjsAppStateMixin(LitElement) {
                   </md-select-option>
                 `
               )}
-            </md-filled-select>
+            </md-outlined-select>
           `
         : html`
-            <md-filled-text-field
+            <md-outlined-text-field
               style="width:100%"
               ?disabled="${this.disabled}"
               ?error="${this.#error}"
@@ -152,7 +152,7 @@ class GrampsjsFormSelectType extends GrampsjsAppStateMixin(LitElement) {
               .value="${this.value}"
               id="custom-type"
             >
-            </md-filled-text-field>
+            </md-outlined-text-field>
           `}
     `
   }

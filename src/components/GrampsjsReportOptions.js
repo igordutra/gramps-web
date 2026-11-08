@@ -1,8 +1,8 @@
 import {LitElement, css, html} from 'lit'
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 import '@material/web/switch/switch'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -46,8 +46,8 @@ export class GrampsjsReportOptions extends GrampsjsAppStateMixin(LitElement) {
           min-width: 0;
         }
 
-        md-filled-text-field,
-        md-filled-select {
+        md-outlined-text-field,
+        md-outlined-select {
           width: 100%;
           min-width: 0;
         }
@@ -211,11 +211,11 @@ export class GrampsjsReportOptions extends GrampsjsAppStateMixin(LitElement) {
       <div class="option">
         <span class="label">${this._label(key)}</span>
         <span class="form">
-          <md-filled-select id="${key}" @change="${this._handleSelect}">
+          <md-outlined-select id="${key}" @change="${this._handleSelect}">
             ${this.optionsHelp[key][2].map(item =>
               this._renderSelectItem(item, this._options[key])
             )}
-          </md-filled-select>
+          </md-outlined-select>
         </span>
       </div>
     `
@@ -229,14 +229,14 @@ export class GrampsjsReportOptions extends GrampsjsAppStateMixin(LitElement) {
       <div class="option">
         <span class="label">${label}</span>
         <span class="form">
-          <md-filled-text-field
+          <md-outlined-text-field
             @input="${this._handleText}"
             id="${key}"
             .value="${String(this._options[key] ?? '')}"
             supporting-text="${this._(helper)}"
             type="${helper.includes('A number') ? 'number' : 'text'}"
             step="any"
-          ></md-filled-text-field>
+          ></md-outlined-text-field>
         </span>
       </div>
     `

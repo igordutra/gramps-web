@@ -28,7 +28,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
           --grampsjs-icon-button-color: var(--grampsjs-body-font-color-60);
         }
 
-        .select-row md-filled-select {
+        .select-row md-outlined-select {
           margin-bottom: 0;
         }
       `,
@@ -111,13 +111,13 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
 
   _renderSelect() {
     if (this._selectDataLoading) {
-      return html`<md-filled-select disabled id="placeholder"
-        >${this._('Loading items...')}</md-filled-select
+      return html`<md-outlined-select disabled id="placeholder"
+        >${this._('Loading items...')}</md-outlined-select
       >`
     }
     return html`
       <div class="select-row">
-        <md-filled-select @change="${this._handleSelectChange}">
+        <md-outlined-select @change="${this._handleSelectChange}">
           ${this._data.map(
             person => html`
               <md-select-option
@@ -127,7 +127,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
               >
             `
           )}
-        </md-filled-select>
+        </md-outlined-select>
         ${this.chromosome && !this._dnaDataLoading && this._dnaData.data?.length
           ? html`<grampsjs-svg-download-button
               filename="${this.grampsId}-chromosomes.svg"

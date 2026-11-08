@@ -3,7 +3,7 @@ import {live} from 'lit/directives/live.js'
 
 import '@material/web/dialog/dialog.js'
 import '@material/web/button/filled-button.js'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/button/text-button.js'
 import {
@@ -992,11 +992,11 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
         <span slot="headline">${this._('Link')}</span>
         <div slot="content">
           <p>
-            <md-filled-text-field
+            <md-outlined-text-field
               id="linkurl"
               label="URL"
               style="width:100%"
-            ></md-filled-text-field>
+            ></md-outlined-text-field>
           </p>
           <p>
             <grampsjs-form-select-object

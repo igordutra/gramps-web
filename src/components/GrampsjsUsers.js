@@ -3,9 +3,9 @@ import {html, css} from 'lit'
 import '@material/web/dialog/dialog.js'
 import '@material/web/button/text-button.js'
 import '@material/web/button/filled-button.js'
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/iconbutton/icon-button.js'
 
 import {
@@ -40,12 +40,12 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           margin-bottom: 4px;
         }
 
-        md-filled-text-field {
+        md-outlined-text-field {
           flex: 1 1 200px;
           min-width: 140px;
         }
 
-        md-filled-select {
+        md-outlined-select {
           flex: 0 1 160px;
           min-width: 130px;
         }
@@ -174,15 +174,15 @@ export class GrampsjsUsers extends GrampsjsTableBase {
   _renderFilterBar() {
     return html`
       <div class="filter-bar">
-        <md-filled-text-field
+        <md-outlined-text-field
           type="search"
           label="${this._('Search')}"
           .value="${this._filterText}"
           @input="${e => {
             this._filterText = e.target.value
           }}"
-        ></md-filled-text-field>
-        <md-filled-select
+        ></md-outlined-text-field>
+        <md-outlined-select
           label="${this._('Role')}"
           .value="${this._filterRole}"
           @change="${e => {
@@ -202,7 +202,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
                 </md-select-option>
               `
             )}
-        </md-filled-select>
+        </md-outlined-select>
         ${this._filterText || this._filterRole !== ALL_ROLES
           ? html`
               <button

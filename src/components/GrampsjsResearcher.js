@@ -125,11 +125,11 @@ export class GrampsjsResearcher extends GrampsjsAppStateMixin(LitElement) {
       <div class="form-grid">
         ${FIELDS.map(
           ({id, label}) => html`
-            <md-filled-text-field
+            <md-outlined-text-field
               id="field-${id}"
               label="${this._(label)}"
               value="${researcher[id] || ''}"
-            ></md-filled-text-field>
+            ></md-outlined-text-field>
           `
         )}
       </div>

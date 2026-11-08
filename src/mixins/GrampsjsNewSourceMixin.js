@@ -1,7 +1,7 @@
 import {html, css} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
 
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 
 import '../components/GrampsjsFormSelectObjectList.js'
 import '../components/GrampsjsFormSelectType.js'
@@ -33,14 +33,14 @@ export const GrampsjsNewSourceMixin = superClass =>
       return html`
         <h3 class="label">${this._('Title')}</h3>
         <p>
-          <md-filled-text-field
+          <md-outlined-text-field
             required
             supporting-text="&nbsp;"
             style="width:100%;"
             @input="${this.handleName}"
             @blur="${this.handleName}"
             id="source-name"
-          ></md-filled-text-field>
+          ></md-outlined-text-field>
         </p>
 
         <h3 class="label">${this._('Author')}</h3>

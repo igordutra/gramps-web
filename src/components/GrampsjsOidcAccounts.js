@@ -73,7 +73,7 @@ export class GrampsjsOidcAccounts extends GrampsjsAppStateMixin(LitElement) {
           color: var(--md-sys-color-error);
         }
 
-        md-filled-text-field {
+        md-outlined-text-field {
           width: 100%;
         }
 
@@ -215,11 +215,11 @@ export class GrampsjsOidcAccounts extends GrampsjsAppStateMixin(LitElement) {
                     'This is your last linked sign-in method. To unlink it, enter your password; you will then sign in with your user name and password.'
                   )}
                 </p>
-                <md-filled-text-field
+                <md-outlined-text-field
                   id="unlink-password"
                   type="password"
                   label="${this._('Password: ').replace(':', '')}"
-                ></md-filled-text-field>
+                ></md-outlined-text-field>
               `
             : ''}
           ${this._unlinkError

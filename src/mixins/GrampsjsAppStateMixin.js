@@ -28,7 +28,7 @@ export const GrampsjsAppStateMixin = superClass =>
       super.update(changed)
       if (stringsChanged) {
         this.renderRoot
-          ?.querySelectorAll?.('md-filled-select, md-outlined-select')
+          ?.querySelectorAll?.('md-outlined-select')
           .forEach(select => select.updateValueAndDisplayText?.())
       }
     }

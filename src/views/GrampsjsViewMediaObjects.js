@@ -50,14 +50,14 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
           gap: 4px;
         }
 
-        .sort-control md-filled-select {
+        .sort-control md-outlined-select {
           min-width: 180px;
-          --md-filled-select-text-field-container-color: transparent;
-          --md-filled-select-text-field-container-height: var(
+          --md-outlined-select-text-field-container-color: transparent;
+          --md-outlined-select-text-field-container-height: var(
             --grampsjs-space-40
           );
-          --md-filled-select-text-field-top-space: var(--grampsjs-space-0);
-          --md-filled-select-text-field-bottom-space: var(--grampsjs-space-0);
+          --md-outlined-select-text-field-top-space: var(--grampsjs-space-0);
+          --md-outlined-select-text-field-bottom-space: var(--grampsjs-space-0);
         }
 
         /* Gallery (grid) view */
@@ -432,7 +432,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
     const sortKey = this._sort ? this._sort.substring(1) : 'change'
     const isAscending = this._sort.startsWith('+')
     return html`
-      <md-filled-select
+      <md-outlined-select
         aria-label="${this._('Sort by')}"
         title="${this._('Sort by')}"
         @change="${this._handleSortKeyChange}"
@@ -449,7 +449,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
               </md-select-option>
             `
           )}
-      </md-filled-select>
+      </md-outlined-select>
       <md-icon-button
         id="btn-sort-direction"
         aria-label="${isAscending ? this._('Ascending') : this._('Descending')}"

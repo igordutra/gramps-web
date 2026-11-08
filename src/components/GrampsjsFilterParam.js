@@ -46,7 +46,7 @@ export class GrampsjsFilterParam extends GrampsjsAppStateMixin(LitElement) {
         }
 
         grampsjs-form-select-type {
-          --md-filled-select-text-field-container-shape: var(
+          --md-outlined-select-text-field-container-shape: var(
             --md-sys-shape-corner-small
           );
         }

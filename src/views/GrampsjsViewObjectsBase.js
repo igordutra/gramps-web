@@ -11,7 +11,7 @@ import '@material/web/button/filled-button.js'
 import '@material/web/dialog/dialog.js'
 import '@material/web/button/text-button.js'
 import '@material/web/checkbox/checkbox.js'
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsTable.js'
@@ -84,12 +84,12 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
           color: var(--grampsjs-body-font-color-70);
         }
 
-        .batch-toolbar md-filled-select {
-          --md-filled-select-text-field-container-height: var(
+        .batch-toolbar md-outlined-select {
+          --md-outlined-select-text-field-container-height: var(
             --grampsjs-space-32
           );
-          --md-filled-select-text-field-top-space: var(--grampsjs-space-0);
-          --md-filled-select-text-field-bottom-space: var(--grampsjs-space-0);
+          --md-outlined-select-text-field-top-space: var(--grampsjs-space-0);
+          --md-outlined-select-text-field-bottom-space: var(--grampsjs-space-0);
         }
 
         .column-picker-row {
@@ -327,7 +327,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
               ${this._('_Select All')} (${this._totalCount})
             </md-text-button>`
           : ''}
-        <md-filled-select
+        <md-outlined-select
           .value="${this._currentAction}"
           label="${this._('Action')}"
           style="min-width:140px"
@@ -345,7 +345,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
                 ${this._('Delete')}
               </md-select-option>`
             : ''}
-        </md-filled-select>
+        </md-outlined-select>
         <md-outlined-button
           ?disabled="${!this._currentAction ||
           this._deleting ||

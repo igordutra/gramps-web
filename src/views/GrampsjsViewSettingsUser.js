@@ -69,7 +69,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
           align-items: start;
         }
 
-        .tree-preferences md-filled-select {
+        .tree-preferences md-outlined-select {
           width: 100%;
         }
 
@@ -79,7 +79,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
           gap: 8px;
         }
 
-        .profile-field md-filled-text-field {
+        .profile-field md-outlined-text-field {
           flex: 1;
         }
       `,
@@ -195,7 +195,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
     return keyed(
       this._translations.length,
       html`
-        <md-filled-select
+        <md-outlined-select
           id="select-language"
           label="${this._langLoading
             ? this._('Loading items...')
@@ -213,7 +213,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
             `,
             this
           )}
-        </md-filled-select>
+        </md-outlined-select>
       `
     )
   }
@@ -262,7 +262,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderThemeSelect() {
     const theme = this.appState.settings.theme ?? 'system'
     return html`
-      <md-filled-select
+      <md-outlined-select
         id="select-theme"
         label="${this._('Theme')}"
         @change="${this._handleThemeSelected}"
@@ -276,7 +276,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
         <md-select-option value="dark" ?selected="${theme === 'dark'}"
           >${this._('Dark')}</md-select-option
         >
-      </md-filled-select>
+      </md-outlined-select>
     `
   }
 
@@ -291,7 +291,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderStyleSelect() {
     const style = this.appState.settings.style ?? DEFAULT_THEME
     return html`
-      <md-filled-select
+      <md-outlined-select
         id="select-style"
         label="${this._('Style')}"
         @change="${this._handleStyleSelected}"
@@ -303,7 +303,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
             >
           `
         )}
-      </md-filled-select>
+      </md-outlined-select>
     `
   }
 
@@ -347,7 +347,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderSymbolsSelect() {
     const symbolSet = this.appState.settings.symbolSet ?? SYMBOL_SET_DEFAULT
     return html`
-      <md-filled-select
+      <md-outlined-select
         id="select-symbols"
         label="${this._('Genealogical symbols')}"
         @change="${this._handleSymbolsSelected}"
@@ -359,7 +359,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
             </md-select-option>
           `
         )}
-      </md-filled-select>
+      </md-outlined-select>
     `
   }
 
@@ -376,7 +376,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
       this.appState.settings.treeDefaultView ?? DEFAULT_TREE_VIEW
     return html`
       <div class="tree-preferences">
-        <md-filled-select
+        <md-outlined-select
           id="tree-default-view"
           label="${this._('Default family tree view')}"
           @change=${this._handleDefaultTreeViewChange}
@@ -391,7 +391,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
               </md-select-option>
             `
           )}
-        </md-filled-select>
+        </md-outlined-select>
       </div>
     `
   }
@@ -420,11 +420,11 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderChangeUsername() {
     return html`
       <p class="profile-field">
-        <md-filled-text-field
+        <md-outlined-text-field
           id="change-username"
           label="${this._('Username: ').replace(':', '')}"
           value="${this._userInfo?.name || ''}"
-        ></md-filled-text-field>
+        ></md-outlined-text-field>
         <md-outlined-button @click="${this._changeUsername}">
           ${this._('Save')}
         </md-outlined-button>
@@ -435,12 +435,12 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderChangeFullName() {
     return html`
       <p class="profile-field">
-        <md-filled-text-field
+        <md-outlined-text-field
           id="change-full-name"
           label="${this._('Full Name')}"
           value="${this._userInfo?.full_name || ''}"
           supporting-text="${this._idpHint()}"
-        ></md-filled-text-field>
+        ></md-outlined-text-field>
         <md-outlined-button @click="${this._changeFullName}">
           ${this._('Save')}
         </md-outlined-button>
@@ -451,12 +451,12 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderChangeEmail() {
     return html`
       <p>
-        <md-filled-text-field
+        <md-outlined-text-field
           id="change-email"
           label="${this._('New E-mail')}"
           value="${this._userInfo?.email ? this._userInfo.email : ''}"
           supporting-text="${this._idpHint()}"
-        ></md-filled-text-field>
+        ></md-outlined-text-field>
       </p>
       <p>
         <md-outlined-button @click="${this._changeEmail}">
@@ -469,16 +469,16 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderChangePw() {
     return html`
       <p>
-        <md-filled-text-field
+        <md-outlined-text-field
           id="old-pw"
           label="${this._('Old password')}"
           type="password"
-        ></md-filled-text-field>
-        <md-filled-text-field
+        ></md-outlined-text-field>
+        <md-outlined-text-field
           id="new-pw"
           label="${this._('New password')}"
           type="password"
-        ></md-filled-text-field>
+        ></md-outlined-text-field>
       </p>
       <p>
         <md-outlined-button @click="${this._changePw}">

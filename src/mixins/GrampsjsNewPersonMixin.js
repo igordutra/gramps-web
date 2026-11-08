@@ -1,6 +1,6 @@
 import {html} from 'lit'
 
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 
 import {makeHandle, dateIsEmpty, emptyDate} from '../util.js'
@@ -33,7 +33,7 @@ export const GrampsjsNewPersonMixin = superClass =>
         ></grampsjs-form-name>
 
         <h3 class="label">${this._('Gender')}</h3>
-        <md-filled-select id="select-gender" @change="${this.handleGender}">
+        <md-outlined-select id="select-gender" @change="${this.handleGender}">
           ${Object.keys(this.gender).map(
             genderConst => html`
               <md-select-option
@@ -47,7 +47,7 @@ export const GrampsjsNewPersonMixin = superClass =>
               </md-select-option>
             `
           )}
-        </md-filled-select>
+        </md-outlined-select>
 
         <h3 class="label">${this._('Birth Date')}</h3>
 

@@ -58,13 +58,13 @@ export class GrampsjsViewExport extends GrampsjsView {
       <h3>${this._('Export your family tree')}</h3>
 
       ${this.data.length === 0
-        ? html`<md-filled-select
+        ? html`<md-outlined-select
             style="min-width:30em;"
             aria-label="${this._('Export')}"
             disabled
-          ></md-filled-select>`
+          ></md-outlined-select>`
         : html`
-            <md-filled-select
+            <md-outlined-select
               @change=${this._handleSelect}
               style="min-width:30em;"
               aria-label="${this._('Export')}"
@@ -79,7 +79,7 @@ export class GrampsjsViewExport extends GrampsjsView {
                   </md-select-option>
                 `
               )}
-            </md-filled-select>
+            </md-outlined-select>
           `}
       ${this._getDescription()} ${this._renderWarning()}
       <p>

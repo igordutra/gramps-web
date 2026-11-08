@@ -39,7 +39,7 @@ export class GrampsjsChatPermissions extends GrampsjsConnectedComponent {
     minRoleAi = minRoleAi > 5 ? 99 : minRoleAi
     return html`<p>
       ${this._('User groups allowed to use AI chat:')}
-      <md-filled-select
+      <md-outlined-select
         id="select-role-ai"
         class="margin-left"
         @change="${this._handleChange}"
@@ -54,7 +54,7 @@ export class GrampsjsChatPermissions extends GrampsjsConnectedComponent {
             </md-select-option>
           `
         )}
-      </md-filled-select>
+      </md-outlined-select>
     </p> `
   }
 
@@ -64,7 +64,7 @@ export class GrampsjsChatPermissions extends GrampsjsConnectedComponent {
       <p>
         ${this._('User groups allowed to use AI chat:')}
         <span class="skeleton margin-left">
-          <md-filled-select class="hidden"> </md-filled-select>
+          <md-outlined-select class="hidden"> </md-outlined-select>
         </span>
       </p>
     `

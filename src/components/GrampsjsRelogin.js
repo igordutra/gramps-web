@@ -16,7 +16,7 @@ class GrampsjsRelogin extends GrampsjsAppStateMixin(LitElement) {
     return [
       sharedStyles,
       css`
-        md-filled-text-field {
+        md-outlined-text-field {
           margin-right: 8px;
           margin-bottom: 12px;
         }
@@ -73,12 +73,12 @@ class GrampsjsRelogin extends GrampsjsAppStateMixin(LitElement) {
               `
             : html`
                 <p>${this._('Please re-enter your password to continue.')}</p>
-                <md-filled-text-field
+                <md-outlined-text-field
                   label="${this._('Password: ').replace(':', '')}"
                   type="password"
                   id="password"
                 >
-                </md-filled-text-field>
+                </md-outlined-text-field>
                 ${this._error
                   ? html` <p class="alert error">${this._error}</p>`
                   : ''}

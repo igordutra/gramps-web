@@ -45,7 +45,7 @@ import '@material/web/button/text-button.js'
 import '@material/web/button/filled-button.js'
 import '@awesome.me/webawesome/dist/components/color-picker/color-picker.js'
 import '@material/web/button/outlined-button.js'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/switch/switch.js'
 
 const VERIFY_OPTIONS_DEFAULTS = {
@@ -324,7 +324,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
       >
         <h3>${this._('Family Tree name')}</h3>
         <p>
-          <md-filled-text-field
+          <md-outlined-text-field
             class="settings-text-field"
             id="tree-name-field"
             label="${this._('Family Tree name')}"
@@ -332,7 +332,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
             @input="${e => {
               this._treeName = e.target.value
             }}"
-          ></md-filled-text-field>
+          ></md-outlined-text-field>
         </p>
         <p>
           <md-outlined-button @click="${this._renameTree}"
@@ -382,7 +382,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
 
         <h3>${this._('App title')}</h3>
         <p>
-          <md-filled-text-field
+          <md-outlined-text-field
             class="settings-text-field"
             id="app-title-field"
             label="${this._('App title')}"
@@ -390,7 +390,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
               'If set, overrides the family tree name in the title bar'
             )}"
             .value="${this.appState.treeConfig?.[TREE_CONFIG_APP_TITLE] ?? ''}"
-          ></md-filled-text-field>
+          ></md-outlined-text-field>
         </p>
         <p>
           <md-outlined-button @click="${this._saveAppTitle}"
@@ -857,7 +857,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
         ${intOptions.map(
           ([key, label]) => html`
             <div class="verify-option">
-              <md-filled-text-field
+              <md-outlined-text-field
                 class="verify-option-field"
                 type="number"
                 label="${label}"
@@ -867,7 +867,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
                   if (!Number.isNaN(v))
                     this._verifyOptions = {...this._verifyOptions, [key]: v}
                 }}"
-              ></md-filled-text-field>
+              ></md-outlined-text-field>
             </div>
           `
         )}

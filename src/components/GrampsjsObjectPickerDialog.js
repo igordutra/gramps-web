@@ -4,7 +4,7 @@ import '@material/web/dialog/dialog.js'
 import '@material/web/button/text-button.js'
 import '@material/web/tabs/tabs.js'
 import '@material/web/tabs/primary-tab.js'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 
 import {
   ArrowClockwise,
@@ -72,13 +72,13 @@ class GrampsjsObjectPickerDialog extends GrampsjsAppStateMixin(LitElement) {
           --md-dialog-content-block-start-space: var(--grampsjs-space-12);
         }
 
-        md-filled-text-field {
-          --md-filled-text-field-container-shape: var(
+        md-outlined-text-field {
+          --md-outlined-text-field-container-shape: var(
             --md-sys-shape-corner-small
           );
-          --md-filled-text-field-active-indicator-color: transparent;
-          --md-filled-text-field-hover-active-indicator-color: transparent;
-          --md-filled-text-field-focus-active-indicator-color: transparent;
+          --md-outlined-text-field-active-indicator-color: transparent;
+          --md-outlined-text-field-hover-active-indicator-color: transparent;
+          --md-outlined-text-field-focus-active-indicator-color: transparent;
           width: 100%;
           margin-bottom: 8px;
         }
@@ -212,7 +212,7 @@ class GrampsjsObjectPickerDialog extends GrampsjsAppStateMixin(LitElement) {
     return html`
       <md-dialog>
         <div slot="content" class="content-wrapper">
-          <md-filled-text-field
+          <md-outlined-text-field
             id="textfield"
             type="search"
             label="${this._('Search')}"
@@ -223,7 +223,7 @@ class GrampsjsObjectPickerDialog extends GrampsjsAppStateMixin(LitElement) {
               path="${MagnifyingGlass}"
               color="var(--md-sys-color-on-surface-variant)"
             ></grampsjs-icon>
-          </md-filled-text-field>
+          </md-outlined-text-field>
 
           ${this._renderTabBar()}
 

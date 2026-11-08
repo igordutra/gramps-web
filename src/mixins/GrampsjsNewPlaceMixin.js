@@ -1,6 +1,6 @@
 import {html} from 'lit'
 
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/button/outlined-button.js'
 
 import {MapPin} from '../icons/phosphor.js'
@@ -41,7 +41,7 @@ export const GrampsjsNewPlaceMixin = superClass =>
       return html`
         <h3 class="label">${this._('Name')}</h3>
         <p>
-          <md-filled-text-field
+          <md-outlined-text-field
             required
             supporting-text="&nbsp;"
             style="width:100%;"
@@ -49,7 +49,7 @@ export const GrampsjsNewPlaceMixin = superClass =>
             @input="${this.handleName}"
             @blur="${this.handleName}"
             id="place-name"
-          ></md-filled-text-field>
+          ></md-outlined-text-field>
         </p>
 
         <h3 class="label">${this._('Type')}</h3>

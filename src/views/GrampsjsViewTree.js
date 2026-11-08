@@ -3,14 +3,14 @@ import {keyed} from 'lit/directives/keyed.js'
 import {map} from 'lit/directives/map.js'
 import {repeat} from 'lit/directives/repeat.js'
 
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/button/filled-button'
 import '@material/web/button/outlined-button'
 import '@material/web/button/text-button.js'
 import '@material/web/dialog/dialog.js'
 import '@material/web/fab/fab.js'
 import '@material/web/iconbutton/icon-button.js'
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 
 import {
@@ -263,7 +263,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
           --md-menu-item-one-line-container-height: var(--grampsjs-space-48);
         }
 
-        #menu-controls md-filled-text-field {
+        #menu-controls md-outlined-text-field {
           width: 6em;
         }
 
@@ -784,7 +784,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
     const value = this.settingValues[setting.name]
     if (setting.type === 'select') {
       return html`
-        <md-filled-select
+        <md-outlined-select
           id="setting-${setting.name}"
           @change=${e => this._changeSetting(setting, e.target.value)}
         >
@@ -797,18 +797,18 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
               <div slot="headline">${this._(option.label)}</div>
             </md-select-option>`
           )}
-        </md-filled-select>
+        </md-outlined-select>
       `
     }
     return html`
-      <md-filled-text-field
+      <md-outlined-text-field
         id="setting-${setting.name}"
         value=${value}
         type="number"
         min=${setting.min ?? nothing}
         max=${setting.max ?? nothing}
         @change=${e => this._changeNumberSetting(setting, e.target)}
-      ></md-filled-text-field>
+      ></md-outlined-text-field>
     `
   }
 

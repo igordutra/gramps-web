@@ -56,21 +56,21 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
           width: auto;
         }
 
-        md-filled-select {
+        md-outlined-select {
           /*
            * The DNA selector is the largest control on the page, so its
            * text is a headline step.
            *
            * The token this used to name,
-           * "--md-filled-select-text-field-input-text-font-size", is not
+           * "--md-outlined-select-text-field-input-text-font-size", is not
            * one Material reads, so the override did nothing at all and
            * the select rendered at the default size. The token Material
            * reads is "input-text-size".
            */
-          --md-filled-select-text-field-input-text-size: var(
+          --md-outlined-select-text-field-input-text-size: var(
             --md-sys-typescale-headline-medium-size
           );
-          --md-filled-select-text-field-input-text-weight: var(
+          --md-outlined-select-text-field-input-text-weight: var(
             --md-sys-typescale-headline-medium-weight
           );
           margin-bottom: 30px;
@@ -134,7 +134,7 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
   }
 
   _handleSelectChange() {
-    const grampsId = this.renderRoot.querySelector('md-filled-select').value
+    const grampsId = this.renderRoot.querySelector('md-outlined-select').value
     this._goTo(`${this.page}/${grampsId}`)
   }
 
@@ -216,7 +216,7 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
   }
 
   _selectPersonByGrampsId() {
-    const select = this.shadowRoot.querySelector('md-filled-select')
+    const select = this.shadowRoot.querySelector('md-outlined-select')
     if (select) {
       select.select(this.grampsId)
     }

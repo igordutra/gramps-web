@@ -80,7 +80,7 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
           overflow-wrap: anywhere;
         }
 
-        md-filled-text-field {
+        md-outlined-text-field {
           width: 100%;
         }
       `,
@@ -421,14 +421,14 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
           ${this._(scopeInfo(this._creatingScope)?.addLabel)}
         </span>
         <div slot="content">
-          <md-filled-text-field
+          <md-outlined-text-field
             id="token-label"
             label="${this._('Device name')}"
             maxlength="${TOKEN_LABEL_MAX_LENGTH}"
             required
             ?disabled="${this._creating}"
             @keydown="${this._handleLabelKeydown}"
-          ></md-filled-text-field>
+          ></md-outlined-text-field>
         </div>
         <div slot="actions">
           <md-text-button @click="${this._closeCreation}">

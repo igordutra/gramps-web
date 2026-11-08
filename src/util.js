@@ -1179,7 +1179,7 @@ export function isKeyEventInInput(e) {
     Boolean(target?.getAttribute?.('contenteditable')) ||
     // Selects and menus jump to an entry when letters are typed
     path.some(el =>
-      ['md-filled-select', 'md-menu'].includes(el.tagName?.toLowerCase())
+      ['md-outlined-select', 'md-menu'].includes(el.tagName?.toLowerCase())
     )
   )
 }

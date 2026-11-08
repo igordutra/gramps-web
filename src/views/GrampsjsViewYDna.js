@@ -166,12 +166,12 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
 
   _renderSelect() {
     if (this._selectDataLoading) {
-      return html`<md-filled-select disabled id="placeholder"
-        >${this._('Loading items...')}</md-filled-select
+      return html`<md-outlined-select disabled id="placeholder"
+        >${this._('Loading items...')}</md-outlined-select
       >`
     }
     return html`
-      <md-filled-select @change="${this._handleSelectChange}">
+      <md-outlined-select @change="${this._handleSelectChange}">
         ${this._data.map(
           person => html`
             <md-select-option
@@ -181,7 +181,7 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
             >
           `
         )}
-      </md-filled-select>
+      </md-outlined-select>
     `
   }
 

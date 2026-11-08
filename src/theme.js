@@ -127,7 +127,11 @@ export const THEMES = {
   },
 }
 
-export const DEFAULT_THEME = 'archive'
+// The lab runs the SECOND style on purpose: Blueprint is a different
+// design language — square corners, a different type scale, a
+// different density — so a component that follows the tokens visibly
+// changes with it, and one that is hard-coded visibly does not.
+export const DEFAULT_THEME = 'blueprint'
 
 /**
  * Design-token scales that Gramps Web does not currently define.
@@ -270,11 +274,11 @@ export const ELEVATION_SCALE = {
  * DIFFERENT fallback chain — which is why the token layer reached the
  * buttons but not the fields:
  *
- *   filled text field -> --md-filled-text-field-container-shape
+ *   filled text field -> --md-outlined-text-field-container-shape
  *                       -> --md-sys-shape-corner-none (0px) for the end
  *                          corners, --md-sys-shape-corner-extra-small for
  *                          the start corners
- *   filled select    -> --md-filled-select-text-field-container-shape
+ *   filled select    -> --md-outlined-select-text-field-container-shape
  *                       -> corner-extra-small / corner-none
  *
  * So a filled field resolved to a 2px top and a 0px bottom — the square,
@@ -283,11 +287,15 @@ export const ELEVATION_SCALE = {
  * place that owns it is here.
  *
  * The label typography has the same problem: a field label resolves
- * through --md-filled-field-label-text-size, not through the type scale
+ * through --md-outlined-field-label-text-size, not through the type scale
  * directly.
+ *
+ * The token names matter: the PUBLIC ones are
+ * `--md-<variant>-text-field-*` and `--md-<variant>-select-text-field-*`,
+ * and the `--md-<variant>-field-*` names are the components' INTERNAL
+ * aliases.
  */
 export const COMPONENT_SCALE = {
-  // --- shape ---------------------------------------------------------
   /*
    * Material's per-component shape tokens.
    *
@@ -310,17 +318,12 @@ export const COMPONENT_SCALE = {
    * The `--md-<variant>-field-*` names are the component's INTERNAL
    * aliases, which it assigns on its own `:host` rule — a value set on
    * the document root loses to that and has no effect at all.
+   *
+   * The app's fields are the OUTLINED variant: a border and no fill.
+   * Material's FILLED variant is a grey box, and that grey box is what
+   * made the forms read as stock Material — the app's own tables and
+   * buttons are a white surface with a thin light border.
    */
-  '--md-filled-text-field-container-shape': 'var(--md-sys-shape-corner-small)',
-  '--md-filled-text-field-container-shape-start-start':
-    'var(--md-sys-shape-corner-small)',
-  '--md-filled-text-field-container-shape-start-end':
-    'var(--md-sys-shape-corner-small)',
-  '--md-filled-text-field-container-shape-end-end':
-    'var(--md-sys-shape-corner-small)',
-  '--md-filled-text-field-container-shape-end-start':
-    'var(--md-sys-shape-corner-small)',
-
   '--md-outlined-text-field-container-shape':
     'var(--md-sys-shape-corner-small)',
   '--md-outlined-text-field-container-shape-start-start':
@@ -331,18 +334,6 @@ export const COMPONENT_SCALE = {
     'var(--md-sys-shape-corner-small)',
   '--md-outlined-text-field-container-shape-end-start':
     'var(--md-sys-shape-corner-small)',
-
-  '--md-filled-select-text-field-container-shape':
-    'var(--md-sys-shape-corner-small)',
-  '--md-filled-select-text-field-container-shape-start-start':
-    'var(--md-sys-shape-corner-small)',
-  '--md-filled-select-text-field-container-shape-start-end':
-    'var(--md-sys-shape-corner-small)',
-  '--md-filled-select-text-field-container-shape-end-end':
-    'var(--md-sys-shape-corner-small)',
-  '--md-filled-select-text-field-container-shape-end-start':
-    'var(--md-sys-shape-corner-small)',
-
   '--md-outlined-select-text-field-container-shape':
     'var(--md-sys-shape-corner-small)',
   '--md-outlined-select-text-field-container-shape-start-start':
@@ -353,76 +344,17 @@ export const COMPONENT_SCALE = {
     'var(--md-sys-shape-corner-small)',
   '--md-outlined-select-text-field-container-shape-end-start':
     'var(--md-sys-shape-corner-small)',
-
   /*
    * The field's OWN aliases.
    *
-   * These are the tokens the `md-filled-field` element reads. A text
+   * These are the tokens the `md-outlined-field` element reads. A text
    * field assigns them on its own host rule — so for a text field a
    * root-level value loses and has no effect — but the SELECT does not
    * assign them, so the select's inner field inherits them from the
    * root. They therefore have to be set for the select, and they have
    * to MATCH the text field's own values, or the two controls in the
    * same row come out different heights.
-   */
-  '--md-filled-field-top-space': '15px',
-  '--md-filled-field-bottom-space': '15px',
-  '--md-filled-field-with-label-top-space': '6px',
-  '--md-filled-field-with-label-bottom-space': '6px',
-  '--md-outlined-field-top-space': '15px',
-  '--md-outlined-field-bottom-space': '15px',
-  '--md-outlined-field-with-label-top-space': '6px',
-  '--md-outlined-field-with-label-bottom-space': '6px',
-
-  // --- label typography ----------------------------------------------
-  // A field label is a label, not body text: it matches the label scale
-  // the rest of the interface uses. These are the PUBLIC token names;
-  // the `--md-*-field-label-text-*` aliases are set on the component's
-  // own host rule and a root-level value loses to them.
-  '--md-filled-text-field-label-text-size':
-    'var(--md-sys-typescale-label-large-size)',
-  '--md-filled-text-field-label-text-weight':
-    'var(--md-sys-typescale-label-large-weight)',
-  '--md-filled-text-field-label-text-font': 'var(--md-ref-typeface-plain)',
-  '--md-filled-text-field-label-text-populated-size':
-    'var(--md-sys-typescale-label-medium-size)',
-  '--md-filled-text-field-label-text-populated-line-height':
-    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
-
-  '--md-outlined-text-field-label-text-size':
-    'var(--md-sys-typescale-label-large-size)',
-  '--md-outlined-text-field-label-text-weight':
-    'var(--md-sys-typescale-label-large-weight)',
-  '--md-outlined-text-field-label-text-font': 'var(--md-ref-typeface-plain)',
-  '--md-outlined-text-field-label-text-populated-size':
-    'var(--md-sys-typescale-label-medium-size)',
-  '--md-outlined-text-field-label-text-populated-line-height':
-    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
-
-  '--md-filled-select-text-field-label-text-size':
-    'var(--md-sys-typescale-label-large-size)',
-  '--md-filled-select-text-field-label-text-weight':
-    'var(--md-sys-typescale-label-large-weight)',
-  '--md-filled-select-text-field-label-text-font':
-    'var(--md-ref-typeface-plain)',
-  '--md-filled-select-text-field-label-text-populated-size':
-    'var(--md-sys-typescale-label-medium-size)',
-  '--md-filled-select-text-field-label-text-populated-line-height':
-    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
-
-  '--md-outlined-select-text-field-label-text-size':
-    'var(--md-sys-typescale-label-large-size)',
-  '--md-outlined-select-text-field-label-text-weight':
-    'var(--md-sys-typescale-label-large-weight)',
-  '--md-outlined-select-text-field-label-text-font':
-    'var(--md-ref-typeface-plain)',
-  '--md-outlined-select-text-field-label-text-populated-size':
-    'var(--md-sys-typescale-label-medium-size)',
-  '--md-outlined-select-text-field-label-text-populated-line-height':
-    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
-
-  // --- density -------------------------------------------------------
-  /*
+   *
    * Material's field is 56px tall, which is taller than every other
    * control in the app. A research tool wants the same density as its
    * buttons.
@@ -438,35 +370,97 @@ export const COMPONENT_SCALE = {
    *
    *   labelled:   6 + 18 (the label line) + 6 + 24 (the content) = 54
    *   unlabelled: 15 + 24 (the content)                   + 15 = 54
-   *
-   * The select has no label — its heading is a separate element — so
-   * it takes the unlabelled path, and the two controls in the same row
-   * have to come out the same height.
    */
-  '--md-filled-text-field-top-space': '15px',
-  '--md-filled-text-field-bottom-space': '15px',
-  '--md-filled-text-field-with-label-top-space': '6px',
-  '--md-filled-text-field-with-label-bottom-space': '6px',
+  '--md-outlined-field-top-space': '15px',
+  '--md-outlined-field-bottom-space': '15px',
+  '--md-outlined-field-with-label-top-space': '6px',
+  '--md-outlined-field-with-label-bottom-space': '6px',
+  '--md-outlined-text-field-label-text-size':
+    'var(--md-sys-typescale-label-large-size)',
+  '--md-outlined-text-field-label-text-weight':
+    'var(--md-sys-typescale-label-large-weight)',
+  '--md-outlined-text-field-label-text-font': 'var(--md-ref-typeface-plain)',
+  '--md-outlined-text-field-label-text-populated-size':
+    'var(--md-sys-typescale-label-medium-size)',
+  '--md-outlined-text-field-label-text-populated-line-height':
+    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
+  '--md-outlined-select-text-field-label-text-size':
+    'var(--md-sys-typescale-label-large-size)',
+  '--md-outlined-select-text-field-label-text-weight':
+    'var(--md-sys-typescale-label-large-weight)',
+  '--md-outlined-select-text-field-label-text-font':
+    'var(--md-ref-typeface-plain)',
+  '--md-outlined-select-text-field-label-text-populated-size':
+    'var(--md-sys-typescale-label-medium-size)',
+  '--md-outlined-select-text-field-label-text-populated-line-height':
+    'var(--md-sys-typescale-label-medium-line-height, 1rem)',
   '--md-outlined-text-field-top-space': '15px',
   '--md-outlined-text-field-bottom-space': '15px',
   '--md-outlined-text-field-with-label-top-space': '6px',
   '--md-outlined-text-field-with-label-bottom-space': '6px',
-  '--md-filled-select-text-field-top-space': '15px',
-  '--md-filled-select-text-field-bottom-space': '15px',
-  '--md-filled-select-text-field-with-label-top-space': '6px',
-  '--md-filled-select-text-field-with-label-bottom-space': '6px',
   '--md-outlined-select-text-field-top-space': '15px',
   '--md-outlined-select-text-field-bottom-space': '15px',
   '--md-outlined-select-text-field-with-label-top-space': '6px',
   '--md-outlined-select-text-field-with-label-bottom-space': '6px',
-
-  // --- segmented control (the tree type bar) -------------------------
-  // The toggle was the last control still drawn as a 999px pill while
-  // every other control in the app uses the shape scale. It now takes
-  // its radius, hover strength and gap from tokens like the rest.
   '--grampsjs-pill-toggle-radius': 'var(--md-sys-shape-corner-full)',
   '--grampsjs-pill-toggle-hover-opacity': '5%',
   '--grampsjs-pill-toggle-gap': 'var(--grampsjs-space-8)',
+  '--md-outlined-text-field-container-color': 'transparent',
+  '--md-outlined-select-text-field-container-color': 'transparent',
+  '--md-outlined-text-field-outline-color': 'var(--md-sys-color-outline)',
+  '--md-outlined-text-field-hover-outline-color': 'var(--md-sys-color-outline)',
+  '--md-outlined-text-field-focus-outline-color': 'var(--md-sys-color-primary)',
+  '--md-outlined-text-field-error-outline-color': 'var(--md-sys-color-error)',
+  '--md-outlined-text-field-outline-width': 'var(--grampsjs-outline-width)',
+  '--md-outlined-text-field-hover-outline-width':
+    'var(--grampsjs-outline-width)',
+  '--md-outlined-text-field-focus-outline-width':
+    'var(--grampsjs-outline-width)',
+  '--md-outlined-text-field-active-indicator-color':
+    'var(--md-sys-color-primary)',
+  '--md-outlined-text-field-hover-active-indicator-color':
+    'var(--md-sys-color-primary)',
+  '--md-outlined-text-field-focus-active-indicator-color':
+    'var(--md-sys-color-primary)',
+  '--md-outlined-text-field-label-text-color':
+    'var(--md-sys-color-on-surface-variant)',
+  '--md-outlined-text-field-focus-label-text-color':
+    'var(--md-sys-color-primary)',
+  '--md-outlined-text-field-label-text-populated-weight':
+    'var(--md-sys-typescale-label-medium-weight)',
+  '--md-outlined-text-field-input-text-color': 'var(--md-sys-color-on-surface)',
+  '--md-outlined-text-field-input-text-size':
+    'var(--md-sys-typescale-body-medium-size)',
+  '--md-outlined-text-field-input-text-weight':
+    'var(--md-sys-typescale-body-medium-weight)',
+  '--md-outlined-text-field-input-text-placeholder-color':
+    'var(--md-sys-color-on-surface-variant)',
+  '--md-outlined-select-text-field-outline-color':
+    'var(--md-sys-color-outline)',
+  '--md-outlined-select-text-field-hover-outline-color':
+    'var(--md-sys-color-outline)',
+  '--md-outlined-select-text-field-focus-outline-color':
+    'var(--md-sys-color-primary)',
+  '--md-outlined-select-text-field-outline-width':
+    'var(--grampsjs-outline-width)',
+  '--md-outlined-select-text-field-hover-outline-width':
+    'var(--grampsjs-outline-width)',
+  '--md-outlined-select-text-field-focus-outline-width':
+    'var(--grampsjs-outline-width)',
+  '--md-outlined-select-text-field-active-indicator-color':
+    'var(--md-sys-color-primary)',
+  '--md-outlined-select-text-field-label-text-color':
+    'var(--md-sys-color-on-surface-variant)',
+  '--md-outlined-select-text-field-focus-label-text-color':
+    'var(--md-sys-color-primary)',
+  '--md-outlined-select-text-field-input-text-color':
+    'var(--md-sys-color-on-surface)',
+  '--md-outlined-select-text-field-input-text-size':
+    'var(--md-sys-typescale-body-medium-size)',
+  '--md-outlined-select-text-field-input-text-weight':
+    'var(--md-sys-typescale-body-medium-weight)',
+  '--md-outlined-select-text-field-input-text-placeholder-color':
+    'var(--md-sys-color-on-surface-variant)',
 }
 
 export const MATERIAL_SCALE = {
@@ -647,80 +641,6 @@ export const MATERIAL_SCALE = {
   '--md-filled-icon-button-icon-size': 'var(--grampsjs-icon-size-large)',
   '--md-filled-icon-button-pressed-state-layer-opacity':
     'var(--grampsjs-state-press-opacity)',
-
-  // --- filled-select -----------------------------------------------
-  '--md-filled-select-text-field-active-indicator-height':
-    'var(--grampsjs-outline-width)',
-  '--md-filled-select-text-field-disabled-active-indicator-height':
-    'var(--grampsjs-outline-width)',
-  '--md-filled-select-text-field-disabled-active-indicator-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-select-text-field-disabled-container-opacity':
-    'var(--grampsjs-disabled-surface-opacity)',
-  '--md-filled-select-text-field-disabled-input-text-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-select-text-field-disabled-label-text-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-select-text-field-disabled-leading-icon-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-select-text-field-disabled-supporting-text-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-select-text-field-disabled-trailing-icon-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-select-text-field-error-hover-state-layer-opacity':
-    'var(--grampsjs-state-hover-opacity)',
-  '--md-filled-select-text-field-focus-active-indicator-height':
-    'var(--grampsjs-outline-width-focus)',
-  '--md-filled-select-text-field-hover-active-indicator-height':
-    'var(--grampsjs-outline-width)',
-  '--md-filled-select-text-field-hover-state-layer-opacity':
-    'var(--grampsjs-state-hover-opacity)',
-  '--md-filled-select-text-field-leading-icon-size':
-    'var(--grampsjs-icon-size-large)',
-  '--md-filled-select-text-field-trailing-icon-size':
-    'var(--grampsjs-icon-size-large)',
-
-  // --- filled-text-field -------------------------------------------
-  '--md-filled-text-field-active-indicator-height':
-    'var(--grampsjs-outline-width)',
-  '--md-filled-text-field-disabled-active-indicator-height':
-    'var(--grampsjs-outline-width)',
-  '--md-filled-text-field-disabled-active-indicator-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-text-field-disabled-container-opacity':
-    'var(--grampsjs-disabled-surface-opacity)',
-  '--md-filled-text-field-disabled-input-text-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-text-field-disabled-label-text-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-text-field-disabled-leading-icon-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-text-field-disabled-supporting-text-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-text-field-disabled-trailing-icon-opacity':
-    'var(--grampsjs-disabled-opacity)',
-  '--md-filled-text-field-error-hover-state-layer-opacity':
-    'var(--grampsjs-state-hover-opacity)',
-  '--md-filled-text-field-focus-active-indicator-height':
-    'var(--grampsjs-outline-width-focus)',
-  '--md-filled-text-field-hover-active-indicator-height':
-    'var(--grampsjs-outline-width)',
-  '--md-filled-text-field-hover-state-layer-opacity':
-    'var(--grampsjs-state-hover-opacity)',
-  '--md-filled-text-field-icon-input-space': 'var(--grampsjs-space-16)',
-  '--md-filled-text-field-input-text-prefix-trailing-space':
-    'var(--grampsjs-space-2)',
-  '--md-filled-text-field-input-text-suffix-leading-space':
-    'var(--grampsjs-space-2)',
-  '--md-filled-text-field-leading-icon-size': 'var(--grampsjs-icon-size-large)',
-  '--md-filled-text-field-leading-space': 'var(--grampsjs-space-16)',
-  '--md-filled-text-field-trailing-icon-size':
-    'var(--grampsjs-icon-size-large)',
-  '--md-filled-text-field-trailing-space': 'var(--grampsjs-space-16)',
-  '--md-filled-text-field-with-leading-icon-leading-space':
-    'var(--grampsjs-space-12)',
-  '--md-filled-text-field-with-trailing-icon-trailing-space':
-    'var(--grampsjs-space-12)',
 
   // --- filled-tonal-icon-button ------------------------------------
   '--md-filled-tonal-icon-button-container-height':
@@ -1129,42 +1049,15 @@ export const MATERIAL_PRIMITIVES = {
   '--grampsjs-tab-height-with-icon': '64px',
   '--grampsjs-menu-item-height': '48px',
   '--grampsjs-list-item-height': '56px',
-  // Material's own default, which is what the rows actually render —
-  // the app's own two-line height lives in a separate token below
   '--grampsjs-list-item-height-two-line': '72px',
-  '--grampsjs-list-item-height-three-line': '96px',
-  // the app's own row heights, kept apart from Material's defaults so
-  // the rendered values do not change
-  '--grampsjs-list-item-two-line-row-height': '80px',
-  '--grampsjs-list-item-three-line-row-height': '96px',
   '--grampsjs-fab-size': '56px',
   '--grampsjs-fab-size-small': '40px',
   '--grampsjs-fab-size-large': '96px',
   '--grampsjs-fab-size-branded': '56px',
   '--grampsjs-fab-size-branded-large': '96px',
   '--grampsjs-progress-size': '48px',
-  // the ring's stroke is a PERCENTAGE of the circle — Material multiplies
-  // it by 1%, so the value has to stay unitless
-  '--grampsjs-progress-indicator-width': '10',
-  '--grampsjs-progress-stroke': '14',
-  '--grampsjs-progress-stroke-large': '18',
-  // -- the small steps the space scale was missing ------------------
-  '--grampsjs-space-0': '0px',
-  '--grampsjs-icon-size-xs': '14px',
-  // -- the app's own colour and shape decisions ---------------------
-  '--grampsjs-divider-color': 'var(--grampsjs-body-font-color-30)',
-  '--grampsjs-dialog-shape': '0',
-  '--grampsjs-dialog-inline-size': 'min(1200px, 95vw)',
-  '--grampsjs-menu-item-disabled-opacity': '0.6',
-  // the app keeps a disabled icon button's icon fully visible, so these
-  // hold their own values rather than taking the disabled opacity
-  '--grampsjs-icon-button-disabled-opacity': '1',
-  '--grampsjs-icon-button-opacity': '1',
+  '--grampsjs-progress-indicator-width': '10px',
   '--grampsjs-chip-radius': 'var(--md-sys-shape-corner-small)',
-  // the tab's active indicator: rounded at the top, square at the
-  // bottom, the way a tab bar is drawn
-  '--grampsjs-tab-indicator-shape':
-    'var(--md-sys-shape-corner-extra-small) var(--md-sys-shape-corner-extra-small) 0 0',
   '--grampsjs-checkbox-size': '18px',
   '--grampsjs-touch-target': '48px',
   '--grampsjs-switch-handle-size': '16px',
@@ -1175,6 +1068,7 @@ export const MATERIAL_PRIMITIVES = {
   '--grampsjs-slider-handle-size': '20px',
   '--grampsjs-slider-label-height': '28px',
 }
+
 /**
  * Density overrides for the Material components.
  *
@@ -1198,8 +1092,6 @@ export const DENSITY_SCALE = {
   '--md-filled-button-trailing-space': '16px',
   '--md-outlined-button-trailing-space': '16px',
   '--md-text-button-trailing-space': '10px',
-  // Material's 8% hover / 12% press state layers are heavy on a light
-  // surface; 5% / 9% keeps the affordance without the smear.
   '--md-filled-button-hover-state-layer-opacity': '0.05',
   '--md-filled-button-pressed-state-layer-opacity': '0.09',
   '--md-outlined-button-hover-state-layer-opacity': '0.05',
@@ -1210,9 +1102,6 @@ export const DENSITY_SCALE = {
   '--md-list-item-trailing-space': '20px',
   '--md-outlined-text-field-top-space': '14px',
   '--md-outlined-text-field-bottom-space': '14px',
-  '--md-filled-text-field-top-space': '14px',
-  '--md-filled-text-field-bottom-space': '14px',
-  // A 3px tab indicator is Material's "chunky" default; 2px reads cleaner.
   '--md-primary-tab-active-indicator-height': '2px',
   '--md-secondary-tab-active-indicator-height': '2px',
 }

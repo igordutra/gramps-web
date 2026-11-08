@@ -1,6 +1,6 @@
 import {html} from 'lit'
 
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 
 import {GrampsjsViewNewObject} from './GrampsjsViewNewObject.js'
@@ -49,7 +49,7 @@ export class GrampsjsViewNewCitation extends GrampsjsViewNewObject {
       </p>
 
       <h3 class="label">${this._('Confidence')}</h3>
-      <md-filled-select
+      <md-outlined-select
         id="select-confidence"
         @change="${this.handleConfidence}"
       >
@@ -66,7 +66,7 @@ export class GrampsjsViewNewCitation extends GrampsjsViewNewObject {
             </md-select-option>
           `
         )}
-      </md-filled-select>
+      </md-outlined-select>
 
       <h3 class="label">${this._('Media')}</h3>
       <grampsjs-form-select-object-list

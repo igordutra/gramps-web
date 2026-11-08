@@ -81,7 +81,7 @@ export class GrampsjsViewNewObject extends GrampsjsNewObjectTagsMixin(
       )
       .forEach(element => element.reset())
     this.shadowRoot
-      .querySelectorAll('md-filled-text-field')
+      .querySelectorAll('md-outlined-text-field')
       .forEach(element => {
         // eslint-disable-next-line no-param-reassign
         element.value = ''
