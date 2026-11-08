@@ -1,7 +1,6 @@
 import {html} from 'lit'
 import '@material/web/button/outlined-button.js'
-import {mdiDeleteSweep} from '@mdi/js'
-
+import {Trash} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import {getRecentObjects, setRecentObjects} from '../api.js'
 import '../components/GrampsjsSearchResultList.js'
@@ -64,14 +63,15 @@ export class GrampsjsViewRecentObject extends GrampsjsView {
   }
 
   render() {
-    return html` <md-outlined-button
+    return html`${this.renderPageHeading()}
+      <md-outlined-button
         class="float-right"
         @click="${this._handleClear}"
         ?disabled=${this._data.length === 0}
       >
         <grampsjs-icon
           slot="icon"
-          path="${mdiDeleteSweep}"
+          path="${Trash}"
           color="currentColor"
           height="20"
           width="20"

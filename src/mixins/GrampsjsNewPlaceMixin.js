@@ -3,8 +3,7 @@ import {html} from 'lit'
 import '@material/web/textfield/filled-text-field.js'
 import '@material/web/button/outlined-button.js'
 
-import {mdiMapMarker} from '@mdi/js'
-
+import {MapPin} from '../icons/phosphor.js'
 import '../components/GrampsjsFormSelectObjectList.js'
 import '../components/GrampsjsFormSelectType.js'
 import '../components/GrampsjsFormPrivate.js'
@@ -98,7 +97,7 @@ export const GrampsjsNewPlaceMixin = superClass =>
           >
             <grampsjs-icon
               slot="icon"
-              path="${mdiMapMarker}"
+              path="${MapPin}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('Pick on map')}

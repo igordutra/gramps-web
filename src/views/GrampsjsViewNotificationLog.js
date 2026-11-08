@@ -7,25 +7,24 @@ import '@material/web/button/text-button.js'
 import '@material/web/dialog/dialog.js'
 import '@material/web/iconbutton/icon-button.js'
 import {
-  mdiAlertCircleOutline,
-  mdiCheckCircleOutline,
-  mdiInformationOutline,
-  mdiAlertOutline,
-  mdiDeleteSweep,
-  mdiChevronRight,
-  mdiContentCopy,
-} from '@mdi/js'
-
+  CaretRight,
+  CheckCircle,
+  Copy,
+  Info,
+  Trash,
+  Warning,
+  WarningCircle,
+} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsTimedelta.js'
 import '../components/GrampsjsTaskProgressIndicator.js'
 
 const TYPE_ICON = {
-  error: mdiAlertCircleOutline,
-  warning: mdiAlertOutline,
-  info: mdiInformationOutline,
-  success: mdiCheckCircleOutline,
+  error: WarningCircle,
+  warning: Warning,
+  info: Info,
+  success: CheckCircle,
 }
 
 const TYPE_COLOR = {
@@ -172,7 +171,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
         >
           <grampsjs-icon
             slot="icon"
-            path="${mdiDeleteSweep}"
+            path="${Trash}"
             color="currentColor"
             height="20"
             width="20"
@@ -251,7 +250,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
                     ${this._hasDetail(n)
                       ? html`<grampsjs-icon
                           slot="end"
-                          path="${mdiChevronRight}"
+                          path="${CaretRight}"
                           color="var(--grampsjs-body-font-color-60)"
                           height="20"
                           width="20"
@@ -296,7 +295,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
                       this._copyDetail(this._selectedNotification.detail)}"
                   >
                     <grampsjs-icon
-                      path="${mdiContentCopy}"
+                      path="${Copy}"
                       height="20"
                       width="20"
                     ></grampsjs-icon>

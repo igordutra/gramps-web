@@ -7,13 +7,12 @@ import '@material/web/menu/menu-item.js'
 import '@material/web/chips/chip-set'
 import '@material/web/chips/filter-chip'
 import {
-  mdiAccountPlus,
-  mdiFamilyTree,
-  mdiDna,
-  mdiSearchWeb,
-  mdiTimelineOutline,
-  mdiMap,
-} from '@mdi/js'
+  Dna,
+  Globe,
+  MapTrifold,
+  TreeStructure,
+  UserPlus,
+} from '../icons/phosphor.js'
 import {GrampsjsObject} from './GrampsjsObject.js'
 import {buttonColorStyles} from '../SharedStyles.js'
 import {getSymbols} from '../symbols.js'
@@ -145,7 +144,7 @@ export class GrampsjsPerson extends GrampsjsObject {
         >
           <span class="profile-picture-content">
             <grampsjs-icon
-              path=${mdiAccountPlus}
+              path=${UserPlus}
               height="48"
               width="48"
               color="currentColor"
@@ -279,27 +278,31 @@ export class GrampsjsPerson extends GrampsjsObject {
     return [
       {
         label: 'Show in tree',
-        path: mdiFamilyTree,
+        path: TreeStructure,
         handler: this._handleTreeButtonClick,
       },
       {
         label: 'Show on timeline',
-        path: mdiTimelineOutline,
+        path: TreeStructure,
         handler: this._handleTimelineButtonClick,
       },
-      {label: 'Open in map', path: mdiMap, handler: this._handleMapButtonClick},
+      {
+        label: 'Open in map',
+        path: MapTrifold,
+        handler: this._handleMapButtonClick,
+      },
       ...(hasDna
         ? [
             {
               label: 'DNA matches',
-              path: mdiDna,
+              path: Dna,
               handler: this._handleDnaButtonClick,
             },
           ]
         : []),
       {
         label: 'External Search',
-        path: mdiSearchWeb,
+        path: Globe,
         handler: this._handleExternalSearchClick,
       },
     ]

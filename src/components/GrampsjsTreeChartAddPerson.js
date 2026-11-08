@@ -1,7 +1,7 @@
 import {html, css, LitElement} from 'lit'
 import '@material/web/dialog/dialog.js'
 import '@material/web/iconbutton/icon-button.js'
-import {mdiLinkPlus, mdiPlus} from '@mdi/js'
+import {Link, Plus} from '../icons/phosphor.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {fireEvent} from '../util.js'
 import {linkParent, linkChild, linkSpouse} from '../util/familyLinks.js'
@@ -156,7 +156,7 @@ export class GrampsjsTreeChartAddPerson extends GrampsjsAppStateMixin(
           @click="${() => this._selectRelationship(relationship, 'link')}"
         >
           <grampsjs-icon
-            path="${mdiLinkPlus}"
+            path="${Link}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -164,7 +164,7 @@ export class GrampsjsTreeChartAddPerson extends GrampsjsAppStateMixin(
           @click="${() => this._selectRelationship(relationship, 'new')}"
         >
           <grampsjs-icon
-            path="${mdiPlus}"
+            path="${Plus}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>

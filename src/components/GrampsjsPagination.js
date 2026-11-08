@@ -3,12 +3,11 @@ import {html, css, LitElement} from 'lit'
 import '@material/web/iconbutton/icon-button.js'
 
 import {
-  mdiChevronLeft,
-  mdiChevronRight,
-  mdiPageFirst,
-  mdiPageLast,
-} from '@mdi/js'
-
+  CaretDoubleLeft,
+  CaretDoubleRight,
+  CaretLeft,
+  CaretRight,
+} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -73,21 +72,21 @@ class GrampsjsPagination extends GrampsjsAppStateMixin(LitElement) {
     return html`
       <div class="paging">
         <span class="range">${this._renderRange()}</span>
-        ${this._renderButton(mdiPageFirst, '_First', 1, this.page === 1)}
+        ${this._renderButton(CaretDoubleLeft, '_First', 1, this.page === 1)}
         ${this._renderButton(
-          mdiChevronLeft,
+          CaretLeft,
           'Previous',
           this.page - 1,
           this.page === 1
         )}
         ${this._renderButton(
-          mdiChevronRight,
+          CaretRight,
           'Next',
           this.page + 1,
           this.page === this.pages
         )}
         ${this._renderButton(
-          mdiPageLast,
+          CaretDoubleRight,
           '_Last',
           this.pages,
           this.page === this.pages

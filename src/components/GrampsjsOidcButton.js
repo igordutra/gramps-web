@@ -1,8 +1,11 @@
 import {html, css, LitElement} from 'lit'
 import '@material/web/button/outlined-button'
 import '@material/web/progress/circular-progress.js'
-import {mdiGoogle, mdiMicrosoft, mdiOpenid} from '@mdi/js'
-
+import {
+  GoogleLogo,
+  IdentificationCard,
+  MicrosoftOutlookLogo,
+} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 
 class GrampsjsOidcButton extends LitElement {
@@ -61,13 +64,13 @@ class GrampsjsOidcButton extends LitElement {
     let iconPath
     switch (this.provider) {
       case 'google':
-        iconPath = mdiGoogle
+        iconPath = GoogleLogo
         break
       case 'microsoft':
-        iconPath = mdiMicrosoft
+        iconPath = MicrosoftOutlookLogo
         break
       default:
-        iconPath = mdiOpenid
+        iconPath = IdentificationCard
     }
     return html`<grampsjs-icon
       .path="${iconPath}"

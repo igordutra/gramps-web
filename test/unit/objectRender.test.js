@@ -1,5 +1,11 @@
 import {describe, it, expect} from 'vitest'
-import {mdiFile, mdiFileMusic, mdiFileVideo, mdiImage, mdiMap} from '@mdi/js'
+import {
+  File,
+  FileAudio,
+  FileVideo,
+  Image,
+  MapTrifold,
+} from '../../src/icons/phosphor.js'
 import {renderIcon} from '../../src/objectRender.js'
 
 describe('renderIcon checksum', () => {
@@ -33,9 +39,9 @@ describe('renderIcon media type', () => {
   })
 
   it.each([
-    ['audio/mpeg', mdiFileMusic],
-    ['application/vnd.google-earth.kml+xml', mdiMap],
-    ['application/zip', mdiFile],
+    ['audio/mpeg', FileAudio],
+    ['application/vnd.google-earth.kml+xml', MapTrifold],
+    ['application/zip', File],
   ])('renders the type icon for %s without a thumbnail', (mime, path) => {
     const result = renderIcon(media(mime))
     expect(result.strings.join('')).not.to.include('grampsjs-img')
@@ -43,9 +49,9 @@ describe('renderIcon media type', () => {
   })
 
   it.each([
-    ['image/jpeg', mdiImage],
-    ['video/mp4', mdiFileVideo],
-    ['application/pdf', mdiFile],
+    ['image/jpeg', Image],
+    ['video/mp4', FileVideo],
+    ['application/pdf', File],
   ])('renders a thumbnail for %s falling back to its icon', (mime, path) => {
     const result = renderIcon(media(mime))
     expect(result.strings.join('')).to.include('grampsjs-img')

@@ -7,7 +7,7 @@ import '@material/web/switch/switch.js'
 
 import './GrampsjsIcon.js'
 import './GrampsjsImg.js'
-import {mdiLayers, mdiCircleOpacity} from '@mdi/js'
+import {CircleHalf, Stack} from '../icons/phosphor.js'
 import {fireEvent, objectIconPath} from '../util.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -270,7 +270,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           @click="${this._handleButtonClick}"
         >
           <grampsjs-icon
-            path="${mdiLayers}"
+            path="${Stack}"
             color="var(--grampsjs-body-font-color-70)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -377,7 +377,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
     return html`
       <div class="opacity">
         <grampsjs-icon
-          path="${mdiCircleOpacity}"
+          path="${CircleHalf}"
           color="var(--md-sys-color-on-surface-variant)"
           height="18"
           width="18"

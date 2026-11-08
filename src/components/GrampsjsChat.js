@@ -1,7 +1,6 @@
 import {html, css, LitElement} from 'lit'
 import '@material/web/button/filled-button.js'
-import {mdiNotificationClearAll} from '@mdi/js'
-
+import {BellSlash} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import './GrampsjsChatPrompt.js'
@@ -145,7 +144,7 @@ class GrampsjsChat extends GrampsjsAppStateMixin(LitElement) {
           >
             <grampsjs-icon
               slot="icon"
-              path="${mdiNotificationClearAll}"
+              path="${BellSlash}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('New')}

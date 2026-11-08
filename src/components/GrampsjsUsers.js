@@ -9,14 +9,13 @@ import '@material/web/textfield/filled-text-field.js'
 import '@material/web/iconbutton/icon-button.js'
 
 import {
-  mdiAccountMultiplePlus,
-  mdiAccountPlus,
-  mdiDeleteForever,
-  mdiDownload,
-  mdiFilterOff,
-  mdiPencil,
-} from '@mdi/js'
-
+  DownloadSimple,
+  FunnelX,
+  PencilSimple,
+  TrashSimple,
+  UserPlus,
+  UsersThree,
+} from '../icons/phosphor.js'
 import {GrampsjsTableBase} from './GrampsjsTableBase.js'
 import {userRoles} from './GrampsjsFormUser.js'
 import {fireEvent} from '../util.js'
@@ -138,7 +137,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
                   id="button-edit-${index}"
                 >
                   <grampsjs-icon
-                    path="${mdiPencil}"
+                    path="${PencilSimple}"
                     height="20"
                     width="20"
                     color="var(--mdc-theme-secondary)"
@@ -154,7 +153,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
                   id="button-del-${index}"
                 >
                   <grampsjs-icon
-                    path="${mdiDeleteForever}"
+                    path="${TrashSimple}"
                     height="20"
                     width="20"
                     color="var(--grampsjs-alert-error-font-color)"
@@ -212,7 +211,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
                 @click="${this._clearFilters}"
               >
                 <grampsjs-icon
-                  path="${mdiFilterOff}"
+                  path="${FunnelX}"
                   height="24"
                   width="24"
                   color="var(--mdc-theme-secondary)"
@@ -242,7 +241,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           id="button-add"
         >
           <grampsjs-icon
-            path="${mdiAccountPlus}"
+            path="${UserPlus}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -257,7 +256,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           @click="${this._handleImportClick}"
         >
           <grampsjs-icon
-            path="${mdiAccountMultiplePlus}"
+            path="${UsersThree}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -272,7 +271,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           @click="${this._handleExportClick}"
         >
           <grampsjs-icon
-            path="${mdiDownload}"
+            path="${DownloadSimple}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>

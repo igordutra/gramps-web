@@ -1,6 +1,5 @@
 import {html} from 'lit'
-import {mdiFormatListChecks} from '@mdi/js'
-
+import {ListChecks} from '../icons/phosphor.js'
 import '../components/GrampsjsBreadcrumbs.js'
 import '../components/GrampsjsTask.js'
 import {GrampsjsViewSource} from './GrampsjsViewSource.js'
@@ -22,7 +21,7 @@ export class GrampsjsViewTask extends GrampsjsViewSource {
         .data="${this._data}"
         .appState="${this.appState}"
         objectsName="Tasks"
-        .objectIcon="${mdiFormatListChecks}"
+        .objectIcon="${ListChecks}"
         ?edit="${this.canEdit}"
         hideBookmark
       ></grampsjs-breadcrumbs>

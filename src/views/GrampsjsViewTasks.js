@@ -1,6 +1,5 @@
 import {css, html} from 'lit'
-import {mdiPlus} from '@mdi/js'
-
+import {Plus} from '../icons/phosphor.js'
 import '@material/web/fab/fab.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import '../components/GrampsjsTasks.js'
@@ -17,8 +16,17 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
       css`
         md-fab {
           position: fixed;
-          bottom: 32px;
-          right: 32px;
+          /* The button belongs to the content column, not to the window.
+             The column ends one page margin short of the viewport edge and
+             the page scrollbar sits outside it, so the button is inset by
+             the margin plus its own gutter — otherwise it hangs over the
+             panel edge and into the scrollbar. */
+          bottom: var(--grampsjs-space-24, 24px);
+          right: calc(
+            var(--grampsjs-page-margin-inline, 40px) +
+              var(--grampsjs-space-24, 24px) +
+              var(--grampsjs-scrollbar-width, 0px)
+          );
           /* Material's FAB is a large saturated disc with a heavy shadow.
              A modern action button is smaller, softer and matches the
              density of the rest of the toolbar. */
@@ -49,7 +57,8 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
   }
 
   render() {
-    return html`<h2>${this._('Tasks')}</h2>
+    return html`${this.renderPageHeading()}
+      <h2>${this._('Tasks')}</h2>
 
       <grampsjs-tasks
         .appState="${this.appState}"
@@ -64,10 +73,14 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
 
   renderFab() {
     return html`
-      <md-fab variant="secondary" @click=${this._handleClickAdd}>
+      <md-fab
+        variant="secondary"
+        @click=${this._handleClickAdd}
+        aria-label="${this._('Add')}"
+      >
         <grampsjs-icon
           slot="icon"
-          .path="${mdiPlus}"
+          .path="${Plus}"
           color="var(--mdc-theme-on-secondary)"
         ></grampsjs-icon>
       </md-fab>

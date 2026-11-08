@@ -10,17 +10,16 @@ import '@material/web/button/filled-button'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/icon/icon.js'
 import {
-  mdiOpenInNew,
-  mdiEarth,
-  mdiShieldAccount,
-  mdiLock,
-  mdiCog,
-  mdiEye,
-  mdiEyeOff,
-  mdiCogOff,
-  mdiPlus,
-  mdiDelete,
-} from '@mdi/js'
+  ArrowSquareOut,
+  Eye,
+  EyeSlash,
+  Gear,
+  GlobeHemisphereWest,
+  Lock,
+  Plus,
+  ShieldCheck,
+  Trash,
+} from '../icons/phosphor.js'
 import {renderIcon} from '../icons.js'
 import {updateSettings, getSettings} from '../api.js'
 import {clickKeyHandler, makeHandle} from '../util.js'
@@ -301,19 +300,19 @@ class GrampsjsFormExternalSearch extends GrampsjsObjectForm {
 
   getWebCriteriaIcon(websiteCriteria, isCustom) {
     if (isCustom) return null
-    if (websiteCriteria.reqSubscription) return mdiLock
-    if (websiteCriteria.reqRegistration) return mdiShieldAccount
-    return mdiEarth
+    if (websiteCriteria.reqSubscription) return Lock
+    if (websiteCriteria.reqRegistration) return ShieldCheck
+    return GlobeHemisphereWest
   }
 
   _getListItemIcon(web) {
     if (!this.editMode) {
-      return renderIcon(mdiOpenInNew, 'var(--grampsjs-body-font-color-100)')
+      return renderIcon(ArrowSquareOut, 'var(--grampsjs-body-font-color-100)')
     }
     if (web.isCustom) {
-      return renderIcon(mdiDelete, 'var(--grampsjs-body-font-color-100)')
+      return renderIcon(Trash, 'var(--grampsjs-body-font-color-100)')
     }
-    const icon = this.hiddenWebsites[web.key] ? mdiEyeOff : mdiEye
+    const icon = this.hiddenWebsites[web.key] ? EyeSlash : Eye
     return renderIcon(icon, 'var(--grampsjs-body-font-color-100)')
   }
 
@@ -335,7 +334,7 @@ class GrampsjsFormExternalSearch extends GrampsjsObjectForm {
         </span>
         <md-icon-button @click="${this._toggleEditMode}">
           <grampsjs-icon
-            .path="${this.editMode ? mdiCogOff : mdiCog}"
+            .path="${this.editMode ? Gear : Gear}"
             color="var(--grampsjs-body-font-color-40)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -419,7 +418,7 @@ class GrampsjsFormExternalSearch extends GrampsjsObjectForm {
       <div class="add-button-container">
         <md-icon-button @click="${this._toggleAddForm}">
           <grampsjs-icon
-            .path="${mdiPlus}"
+            .path="${Plus}"
             color="var(--md-sys-color-primary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -440,15 +439,18 @@ class GrampsjsFormExternalSearch extends GrampsjsObjectForm {
     return html`
       <div class="legend">
         <span class="legend-item">
-          ${renderIcon(mdiEarth, 'var(--grampsjs-body-font-color-60)')}
+          ${renderIcon(
+            GlobeHemisphereWest,
+            'var(--grampsjs-body-font-color-60)'
+          )}
           <span>${this._('Open access')}</span>
         </span>
         <span class="legend-item">
-          ${renderIcon(mdiShieldAccount, 'var(--grampsjs-body-font-color-60)')}
+          ${renderIcon(ShieldCheck, 'var(--grampsjs-body-font-color-60)')}
           <span>${this._('Registration required')}</span>
         </span>
         <span class="legend-item">
-          ${renderIcon(mdiLock, 'var(--grampsjs-body-font-color-60)')}
+          ${renderIcon(Lock, 'var(--grampsjs-body-font-color-60)')}
           <span>${this._('Records require additional access')}</span>
         </span>
       </div>

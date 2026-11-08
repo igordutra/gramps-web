@@ -11,8 +11,7 @@ import {css, html, LitElement} from 'lit'
 import '@material/web/button/text-button.js'
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiClose} from '@mdi/js'
-
+import {X} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import {buttonColorStyles, iconButtonColorStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -169,10 +168,7 @@ class GrampsjsSnackbar extends GrampsjsAppStateMixin(LitElement) {
               aria-label="${this._('Close')}"
               @click="${this.dismiss}"
             >
-              <grampsjs-icon
-                path="${mdiClose}"
-                color="currentColor"
-              ></grampsjs-icon>
+              <grampsjs-icon path="${X}" color="currentColor"></grampsjs-icon>
             </md-icon-button>`
           : ''}
       </div>

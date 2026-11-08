@@ -1,14 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import {html, css} from 'lit'
 
-import {
-  mdiClose,
-  mdiDelete,
-  mdiPencil,
-  mdiSelectDrag,
-  mdiSelectOff,
-  mdiTextRecognition,
-} from '@mdi/js'
+import {PencilSimple, Scan, Selection, Trash, X} from '../icons/phosphor.js'
 import {GrampsjsObject} from './GrampsjsObject.js'
 import './GrampsjsImg.js'
 import {isPlayableMime} from './GrampsjsMediaPlayer.js'
@@ -171,7 +164,7 @@ export class GrampsjsMediaObject extends GrampsjsObject {
                       @click="${this._handleEditDate}"
                     >
                       <grampsjs-icon
-                        path="${mdiPencil}"
+                        path="${PencilSimple}"
                         color="currentColor"
                       ></grampsjs-icon>
                     </md-icon-button>
@@ -224,10 +217,7 @@ export class GrampsjsMediaObject extends GrampsjsObject {
           ?disabled="${noSelection}"
           @click="${this._handleRegionDelete}"
         >
-          <grampsjs-icon
-            path="${mdiDelete}"
-            color="currentColor"
-          ></grampsjs-icon>
+          <grampsjs-icon path="${Trash}" color="currentColor"></grampsjs-icon>
         </md-icon-button>
         <md-icon-button
           class="edit"
@@ -236,7 +226,7 @@ export class GrampsjsMediaObject extends GrampsjsObject {
           @click="${this._handleRegionDeselect}"
         >
           <grampsjs-icon
-            path="${mdiSelectOff}"
+            path="${Selection}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -247,7 +237,7 @@ export class GrampsjsMediaObject extends GrampsjsObject {
           @click="${this._handleEnableDraw}"
         >
           <grampsjs-icon
-            path="${mdiSelectDrag}"
+            path="${Selection}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -393,7 +383,7 @@ export class GrampsjsMediaObject extends GrampsjsObject {
               <md-outlined-button @click="${this._handleOcrClick}">
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiTextRecognition}"
+                  path="${Scan}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('Text Recognition')}
@@ -419,10 +409,7 @@ export class GrampsjsMediaObject extends GrampsjsObject {
           aria-label="${this._('Close')}"
           @click="${this._handleCloseOcrClick}"
         >
-          <grampsjs-icon
-            path="${mdiClose}"
-            color="currentColor"
-          ></grampsjs-icon>
+          <grampsjs-icon path="${X}" color="currentColor"></grampsjs-icon>
         </md-icon-button>
       </span>
       <grampsjs-text-recognition

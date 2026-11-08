@@ -2,9 +2,10 @@ import '@material/mwc-drawer'
 import '@material/web/progress/linear-progress.js'
 import '@material/mwc-top-app-bar'
 import '@material/web/button/filled-button.js'
-import {mdiLogout} from '@mdi/js'
+import {SignOut} from './icons/phosphor.js'
 import {LitElement, css, html} from 'lit'
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js'
+import {PAGE_TITLES} from './pageTitles.js'
 import {installRouter} from 'pwa-helpers/router.js'
 import {
   getSettings,
@@ -80,39 +81,6 @@ const OBJECT_PAGES = new Set([
 ])
 
 // Map from route name to translatable title string
-const PAGE_TITLES = {
-  home: 'Home',
-  blog: 'Blog',
-  people: 'People',
-  families: 'Families',
-  events: 'Events',
-  places: 'Places',
-  sources: 'Sources',
-  citations: 'Citations',
-  repositories: 'Repositories',
-  notes: 'Notes',
-  medialist: 'Media',
-  map: 'Map',
-  tree: 'Family Tree',
-  'dna-matches': 'DNA',
-  'dna-chromosome': 'DNA',
-  ydna: 'DNA',
-  chat: 'Assistant',
-  recent: 'History',
-  bookmarks: '_Bookmarks',
-  tasks: 'Tasks',
-  notifications: 'Notifications',
-  tags: 'Tags',
-  export: 'Export',
-  reports: '_Reports',
-  report: '_Reports',
-  revisions: 'Revisions',
-  revision: 'Revisions',
-  search: 'Search',
-  settings: 'Settings',
-  anniversaries: 'Anniversaries',
-}
-
 export class GrampsJs extends LitElement {
   static get properties() {
     return {
@@ -174,6 +142,8 @@ export class GrampsJs extends LitElement {
         }
 
         main {
+          /* Views manage their own gutter (the table has its own, the
+             toolbar has its own), so main itself stays flush. */
           padding: 0;
         }
 
@@ -187,6 +157,11 @@ export class GrampsJs extends LitElement {
 
         mwc-drawer {
           --mdc-drawer-width: 240px;
+          /* The horizontal margin between the content column and the
+             window edge. The view host applies it, and the floating
+             action button subtracts it from its own viewport-relative
+             offset so it lands inside the panel. */
+          --grampsjs-page-margin-inline: 40px;
           --mdc-typography-headline6-font-family: var(
             --grampsjs-heading-font-family
           );
@@ -199,11 +174,27 @@ export class GrampsJs extends LitElement {
             --md-sys-color-surface-container-lowest
           );
           --mdc-drawer-width: 240px;
+          /* The horizontal margin between the content column and the
+             window edge. The view host applies it, and the floating
+             action button subtracts it from its own viewport-relative
+             offset so it lands inside the panel. */
+          --grampsjs-page-margin-inline: 40px;
         }
 
-        mwc-drawer::part(drawer) {
-          border-right: 1px solid var(--md-sys-color-outline-variant);
-          background-color: var(--md-sys-color-surface-container-lowest);
+        /*
+         * The drawer's own surface.
+         *
+         * MWC styles the .mdc-drawer element from --mdc-theme-surface and
+         * gives it a hard 12% black border. The earlier rule targeted
+         * ::part(drawer), which this component does not expose, so it had
+         * no effect at all. Setting the theme variable reaches the real
+         * element: the surface comes from the app's layered palette and
+         * the border from the outline token, so the drawer separates from
+         * the page instead of blending into it.
+         */
+        mwc-drawer {
+          --mdc-theme-surface: var(--md-sys-color-surface-container-low);
+          --mdc-theme-primary: var(--md-sys-color-primary);
         }
 
         mwc-drawer[open]:not([type='modal']) {
@@ -300,6 +291,7 @@ export class GrampsJs extends LitElement {
 
           mwc-drawer {
             --mdc-drawer-width: 0px;
+            --grampsjs-page-margin-inline: 20px;
             height: auto !important;
             overflow: visible !important;
           }
@@ -538,7 +530,7 @@ export class GrampsJs extends LitElement {
         <md-filled-button @click=${() => this.appState.signout()}>
           <grampsjs-icon
             slot="icon"
-            .path="${mdiLogout}"
+            .path="${SignOut}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('Log out')}
@@ -686,6 +678,55 @@ export class GrampsJs extends LitElement {
     this._loadDbInfo()
   }
 
+  /**
+   * The page scrollbar lives on the app content column, not on the window.
+   * A viewport-fixed element cannot know how wide that scrollbar is, so
+   * publish it: the floating action button needs it to stay inside the
+   * panel rather than hang over the scrollbar.
+   */
+  _updateScrollbarWidth() {
+    const content = this._appContentElement()
+    if (!content) return
+    const width = content.offsetWidth - content.clientWidth
+    this.style.setProperty('--grampsjs-scrollbar-width', `${width}px`)
+  }
+
+  // The app content column lives inside the drawer's shadow root.
+  _appContentElement() {
+    const drawer = this.renderRoot.querySelector('mwc-drawer')
+    const root = drawer && drawer.shadowRoot
+    return root ? root.querySelector('.mdc-drawer-app-content') : null
+  }
+
+  /**
+   * Watch the app content column so the scrollbar width stays correct.
+   *
+   * The drawer renders asynchronously, so its shadow root may not exist
+   * on the first tick; keep trying until it does, then observe it.
+   */
+  _observeAppContent() {
+    const content = this._appContentElement()
+    if (content) {
+      this._updateScrollbarWidth()
+      if (typeof ResizeObserver !== 'undefined') {
+        this._scrollbarObserver = new ResizeObserver(() =>
+          this._updateScrollbarWidth()
+        )
+        this._scrollbarObserver.observe(content)
+      }
+      return
+    }
+    if (!this._scrollbarRetry) {
+      this._scrollbarRetry = setInterval(() => {
+        if (this._appContentElement()) {
+          clearInterval(this._scrollbarRetry)
+          this._scrollbarRetry = null
+          this._observeAppContent()
+        }
+      }, 100)
+    }
+  }
+
   connectedCallback() {
     super.connectedCallback()
 
@@ -709,6 +750,10 @@ export class GrampsJs extends LitElement {
     })
     this.addEventListener('drawer:toggle', this._toggleDrawer)
     window.addEventListener('keydown', event => this._handleKey(event))
+    window.addEventListener('resize', () => this._updateScrollbarWidth())
+    // The drawer opening or closing changes the column width, so watch it
+    // rather than only the window.
+    this._observeAppContent()
     window.addEventListener('shortcuts:show', event =>
       this._handleShowShortcuts(event)
     )
@@ -760,6 +805,7 @@ export class GrampsJs extends LitElement {
   }
 
   firstUpdated() {
+    this._observeAppContent()
     installRouter(location =>
       this._loadPage(decodeURIComponent(location.pathname))
     )

@@ -2,8 +2,7 @@
 /* eslint-disable no-unused-vars */
 import {LitElement, css, html} from 'lit'
 
-import {mdiTableOfContents, mdiPencil} from '@mdi/js'
-
+import {List, PencilSimple} from '../icons/phosphor.js'
 import '@material/web/button/outlined-button.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/dialog/dialog.js'
@@ -604,7 +603,7 @@ export class GrampsjsObject extends GrampsjsAppStateMixin(LitElement) {
                       @click="${this._openTocDialog}"
                     >
                       <grampsjs-icon
-                        .path="${mdiTableOfContents}"
+                        .path="${List}"
                         color="var(--grampsjs-body-font-color-40)"
                       ></grampsjs-icon>
                     </md-icon-button>
@@ -708,7 +707,7 @@ export class GrampsjsObject extends GrampsjsAppStateMixin(LitElement) {
                 >
                   <grampsjs-icon
                     slot="icon"
-                    path="${mdiPencil}"
+                    path="${PencilSimple}"
                     color="var(--mdc-theme-secondary)"
                   ></grampsjs-icon>
                   ${this._('Edit coordinates')}

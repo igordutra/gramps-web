@@ -2,8 +2,7 @@ import {css, html} from 'lit'
 import '@material/web/select/filled-select'
 import '@material/web/select/select-option'
 import '@material/web/button/filled-button'
-import {mdiAlertOutline} from '@mdi/js'
-
+import {Warning} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsImportExportReport.js'
@@ -61,12 +60,14 @@ export class GrampsjsViewExport extends GrampsjsView {
       ${this.data.length === 0
         ? html`<md-filled-select
             style="min-width:30em;"
+            aria-label="${this._('Export')}"
             disabled
           ></md-filled-select>`
         : html`
             <md-filled-select
               @change=${this._handleSelect}
               style="min-width:30em;"
+              aria-label="${this._('Export')}"
             >
               ${this.data.map(
                 obj => html`
@@ -100,6 +101,7 @@ export class GrampsjsViewExport extends GrampsjsView {
             ? getExporterDownloadUrl(this._downloadUrl)
             : ''}"
           id="downloadanchor"
+          aria-label="${this._('Download')}"
           >&nbsp;</a
         >
       </p>
@@ -132,6 +134,7 @@ export class GrampsjsViewExport extends GrampsjsView {
             ? getExporterDownloadUrl(this._mediaDownloadUrl)
             : ''}"
           id="downloadanchor-media"
+          aria-label="${this._('Download')}"
           >&nbsp;</a
         >
       </p>
@@ -145,7 +148,7 @@ export class GrampsjsViewExport extends GrampsjsView {
     return html`
       <p class="warn">
         <grampsjs-icon
-          path="${mdiAlertOutline}"
+          path="${Warning}"
           height="1em"
           width="1em"
           color="var(--grampsjs-body-font-color-50)"

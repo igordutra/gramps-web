@@ -4,8 +4,7 @@ import '@material/web/button/text-button'
 import '@material/web/button/filled-button'
 import '@material/web/iconbutton/icon-button.js'
 import '@awesome.me/webawesome/dist/components/color-picker/color-picker.js'
-import {mdiPencil, mdiDelete} from '@mdi/js'
-
+import {PencilSimple, Trash} from '../icons/phosphor.js'
 import {GrampsjsTableBase} from './GrampsjsTableBase.js'
 import './GrampsjsIcon.js'
 import './GrampsjsFormString.js'
@@ -104,7 +103,7 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
                             @click="${() => this._openEdit(tag)}"
                           >
                             <grampsjs-icon
-                              path="${mdiPencil}"
+                              path="${PencilSimple}"
                               color="var(--mdc-theme-secondary)"
                             ></grampsjs-icon>
                           </md-icon-button>
@@ -113,7 +112,7 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
                             @click="${() => this._openDelete(tag)}"
                           >
                             <grampsjs-icon
-                              path="${mdiDelete}"
+                              path="${Trash}"
                               color="var(--mdc-theme-secondary)"
                             ></grampsjs-icon>
                           </md-icon-button>

@@ -9,8 +9,7 @@ import '@material/web/button/text-button.js'
 import '@material/web/select/filled-select.js'
 import '@material/web/select/select-option.js'
 
-import {mdiCalendar, mdiChevronDown} from '@mdi/js'
-
+import {Calendar, CaretDown} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import './GrampsjsChipChoice.js'
 import {sharedStyles, iconButtonColorStyles} from '../SharedStyles.js'
@@ -271,7 +270,7 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
         ${this._('More options')}
         <grampsjs-icon
           slot="icon"
-          path="${mdiChevronDown}"
+          path="${CaretDown}"
           color="currentColor"
         ></grampsjs-icon>
       </md-text-button>
@@ -331,7 +330,7 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
           @click="${() => this._openPicker(index)}"
         >
           <grampsjs-icon
-            path="${mdiCalendar}"
+            path="${Calendar}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>

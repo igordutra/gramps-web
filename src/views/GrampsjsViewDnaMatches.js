@@ -1,6 +1,5 @@
 import {css, html} from 'lit'
-import {mdiPencil, mdiPlus} from '@mdi/js'
-
+import {PencilSimple, Plus} from '../icons/phosphor.js'
 import '@material/web/select/filled-select'
 import '../components/GrampsjsIcon.js'
 
@@ -55,17 +54,25 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
 
   renderFab() {
     return this.grampsIdMatch
-      ? html`<md-fab variant="secondary" @click=${this._handleClickEdit}>
+      ? html`<md-fab
+          variant="secondary"
+          @click=${this._handleClickEdit}
+          aria-label="${this._('Edit')}"
+        >
           <grampsjs-icon
             slot="icon"
-            .path="${mdiPencil}"
+            .path="${PencilSimple}"
             color="var(--mdc-theme-on-secondary)"
           ></grampsjs-icon>
         </md-fab>`
-      : html`<md-fab variant="secondary" @click=${this._handleClickAdd}>
+      : html`<md-fab
+          variant="secondary"
+          @click=${this._handleClickAdd}
+          aria-label="${this._('Add')}"
+        >
           <grampsjs-icon
             slot="icon"
-            .path="${mdiPlus}"
+            .path="${Plus}"
             color="var(--mdc-theme-on-secondary)"
           ></grampsjs-icon>
         </md-fab>`

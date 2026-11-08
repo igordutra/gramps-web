@@ -1,8 +1,7 @@
 import {LitElement, css, html} from 'lit'
 
 import '@material/web/button/text-button'
-import {mdiPencil} from '@mdi/js'
-
+import {PencilSimple} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import './GrampsjsSearchResultList.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -13,7 +12,7 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
     return [
       sharedStyles,
       css`
-        h3 {
+        h2 {
           margin-bottom: 15px;
         }
       `,
@@ -37,7 +36,7 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
 
   render() {
     return html`
-      <h3>${this._('Home Person')}</h3>
+      <h2>${this._('Home Person')}</h2>
 
       ${this.homePersonGrampsId && !this.homePersonMissing
         ? html`
@@ -45,7 +44,7 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
               <grampsjs-search-result-list
                 large
                 linked
-                metaIcon="${mdiPencil}"
+                metaIcon="${PencilSimple}"
                 .appState="${this.appState}"
                 ?loading="${!this.homePersonDetails?.handle}"
                 numberLoading="1"
@@ -59,8 +58,8 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
           `
         : html` <md-text-button trailing-icon @click="${this._handleEditClick}">
             ${this._('Set _Home Person')}
-            <svg viewBox="0 0 24 24" slot="icon">
-              <path d="${mdiPencil}" />
+            <svg viewBox="0 0 256 256" slot="icon">
+              <path d="${PencilSimple}" />
             </svg>
           </md-text-button>`}
       <grampsjs-form-select-object

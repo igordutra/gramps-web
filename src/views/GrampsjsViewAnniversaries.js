@@ -21,7 +21,7 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
           margin-bottom: 0.7em;
         }
 
-        h3 {
+        h2 {
           margin-bottom: 15px;
         }
 
@@ -29,9 +29,16 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
           height: 38px;
           width: 38px;
           border-radius: 19px;
-          background-color: var(--mdc-theme-primary);
-          opacity: 0.6;
-          color: var(--mdc-theme-on-primary);
+          /* The badge was the primary colour at 60% opacity with white
+             text, which is only a 2.9:1 contrast. A pale tint of the same
+             hue with the primary colour as the label keeps the soft look
+             and passes the 4.5:1 minimum. */
+          background-color: color-mix(
+            in srgb,
+            var(--mdc-theme-primary) 22%,
+            white
+          );
+          color: var(--mdc-theme-primary);
           font-size: 15px;
           line-height: 38px;
           display: inline-block;
@@ -45,7 +52,7 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
   }
 
   renderLoading() {
-    return html`<h3>${this._('Anniversaries')}</h3>
+    return html`<h2>${this._('Anniversaries')}</h2>
       <md-list>
         ${Array(2).fill(
           html`
@@ -64,7 +71,7 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
   }
 
   renderContent() {
-    return html`<h3>${this._('Anniversaries')}</h3>
+    return html`<h2>${this._('Anniversaries')}</h2>
       ${this._data.data.length === 0
         ? html`<p>${this._('None')}.</p>`
         : html`

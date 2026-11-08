@@ -1,7 +1,6 @@
 import {html} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {mdiMapMarker} from '@mdi/js'
-
+import {MapPin} from '../icons/phosphor.js'
 import {GrampsjsEditableList} from './GrampsjsEditableList.js'
 import './GrampsjsFormEditAddress.js'
 import './GrampsjsIcon.js'
@@ -56,7 +55,7 @@ export class GrampsjsAddresses extends GrampsjsEditableList {
         ${this._supportingText(obj, i)}
         <grampsjs-icon
           slot="start"
-          path="${mdiMapMarker}"
+          path="${MapPin}"
           color="var(--grampsjs-color-icon)"
         ></grampsjs-icon>
       </md-list-item>

@@ -19,7 +19,7 @@ import '../components/GrampsjsTreeQuotas.js'
 import '../components/GrampsjsUsers.js'
 import {GrampsjsView} from './GrampsjsView.js'
 
-import {mdiCheck, mdiContentCopy} from '@mdi/js'
+import {Check, Copy} from '../icons/phosphor.js'
 import {
   __APIHOST__,
   ACCESS_TOKEN_EXPIRY_MS,
@@ -443,7 +443,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
         <md-outlined-button @click="${this._copyToken}">
           <grampsjs-icon
             slot="icon"
-            path="${this._tokenCopied ? mdiCheck : mdiContentCopy}"
+            path="${this._tokenCopied ? Check : Copy}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('_Copy')}

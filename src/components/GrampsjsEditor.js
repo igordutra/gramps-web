@@ -7,20 +7,19 @@ import '@material/web/textfield/filled-text-field.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/button/text-button.js'
 import {
-  mdiFormatBold,
-  mdiFormatColorHighlight,
-  mdiFormatItalic,
-  mdiFormatStrikethrough,
-  mdiFormatUnderline,
-  mdiFile,
-  mdiImage,
-  mdiInformation,
-  mdiClose,
-  mdiLink,
-  mdiUndo,
-  mdiRedo,
-} from '@mdi/js'
-
+  ArrowClockwise,
+  ArrowCounterClockwise,
+  File,
+  Highlighter,
+  Image,
+  Info,
+  Link,
+  TextB,
+  TextItalic,
+  TextStrikethrough,
+  TextUnderline,
+  X,
+} from '../icons/phosphor.js'
 import {
   sharedStyles,
   iconButtonColorStyles,
@@ -153,7 +152,7 @@ function _replaceFailedInlineImage(e) {
   const img = e.target
   if (img.tagName !== 'IMG' || !img.closest('.inline-image')) return
   const icon = document.createElement('grampsjs-icon')
-  icon.path = mdiFile
+  icon.path = File
   icon.color = 'var(--grampsjs-body-font-color-50)'
   img.replaceWith(icon)
 }
@@ -426,7 +425,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
             <div class="draft-banner">
               <div class="draft-banner-content">
                 <grampsjs-icon
-                  path="${mdiInformation}"
+                  path="${Info}"
                   color="var(--grampsjs-body-font-color-50)"
                 ></grampsjs-icon>
                 <span>
@@ -446,7 +445,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
                   @click="${this._handleDismissBanner}"
                 >
                   <grampsjs-icon
-                    path="${mdiClose}"
+                    path="${X}"
                     color="currentColor"
                   ></grampsjs-icon>
                 </md-icon-button>
@@ -460,10 +459,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
           aria-label="${this._('Bold')}"
           @click="${() => this._handleFormat('bold')}"
         >
-          <grampsjs-icon
-            path="${mdiFormatBold}"
-            color="currentColor"
-          ></grampsjs-icon>
+          <grampsjs-icon path="${TextB}" color="currentColor"></grampsjs-icon>
         </md-icon-button>
         <grampsjs-tooltip for="btn-bold" .appState="${this.appState}"
           >${this._('Bold')}</grampsjs-tooltip
@@ -474,7 +470,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
           @click="${() => this._handleFormat('italic')}"
         >
           <grampsjs-icon
-            path="${mdiFormatItalic}"
+            path="${TextItalic}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -487,7 +483,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
           @click="${() => this._handleFormat('underline')}"
         >
           <grampsjs-icon
-            path="${mdiFormatUnderline}"
+            path="${TextUnderline}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -500,7 +496,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
           @click="${() => this._handleFormat('strikethrough')}"
         >
           <grampsjs-icon
-            path="${mdiFormatStrikethrough}"
+            path="${TextStrikethrough}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -513,7 +509,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
           @click="${() => this._handleFormat('highlight')}"
         >
           <grampsjs-icon
-            path="${mdiFormatColorHighlight}"
+            path="${Highlighter}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -525,7 +521,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
           aria-label="${this._('Link')}"
           @click="${() => this._handleFormat('link')}"
         >
-          <grampsjs-icon path="${mdiLink}" color="currentColor"></grampsjs-icon>
+          <grampsjs-icon path="${Link}" color="currentColor"></grampsjs-icon>
         </md-icon-button>
         <grampsjs-tooltip for="btn-link" .appState="${this.appState}"
           >${this._('Link')}</grampsjs-tooltip
@@ -538,7 +534,7 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this._handleImageButton}"
               >
                 <grampsjs-icon
-                  path="${mdiImage}"
+                  path="${Image}"
                   color="currentColor"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -553,7 +549,10 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
           ?disabled="${!this._canUndo}"
           @click="${this._undo}"
         >
-          <grampsjs-icon path="${mdiUndo}" color="currentColor"></grampsjs-icon>
+          <grampsjs-icon
+            path="${ArrowCounterClockwise}"
+            color="currentColor"
+          ></grampsjs-icon>
         </md-icon-button>
         <grampsjs-tooltip for="btn-undo" .appState="${this.appState}"
           >${this._('Undo')}</grampsjs-tooltip
@@ -564,7 +563,10 @@ class GrampsjsEditor extends GrampsjsAppStateMixin(LitElement) {
           ?disabled="${!this._canRedo}"
           @click="${this._redo}"
         >
-          <grampsjs-icon path="${mdiRedo}" color="currentColor"></grampsjs-icon>
+          <grampsjs-icon
+            path="${ArrowClockwise}"
+            color="currentColor"
+          ></grampsjs-icon>
         </md-icon-button>
         <grampsjs-tooltip for="btn-redo" .appState="${this.appState}"
           >${this._('Redo')}</grampsjs-tooltip

@@ -14,16 +14,16 @@ import '@material/web/select/filled-select.js'
 import '@material/web/select/select-option.js'
 
 import {
-  mdiArrowLeft,
-  mdiChevronRight,
-  mdiCog,
-  mdiFamilyTree,
-  mdiFitToScreen,
-  mdiHomeAccount,
-  mdiPencil,
-  mdiPlus,
-  mdiTargetAccount,
-} from '@mdi/js'
+  ArrowLeft as ArrowLeftIcon,
+  ArrowsOutSimple,
+  CaretRight,
+  Gear,
+  HouseLine,
+  PencilSimple,
+  Plus,
+  TreeStructure,
+  UserFocus,
+} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import {GrampsjsStaleDataMixin} from '../mixins/GrampsjsStaleDataMixin.js'
 import '../components/GrampsjsFormSelectObject.js'
@@ -257,8 +257,17 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
 
         md-fab {
           position: fixed;
-          bottom: 32px;
-          right: 32px;
+          /* The button belongs to the content column, not to the window.
+             The column ends one page margin short of the viewport edge and
+             the page scrollbar sits outside it, so the button is inset by
+             the margin plus its own gutter — otherwise it hangs over the
+             panel edge and into the scrollbar. */
+          bottom: var(--grampsjs-space-24, 24px);
+          right: calc(
+            var(--grampsjs-page-margin-inline, 40px) +
+              var(--grampsjs-space-24, 24px) +
+              var(--grampsjs-scrollbar-width, 0px)
+          );
           /* Material's FAB is a large saturated disc with a heavy shadow.
              A modern action button is smaller, softer and matches the
              density of the rest of the toolbar. */
@@ -501,13 +510,13 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
       {
         value: 'ancestor',
         label: this._('Ancestor Tree'),
-        icon: mdiFamilyTree,
+        icon: TreeStructure,
         rotate: -90,
       },
       {
         value: 'descendant',
         label: this._('Descendant Tree'),
-        icon: mdiFamilyTree,
+        icon: TreeStructure,
         rotate: 90,
       },
       {
@@ -561,10 +570,14 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
 
   renderFab() {
     return html`
-      <md-fab variant="secondary" @click="${this._enableEditMode}">
+      <md-fab
+        variant="secondary"
+        @click="${this._enableEditMode}"
+        aria-label="${this._('Edit')}"
+      >
         <grampsjs-icon
           slot="icon"
-          .path="${mdiPencil}"
+          .path="${PencilSimple}"
           color="var(--mdc-theme-on-secondary)"
         ></grampsjs-icon>
       </md-fab>
@@ -578,10 +591,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
         ?disabled=${this.grampsId === this.settings.homePerson}
         aria-label="${this._('Home Person')}"
         id="button-home"
-        ><grampsjs-icon
-          path="${mdiHomeAccount}"
-          color="currentColor"
-        ></grampsjs-icon
+        ><grampsjs-icon path="${HouseLine}" color="currentColor"></grampsjs-icon
       ></md-icon-button>
       <grampsjs-tooltip for="button-home" .appState="${this.appState}"
         >${this._('Home Person')}</grampsjs-tooltip
@@ -592,7 +602,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
         aria-label="${this._('_Back')}"
         id="btn-back"
         ><grampsjs-icon
-          path="${mdiArrowLeft}"
+          path="${ArrowLeftIcon}"
           color="currentColor"
         ></grampsjs-icon
       ></md-icon-button>
@@ -608,7 +618,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
         id="btn-controls"
         aria-label="${this._('Preferences')}"
         @click=${this._openMenuControls}
-        ><grampsjs-icon path="${mdiCog}" color="currentColor"></grampsjs-icon
+        ><grampsjs-icon path="${Gear}" color="currentColor"></grampsjs-icon
       ></md-icon-button>
       <grampsjs-tooltip for="btn-controls" .appState="${this.appState}"
         >${this._('Preferences')}</grampsjs-tooltip
@@ -666,7 +676,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
         </span>
         <grampsjs-icon
           class="chevron"
-          path="${mdiChevronRight}"
+          path="${CaretRight}"
           color="currentColor"
           height="20"
           width="20"
@@ -693,13 +703,8 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
       >
     `
     return html`
-      ${button(
-        'btn-centre',
-        'centre',
-        mdiTargetAccount,
-        'Center on selected person'
-      )}
-      ${button('btn-fit', 'fit', mdiFitToScreen, 'Fit to window')}
+      ${button('btn-centre', 'centre', UserFocus, 'Center on selected person')}
+      ${button('btn-fit', 'fit', ArrowsOutSimple, 'Fit to window')}
     `
   }
 
@@ -925,7 +930,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
       <md-filled-button href="/new_person">
         <grampsjs-icon
           slot="icon"
-          path="${mdiPlus}"
+          path="${Plus}"
           color="currentColor"
         ></grampsjs-icon>
         ${this._('New Person')}
@@ -938,7 +943,7 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
       <md-outlined-button id="select-home-person" @click="${this._openPicker}">
         <grampsjs-icon
           slot="icon"
-          path="${mdiPencil}"
+          path="${PencilSimple}"
           color="currentColor"
         ></grampsjs-icon>
         ${this._('Set _Home Person')}

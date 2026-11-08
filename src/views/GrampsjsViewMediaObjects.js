@@ -4,11 +4,11 @@ Medias list view
 
 import {html, css, nothing} from 'lit'
 import {
-  mdiViewList,
-  mdiViewGrid,
-  mdiSortAscending,
-  mdiSortDescending,
-} from '@mdi/js'
+  Rows,
+  SortAscending,
+  SortDescending,
+  SquaresFour,
+} from '../icons/phosphor.js'
 import {GrampsjsViewObjectsBase} from './GrampsjsViewObjectsBase.js'
 import {
   fireEvent,
@@ -454,7 +454,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
         @click="${this._toggleSortDirection}"
       >
         <grampsjs-icon
-          path="${isAscending ? mdiSortAscending : mdiSortDescending}"
+          path="${isAscending ? SortAscending : SortDescending}"
           height="24"
         ></grampsjs-icon>
       </md-icon-button>
@@ -576,7 +576,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
         @click="${() => this._setGalleryView(true)}"
       >
         <grampsjs-icon
-          path="${mdiViewGrid}"
+          path="${SquaresFour}"
           height="28"
           color="${this._galleryView ? activeColor : inactiveColor}"
         ></grampsjs-icon>
@@ -590,7 +590,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
         @click="${() => this._setGalleryView(false)}"
       >
         <grampsjs-icon
-          path="${mdiViewList}"
+          path="${Rows}"
           height="28"
           color="${!this._galleryView ? activeColor : inactiveColor}"
         ></grampsjs-icon>

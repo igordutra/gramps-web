@@ -1,7 +1,7 @@
 import {html, css, LitElement} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
 import {sharedStyles} from '../SharedStyles.js'
-import {mdiImage} from '@mdi/js'
+import {Image} from '../icons/phosphor.js'
 import {hasThumbnail, linkUrls, mediaIconPath} from '../util.js'
 import {getThumbnailUrl} from '../api.js'
 import {IMAGE_PLACEHOLDER} from '../inlineImages.js'
@@ -79,7 +79,7 @@ export function renderInlineImages(container, mediaById) {
     if (parsed?.objectType !== 'media') continue
     const media = mediaById[parsed.grampsId]
     if (!media) {
-      _renderInlineIcon(a, mdiImage, parsed.grampsId)
+      _renderInlineIcon(a, Image, parsed.grampsId)
       continue
     }
     const label = media.desc || parsed.grampsId

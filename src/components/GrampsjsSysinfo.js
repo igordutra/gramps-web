@@ -6,8 +6,7 @@ import './GrampsjsTooltip.js'
 import './GrampsjsIcon.js'
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiContentCopy} from '@mdi/js'
-
+import {Copy} from '../icons/phosphor.js'
 export class GrampsjsSysinfo extends GrampsjsAppStateMixin(LitElement) {
   static get styles() {
     return [
@@ -41,7 +40,7 @@ export class GrampsjsSysinfo extends GrampsjsAppStateMixin(LitElement) {
           @click=${this._copyToClipboard}
         >
           <grampsjs-icon
-            path="${mdiContentCopy}"
+            path="${Copy}"
             color="var(--grampsjs-body-font-color-30)"
           ></grampsjs-icon>
         </md-icon-button>

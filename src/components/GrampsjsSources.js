@@ -1,7 +1,6 @@
 import {html} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {mdiBookOpenVariant} from '@mdi/js'
-
+import {BookOpenText} from '../icons/phosphor.js'
 import {GrampsjsEditableList} from './GrampsjsEditableList.js'
 import './GrampsjsIcon.js'
 import './GrampsjsImg.js'
@@ -46,7 +45,7 @@ export class GrampsjsSources extends GrampsjsEditableList {
         ${renderIcon(
           {object: obj, object_type: 'source'},
           'start',
-          mdiBookOpenVariant
+          BookOpenText
         )}
       </md-list-item>
     `

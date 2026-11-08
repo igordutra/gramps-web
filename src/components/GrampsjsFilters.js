@@ -1,13 +1,6 @@
 import {LitElement, css, html, nothing} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {
-  mdiAlertCircleOutline,
-  mdiChevronRight,
-  mdiFilter,
-  mdiFilterCogOutline,
-  mdiFilterOff,
-} from '@mdi/js'
-
+import {CaretRight, Funnel, FunnelX, WarningCircle} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import '@material/web/button/filled-button'
 import '@material/web/button/outlined-button'
@@ -52,14 +45,18 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
-          gap: 4px 8px;
+          gap: 8px 12px;
+          /* The toolbar sat flush against the panel edges. Give it the same
+             gutter the table uses so the two read as one system. */
+          padding: var(--grampsjs-space-12, 12px)
+            var(--grampsjs-page-gutter, 24px);
         }
 
         slot[name='trailing'] {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
-          gap: 4px 8px;
+          gap: 8px 12px;
           margin-left: auto;
         }
 
@@ -104,7 +101,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
         summary {
           display: flex;
           align-items: center;
-          gap: 2px;
+          gap: 4px;
           padding: 8px 0;
           cursor: pointer;
           list-style: none;
@@ -205,7 +202,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
               <md-filled-button @click="${this._handleFilterButton}">
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiFilter}"
+                  path="${Funnel}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('filter')}
@@ -215,7 +212,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
               <md-outlined-button @click="${this._handleFilterButton}">
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiFilter}"
+                  path="${Funnel}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('filter')}
@@ -227,7 +224,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
           ?disabled="${!this._hasChips}"
           @click="${this._handleFilterOff}"
         >
-          <grampsjs-icon path="${mdiFilterOff}"></grampsjs-icon>
+          <grampsjs-icon path="${FunnelX}"></grampsjs-icon>
         </md-icon-button>
         <grampsjs-tooltip for="filteroff" .appState="${this.appState}"
           >${this._('Clear all filters')}</grampsjs-tooltip
@@ -259,7 +256,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
           ? html`<md-text-button @click="${this._openBuilder}">
               <grampsjs-icon
                 slot="icon"
-                path="${mdiFilterCogOutline}"
+                path="${Funnel}"
                 color="currentColor"
               ></grampsjs-icon>
               ${this._('Advanced filter')}
@@ -339,7 +336,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
       <details data-section="${id}">
         <summary>
           <grampsjs-icon
-            path="${mdiChevronRight}"
+            path="${CaretRight}"
             height="20"
             width="20"
             color="var(--mdc-theme-primary)"
@@ -411,7 +408,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
           ?error="${this._hasGoqlError}"
         >
           ${this._hasGoqlError
-            ? renderIconSvg(mdiAlertCircleOutline, null, 0, 'trailing-icon')
+            ? renderIconSvg(WarningCircle, null, 0, 'trailing-icon')
             : ''}
         </grampsjs-goql-input>
         <span

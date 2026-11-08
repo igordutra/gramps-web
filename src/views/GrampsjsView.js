@@ -2,9 +2,10 @@
 Base class for Gramps views
 */
 
-import {LitElement, css} from 'lit'
+import {LitElement, css, html} from 'lit'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
+import {PAGE_TITLES} from '../pageTitles.js'
 
 export class GrampsjsView extends GrampsjsAppStateMixin(LitElement) {
   static get styles() {
@@ -12,13 +13,14 @@ export class GrampsjsView extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       css`
         :host {
-          margin: 25px 40px;
+          margin: 25px var(--grampsjs-page-margin-inline, 40px);
           background-color: var(--md-sys-color-surface);
         }
 
         @media (max-width: 768px) {
           :host {
             margin: 25px 20px;
+            --grampsjs-page-margin-inline: 20px;
           }
         }
       `,
@@ -55,7 +57,24 @@ export class GrampsjsView extends GrampsjsAppStateMixin(LitElement) {
   }
 
   render() {
-    return this.renderContent()
+    return html`${this.renderPageHeading()}${this.renderContent()}`
+  }
+
+  /**
+   * The page's level-one heading.
+   *
+   * Rendered for assistive technology only: the visible page title comes
+   * from the tab bar, and a second visible heading would be redundant.
+   *
+   * Views that override render() call this themselves.
+   */
+  renderPageHeading() {
+    const {page} = this.appState?.path ?? {}
+    const title = page ? PAGE_TITLES[page] : null
+    if (!title) {
+      return ''
+    }
+    return html`<h1 class="visually-hidden">${this._(title)}</h1>`
   }
 
   updated(changed) {

@@ -6,8 +6,12 @@ import '@material/web/tabs/tabs.js'
 import '@material/web/tabs/primary-tab.js'
 import '@material/web/textfield/filled-text-field.js'
 
-import {mdiHistory, mdiMagnify, mdiUpdate, mdiBookmarkMultiple} from '@mdi/js'
-
+import {
+  ArrowClockwise,
+  Bookmarks,
+  ClockCounterClockwise,
+  MagnifyingGlass,
+} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {
   debounce,
@@ -43,10 +47,10 @@ const endpointToType = Object.fromEntries(
 const SIDEBAR_MODES = ['search', ...QUICK_ACCESS_MODES]
 
 const modeIcon = {
-  search: mdiMagnify,
-  changed: mdiUpdate,
-  recent: mdiHistory,
-  bookmarks: mdiBookmarkMultiple,
+  search: MagnifyingGlass,
+  changed: ArrowClockwise,
+  recent: ClockCounterClockwise,
+  bookmarks: Bookmarks,
 }
 
 const modeLabel = {
@@ -216,7 +220,7 @@ class GrampsjsObjectPickerDialog extends GrampsjsAppStateMixin(LitElement) {
           >
             <grampsjs-icon
               slot="leading-icon"
-              path="${mdiMagnify}"
+              path="${MagnifyingGlass}"
               color="var(--md-sys-color-on-surface-variant)"
             ></grampsjs-icon>
           </md-filled-text-field>

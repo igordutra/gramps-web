@@ -1,11 +1,6 @@
 import {LitElement, html, css} from 'lit'
 
-import {
-  mdiChevronRight,
-  mdiLockOpenVariantOutline,
-  mdiLockOutline,
-} from '@mdi/js'
-
+import {CaretRight, Lock, LockOpen} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {fireEvent, clickKeyHandler} from '../util.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -120,7 +115,7 @@ export class GrampsjsBreadcrumbs extends GrampsjsAppStateMixin(LitElement) {
         <grampsjs-icon path="${this.objectIcon}" color="currentColor">
         </grampsjs-icon>
         <a href="/${this._getObjectsLink()}">${this._(this.objectsName)}</a>
-        <grampsjs-icon path="${mdiChevronRight}" color="currentColor">
+        <grampsjs-icon path="${CaretRight}" color="currentColor">
         </grampsjs-icon>
         <span class="dark">${this.data.gramps_id}</span>
         <span class="action-buttons">
@@ -168,9 +163,7 @@ export class GrampsjsBreadcrumbs extends GrampsjsAppStateMixin(LitElement) {
             id="btn-private"
           >
             <grampsjs-icon
-              .path="${this.data.private
-                ? mdiLockOutline
-                : mdiLockOpenVariantOutline}"
+              .path="${this.data.private ? Lock : LockOpen}"
               color="var(--mdc-theme-secondary)"
             ></grampsjs-icon>
           </md-icon-button>
@@ -192,9 +185,7 @@ export class GrampsjsBreadcrumbs extends GrampsjsAppStateMixin(LitElement) {
           : this._('Record is public')}"
       >
         <grampsjs-icon
-          .path="${this.data.private
-            ? mdiLockOutline
-            : mdiLockOpenVariantOutline}"
+          .path="${this.data.private ? Lock : LockOpen}"
           color="var(--grampsjs-body-font-color-40)"
         ></grampsjs-icon>
         <grampsjs-tooltip

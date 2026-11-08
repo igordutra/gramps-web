@@ -1,5 +1,5 @@
 import {html, css, LitElement, nothing} from 'lit'
-import {mdiCheck, mdiClose, mdiContentSave, mdiDelete, mdiPencil} from '@mdi/js'
+import {Check, FloppyDisk, PencilSimple, Trash, X} from '../icons/phosphor.js'
 import {
   PRIORITY_ICONS,
   TASK_PRIORITIES,
@@ -161,7 +161,7 @@ export class GrampsjsTask extends GrampsjsAppStateMixin(LitElement) {
           }}"
         >
           <grampsjs-icon
-            path="${mdiDelete}"
+            path="${Trash}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -305,7 +305,7 @@ export class GrampsjsTask extends GrampsjsAppStateMixin(LitElement) {
                 @click="${onEdit}"
               >
                 <grampsjs-icon
-                  path="${mdiPencil}"
+                  path="${PencilSimple}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -350,7 +350,7 @@ export class GrampsjsTask extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this._handleSaveNote}"
               >
                 <grampsjs-icon
-                  path="${mdiContentSave}"
+                  path="${FloppyDisk}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -365,7 +365,7 @@ export class GrampsjsTask extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this._handleCancelNote}"
               >
                 <grampsjs-icon
-                  path="${mdiClose}"
+                  path="${X}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -419,7 +419,7 @@ export class GrampsjsTask extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this._handleEditGallery}"
               >
                 <grampsjs-icon
-                  path="${mdiCheck}"
+                  path="${Check}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>

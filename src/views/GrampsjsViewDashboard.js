@@ -223,7 +223,7 @@ export class GrampsjsViewDashboard extends GrampsjsView {
   _renderGetStartedCard(text, buttons) {
     return html`
       <div>
-        <h3>${this._('Get started')}</h3>
+        <h2>${this._('Get started')}</h2>
         <p>${text}</p>
         <div class="buttons">${buttons}</div>
       </div>

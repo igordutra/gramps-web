@@ -5,7 +5,7 @@ import {sharedStyles} from '../SharedStyles.js'
 import '@material/web/iconbutton/icon-button.js'
 import './GrampsjsIcon.js'
 
-import {mdiClose} from '@mdi/js'
+import {X} from '../icons/phosphor.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 
 import {fireEvent} from '../util.js'
@@ -74,7 +74,7 @@ export class GrampsjsFilterChip extends GrampsjsAppStateMixin(LitElement) {
           @click=${this._handleClear}
         >
           <grampsjs-icon
-            path="${mdiClose}"
+            path="${X}"
             color="var(--mdc-theme-on-primary)"
             width="14"
             height="14"

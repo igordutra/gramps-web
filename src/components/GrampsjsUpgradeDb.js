@@ -4,7 +4,7 @@ import {html, css, LitElement} from 'lit'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {sharedStyles} from '../SharedStyles.js'
 
-import {mdiLogout} from '@mdi/js'
+import {SignOut} from '../icons/phosphor.js'
 import {fireEvent} from '../util.js'
 import {dispatchErrorMessage} from '../taskResponse.js'
 import '@material/web/button/filled-button.js'
@@ -16,7 +16,7 @@ function renderLogoutButton(appState, _) {
     <md-outlined-button @click=${() => appState.signout()}>
       <grampsjs-icon
         slot="icon"
-        .path="${mdiLogout}"
+        .path="${SignOut}"
         color="currentColor"
       ></grampsjs-icon>
       ${_('Log out')}

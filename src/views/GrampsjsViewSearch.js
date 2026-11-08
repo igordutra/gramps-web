@@ -13,7 +13,7 @@ import {
 } from '../util.js'
 import '@material/web/textfield/outlined-text-field'
 import '@material/web/iconbutton/icon-button.js'
-import {mdiClose, mdiMagnify} from '@mdi/js'
+import {MagnifyingGlass, X} from '../icons/phosphor.js'
 import '../components/GrampsjsIcon.js'
 
 function capitalize(string) {
@@ -138,7 +138,7 @@ export class GrampsjsViewSearch extends GrampsjsView {
       >
         <grampsjs-icon
           slot="leading-icon"
-          path="${mdiMagnify}"
+          path="${MagnifyingGlass}"
           color="var(--grampsjs-body-font-color-50)"
         ></grampsjs-icon>
         ${this._query
@@ -148,7 +148,7 @@ export class GrampsjsViewSearch extends GrampsjsView {
               @click="${this._handleClear}"
             >
               <grampsjs-icon
-                path="${mdiClose}"
+                path="${X}"
                 color="var(--grampsjs-body-font-color-50)"
               ></grampsjs-icon>
             </md-icon-button>`

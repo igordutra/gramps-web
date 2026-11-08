@@ -15,12 +15,12 @@ import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsTaskProgressIndicator.js'
 
 import {
-  mdiClose,
-  mdiUndo,
-  mdiAlertOutline,
-  mdiSourceCommit,
-  mdiOpenInNew,
-} from '@mdi/js'
+  ArrowCounterClockwise,
+  ArrowSquareOut,
+  GitCommit,
+  Warning,
+  X,
+} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 
 import {renderIconSvg} from '../icons.js'
@@ -183,13 +183,14 @@ export class GrampsjsViewRevision extends GrampsjsView {
       return ''
     }
     return html`
+      ${this.renderPageHeading()}
       <grampsjs-breadcrumbs
         hideLock
         hideBookmark
         .data="${{gramps_id: this.transactionId}}"
         .appState="${this.appState}"
         objectsName="Revisions"
-        .objectIcon="${mdiSourceCommit}"
+        .objectIcon="${GitCommit}"
       ></grampsjs-breadcrumbs>
 
       <div class="revision-header">
@@ -203,7 +204,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
               >
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiUndo}"
+                  path="${ArrowCounterClockwise}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('Undo')}
@@ -263,7 +264,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
               <md-text-button
                 @click="${() => this._handleOpenObject(objectType, grampsId)}"
                 >${renderIconSvg(
-                  mdiOpenInNew,
+                  ArrowSquareOut,
                   '--md-sys-color-primary',
                   0,
                   'icon'
@@ -273,7 +274,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
             `
           : html`<span></span>`}
         <md-text-button @click="${this._handleCloseDetail}"
-          >${renderIconSvg(mdiClose, '--md-sys-color-primary', 0, 'icon')}
+          >${renderIconSvg(X, '--md-sys-color-primary', 0, 'icon')}
           ${this._('Close')}</md-text-button
         >
       </div>
@@ -317,11 +318,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
           ${this._forceRequired
             ? html`
                 <div class="dialog-warning">
-                  ${renderIconSvg(
-                    mdiAlertOutline,
-                    'var(--md-sys-color-error)',
-                    0
-                  )}
+                  ${renderIconSvg(Warning, 'var(--md-sys-color-error)', 0)}
                   <span>
                     ${this._(
                       'This revision cannot be cleanly undone because some objects have been modified after this transaction. Forcing the undo may result in data inconsistencies.'

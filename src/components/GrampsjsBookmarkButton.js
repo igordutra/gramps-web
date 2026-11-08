@@ -2,8 +2,7 @@ import {LitElement, html, css} from 'lit'
 
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiBookmark, mdiBookmarkOutline} from '@mdi/js'
-
+import {BookmarkSimple} from '../icons/phosphor.js'
 import {sharedStyles, iconButtonColorStyles} from '../SharedStyles.js'
 import {clickKeyHandler, fireEvent} from '../util.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -50,7 +49,7 @@ export class GrampsjsBookmarkButton extends GrampsjsAppStateMixin(LitElement) {
         id="btn-star"
       >
         <grampsjs-icon
-          path="${this.bookmarked ? mdiBookmark : mdiBookmarkOutline}"
+          path="${this.bookmarked ? BookmarkSimple : BookmarkSimple}"
           color="currentColor"
         ></grampsjs-icon>
       </md-icon-button>

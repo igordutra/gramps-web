@@ -35,6 +35,24 @@ export const sharedStyles = css`
     --mdc-list-side-padding: 16px;
   }
 
+  /*
+   * A heading for screen readers only. Every page needs a level-one
+   * heading so assistive technology can announce the page name; the
+   * visible title is rendered by the tab bar, so repeating it here would
+   * be visual noise.
+   */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   md-list-item {
     --md-list-item-label-text-weight: 450;
     --md-list-item-label-text-size: 15px;
@@ -103,6 +121,19 @@ export const sharedStyles = css`
   span.link {
     color: var(--grampsjs-color-link-font);
     text-decoration: none;
+  }
+
+  /*
+   * A link inside a block of text needs to be distinguishable from the
+   * surrounding words without relying on colour alone: either a 3:1
+   * contrast against the text around it, or an underline. The accent
+   * colour does not reach that contrast against the page's dark text, so
+   * links inside text get an underline.
+   */
+  a:link,
+  a:visited {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
   }
 
   a:hover,

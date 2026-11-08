@@ -2,7 +2,7 @@
 /* eslint-disable class-methods-use-this */
 import {css, html} from 'lit'
 
-import {mdiPencil} from '@mdi/js'
+import {PencilSimple} from '../icons/phosphor.js'
 import '@material/web/fab/fab.js'
 import '../components/GrampsjsIcon.js'
 
@@ -92,8 +92,17 @@ export class GrampsjsViewObject extends GrampsjsView {
 
         md-fab {
           position: fixed;
-          bottom: 32px;
-          right: 32px;
+          /* The button belongs to the content column, not to the window.
+             The column ends one page margin short of the viewport edge and
+             the page scrollbar sits outside it, so the button is inset by
+             the margin plus its own gutter — otherwise it hangs over the
+             panel edge and into the scrollbar. */
+          bottom: var(--grampsjs-space-24, 24px);
+          right: calc(
+            var(--grampsjs-page-margin-inline, 40px) +
+              var(--grampsjs-space-24, 24px) +
+              var(--grampsjs-scrollbar-width, 0px)
+          );
         }
       `,
     ]
@@ -166,10 +175,14 @@ export class GrampsjsViewObject extends GrampsjsView {
 
   renderFab() {
     return html`
-      <md-fab variant="secondary" @click="${this._activateEditMode}">
+      <md-fab
+        variant="secondary"
+        @click="${this._activateEditMode}"
+        aria-label="${this._('Edit')}"
+      >
         <grampsjs-icon
           slot="icon"
-          .path="${mdiPencil}"
+          .path="${PencilSimple}"
           color="var(--mdc-theme-on-secondary)"
         ></grampsjs-icon>
       </md-fab>

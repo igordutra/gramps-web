@@ -1,6 +1,5 @@
 import {create} from 'd3-selection'
-import {mdiAccount} from '@mdi/js'
-
+import {User} from '../icons/phosphor.js'
 const clipString = (s, length) => {
   if (!s) {
     return ''
@@ -50,7 +49,7 @@ export function YtreeLineageChart(chartData, options = {}) {
 
   const g = svg.append('g')
   const defs = svg.append('defs')
-  const personPath = mdiAccount
+  const personPath = User
   const iconRadius = 24
   const imgRadius = (boxHeight - imgPadding * 2) / 2
   const leftPad = padding

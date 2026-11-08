@@ -9,13 +9,13 @@ Apply fires `filter-builder:apply` with the edited tree.
 import {LitElement, css, html, nothing} from 'lit'
 import {repeat} from 'lit/directives/repeat.js'
 import {
-  mdiArrowLeft,
-  mdiChevronRight,
-  mdiClose,
-  mdiDotsVertical,
-  mdiMagnify,
-  mdiPlus,
-} from '@mdi/js'
+  ArrowLeft,
+  CaretRight,
+  DotsThreeVertical,
+  MagnifyingGlass,
+  Plus,
+  X,
+} from '../icons/phosphor.js'
 import '@material/web/button/filled-button'
 import '@material/web/button/text-button'
 import '@material/web/chips/chip-set'
@@ -350,7 +350,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
             aria-label="${this._('More options')}"
             @click="${e => this._openMenu(e, path)}"
           >
-            <grampsjs-icon path="${mdiDotsVertical}"></grampsjs-icon>
+            <grampsjs-icon path="${DotsThreeVertical}"></grampsjs-icon>
           </md-icon-button>
           ${isTop ? nothing : this._renderRemoveButton(path)}
         </div>
@@ -369,7 +369,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
             <md-text-button @click="${() => this._openPicker(path)}">
               <grampsjs-icon
                 slot="icon"
-                path="${mdiPlus}"
+                path="${Plus}"
                 color="currentColor"
               ></grampsjs-icon>
               ${this._('Add condition')}
@@ -380,7 +380,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
             >
               <grampsjs-icon
                 slot="icon"
-                path="${mdiPlus}"
+                path="${Plus}"
                 color="currentColor"
               ></grampsjs-icon>
               ${this._('Add group')}
@@ -408,7 +408,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
         aria-label="${this._('Remove')}"
         @click="${() => this._remove(path)}"
       >
-        <grampsjs-icon path="${mdiClose}"></grampsjs-icon>
+        <grampsjs-icon path="${X}"></grampsjs-icon>
       </md-icon-button>
     `
   }
@@ -466,7 +466,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
           aria-label="${this._('_Back')}"
           @click="${this._closePicker}"
         >
-          <grampsjs-icon path="${mdiArrowLeft}"></grampsjs-icon>
+          <grampsjs-icon path="${ArrowLeft}"></grampsjs-icon>
         </md-icon-button>
         <md-outlined-text-field
           id="search"
@@ -479,7 +479,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
         >
           <grampsjs-icon
             slot="leading-icon"
-            path="${mdiMagnify}"
+            path="${MagnifyingGlass}"
             color="var(--md-sys-color-on-surface-variant)"
           ></grampsjs-icon>
         </md-outlined-text-field>
@@ -508,7 +508,7 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
         <details ?open="${searching}">
           <summary>
             <grampsjs-icon
-              path="${mdiChevronRight}"
+              path="${CaretRight}"
               height="20"
               width="20"
               color="var(--mdc-theme-primary)"

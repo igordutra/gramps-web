@@ -2,8 +2,7 @@ import {css, html} from 'lit'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/button/filled-button.js'
 
-import {mdiArrowLeft} from '@mdi/js'
-
+import {ArrowLeft} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsReportOptions.js'
@@ -74,7 +73,7 @@ export class GrampsjsViewReport extends GrampsjsView {
           @click="${this._handleBack}"
         >
           <grampsjs-icon
-            path="${mdiArrowLeft}"
+            path="${ArrowLeft}"
             color="var(--mdc-theme-primary)"
           ></grampsjs-icon>
         </md-icon-button>

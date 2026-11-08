@@ -6,8 +6,7 @@ import {html, css, LitElement} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
 import {ifDefined} from 'lit/directives/if-defined.js'
 import {keyed} from 'lit/directives/keyed.js'
-import {mdiImageBroken, mdiPlayCircle} from '@mdi/js'
-
+import {ImageBroken, PlayCircle} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {getMediaUrl, getThumbnailUrl, getThumbnailUrlCropped} from '../api.js'
 import {hasThumbnail, mediaIconPath, normalizeRect} from '../util.js'
@@ -335,7 +334,7 @@ class GrampsjsImg extends LitElement {
       return this._renderPlaceholder(this.fallbackIcon)
     }
     if (!this.mime || this.mime.startsWith('image')) {
-      return this._renderPlaceholder(mdiImageBroken, 'Error')
+      return this._renderPlaceholder(ImageBroken, 'Error')
     }
     return this._renderPlaceholder(mediaIconPath(this.mime))
   }
@@ -352,8 +351,8 @@ class GrampsjsImg extends LitElement {
     if (this.mime.startsWith('video')) {
       return html`<span class="video"
         >${img}<span class="play"
-          ><svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="${mdiPlayCircle}" /></svg></span
+          ><svg viewBox="0 0 256 256" aria-hidden="true">
+            <path d="${PlayCircle}" /></svg></span
       ></span>`
     }
     return img

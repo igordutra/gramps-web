@@ -1,11 +1,11 @@
 import {describe, it, expect, afterEach} from 'vitest'
 import {
-  mdiFile,
-  mdiFileMusic,
-  mdiFileVideo,
-  mdiImageBroken,
-  mdiMap,
-} from '@mdi/js'
+  File,
+  FileAudio,
+  FileVideo,
+  ImageBroken,
+  MapTrifold,
+} from '../../src/icons/phosphor.js'
 import {isPlayableMime} from '../../src/components/GrampsjsMediaPlayer.js'
 import '../../src/components/GrampsjsImg.js'
 import {fireEvent} from '../../src/util.js'
@@ -56,7 +56,7 @@ describe('grampsjs-media-player', () => {
     const img = el.shadowRoot.querySelector('grampsjs-img')
     await img.updateComplete
     const path = img.shadowRoot.querySelector('svg.placeholder path')
-    expect(path.getAttribute('d')).toBe(mdiFileMusic)
+    expect(path.getAttribute('d')).toBe(FileAudio)
   })
 
   it('reloads the source when the handle changes', async () => {
@@ -77,11 +77,11 @@ describe('grampsjs-img placeholders', () => {
     null
 
   it.each([
-    ['audio/mpeg', mdiFileMusic],
-    ['application/vnd.google-earth.kml+xml', mdiMap],
-    ['application/geo+json', mdiMap],
-    ['application/gpx+xml', mdiMap],
-    ['application/zip', mdiFile],
+    ['audio/mpeg', FileAudio],
+    ['application/vnd.google-earth.kml+xml', MapTrifold],
+    ['application/geo+json', MapTrifold],
+    ['application/gpx+xml', MapTrifold],
+    ['application/zip', File],
   ])('renders a placeholder for %s', async (mime, path) => {
     for (const square of [true, false]) {
       // eslint-disable-next-line no-await-in-loop
@@ -128,7 +128,7 @@ describe('grampsjs-img placeholders', () => {
     })
     fireEvent(el.shadowRoot.querySelector('img'), 'error')
     await el.updateComplete
-    expect(placeholderPath(el)).toBe(mdiFileVideo)
+    expect(placeholderPath(el)).toBe(FileVideo)
   })
 
   it('renders a broken image when an image thumbnail fails', async () => {
@@ -139,12 +139,12 @@ describe('grampsjs-img placeholders', () => {
     })
     fireEvent(el.shadowRoot.querySelector('img'), 'error')
     await el.updateComplete
-    expect(placeholderPath(el)).toBe(mdiImageBroken)
+    expect(placeholderPath(el)).toBe(ImageBroken)
   })
 
   it.each([
-    ['application/pdf', mdiFile],
-    ['', mdiImageBroken],
+    ['application/pdf', File],
+    ['', ImageBroken],
   ])('renders the icon for a failed %s thumbnail', async (mime, path) => {
     const el = await mount('grampsjs-img', {handle: 'h', size: 300, mime})
     fireEvent(el.shadowRoot.querySelector('img'), 'error')
@@ -157,10 +157,10 @@ describe('grampsjs-img placeholders', () => {
       handle: 'h',
       size: 40,
       mime: 'video/mp4',
-      fallbackIcon: mdiMap,
+      fallbackIcon: MapTrifold,
     })
     fireEvent(el.shadowRoot.querySelector('img'), 'error')
     await el.updateComplete
-    expect(placeholderPath(el)).toBe(mdiMap)
+    expect(placeholderPath(el)).toBe(MapTrifold)
   })
 })

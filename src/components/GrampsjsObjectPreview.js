@@ -1,6 +1,5 @@
 import {LitElement, css, html, nothing} from 'lit'
-import {mdiOpenInNew} from '@mdi/js'
-
+import {ArrowSquareOut} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {fireEvent} from '../util.js'
@@ -446,7 +445,7 @@ export class GrampsjsObjectPreview extends GrampsjsAppStateMixin(LitElement) {
           title="${this._('_Open')}"
           aria-label="${this._('_Open')}"
         >
-          <grampsjs-icon path="${mdiOpenInNew}"></grampsjs-icon>
+          <grampsjs-icon path="${ArrowSquareOut}"></grampsjs-icon>
         </md-icon-button>
         <div id="content">${this._renderContent()}</div>
       </div>

@@ -4,16 +4,15 @@ import '@material/web/list/list'
 import '@material/web/list/list-item'
 
 import {
-  mdiAccount,
-  mdiChevronDown,
-  mdiChevronUp,
-  mdiClose,
-  mdiEarth,
-  mdiFilterVariant,
-  mdiMagnify,
-  mdiMapMarker,
-  mdiMapMarkerOff,
-} from '@mdi/js'
+  CaretDown,
+  CaretUp,
+  FunnelSimple,
+  GlobeHemisphereWest,
+  MagnifyingGlass,
+  MapPin,
+  User,
+  X,
+} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import './GrampsjsButtonToggle.js'
 import './GrampsjsMapFilters.js'
@@ -302,7 +301,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
       <div id="container">
         <div id="searchbar">
           <grampsjs-icon
-            path="${mdiMagnify}"
+            path="${MagnifyingGlass}"
             color="var(--md-sys-color-on-surface-variant)"
           ></grampsjs-icon>
           <input
@@ -316,7 +315,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           ${showClearButton
             ? html`
                 <md-icon-button @click="${this._handleClear}">
-                  <grampsjs-icon path="${mdiClose}"></grampsjs-icon>
+                  <grampsjs-icon path="${X}"></grampsjs-icon>
                 </md-icon-button>
               `
             : ''}
@@ -327,7 +326,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
               ?disabled="${this.filtersSuspended}"
               @click="${this._toggleFilters}"
             >
-              <grampsjs-icon path="${mdiFilterVariant}"></grampsjs-icon>
+              <grampsjs-icon path="${FunnelSimple}"></grampsjs-icon>
             </md-icon-button>
             ${this._filtersActive ? html`<span class="filter-dot"></span>` : ''}
           </span>
@@ -387,7 +386,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
             }}"
           >
             <grampsjs-icon
-              path="${this._collapsed ? mdiChevronDown : mdiChevronUp}"
+              path="${this._collapsed ? CaretDown : CaretUp}"
               color="var(--md-sys-color-on-surface-variant)"
             ></grampsjs-icon>
           </button>
@@ -466,7 +465,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
       <div id="filter-pills">
         <grampsjs-button-toggle
           label="${this._('Places')}"
-          .iconPath="${mdiMapMarker}"
+          .iconPath="${MapPin}"
           ?checked="${this._activeFilter.split(',').includes(TYPE_PLACE)}"
           .appState="${this.appState}"
           @grampsjs-button-toggle:toggle="${() =>
@@ -474,7 +473,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         ></grampsjs-button-toggle>
         <grampsjs-button-toggle
           label="${this._('People')}"
-          .iconPath="${mdiAccount}"
+          .iconPath="${User}"
           ?checked="${this._activeFilter.split(',').includes(TYPE_PERSON)}"
           .appState="${this.appState}"
           @grampsjs-button-toggle:toggle="${() =>
@@ -482,7 +481,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         ></grampsjs-button-toggle>
         <grampsjs-button-toggle
           label="${this._('External')}"
-          .iconPath="${mdiEarth}"
+          .iconPath="${GlobeHemisphereWest}"
           ?checked="${this._activeFilter === TYPE_EXTERNAL}"
           .appState="${this.appState}"
           @grampsjs-button-toggle:toggle="${() =>
@@ -528,14 +527,14 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           this.appState.i18n.strings,
           this.appState.settings
         ).trim(),
-        iconPath: mdiAccount,
+        iconPath: User,
       }
     }
     if (obj.object_type === TYPE_EXTERNAL) {
       return {
         label: obj.object?.name || obj.object?.display_name || '',
         supportingText: obj.object?.name ? obj.object.display_name : '',
-        iconPath: mdiEarth,
+        iconPath: GlobeHemisphereWest,
       }
     }
     return {
@@ -547,8 +546,8 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
       ).trim(),
       iconPath:
         obj.object?.profile?.lat != null && obj.object?.profile?.long != null
-          ? mdiMapMarker
-          : mdiMapMarkerOff,
+          ? MapPin
+          : MapPin,
     }
   }
 

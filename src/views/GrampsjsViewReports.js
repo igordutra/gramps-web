@@ -3,21 +3,15 @@ import '@material/web/list/list'
 import '@material/web/list/list-item'
 import '@material/web/divider/divider'
 
-import {
-  mdiFileDocument,
-  mdiChartPie,
-  mdiFileTree,
-  mdiBookOpenVariant,
-} from '@mdi/js'
-
+import {BookOpenText, ChartPie, FileCode, FileDoc} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import {fireEvent} from '../util.js'
 import '../components/GrampsjsIcon.js'
 
 const categoryIconPath = {
-  0: mdiFileDocument,
-  1: mdiChartPie,
-  5: mdiFileTree,
+  0: FileDoc,
+  1: ChartPie,
+  5: FileCode,
 }
 
 export class GrampsjsViewReports extends GrampsjsView {
@@ -60,7 +54,7 @@ export class GrampsjsViewReports extends GrampsjsView {
   }
 
   _selectListItem(report) {
-    const iconPath = categoryIconPath[report.category] || mdiBookOpenVariant
+    const iconPath = categoryIconPath[report.category] || BookOpenText
     return html`
       <md-divider inset></md-divider>
       <md-list-item

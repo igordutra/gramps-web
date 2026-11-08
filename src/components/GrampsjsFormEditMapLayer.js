@@ -8,8 +8,7 @@ import '@material/web/button/filled-button.js'
 import '@material/web/button/outlined-button.js'
 import '@material/web/slider/slider.js'
 
-import {mdiMapMarker} from '@mdi/js'
-
+import {MapPin} from '../icons/phosphor.js'
 import './GrampsjsMap.js'
 import './GrampsjsFormSelectDate.js'
 import './GrampsjsFormSelectObjectList.js'
@@ -132,7 +131,7 @@ class GrampsjsFormEditMapLayer extends GrampsjsNominatimSearchMixin(
               <md-filled-button @click="${this._handleClickPinBtn}">
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiMapMarker}"
+                  path="${MapPin}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('Select a point on the map')}
@@ -142,7 +141,7 @@ class GrampsjsFormEditMapLayer extends GrampsjsNominatimSearchMixin(
               <md-outlined-button @click="${this._handleClickPinBtn}">
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiMapMarker}"
+                  path="${MapPin}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('Select a point on the map')}
@@ -154,7 +153,7 @@ class GrampsjsFormEditMapLayer extends GrampsjsNominatimSearchMixin(
                 <md-filled-button @click="${this._handleClickAlignBtn}">
                   <grampsjs-icon
                     slot="icon"
-                    path="${mdiMapMarker}"
+                    path="${MapPin}"
                     color="currentColor"
                   ></grampsjs-icon>
                   ${this._('Align the image')}
@@ -164,7 +163,7 @@ class GrampsjsFormEditMapLayer extends GrampsjsNominatimSearchMixin(
                 <md-outlined-button @click="${this._handleClickAlignBtn}">
                   <grampsjs-icon
                     slot="icon"
-                    path="${mdiMapMarker}"
+                    path="${MapPin}"
                     color="currentColor"
                   ></grampsjs-icon>
                   ${this._('Align the image')}

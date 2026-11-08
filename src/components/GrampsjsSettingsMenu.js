@@ -10,16 +10,16 @@ import '@material/web/menu/menu-item'
 import '@material/web/divider/divider'
 
 import {
-  mdiLogout,
-  mdiInformation,
-  mdiWrench,
-  mdiAccountMultiple,
-  mdiAccountCog,
-  mdiAccountCircle,
-  mdiHelp,
-  mdiCloud,
-  mdiOpenInNew,
-} from '@mdi/js'
+  ArrowSquareOut,
+  Cloud,
+  Info,
+  Question,
+  SignOut,
+  UserCircle,
+  UserGear,
+  Users,
+  Wrench,
+} from '../icons/phosphor.js'
 import {sharedStyles, appBarIconButtonStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {renderIconSvg} from '../icons.js'
@@ -27,11 +27,11 @@ import './GrampsjsIcon.js'
 import {clickKeyHandler} from '../util.js'
 
 const menuItems = [
-  ['User settings', '/settings/user', mdiAccountCog, false],
-  ['Administration', '/settings/administration', mdiWrench, true],
-  ['Manage users', '/settings/users', mdiAccountMultiple, true],
-  ['System Information', '/settings/info', mdiInformation, false],
-  ['Help', '/help', mdiHelp, false],
+  ['User settings', '/settings/user', UserGear, false],
+  ['Administration', '/settings/administration', Wrench, true],
+  ['Manage users', '/settings/users', Users, true],
+  ['System Information', '/settings/info', Info, false],
+  ['Help', '/help', Question, false],
 ]
 
 class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
@@ -72,7 +72,7 @@ class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
           id="button_settings"
         >
           <grampsjs-icon
-            path="${mdiAccountCircle}"
+            path="${UserCircle}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -92,7 +92,7 @@ class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
           >
             <div slot="headline">${this._('Log out')}</div>
             <md-icon slot="start">${renderIconSvg(
-              mdiLogout,
+              SignOut,
               'var(--icon-color)'
             )}</md-icon>
           </md-menu-item>
@@ -119,12 +119,12 @@ class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
         <div slot="headline">${accountName}</div>
         <grampsjs-icon
           slot="start"
-          path="${mdiCloud}"
+          path="${Cloud}"
           color="var(--icon-color)"
         ></grampsjs-icon>
         <grampsjs-icon
           slot="end"
-          path="${mdiOpenInNew}"
+          path="${ArrowSquareOut}"
           color="var(--icon-color)"
           height="18"
           width="18"

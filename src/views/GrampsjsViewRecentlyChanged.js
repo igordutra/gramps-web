@@ -5,7 +5,7 @@ import '../components/GrampsjsSearchResultList.js'
 
 export class GrampsjsViewRecentlyChanged extends GrampsjsConnectedComponent {
   renderContent() {
-    return html` <h3>${this._('Recently changed objects')}</h3>
+    return html` <h2>${this._('Recently changed objects')}</h2>
       ${this._data?.data === undefined || this._data?.data?.length === 0
         ? html` <p>${this._('None')}.</p> `
         : html`
@@ -22,7 +22,7 @@ export class GrampsjsViewRecentlyChanged extends GrampsjsConnectedComponent {
 
   renderLoading() {
     return html`
-      <h3>${this._('Recently changed objects')}</h3>
+      <h2>${this._('Recently changed objects')}</h2>
       <grampsjs-search-result-list
         .data="${[]}"
         .appState="${this.appState}"

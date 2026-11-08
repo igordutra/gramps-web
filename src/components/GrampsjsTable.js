@@ -5,12 +5,11 @@ import '@material/web/icon/icon.js'
 import '@material/web/iconbutton/filled-icon-button'
 import '@material/web/menu/menu'
 import {
-  mdiArrowDown,
-  mdiArrowUp,
-  mdiSort,
-  mdiSortAscending,
-  mdiSortDescending,
-} from '@mdi/js'
+  ArrowDown,
+  ArrowUp,
+  SortAscending,
+  SortDescending,
+} from '../icons/phosphor.js'
 import {classMap} from 'lit/directives/class-map.js'
 
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -25,6 +24,12 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
       css`
         :host {
           display: block;
+        }
+
+        .table-container {
+          /* The table sat flush against the panel edge, so the first
+             column read as cramped. A gutter gives the whole table room. */
+          padding: 0 var(--grampsjs-page-gutter, 24px);
         }
 
         table {
@@ -43,7 +48,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           gap: 0.75em;
           border-top: 1px solid var(--grampsjs-body-font-color-10);
           grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-          padding: 12px 0;
+          padding: 16px 0;
         }
 
         tbody tr:last-child {
@@ -53,7 +58,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
         tbody td {
           text-align: left;
           display: block;
-          padding: 0 10px;
+          padding: 0 14px;
           border: none;
           position: relative;
           font-size: 15px;
@@ -100,7 +105,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         table.wide thead th {
           text-align: left;
-          padding: 12px 16px;
+          padding: 14px 20px;
           font-size: 11px;
           letter-spacing: 0.04em;
           text-transform: uppercase;
@@ -169,7 +174,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         table.wide tbody td {
           display: table-cell;
-          padding: 12px 16px;
+          padding: 14px 20px;
           border: none;
           font-size: 15px;
         }
@@ -415,7 +420,11 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
       : !this.descending
     return html`
       <div class="mobile-sort">
-        <md-icon-button @click="${this._toggleSortMenu}" id="btn-sort-menu">
+        <md-icon-button
+          @click="${this._toggleSortMenu}"
+          id="btn-sort-menu"
+          aria-label="${this._('Sort by')}"
+        >
           <md-icon>${this._renderSortIcon(hasActive, isAscending)}</md-icon>
         </md-icon-button>
         <md-menu id="sort-menu" anchor="btn-sort-menu">
@@ -484,7 +493,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
       >
         ${label}
         ${renderIconSvg(
-          isCurrent && isDescending ? mdiArrowDown : mdiArrowUp,
+          isCurrent && isDescending ? ArrowDown : ArrowUp,
           'currentColor'
         )}
       </button>
@@ -524,16 +533,13 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
     if (isCurrent) {
       if (isAscending) {
         return renderIconSvg(
-          mdiSortAscending,
+          SortAscending,
           'var(--grampsjs-body-font-color-60)'
         )
       }
-      return renderIconSvg(
-        mdiSortDescending,
-        'var(--grampsjs-body-font-color-60)'
-      )
+      return renderIconSvg(SortDescending, 'var(--grampsjs-body-font-color-60)')
     }
-    return renderIconSvg(mdiSort, 'var(--grampsjs-body-font-color-20)')
+    return renderIconSvg(SortAscending, 'var(--grampsjs-body-font-color-20)')
   }
 
   _renderNarrowSelectAll() {

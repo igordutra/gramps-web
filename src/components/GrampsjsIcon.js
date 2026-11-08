@@ -71,7 +71,7 @@ export class GrampsjsIcon extends LitElement {
       <svg
         height="100%"
         width="100%"
-        viewBox="0 0 24 24"
+        viewBox="0 0 256 256"
         transform="rotate(${this.rotate})"
         preserveAspectRatio="xMidYMid meet"
       >

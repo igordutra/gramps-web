@@ -2,7 +2,7 @@ import {html, css, LitElement} from 'lit'
 import {unsafeHTML} from 'lit/directives/unsafe-html.js'
 import {classMap} from 'lit/directives/class-map.js'
 import '@material/web/icon/icon.js'
-import {mdiFamilyTree} from '@mdi/js'
+import {TreeStructure} from '../icons/phosphor.js'
 import {marked} from 'marked'
 import DOMPurify from 'dompurify'
 
@@ -237,7 +237,7 @@ class GrampsjsChatMessage extends GrampsjsAppStateMixin(LitElement) {
                 <div class="avatar">
                   <md-icon
                     >${renderIconSvg(
-                      mdiFamilyTree,
+                      TreeStructure,
                       'var(--grampsjs-body-font-color-40)',
                       270
                     )}</md-icon

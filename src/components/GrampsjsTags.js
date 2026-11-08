@@ -6,8 +6,7 @@ import '@material/web/chips/chip-set'
 import '@material/web/chips/input-chip'
 import '@material/web/chips/assist-chip'
 import '@material/web/iconbutton/icon-button.js'
-import {mdiTagPlus} from '@mdi/js'
-
+import {Tag} from '../icons/phosphor.js'
 import {fireEvent} from '../util.js'
 import './GrampsjsIcon.js'
 import './GrampsjsTooltip.js'
@@ -133,7 +132,7 @@ export class GrampsjsTags extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this._handleNewTag}"
               >
                 <grampsjs-icon
-                  path="${mdiTagPlus}"
+                  path="${Tag}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>

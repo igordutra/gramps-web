@@ -4,8 +4,7 @@ import '@material/web/iconbutton/icon-button.js'
 import '@material/web/list/list.js'
 import '@material/web/list/list-item.js'
 
-import {mdiAccountPlus, mdiDelete, mdiStar} from '@mdi/js'
-
+import {Star, Trash, UserPlus} from '../icons/phosphor.js'
 import {GrampsjsViewNewObject} from './GrampsjsViewNewObject.js'
 import {GrampsjsNewEventMixin} from '../mixins/GrampsjsNewEventMixin.js'
 import '../components/GrampsjsFormSelectDate.js'
@@ -108,7 +107,7 @@ export class GrampsjsViewNewEvent extends GrampsjsNewEventMixin(
                       ${this._isPrimaryRole(p.role?.string || p.role || '')
                         ? html`<grampsjs-icon
                             class="role-star"
-                            path="${mdiStar}"
+                            path="${Star}"
                             color="currentColor"
                           ></grampsjs-icon>`
                         : ''}
@@ -136,7 +135,7 @@ export class GrampsjsViewNewEvent extends GrampsjsNewEventMixin(
                       @click="${() => this._removeParticipant(i)}"
                     >
                       <grampsjs-icon
-                        path="${mdiDelete}"
+                        path="${Trash}"
                         color="var(--mdc-theme-secondary)"
                       ></grampsjs-icon>
                     </md-icon-button>
@@ -151,7 +150,7 @@ export class GrampsjsViewNewEvent extends GrampsjsNewEventMixin(
         <md-outlined-button @click="${this._handleAddParticipant}">
           <grampsjs-icon
             slot="icon"
-            path="${mdiAccountPlus}"
+            path="${UserPlus}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('Add Participant')}

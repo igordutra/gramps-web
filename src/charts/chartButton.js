@@ -1,21 +1,15 @@
 import {select} from 'd3-selection'
-import {
-  mdiChevronDown,
-  mdiChevronLeft,
-  mdiChevronRight,
-  mdiChevronUp,
-} from '@mdi/js'
-
+import {CaretDown, CaretLeft, CaretRight, CaretUp} from '../icons/phosphor.js'
 // The chevron buttons of the charts. Their radius, in pixels.
 export const buttonRadius = 20
 // Radius of the backdrop around the chevron, in pixels
 const backdropRadius = 12
 
 const chevrons = {
-  left: mdiChevronLeft,
-  right: mdiChevronRight,
-  top: mdiChevronUp,
-  bottom: mdiChevronDown,
+  left: CaretLeft,
+  right: CaretRight,
+  top: CaretUp,
+  bottom: CaretDown,
 }
 
 // Appends buttons to the `enter` selection that call `activate(event, d)`

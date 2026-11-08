@@ -26,14 +26,14 @@ import {
 } from '../api.js'
 import {DEFAULT_PRIMARY, DEFAULT_SECONDARY} from '../theme.js'
 import {
-  mdiAlertCircle,
-  mdiAlertOutline,
-  mdiCheckCircle,
-  mdiDeleteForever,
-  mdiDownload,
-  mdiPlus,
-  mdiUpload,
-} from '@mdi/js'
+  CheckCircle,
+  DownloadSimple,
+  Plus,
+  TrashSimple,
+  UploadSimple,
+  Warning,
+  WarningCircle,
+} from '../icons/phosphor.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsFormUpload.js'
 import '../components/GrampsjsFormSelectObject.js'
@@ -449,7 +449,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
           <md-outlined-button @click="${this._handleExportTreeConfig}">
             <grampsjs-icon
               slot="icon"
-              path="${mdiDownload}"
+              path="${DownloadSimple}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('Export')}
@@ -457,7 +457,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
           <md-outlined-button @click="${this._handleImportClick}">
             <grampsjs-icon
               slot="icon"
-              path="${mdiUpload}"
+              path="${UploadSimple}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('Import')}
@@ -564,7 +564,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
           <md-outlined-button @click="${this._openCreateTag}">
             <grampsjs-icon
               slot="icon"
-              path="${mdiPlus}"
+              path="${Plus}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('New Tag')}
@@ -609,7 +609,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
               >
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiDeleteForever}"
+                  path="${TrashSimple}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('Delete')}
@@ -647,12 +647,12 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
     )
     const iconError = html`<grampsjs-icon
       class="error status"
-      path="${mdiAlertCircle}"
+      path="${WarningCircle}"
       color="currentColor"
     ></grampsjs-icon>`
     const iconOk = html`<grampsjs-icon
       class="success status"
-      path="${mdiCheckCircle}"
+      path="${CheckCircle}"
       color="currentColor"
     ></grampsjs-icon>`
     const icon = objCount === 0 || count / objCount > 0.98 ? iconOk : iconError
@@ -906,7 +906,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
             style="display:flex;align-items:center;gap:4px;white-space:nowrap;"
           >
             <grampsjs-icon
-              path="${severity === 'error' ? mdiAlertCircle : mdiAlertOutline}"
+              path="${severity === 'error' ? WarningCircle : Warning}"
               color="${severity === 'error'
                 ? 'var(--grampsjs-alert-error-font-color)'
                 : 'var(--md-sys-color-tertiary)'}"

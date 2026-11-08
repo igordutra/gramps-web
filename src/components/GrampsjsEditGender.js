@@ -2,21 +2,20 @@ import {LitElement, html} from 'lit'
 
 import '@material/web/iconbutton/icon-button.js'
 import {
-  mdiGenderFemale,
-  mdiGenderMale,
-  mdiGenderNonBinary,
-  mdiHelp,
-} from '@mdi/js'
-
+  GenderFemale,
+  GenderMale,
+  GenderNonbinary,
+  Question,
+} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {fireEvent} from '../util.js'
 
 const icons = {
-  0: mdiGenderFemale,
-  1: mdiGenderMale,
-  2: mdiHelp,
-  3: mdiGenderNonBinary,
+  0: GenderFemale,
+  1: GenderMale,
+  2: Question,
+  3: GenderNonbinary,
 }
 
 export class GrampsjsEditGender extends LitElement {

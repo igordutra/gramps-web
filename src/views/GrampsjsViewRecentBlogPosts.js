@@ -15,7 +15,7 @@ export class GrampsjsViewRecentBlogPosts extends GrampsjsConnectedComponent {
           margin-top: 0.3em;
         }
 
-        h3 {
+        h2 {
           margin-bottom: 15px;
         }
       `,
@@ -25,12 +25,12 @@ export class GrampsjsViewRecentBlogPosts extends GrampsjsConnectedComponent {
   renderContent() {
     if (!this._data?.data?.length) {
       return html`
-        <h3>${this._('Latest Blog Post')}</h3>
+        <h2>${this._('Latest Blog Post')}</h2>
         <p>${this._('None')}.</p>
       `
     }
     return html`
-      <h3>${this._('Latest Blog Post')}</h3>
+      <h2>${this._('Latest Blog Post')}</h2>
       <grampsjs-search-result-list
         large
         selectable
@@ -49,7 +49,7 @@ export class GrampsjsViewRecentBlogPosts extends GrampsjsConnectedComponent {
 
   renderLoading() {
     return html`
-      <h3>${this._('Latest Blog Post')}</h3>
+      <h2>${this._('Latest Blog Post')}</h2>
       <grampsjs-search-result-list
         .data="${this._data.data}"
         .appState="${this.appState}"

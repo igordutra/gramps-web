@@ -4,19 +4,19 @@ The dropdown menu for adding objects in the top app bar
 
 import {html, css, LitElement} from 'lit'
 import {
-  mdiAccount,
-  mdiAccountMultiple,
-  mdiCalendar,
-  mdiMapMarker,
-  mdiBookOpenVariant,
-  mdiBookmark,
-  mdiArchive,
-  mdiTextBox,
-  mdiImage,
-  mdiFormatListChecks,
-  mdiPlus,
-  mdiRss,
-} from '@mdi/js'
+  Archive,
+  BookOpenText,
+  BookmarkSimple,
+  Calendar,
+  Image,
+  ListChecks,
+  MapPin,
+  Plus,
+  Rss,
+  Textbox,
+  User,
+  Users,
+} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/menu/menu'
 import '@material/web/menu/menu-item'
@@ -27,17 +27,17 @@ import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import './GrampsjsIcon.js'
 
 const menuItems = [
-  ['Person', '/new_person', mdiAccount],
-  ['Family', '/new_family', mdiAccountMultiple],
-  ['Event', '/new_event', mdiCalendar],
-  ['Place', '/new_place', mdiMapMarker],
-  ['Source', '/new_source', mdiBookOpenVariant],
-  ['Citation', '/new_citation', mdiBookmark],
-  ['Repository', '/new_repository', mdiArchive],
-  ['Note', '/new_note', mdiTextBox],
-  ['Media Object', '/new_media', mdiImage],
-  ['Task', '/new_task', mdiFormatListChecks],
-  ['Blog Post', '/new_blog_post', mdiRss],
+  ['Person', '/new_person', User],
+  ['Family', '/new_family', Users],
+  ['Event', '/new_event', Calendar],
+  ['Place', '/new_place', MapPin],
+  ['Source', '/new_source', BookOpenText],
+  ['Citation', '/new_citation', BookmarkSimple],
+  ['Repository', '/new_repository', Archive],
+  ['Note', '/new_note', Textbox],
+  ['Media Object', '/new_media', Image],
+  ['Task', '/new_task', ListChecks],
+  ['Blog Post', '/new_blog_post', Rss],
 ]
 
 class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
@@ -75,7 +75,7 @@ class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
           @click="${this._handleClickAdd}"
           id="button_add"
         >
-          <grampsjs-icon path="${mdiPlus}" color="currentColor"></grampsjs-icon>
+          <grampsjs-icon path="${Plus}" color="currentColor"></grampsjs-icon>
         </md-icon-button>
 
         <md-menu

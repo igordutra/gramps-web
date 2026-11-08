@@ -9,7 +9,7 @@ This is the frontend for [Gramps Web](https://www.grampsweb.org/), a genealogica
 - **[Material Web Components](https://github.com/material-components/material-web)** — UI primitives; the codebase contains a mix of the old v1 `@material/mwc-*` (`<mwc-button>` etc.) and the new v2 `@material/web` (`<md-button>` etc.). **New code should use `md-*` elements only.**
 - **[D3.js](https://d3js.org/)** — genealogical charts (fan chart, tree chart, relationship chart, Y-DNA lineage)
 - **[MapLibre GL](https://maplibre.org/)** — interactive maps
-- **[MDI icons](https://materialdesignicons.com/)** via `@mdi/js` — SVG path constants rendered through `<grampsjs-icon>`. The codebase also contains older `<mwc-icon>` usage. **New code should always use `<grampsjs-icon>`.**
+- **[Phosphor Icons](https://phosphoricons.com/)** — SVG path constants rendered through `<grampsjs-icon>`. The constants live in `src/icons/phosphor.js`, which is generated from the Phosphor catalogue; see `scripts/map-mdi-to-phosphor.py` and `scripts/generate-phosphor-icons.py`. The codebase also contains older `<mwc-icon>` usage. **New code should always use `<grampsjs-icon>`.**
 
 ## Development
 
@@ -70,16 +70,29 @@ All component files and classes use the `Grampsjs` prefix with lowercase `js` (e
 
 ### Icons
 
-Import the SVG path constant from `@mdi/js` and pass it to `<grampsjs-icon>`:
+Import the SVG path constant from `src/icons/phosphor.js` and pass it to `<grampsjs-icon>`:
 
 ```js
-import {mdiInformation} from '@mdi/js'
+import {Information} from '../icons/phosphor.js'
 
 // in render():
-html`<grampsjs-icon path="${mdiInformation}"></grampsjs-icon>`
+html`<grampsjs-icon path="${Information}"></grampsjs-icon>`
 ```
 
 Optional attributes: `color`, `height`, `width`, `rotate`.
+
+The constants are on Phosphor's 256x256 grid and `<grampsjs-icon>` renders
+them with the matching viewBox, so the path data is never scaled by hand.
+
+`src/icons/phosphor.js` is generated and committed. To add or change an
+icon, edit the mapping in `scripts/map-mdi-to-phosphor.py` and regenerate:
+
+```
+python3 scripts/generate-phosphor-icons.py
+```
+
+The catalogue comes from `@phosphor-icons/core`, a dev dependency — it is
+not needed at runtime.
 
 For action icon color (add/edit/delete buttons), use `color="var(--mdc-theme-secondary)"` — this is derived from the active secondary seed colour and adapts to light/dark mode.
 

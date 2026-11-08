@@ -6,7 +6,7 @@ import {html, css, LitElement} from 'lit'
 
 import '@material/web/button/outlined-button.js'
 
-import {mdiLinkPlus, mdiPlus} from '@mdi/js'
+import {Link, Plus} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 
 import {fireEvent, makeHandle, objectTypeToEndpoint} from '../util.js'
@@ -80,7 +80,7 @@ class GrampsjsFormSelectObject extends GrampsjsAppStateMixin(LitElement) {
     this.disabled = false
     this.hideButton = false
     this.initialQuery = ''
-    this.iconPath = mdiLinkPlus
+    this.iconPath = Link
     this.allowNew = false
     this.filter = null
     this._newObjectDialogOpen = false
@@ -110,7 +110,7 @@ class GrampsjsFormSelectObject extends GrampsjsAppStateMixin(LitElement) {
               >
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiPlus}"
+                  path="${Plus}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._(newBtnLabel[this.objectType])}

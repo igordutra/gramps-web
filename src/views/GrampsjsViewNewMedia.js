@@ -3,8 +3,7 @@ import {repeat} from 'lit/directives/repeat.js'
 
 import '@material/web/progress/linear-progress.js'
 import '@material/web/iconbutton/icon-button.js'
-import {mdiClose, mdiFileDocumentOutline} from '@mdi/js'
-
+import {FileDoc, X} from '../icons/phosphor.js'
 import '../components/GrampsjsFormUpload.js'
 import '../components/GrampsjsIcon.js'
 
@@ -174,7 +173,7 @@ export class GrampsjsViewNewMedia extends GrampsjsNewMediaMixin(
             @click="${() => this._removeFile(index)}"
             style="--md-icon-button-icon-color: var(--grampsjs-body-font-color-60);"
           >
-            <grampsjs-icon path="${mdiClose}"></grampsjs-icon>
+            <grampsjs-icon path="${X}"></grampsjs-icon>
           </md-icon-button>
         </div>
 
@@ -185,9 +184,7 @@ export class GrampsjsViewNewMedia extends GrampsjsNewMediaMixin(
                   src="${this._getFilePreviewUrl(file)}"
                   alt="${file.name}"
                 />`
-              : html`<grampsjs-icon
-                  path="${mdiFileDocumentOutline}"
-                ></grampsjs-icon>`}
+              : html`<grampsjs-icon path="${FileDoc}"></grampsjs-icon>`}
           </div>
 
           <div class="file-metadata">

@@ -1,7 +1,6 @@
 import {html} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {mdiArchive} from '@mdi/js'
-
+import {Archive} from '../icons/phosphor.js'
 import {GrampsjsEditableList} from './GrampsjsEditableList.js'
 import './GrampsjsIcon.js'
 import './GrampsjsFormRepoRef.js'
@@ -49,7 +48,7 @@ export class GrampsjsRepositories extends GrampsjsEditableList {
           : ''}
         <grampsjs-icon
           slot="start"
-          path="${mdiArchive}"
+          path="${Archive}"
           color="var(--grampsjs-color-icon)"
         ></grampsjs-icon>
       </md-list-item>

@@ -1,5 +1,5 @@
 import {describe, it, expect, beforeAll, afterAll, vi} from 'vitest'
-import {mdiFile, mdiFileMusic, mdiImage} from '@mdi/js'
+import {File, FileAudio, Image} from '../../src/icons/phosphor.js'
 import {
   _parseGrampsHref,
   renderInlineImages,
@@ -176,7 +176,7 @@ describe('renderInlineImages', () => {
     expect(a.querySelector('img')).toBeNull()
     const icon = a.querySelector('grampsjs-icon.inline-image-icon')
     expect(icon).not.toBeNull()
-    expect(icon.path).toBe(mdiImage)
+    expect(icon.path).toBe(Image)
     expect(a.getAttribute('aria-label')).toBe('M9999')
     expect(a.textContent).not.toContain('\uFFFC')
     expect(a.getAttribute('href')).toBe('/media/M9999')
@@ -198,7 +198,7 @@ describe('renderInlineImages', () => {
     })
     const a = container.querySelector('a')
     expect(a.querySelector('img')).toBeNull()
-    expect(a.querySelector('grampsjs-icon').path).toBe(mdiFileMusic)
+    expect(a.querySelector('grampsjs-icon').path).toBe(FileAudio)
     expect(a.getAttribute('aria-label')).toBe('Interview')
   })
 
@@ -211,7 +211,7 @@ describe('renderInlineImages', () => {
     expect(a.querySelector('img')).toBeNull()
     expect(a.querySelector('.inline-image-caption')).toBeNull()
     expect(a.classList.contains('inline-image')).toBe(false)
-    expect(a.querySelector('grampsjs-icon').path).toBe(mdiFile)
+    expect(a.querySelector('grampsjs-icon').path).toBe(File)
   })
 
   it('turns a video into a player captioned by a link', () => {

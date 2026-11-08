@@ -94,6 +94,22 @@ export const TYPE_SCALE = {
 
 export const SPACE_SCALE = {
   '--md-sys-space-unit': '4px',
+  // Material exposes a single space unit; the app needs a real scale.
+  // These are the values the layout is built from, so padding and gaps
+  // across the app stay on the same rhythm instead of drifting apart.
+  '--grampsjs-space-2': '2px',
+  '--grampsjs-space-4': '4px',
+  '--grampsjs-space-8': '8px',
+  '--grampsjs-space-12': '12px',
+  '--grampsjs-space-16': '16px',
+  '--grampsjs-space-20': '20px',
+  '--grampsjs-space-24': '24px',
+  '--grampsjs-space-32': '32px',
+  '--grampsjs-space-40': '40px',
+  // Page gutter: the breathing room between the window edge and content.
+  '--grampsjs-page-gutter': '24px',
+  // Gutter for the narrow layout, where 24px would eat the content.
+  '--grampsjs-page-gutter-compact': '12px',
 }
 
 export const ELEVATION_SCALE = {

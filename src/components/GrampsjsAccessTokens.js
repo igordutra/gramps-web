@@ -7,8 +7,7 @@ import '@material/web/list/list'
 import '@material/web/list/list-item'
 import '@material/web/textfield/filled-text-field'
 
-import {mdiCheck, mdiContentCopy} from '@mdi/js'
-
+import {Check, Copy} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {apiVersionAtLeast, fireEvent} from '../util.js'
@@ -493,7 +492,7 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
           <md-text-button @click="${this._copyCreatedToken}">
             <grampsjs-icon
               slot="icon"
-              path="${this._createdTokenCopied ? mdiCheck : mdiContentCopy}"
+              path="${this._createdTokenCopied ? Check : Copy}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('_Copy')}

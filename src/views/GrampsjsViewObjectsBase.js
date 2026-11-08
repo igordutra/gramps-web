@@ -3,8 +3,7 @@ Base view for lists of Gramps objects, e.g. people, events, ...
 */
 
 import {html, css} from 'lit'
-import {mdiPlus, mdiCog, mdiCheckboxMultipleOutline} from '@mdi/js'
-
+import {Checks, Gear, Plus} from '../icons/phosphor.js'
 import '@material/web/fab/fab.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/button/outlined-button.js'
@@ -44,8 +43,17 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
 
         md-fab {
           position: fixed;
-          bottom: 32px;
-          right: 32px;
+          /* The button belongs to the content column, not to the window.
+             The column ends one page margin short of the viewport edge and
+             the page scrollbar sits outside it, so the button is inset by
+             the margin plus its own gutter — otherwise it hangs over the
+             panel edge and into the scrollbar. */
+          bottom: var(--grampsjs-space-24, 24px);
+          right: calc(
+            var(--grampsjs-page-margin-inline, 40px) +
+              var(--grampsjs-space-24, 24px) +
+              var(--grampsjs-scrollbar-width, 0px)
+          );
           /* Material's FAB is a large saturated disc with a heavy shadow.
              A modern action button is smaller, softer and matches the
              density of the rest of the toolbar. */
@@ -264,7 +272,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
   _renderSelectButton() {
     const icon = html`<grampsjs-icon
       slot="icon"
-      .path="${mdiCheckboxMultipleOutline}"
+      .path="${Checks}"
       height="20"
       color="currentColor"
     ></grampsjs-icon>`
@@ -294,7 +302,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
           this._showColumnPicker = true
         }}"
       >
-        <grampsjs-icon .path="${mdiCog}" height="22"></grampsjs-icon>
+        <grampsjs-icon .path="${Gear}" height="22"></grampsjs-icon>
       </md-icon-button>
     `
   }
@@ -563,10 +571,14 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
 
   renderFab() {
     return html`
-      <md-fab variant="secondary" @click=${this._handleClickAdd}>
+      <md-fab
+        variant="secondary"
+        @click=${this._handleClickAdd}
+        aria-label="${this._('Add')}"
+      >
         <grampsjs-icon
           slot="icon"
-          .path="${mdiPlus}"
+          .path="${Plus}"
           color="var(--mdc-theme-on-secondary)"
         ></grampsjs-icon>
       </md-fab>

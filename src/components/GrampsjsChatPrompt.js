@@ -3,7 +3,7 @@ import '@material/web/textfield/outlined-text-field'
 import '@material/web/iconbutton/filled-icon-button'
 import '@material/web/icon/icon.js'
 
-import {mdiSend} from '@mdi/js'
+import {PaperPlaneTilt} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {fireEvent} from '../util.js'
@@ -82,7 +82,7 @@ class GrampsjsChatPrompt extends GrampsjsAppStateMixin(LitElement) {
         >
           <md-icon
             >${renderIconSvg(
-              mdiSend,
+              PaperPlaneTilt,
               'var(--grampsjs-color-shade-255)'
             )}</md-icon
           >

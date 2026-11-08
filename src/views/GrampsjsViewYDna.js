@@ -1,8 +1,7 @@
 import {html, css} from 'lit'
 
 import '@material/web/select/filled-select'
-import {mdiEye, mdiPencil, mdiPlus} from '@mdi/js'
-
+import {Eye, PencilSimple, Plus} from '../icons/phosphor.js'
 import '../components/GrampsjsYtreeLineage.js'
 import '../components/GrampsjsFormNewYDna.js'
 import '../components/GrampsjsFormEditYDna.js'
@@ -40,10 +39,14 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
   }
 
   renderFab() {
-    return html`<md-fab variant="secondary" @click="${this._handleClickAdd}">
+    return html`<md-fab
+      variant="secondary"
+      @click="${this._handleClickAdd}"
+      aria-label="${this._('Add')}"
+    >
       <grampsjs-icon
         slot="icon"
-        .path="${mdiPlus}"
+        .path="${Plus}"
         color="var(--mdc-theme-on-secondary)"
       ></grampsjs-icon>
     </md-fab>`
@@ -91,7 +94,7 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
       <p>
         <md-text-button @click="${this._showRawSnpData}">
           <grampsjs-icon
-            .path="${mdiEye}"
+            .path="${Eye}"
             slot="icon"
             color="currentColor"
           ></grampsjs-icon>
@@ -101,7 +104,7 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
           ? html`
               <md-text-button @click="${this._editRawSnpData}">
                 <grampsjs-icon
-                  .path="${mdiPencil}"
+                  .path="${PencilSimple}"
                   slot="icon"
                   color="currentColor"
                 ></grampsjs-icon>

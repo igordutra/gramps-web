@@ -7,13 +7,7 @@ import {html, css, LitElement} from 'lit'
 import '@material/web/button/text-button'
 import '@material/web/list/list'
 import '@material/web/list/list-item'
-import {
-  mdiPlusCircleOutline,
-  mdiPencilOutline,
-  mdiDeleteOutline,
-  mdiHelpCircleOutline,
-} from '@mdi/js'
-
+import {PencilSimple, PlusCircle, Question, Trash} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import './GrampsjsTimedelta.js'
 
@@ -24,9 +18,9 @@ const PAGE_SIZE = 10
 const MAX_ITEMS = 50
 
 const transTypeIcons = {
-  0: mdiPlusCircleOutline,
-  1: mdiPencilOutline,
-  2: mdiDeleteOutline,
+  0: PlusCircle,
+  1: PencilSimple,
+  2: Trash,
 }
 
 const transTypeLabels = {
@@ -151,7 +145,7 @@ export class GrampsjsObjectRevisions extends GrampsjsAppStateMixin(LitElement) {
         </div>
         <grampsjs-icon
           slot="start"
-          path="${transTypeIcons[change.trans_type] || mdiHelpCircleOutline}"
+          path="${transTypeIcons[change.trans_type] || Question}"
           color="var(--grampsjs-body-font-color-50)"
         ></grampsjs-icon>
         <div slot="supporting-text">

@@ -25,8 +25,17 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
       css`
         md-fab {
           position: fixed;
-          bottom: 32px;
-          right: 32px;
+          /* The button belongs to the content column, not to the window.
+             The column ends one page margin short of the viewport edge and
+             the page scrollbar sits outside it, so the button is inset by
+             the margin plus its own gutter — otherwise it hangs over the
+             panel edge and into the scrollbar. */
+          bottom: var(--grampsjs-space-24, 24px);
+          right: calc(
+            var(--grampsjs-page-margin-inline, 40px) +
+              var(--grampsjs-space-24, 24px) +
+              var(--grampsjs-scrollbar-width, 0px)
+          );
           /* Material's FAB is a large saturated disc with a heavy shadow.
              A modern action button is smaller, softer and matches the
              density of the rest of the toolbar. */
@@ -91,7 +100,7 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
       !this._dnaDataLoading &&
       objectOrArrayIsEmpty(this._dnaData?.data ?? [])
     return html`
-      ${this._renderSelect()}
+      ${this.renderPageHeading()} ${this._renderSelect()}
       ${noSelectData || (this.grampsId && noDnaData)
         ? this._renderNoData()
         : this.renderContent()}

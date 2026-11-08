@@ -1,6 +1,8 @@
 import {html, css, LitElement} from 'lit'
-import {mdiUnfoldMoreHorizontal, mdiUnfoldLessHorizontal} from '@mdi/js'
-
+import {
+  ArrowsInLineHorizontal,
+  ArrowsOutLineHorizontal,
+} from '../icons/phosphor.js'
 import '@material/web/iconbutton/filled-tonal-icon-button.js'
 
 import {sharedStyles} from '../SharedStyles.js'
@@ -191,8 +193,8 @@ export class GrampsjsYtreeLineage extends GrampsjsAppStateMixin(LitElement) {
                   <grampsjs-icon
                     style="width:24px; height:24px;"
                     path="${this.expanded
-                      ? mdiUnfoldLessHorizontal
-                      : mdiUnfoldMoreHorizontal}"
+                      ? ArrowsInLineHorizontal
+                      : ArrowsOutLineHorizontal}"
                     color="var(--grampsjs-color-ytree-expand-font)"
                   ></grampsjs-icon>
                 </md-filled-tonal-icon-button>

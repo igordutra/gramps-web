@@ -3,8 +3,7 @@ import {html, css, LitElement} from 'lit'
 import '@material/web/textfield/outlined-text-field'
 import '@material/web/button/filled-button.js'
 
-import {mdiCheckCircle} from '@mdi/js'
-
+import {CheckCircle} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {apiRegisterUser} from '../api.js'
@@ -131,7 +130,7 @@ class GrampsjsFormRegister extends GrampsjsAppStateMixin(LitElement) {
           </div>
           <p class="success" id="register-success" style="display:none;">
             <grampsjs-icon
-              path="${mdiCheckCircle}"
+              path="${CheckCircle}"
               color="currentColor"
             ></grampsjs-icon
             ><br />

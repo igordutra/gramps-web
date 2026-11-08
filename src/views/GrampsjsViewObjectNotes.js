@@ -1,7 +1,6 @@
 import {html, css} from 'lit'
 
-import {mdiLinkOff, mdiLinkPlus, mdiPlus} from '@mdi/js'
-
+import {Link, LinkSimple, Plus} from '../icons/phosphor.js'
 import '@material/web/button/text-button'
 import '@material/web/iconbutton/icon-button.js'
 
@@ -94,13 +93,13 @@ export class GrampsjsViewObjectNotes extends GrampsjsViewObjectsDetail {
       <div>
         <md-icon-button class="edit" @click="${this._handleShareClick}">
           <grampsjs-icon
-            path="${mdiLinkPlus}"
+            path="${Link}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
         <md-icon-button class="edit" @click="${this._handleAddClick}">
           <grampsjs-icon
-            path="${mdiPlus}"
+            path="${Plus}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -161,7 +160,7 @@ export class GrampsjsViewObjectNotes extends GrampsjsViewObjectsDetail {
                 id="del-note-${i}"
               >
                 <grampsjs-icon
-                  path="${mdiLinkOff}"
+                  path="${LinkSimple}"
                   class="edit"
                   color="var(--mdc-theme-secondary)"
                   icon="delete"

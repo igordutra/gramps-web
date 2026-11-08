@@ -5,8 +5,7 @@ import '@material/web/progress/circular-progress.js'
 import '@material/web/button/filled-button'
 import '@material/web/button/outlined-button'
 
-import {mdiCheckCircle} from '@mdi/js'
-
+import {CheckCircle} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import './GrampsjsOidcButton.js'
 import {sharedStyles} from '../SharedStyles.js'
@@ -410,7 +409,7 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
           </div>
           <p class="success" id="reset-success" style="display:none;">
             <grampsjs-icon
-              path="${mdiCheckCircle}"
+              path="${CheckCircle}"
               color="currentColor"
             ></grampsjs-icon
             ><br />

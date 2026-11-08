@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit'
-import {mdiChevronRight} from '@mdi/js'
+import {CaretRight} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 
 export class GrampsjsCollapsibleSection extends LitElement {
@@ -84,7 +84,7 @@ export class GrampsjsCollapsibleSection extends LitElement {
         <summary>
           <span class="chevron">
             <grampsjs-icon
-              path="${mdiChevronRight}"
+              path="${CaretRight}"
               height="22"
               color="var(--md-sys-color-on-surface)"
             ></grampsjs-icon>

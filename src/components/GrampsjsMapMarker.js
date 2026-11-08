@@ -1,5 +1,5 @@
 import {html, LitElement} from 'lit'
-import {mdiMapMarker} from '@mdi/js'
+import {MapPin} from '../icons/phosphor.js'
 import * as maplibregl from 'maplibre-gl'
 
 class GrampsjsMapMarker extends LitElement {
@@ -48,8 +48,8 @@ class GrampsjsMapMarker extends LitElement {
     el.style.opacity = this.opacity
     el.style.cursor = 'pointer'
     el.innerHTML = `
-      <svg width="${this.size}" height="${this.size}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="${mdiMapMarker}" fill="var(--grampsjs-map-marker-color)" />
+      <svg width="${this.size}" height="${this.size}" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="${MapPin}" fill="var(--grampsjs-map-marker-color)" />
       </svg>
     `
     el.addEventListener('click', this.clickHandler.bind(this))

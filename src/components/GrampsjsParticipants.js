@@ -1,6 +1,5 @@
 import {html, css} from 'lit'
-import {mdiStar} from '@mdi/js'
-
+import {Star} from '../icons/phosphor.js'
 import {GrampsjsEditableList} from './GrampsjsEditableList.js'
 import './GrampsjsImg.js'
 import './GrampsjsIcon.js'
@@ -61,7 +60,7 @@ export class GrampsjsParticipants extends GrampsjsEditableList {
         ${this._isPrimaryRole(role)
           ? html`<grampsjs-icon
               class="role-star"
-              path="${mdiStar}"
+              path="${Star}"
               color="currentColor"
             ></grampsjs-icon>`
           : ''}
