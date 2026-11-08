@@ -1289,6 +1289,19 @@ export function resolveTheme(themeName, treeConfig = {}) {
   }
 }
 
+/**
+ * The browser's own chrome — the address bar on a phone, the tab strip
+ * on a desktop — is painted with the `theme-color` meta tag, and it
+ * sits outside the page, so it cannot be reached by a stylesheet. It
+ * was a baked-in brown that did not match the app's own primary.
+ */
+function setChromeColor(color) {
+  const meta = document.querySelector('meta[name="theme-color"]')
+  if (meta) {
+    meta.setAttribute('content', color)
+  }
+}
+
 export function applyScheme(
   primaryHex = DEFAULT_PRIMARY,
   secondaryHex = DEFAULT_SECONDARY,
@@ -1298,5 +1311,8 @@ export function applyScheme(
   const isDark = getCurrentTheme(theme) === 'dark'
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light')
   document.documentElement.setAttribute('data-style', themeName)
+  // the chrome follows the app's own primary, so it changes with the
+  // style and never disagrees with the page
+  setChromeColor(primaryHex)
   applyColors(primaryHex, secondaryHex, isDark, themeName)
 }
