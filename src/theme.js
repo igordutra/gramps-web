@@ -127,11 +127,15 @@ export const THEMES = {
   },
 }
 
-// The lab runs the SECOND style on purpose: Blueprint is a different
-// design language — square corners, a different type scale, a
-// different density — so a component that follows the tokens visibly
-// changes with it, and one that is hard-coded visibly does not.
-export const DEFAULT_THEME = 'blueprint'
+// The lab runs the Archive style by default: the app's own design
+// language, a small radius on an airy gutter.
+//
+// Blueprint is the second style and is a deliberately different design
+// language — square corners, a different type scale, a different
+// density — so it is the check: a component that follows the tokens
+// visibly changes with it, and one that is hard-coded visibly does
+// not. It was the default while the field treatment was being checked.
+export const DEFAULT_THEME = 'archive'
 
 /**
  * Design-token scales that Gramps Web does not currently define.
