@@ -45,8 +45,15 @@ class GrampsjsMapTimeSlider extends GrampsjsAppStateMixin(LitElement) {
           text-align: right;
         }
 
+        /*
+          The disabled year was dimmed to 38% opacity, which put it at
+          1.72:1 on the container surface -- too faint to read. A
+          disabled control is allowed to be quiet, not to be unreadable:
+          the slider's own disabled styling carries the state, so the
+          year keeps the same ink as when it is live.
+        */
         :host([disabled]) div.date {
-          opacity: 0.38;
+          opacity: 1;
         }
       `,
     ]

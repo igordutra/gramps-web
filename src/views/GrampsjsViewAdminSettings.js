@@ -354,6 +354,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
             <span class="color-label">${this._('Primary color')}</span>
             <wa-color-picker
               format="hex"
+              label="${this._('Primary color')}"
               .value="${this._primaryColor}"
               @change="${e => {
                 this._primaryColor = e.target.value
@@ -364,6 +365,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
             <span class="color-label">${this._('Accent color')}</span>
             <wa-color-picker
               format="hex"
+              label="${this._('Accent color')}"
               .value="${this._secondaryColor}"
               @change="${e => {
                 this._secondaryColor = e.target.value

@@ -158,6 +158,26 @@ export const sharedStyles = css`
     font-weight: 600;
   }
 
+  /*
+   * The colour picker's own label is what names its trigger for
+   * assistive technology, but Web Awesome PAINTS that label inside the
+   * control -- setting the attribute grew the trigger from 43x43 to
+   * 100x70 in the live app. Where the app already shows the name
+   * itself, the vendor's copy is kept for the accessibility tree and
+   * taken out of sight. The clip keeps it announced without painting
+   * it. The rule lives in the shared styles because the picker is
+   * inside each component's own shadow root, and ::part() only reaches
+   * a part from the tree that owns the element.
+   */
+  wa-color-picker::part(form-control-label) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+  }
+
   a:link,
   a:visited,
   span.link {
@@ -358,7 +378,7 @@ export const sharedStyles = css`
   }
 
   .warn {
-    color: var(--grampsjs-alert-warn-font-color);
+    color: var(--grampsjs-alert-warn-text-color);
   }
 
   @keyframes shine {

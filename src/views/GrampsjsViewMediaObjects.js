@@ -16,7 +16,7 @@ import {
   filterCounts,
   clickKeyHandler,
 } from '../util.js'
-import {tagColorToCss} from '../color.js'
+import {tagColorToCss, tagLabelColorToCss} from '../color.js'
 import {
   associationsFilter,
   mimeFilter,
@@ -415,7 +415,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
                 ${row.extended.tags.map(
                   tag => html`<span
                     class="tag-chip"
-                    style="--tag-color:${tagColorToCss(
+                    style="--tag-color:${tagLabelColorToCss(
                       tag.color
                     )};--tag-color-bg:${tagColorToCss(tag.color, 0.1)}"
                     >${tag.name}</span

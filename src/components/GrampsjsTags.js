@@ -1,6 +1,6 @@
 import {LitElement, css, html} from 'lit'
 
-import {tagColorToCss} from '../color.js'
+import {tagColorToCss, tagLabelColorToCss} from '../color.js'
 import {sharedStyles} from '../SharedStyles.js'
 import '@material/web/chips/chip-set'
 import '@material/web/chips/input-chip'
@@ -106,9 +106,8 @@ export class GrampsjsTags extends GrampsjsAppStateMixin(LitElement) {
               this.edit
                 ? html`<md-input-chip
                     label="${obj.name}"
-                    style="--tag-color:${tagColorToCss(
-                      obj.color,
-                      0.9
+                    style="--tag-color:${tagLabelColorToCss(
+                      obj.color
                     )};--tag-color-bg:${tagColorToCss(obj.color, 0.12)}"
                     @remove=${e => {
                       e.preventDefault()
@@ -117,9 +116,8 @@ export class GrampsjsTags extends GrampsjsAppStateMixin(LitElement) {
                   ></md-input-chip>`
                 : html`<md-assist-chip
                     label="${obj.name}"
-                    style="--tag-color:${tagColorToCss(
-                      obj.color,
-                      0.9
+                    style="--tag-color:${tagLabelColorToCss(
+                      obj.color
                     )};--tag-color-bg:${tagColorToCss(obj.color, 0.12)}"
                   ></md-assist-chip>`
             )}

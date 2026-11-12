@@ -83,6 +83,14 @@ body {
   --grampsjs-alert-warn-background-color: rgba(251, 192, 45, 0.2);
   --grampsjs-alert-warn-border-color: rgba(251, 192, 45, 0.7);
   --grampsjs-alert-warn-font-color: #f9a825;
+  /* The TEXT of a warning, which is not the amber of the warning ICON.
+     The amber is a graphic: it reads as "amber" on a light surface but
+     it measures 1.78:1 as text on the warning's own tint, which is
+     below the 4.5:1 WCAG AA wants. So the text takes a deeper amber --
+     5.05:1 on the tint over the page surface, 5.40:1 on the surface
+     itself -- and the icon keeps the amber, which is what makes the
+     warning look like a warning. */
+  --grampsjs-alert-warn-text-color: #8a5a00;
   --grampsjs-alert-success-font-color: #41ad49;
   --grampsjs-task-open: #007bff;
   --grampsjs-task-progress: #ff9800;
@@ -142,7 +150,29 @@ body {
     var(--mdc-theme-secondary) 80%,
     black
   );
+  /* MapLibre paints its attribution bar WHITE in every theme -- it is
+     the widget's own surface and no token of the app's reaches it. So
+     the links on it take a fixed ink that reads on white (11.6:1)
+     rather than the app's themed link colour, which resolves to a
+     light indigo in the dark theme and measured 3.17:1 on white.
+     The ink is the app's own secondary, the indigo of old ink. */
+  --grampsjs-map-attribution-link-color: #2e3566;
   --grampsjs-color-page-loading-progress: var(--mdc-theme-secondary);
+  /* The lightness range a tag chip's LABEL may take.
+
+     The chip sits on a TINT of the tag's own colour, so the label has
+     to read against that tint -- and the tint follows the theme. On the
+     light theme the tint is light, so the label is darkened until it
+     reads; on the dark theme the tint is dark, so the label is the
+     light version of the tag colour. The range lives here, in the
+     theme, rather than in a JavaScript branch on the mode, so the
+     label follows the theme the moment the theme changes.
+
+     Measured over the ten tag colours Gramps ships with, plus black,
+     white and the primaries: 5.92:1 worst case on the light theme,
+     5.39:1 on the dark one. */
+  --grampsjs-tag-label-lightness-min: 0;
+  --grampsjs-tag-label-lightness-max: 0.42;
 }
 
 :root[data-theme='light'] {
@@ -320,6 +350,16 @@ body {
   --grampsjs-note-highlight-strength: 30%;
   /* keep tag colors readable on dark surfaces (see tagColorToCss) */
   --grampsjs-tag-lightness-min: 0.7;
+  /* The warning TEXT on the dark theme: the amber reads on a dark
+     surface, where the deeper amber of the light theme would not. */
+  --grampsjs-alert-warn-text-color: #f9a825;
+  /* The tag chip's LABEL on the dark theme: the chip's tint is dark
+     here, so the label is the LIGHT version of the tag colour rather
+     than the darkened one. 5.39:1 worst case, measured over the ten
+     tag colours Gramps ships with, plus black, white and the
+     primaries. */
+  --grampsjs-tag-label-lightness-min: 0.75;
+  --grampsjs-tag-label-lightness-max: 1;
   --grampsjs-map-marker-color: #bb1f11;
   /* --md-sys-color-* tokens are set dynamically by applyColors() in theme.js */
   --mdc-select-fill-color: var(--md-sys-color-surface-container-highest);

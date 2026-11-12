@@ -61,6 +61,17 @@ export class GrampsjsCollapsibleSection extends LitElement {
         grid-area: title;
         font-size: 1.5em;
         font-weight: 500;
+        /* The section title is a real HEADING, not a styled span. A
+           section whose title is not a heading leaves the document
+           outline skipping a level -- the page's <h1> followed
+           straight by the section's <h3> -- and axe's heading-order
+           rule fires on it. A heading inside <summary> is valid HTML:
+           the summary's content model is phrasing content optionally
+           intermixed with heading content.
+
+           The heading's own margins and size are reset so the section
+           looks exactly as it did when the title was a span. */
+        margin: 0;
       }
 
       .description {
@@ -89,7 +100,7 @@ export class GrampsjsCollapsibleSection extends LitElement {
               color="var(--md-sys-color-on-surface)"
             ></grampsjs-icon>
           </span>
-          <span class="title">${this.heading}</span>
+          <h2 class="title">${this.heading}</h2>
           ${this.description
             ? html`<span class="description">${this.description}</span>`
             : ''}

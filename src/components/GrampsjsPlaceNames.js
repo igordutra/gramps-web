@@ -26,6 +26,7 @@ export class GrampsjsPlaceNames extends GrampsjsEditableList {
     const dateStr = this.profile[i]?.date_str ?? ''
     return html`
       <md-list-item
+        role="none"
         type="${this.edit ? 'button' : 'text'}"
         class="${classMap({selected: i === this._selectedIndex})}"
         @click="${() => {

@@ -17,6 +17,7 @@ export class GrampsjsPlaceChildren extends GrampsjsEditableList {
     const type = obj.place_type
     return html`
       <md-list-item
+        role="none"
         type="button"
         class="${classMap({selected: i === this._selectedIndex})}"
         @click="${() => {

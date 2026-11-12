@@ -9,13 +9,20 @@ import {
 } from '@material/material-color-utilities'
 import {TREE_CONFIG_PRIMARY_COLOR, TREE_CONFIG_SECONDARY_COLOR} from './api.js'
 
-export const DEFAULT_PRIMARY = '#6d4c41'
 /**
- * The stock Material blue (#0277bd) reads as an unrelated accent beside the
- * warm brown primary — it was the loudest thing on the screen and it was
- * not the brand. A deep, desaturated slate-teal sits beside the brown as a
- * cool counterweight instead of a competing hue.
+ * Russet: the Archive style's primary.
+ *
+ * The stock Material blue (#0277bd) read as an unrelated accent beside
+ * the warm brown primary — it was the loudest thing on the screen and it
+ * was not the brand. The brown (#6d4c41) was warmer than the accent but
+ * too far from it in chroma to sit beside it: the two accents scored
+ * 60/58 out of 100 for balance, and the pair read as brown-and-blue
+ * rather than as one palette. Russet keeps the warm, earthy family the
+ * style is named for and lands within 0.6 of the secondary's chroma in
+ * the light scheme, 127 degrees away in hue, at 6.4:1 for glyphs on
+ * both surfaces.
  */
+export const DEFAULT_PRIMARY = '#8f5433'
 /**
  * The second accent.
  *
@@ -26,7 +33,7 @@ export const DEFAULT_PRIMARY = '#6d4c41'
  * seed is where the choice has to be made.
  *
  * Indigo ink: the colour of old ink and blueprints. It is far enough
- * from the warm brown to read as its own accent, close enough in
+ * from the warm russet to read as its own accent, close enough in
  * lightness to sit beside it, and unlike a teal or a blue-grey it has
  * a specific identity rather than a default one.
  */

@@ -18,6 +18,7 @@ export class GrampsjsSourceCitations extends GrampsjsEditableList {
   row(obj, i) {
     return html`
       <md-list-item
+        role="none"
         type="button"
         class="${classMap({selected: i === this._selectedIndex})}"
         @click="${() => {

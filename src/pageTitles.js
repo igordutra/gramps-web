@@ -21,6 +21,7 @@ export const PAGE_TITLES = {
   medialist: 'Media',
   map: 'Map',
   tree: 'Family Tree',
+  timeline: 'Timeline',
   'dna-matches': 'DNA',
   'dna-chromosome': 'DNA',
   ydna: 'DNA',

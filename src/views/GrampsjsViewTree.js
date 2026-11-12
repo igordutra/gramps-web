@@ -229,7 +229,11 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
 
         #selected-person .gramps-id {
           font-size: var(--md-sys-typescale-label-small-size);
-          color: var(--grampsjs-body-font-color-50);
+          /* 60% black, not 50%: the identifier sits on the page surface,
+             where 50% measured 3.92:1 and failed WCAG AA for this
+             12px size. The chevron beside it is an ICON, which needs
+             only 3:1, so it keeps the quieter 50%. */
+          color: var(--grampsjs-body-font-color-60);
         }
 
         #selected-person .chevron {

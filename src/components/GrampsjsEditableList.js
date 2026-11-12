@@ -137,6 +137,7 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
         : html`
             ${this.edit ? this._renderActionBtns() : ''}
             <md-list
+              role="list"
               class="${classMap({
                 activatable: this.edit,
                 reorderable: this.edit && this.hasReorder,

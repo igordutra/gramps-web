@@ -354,7 +354,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
             ${this._renderFilterPills()}
             ${this.data.length === 0
               ? html`<div class="panel-section">${this._('Not found')}</div>`
-              : html`<md-list id="searchresult-list">
+              : html`<md-list id="searchresult-list" role="list">
                   ${this.data.map((obj, i) => this._renderListItem(obj, i))}
                 </md-list>`}
             ${this._activeFilter === TYPE_EXTERNAL && this.data.length > 0
@@ -564,7 +564,11 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
   _renderListItem(obj, i) {
     const {label, supportingText, iconPath} = this._listItemMeta(obj)
     return html`
-      <md-list-item type="button" @click="${() => this._handleSelected(i)}">
+      <md-list-item
+        role="none"
+        type="button"
+        @click="${() => this._handleSelected(i)}"
+      >
         ${label}
         <grampsjs-icon slot="start" path="${iconPath}"></grampsjs-icon>
         ${supportingText

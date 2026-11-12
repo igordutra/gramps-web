@@ -73,10 +73,11 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
 
     return html`
       ${this.heading ? html`<h3>${this._('Table Of Contents')}</h3>` : ''}
-      <md-list class="toc-list">
+      <md-list class="toc-list" role="list">
         ${tabKeys.map(
           key => html`
             <md-list-item
+              role="none"
               type="button"
               id="toc-item-${key}"
               class="${key === this.activeSection ? 'active' : ''}"

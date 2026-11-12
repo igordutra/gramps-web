@@ -189,7 +189,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
               <md-list role="list">
                 ${this._runningTasks.map(
                   task => html`
-                    <md-list-item type="text" noninteractive>
+                    <md-list-item role="none" type="text" noninteractive>
                       <grampsjs-task-progress-indicator
                         slot="start"
                         taskId="${task.id}"
@@ -227,6 +227,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
               ${this._notifications.map(
                 n => html`
                   <md-list-item
+                    role="none"
                     type="${this._hasDetail(n) ? 'button' : 'text'}"
                     ?noninteractive="${!this._hasDetail(n)}"
                     @click="${() => this._hasDetail(n) && this._openDetail(n)}"

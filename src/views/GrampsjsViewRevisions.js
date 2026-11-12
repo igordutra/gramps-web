@@ -152,6 +152,7 @@ export class GrampsjsViewRevisions extends GrampsjsStaleDataMixin(
     }, {})
 
     return html`<md-list-item
+        role="none"
         ?interactive="${!!txn.changes?.length}"
         type="${txn.changes?.length ? 'link' : 'text'}"
         href="${txn.changes?.length ? `/revision/${txn.id}` : ''}"

@@ -9,7 +9,7 @@ import {GrampsjsTableBase} from './GrampsjsTableBase.js'
 import './GrampsjsIcon.js'
 import './GrampsjsFormString.js'
 import {fireEvent} from '../util.js'
-import {tagColorToCss, colorForPicker, readableOnLight} from '../color.js'
+import {tagColorToCss, colorForPicker, tagLabelColorToCss} from '../color.js'
 
 export class GrampsjsTagsManager extends GrampsjsTableBase {
   static get styles() {
@@ -92,7 +92,7 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
                         <span
                           class="tag-chip"
                           style="
-                            --tag-color: ${readableOnLight(tag.color)};
+                            --tag-color: ${tagLabelColorToCss(tag.color)};
                             --tag-color-bg: ${tagColorToCss(tag.color, 0.12)};
                           "
                           >${tag.name}</span
@@ -155,6 +155,7 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
             ></grampsjs-form-string>
             <wa-color-picker
               format="hex"
+              label="${this._('Color')}"
               value="${this._editColor}"
               swatches="#1f77b4;#ff7f0e;#2ca02c;#d62728;#9467bd;#8c564b;#e377c2;#7f7f7f;#bcbd22;#17becf"
               @change="${this._handleColorChange}"

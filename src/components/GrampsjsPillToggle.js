@@ -24,7 +24,10 @@ export class GrampsjsPillToggle extends GrampsjsAppStateMixin(LitElement) {
         /* Grey options, with a light tint of the primary colour for the
            selected one */
         :host([muted]) {
-          --_label-color: var(--grampsjs-body-font-color-50);
+          /* 60% black, not 50%: the muted label sits on the page surface,
+             where 50% measured 3.94:1 and failed WCAG AA. 60% measures
+             5.74:1 on white and on the light surface tints. */
+          --_label-color: var(--grampsjs-body-font-color-60);
           --_hover-color: var(--md-sys-color-primary);
           --_selected-container-color: color-mix(
             in srgb,

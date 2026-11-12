@@ -83,6 +83,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
     return html`
       <md-list
         id="search-results"
+        role="list"
         class="${classMap({activatable: this.activatable, large: this.large})}"
       >
         ${this.data.length === 0 && this.textEmpty
@@ -100,6 +101,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
           )
           return html`
             <md-list-item
+              role="none"
               type="${this.selectable || this.linked ? 'button' : 'text'}"
               class="${classMap({
                 selected: this.activatable && i === this._selectedIndex,

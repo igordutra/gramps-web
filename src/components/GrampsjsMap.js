@@ -193,6 +193,17 @@ class GrampsjsMap extends GrampsjsAppStateMixin(LitElement) {
         .maplibregl-ctrl-group {
           border-radius: 12px !important;
         }
+        /*
+          MapLibre paints its attribution bar white in EVERY theme, so
+          the app's link colour -- a light indigo in the dark theme --
+          landed on white at 3.17:1. The bar's surface is the widget's
+          own, so the links take an ink that reads on the surface the
+          widget actually paints.
+        */
+        .maplibregl-ctrl-attrib a:link,
+        .maplibregl-ctrl-attrib a:visited {
+          color: var(--grampsjs-map-attribution-link-color);
+        }
         .maplibregl-ctrl-bottom-right {
           right: var(--grampsjs-space-8);
         }
