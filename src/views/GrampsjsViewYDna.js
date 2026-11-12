@@ -171,7 +171,10 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
       >`
     }
     return html`
-      <md-outlined-select @change="${this._handleSelectChange}">
+      <md-outlined-select
+        aria-label="${this._('Select a person')}"
+        @change="${this._handleSelectChange}"
+      >
         ${this._data.map(
           person => html`
             <md-select-option

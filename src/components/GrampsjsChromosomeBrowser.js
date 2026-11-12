@@ -68,7 +68,7 @@ export class GrampsjsChromosomeBrowser extends GrampsjsAppStateMixin(
 
         span.total {
           margin-left: 6px;
-          color: var(--grampsjs-body-font-color-50);
+          color: var(--grampsjs-body-font-color-60);
         }
 
         rect.segment {
@@ -250,7 +250,7 @@ export class GrampsjsChromosomeBrowser extends GrampsjsAppStateMixin(
   }
 
   renderLegend() {
-    return html`<ul>
+    return html`<ul role="group">
       ${this.data.map(
         (obj, i) => html`
           <li

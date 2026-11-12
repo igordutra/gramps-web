@@ -174,7 +174,7 @@ class GrampsjsPages extends GrampsjsAppStateMixin(LitElement) {
         homePersonGrampsId="${this.homePersonDetails?.gramps_id ?? ''}"
         grampsId="${this.appState.path.pageId}"
         grampsIdMatch="${this.appState.path.pageId2}"
-        ?matches="${this.appState.path.page === 'dna-matches'}"
+        .showMatches="${this.appState.path.page === 'dna-matches'}"
         ?chromosome="${this.appState.path.page === 'dna-chromosome'}"
       ></grampsjs-view-dna-matches>
 

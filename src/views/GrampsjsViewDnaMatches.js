@@ -44,7 +44,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
   static get properties() {
     return {
       chromosome: {type: Boolean},
-      matches: {type: Boolean},
+      showMatches: {type: Boolean},
       grampsIdMatch: {type: String},
     }
   }
@@ -52,7 +52,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
   constructor() {
     super()
     this.chromosome = false
-    this.matches = false
+    this.showMatches = false
     this.grampsIdMatch = ''
   }
 
@@ -93,7 +93,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
     if (this._selectDataLoading || this._dnaDataLoading) {
       return this.renderLoading()
     }
-    if (this.matches) {
+    if (this.showMatches) {
       return this._renderMatches()
     }
     if (this.chromosome) {
@@ -112,7 +112,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
   }
 
   get page() {
-    return this.matches ? 'dna-matches' : 'dna-chromosome'
+    return this.showMatches ? 'dna-matches' : 'dna-chromosome'
   }
 
   _renderSelect() {
@@ -123,7 +123,10 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
     }
     return html`
       <div class="select-row">
-        <md-outlined-select @change="${this._handleSelectChange}">
+        <md-outlined-select
+          aria-label="${this._('Select a person')}"
+          @change="${this._handleSelectChange}"
+        >
           ${this._data.map(
             person => html`
               <md-select-option
