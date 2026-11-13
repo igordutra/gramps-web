@@ -204,7 +204,13 @@ export const THEMES = {
         '--md-sys-color-outline': '#b8ad90',
         '--md-sys-color-outline-variant': '#dcd3ba',
         '--md-sys-color-on-surface': '#241f16',
-        '--md-sys-color-on-surface-variant': '#4d4636',
+        // DARKER than a plain "variant" would be, and deliberately so.
+        // The section description paints this colour at 0.75 opacity,
+        // so the value that reaches the screen is a COMPOSITE of the
+        // two — and the composite, not the token, is what has to
+        // clear 4.5:1. At #4d4636 the composite measured 4.44:1 on
+        // this paper and failed; #363025 measures 5.71:1.
+        '--md-sys-color-on-surface-variant': '#363025',
       },
       dark: {
         '--md-sys-color-background': '#14120d',

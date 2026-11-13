@@ -639,18 +639,20 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
       <md-dialog id="menu-controls">
         <div slot="content">
           <table>
-            ${repeat(
-              this.definition.settings,
-              // Each setting has its own input, so that an input does not
-              // keep what it showed for another chart's setting
-              setting => setting.key,
-              setting => html`
-                <tr>
-                  <td>${this._(setting.label)}</td>
-                  <td>${this._renderSettingInput(setting)}</td>
-                </tr>
-              `
-            )}
+            <tbody>
+              ${repeat(
+                this.definition.settings,
+                // Each setting has its own input, so that an input does not
+                // keep what it showed for another chart's setting
+                setting => setting.key,
+                setting => html`
+                  <tr>
+                    <td>${this._(setting.label)}</td>
+                    <td>${this._renderSettingInput(setting)}</td>
+                  </tr>
+                `
+              )}
+            </tbody>
           </table>
         </div>
         <div slot="actions">
