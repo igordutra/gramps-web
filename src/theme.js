@@ -211,6 +211,20 @@ export const THEMES = {
         // clear 4.5:1. At #4d4636 the composite measured 4.44:1 on
         // this paper and failed; #363025 measures 5.71:1.
         '--md-sys-color-on-surface-variant': '#363025',
+        // The app's neutral GREY ramp, warmed to match the paper. These
+        // paint the hover and recessed surfaces — a table row on hover,
+        // the timeline's lane, the chat bubble, the media tile. Left as
+        // pure greys they read as cool boxes on warm paper, which is
+        // exactly the tell that a themed surface is sitting on a
+        // hard-coded grey.
+        //
+        // ONLY the two shades that are pure `background-color` on a
+        // container are overridden. `shade-120` and `shade-220` are
+        // CHART FILLS that carry text on them (the fan chart's root box
+        // and its "no value" box), so warming them would change a
+        // contrast finding that is not the style's to change.
+        '--grampsjs-color-shade-230': '#e3dac6',
+        '--grampsjs-color-shade-240': '#eae2d0',
       },
       dark: {
         '--md-sys-color-background': '#14120d',
@@ -224,6 +238,11 @@ export const THEMES = {
         '--md-sys-color-outline-variant': '#443e31',
         '--md-sys-color-on-surface': '#ece5d6',
         '--md-sys-color-on-surface-variant': '#bdb4a0',
+        // The same two container shades, warmed for the dark paper. In
+        // dark mode they sit just ABOVE the surface, so they are a
+        // little lighter than it rather than a little darker.
+        '--grampsjs-color-shade-230': '#221e17',
+        '--grampsjs-color-shade-240': '#1b1812',
       },
     },
     // Square corners, like a printed page.
