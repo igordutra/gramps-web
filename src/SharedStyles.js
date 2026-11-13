@@ -1,9 +1,43 @@
 import {css} from 'lit'
 
-export const sharedStyles = css`
-  :host {
-    line-height: 1.6;
-    /* The typeface is the THEME's, not this component's.
+/**
+ * The shared variant's rule, on its own.
+ *
+ * The few components that do not adopt `sharedStyles` still have to
+ * draw the same hairline as everybody else — an app with two different
+ * buttons is worse than an app with one. So the rule is exported
+ * separately and those components adopt just this.
+ */
+export const variantStyles = css`
+  /*
+ * THE SHARED VARIANT: the ruled action.
+ *
+ * The variant's TOKENS live at the root element, because Material's
+ * buttons resolve their public custom properties through the ones
+ * they inherit, and a token on the root reaches every button in
+ * every component. What cannot be a token is the RULE — a border is
+ * not a custom property — so the hairline is drawn here, in the
+ * shadow root that owns the button.
+ *
+ * It is drawn with an INSET BOX SHADOW on the host, and not with an
+ * outline, for three reasons: an outline is the focus ring's job
+ * and the two would fight over one property; a border would change
+ * the host's box and move the control; and an inset shadow changes
+ * nothing but the paint.
+ */
+  md-filled-button,
+  md-elevated-button {
+    border-radius: var(--md-sys-shape-corner-full);
+    box-shadow: inset 0 0 0 1px var(--grampsjs-button-rule-color);
+  }
+`
+
+export const sharedStyles = [
+  variantStyles,
+  css`
+    :host {
+      line-height: 1.6;
+      /* The typeface is the THEME's, not this component's.
      *
      * These two were written down as literals, which meant a style
      * could not change the app's voice: the declaration below is LOCAL
@@ -12,76 +46,111 @@ export const sharedStyles = css`
      * from the root tokens, which the theme owns, so a style that
      * carries a different typeface changes the whole app.
      */
-    --grampsjs-body-font-family: var(
-      --grampsjs-style-body-font,
-      'Inter var',
-      'Gramps Symbols',
-      sans-serif
-    );
-    --grampsjs-heading-font-family: var(
-      --grampsjs-style-heading-font,
-      'Inter var',
-      'Gramps Symbols',
-      sans-serif
-    );
-    --grampsjs-mono-font-family: 'Commit Mono', monospace;
-    --md-ref-typeface-plain: var(--grampsjs-style-body-font);
-    --grampsjs-body-font-size: 16px;
-    font-size: var(--grampsjs-body-font-size);
-    font-family: var(--grampsjs-body-font-family);
-    /* 340 is too light to read comfortably at 16px on a layered surface;
+      --grampsjs-body-font-family: var(
+        --grampsjs-style-body-font,
+        'Inter var',
+        'Gramps Symbols',
+        sans-serif
+      );
+      --grampsjs-heading-font-family: var(
+        --grampsjs-style-heading-font,
+        'Inter var',
+        'Gramps Symbols',
+        sans-serif
+      );
+      --grampsjs-mono-font-family: 'Commit Mono', monospace;
+      --md-ref-typeface-plain: var(--grampsjs-style-body-font);
+      --grampsjs-body-font-size: 16px;
+      font-size: var(--grampsjs-body-font-size);
+      font-family: var(--grampsjs-body-font-family);
+      /* 340 is too light to read comfortably at 16px on a layered surface;
        400 is the modern default body weight. */
-    --grampsjs-body-font-weight: 400;
-    font-weight: var(--grampsjs-body-font-weight);
-    /* Slightly tighter tracking on body copy reads as considered rather
+      --grampsjs-body-font-weight: 400;
+      font-weight: var(--grampsjs-body-font-weight);
+      /* Slightly tighter tracking on body copy reads as considered rather
        than default-browser. */
-    letter-spacing: -0.005em;
-    --mdc-typography-font-family: var(--grampsjs-body-font-family);
-    --md-sys-typescale-headline-small-font: var(--grampsjs-heading-font-family);
-    --md-sys-typescale-headline-medium-font: var(
-      --grampsjs-heading-font-family
-    );
-    --md-sys-typescale-headline-large-font: var(--grampsjs-heading-font-family);
-    --md-sys-typescale-body-small-font: var(--grampsjs-body-font-family);
-    --md-sys-typescale-body-medium-font: var(--grampsjs-body-font-family);
-    --md-sys-typescale-body-large-font: var(--grampsjs-body-font-family);
-    /*
+      letter-spacing: -0.005em;
+      --mdc-typography-font-family: var(--grampsjs-body-font-family);
+      --md-sys-typescale-headline-small-font: var(
+        --grampsjs-heading-font-family
+      );
+      --md-sys-typescale-headline-medium-font: var(
+        --grampsjs-heading-font-family
+      );
+      --md-sys-typescale-headline-large-font: var(
+        --grampsjs-heading-font-family
+      );
+      --md-sys-typescale-body-small-font: var(--grampsjs-body-font-family);
+      --md-sys-typescale-body-medium-font: var(--grampsjs-body-font-family);
+      --md-sys-typescale-body-large-font: var(--grampsjs-body-font-family);
+      /*
      * The tab bar is navigation, so its labels carry more weight than the
      * list rows below them. Upstream wrote 15px at 500 — the label size
      * with a heavier weight. The size and the weight are taken from the
      * SAME step here, which is what the scale requires: title-small is
      * the step whose weight reads as navigation.
      */
-    --md-primary-tab-label-text-weight: var(
-      --md-sys-typescale-title-small-weight
-    );
-    --md-primary-tab-label-text-size: var(--md-sys-typescale-title-small-size);
-    --md-primary-tab-active-indicator-height: var(--grampsjs-space-2);
-    --md-divider-thickness: var(--grampsjs-space-0);
-    --md-list-item-leading-space: var(--grampsjs-space-16);
-    --md-list-item-trailing-space: var(--grampsjs-space-16);
-    --mdc-list-side-padding: 16px;
-  }
+      --md-primary-tab-label-text-weight: var(
+        --md-sys-typescale-title-small-weight
+      );
+      --md-primary-tab-label-text-size: var(
+        --md-sys-typescale-title-small-size
+      );
+      --md-primary-tab-active-indicator-height: var(--grampsjs-space-2);
+      --md-divider-thickness: var(--grampsjs-space-0);
+      --md-list-item-leading-space: var(--grampsjs-space-16);
+      --md-list-item-trailing-space: var(--grampsjs-space-16);
+      --mdc-list-side-padding: 16px;
+    }
 
-  /*
+    /*
+   * The focus ring, drawn by the style.
+   *
+   * Two rules, because the two cases are different elements. A control
+   * that DELEGATES focus — which every Material button does — is
+   * focused as the host, so the ring belongs around the host: that is
+   * the control's own boundary, and it is the shape the user sees.
+   * A control that does not delegate is focused on an inner element,
+   * and the ring belongs there.
+   *
+   * The colour and the width come from the ROOT, and are NOT given a
+   * value here. A declaration in the host block is LOCAL to every
+   * shadow root, so it beats the inherited value from the root element
+   * — which is exactly the trap the typeface tokens fell into: a
+   * local fallback would quietly replace the style's own colour with
+   * Material's default, in every component, forever. So the fallback
+   * lives in the var() and the root owns the value.
+   *
+   * The ring is drawn with an outline rather than a box-shadow
+   * because an outline does not change the element's box: a ring that
+   * changed the layout would move the thing the user was aiming at.
+   */
+    :host(:focus-visible),
+    :host *:focus-visible {
+      outline: var(--grampsjs-focus-ring-width, 2px) solid
+        var(--grampsjs-focus-ring-color, #1d4ed8);
+      outline-offset: 2px;
+    }
+
+    /*
    * A heading for screen readers only. Every page needs a level-one
    * heading so assistive technology can announce the page name; the
    * visible title is rendered by the tab bar, so repeating it here would
    * be visual noise.
    */
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
-  /*
+    /*
    * Material's select renders its SELECTED text by inheritance from
    * its host: it has no override point for it, so the token that sizes
    * a text field's value does not reach it. The select would then
@@ -90,94 +159,94 @@ export const sharedStyles = css`
    * is set from the same token the text field uses, so the two agree
    * and both follow the theme.
    */
-  md-outlined-select {
-    font-size: var(--grampsjs-field-value-size);
-  }
+    md-outlined-select {
+      font-size: var(--grampsjs-field-value-size);
+    }
 
-  md-list-item {
-    --md-list-item-label-text-weight: var(
-      --md-sys-typescale-label-large-weight
-    );
-    --md-list-item-label-text-size: var(--md-sys-typescale-label-large-size);
-    --md-list-item-supporting-text-color: var(--grampsjs-body-font-color-50);
-    --md-list-item-trailing-supporting-text-color: var(
-      --grampsjs-body-font-color-60
-    );
-    /*
+    md-list-item {
+      --md-list-item-label-text-weight: var(
+        --md-sys-typescale-label-large-weight
+      );
+      --md-list-item-label-text-size: var(--md-sys-typescale-label-large-size);
+      --md-list-item-supporting-text-color: var(--grampsjs-body-font-color-50);
+      --md-list-item-trailing-supporting-text-color: var(
+        --grampsjs-body-font-color-60
+      );
+      /*
      * The trailing text is the quietest text in a row. Material's own
      * list item uses the label-small step for it, and the app's label-
      * small step is 12px — which is also the size upstream wrote as
      * 0.875rem.
      */
-    --md-list-item-trailing-supporting-text-size: var(
-      --md-sys-typescale-label-small-size
-    );
-    --md-list-item-trailing-supporting-text-weight: var(
-      --md-sys-typescale-label-small-weight
-    );
-    /* A list item of type "link" renders an <a> inside Material's shadow
+      --md-list-item-trailing-supporting-text-size: var(
+        --md-sys-typescale-label-small-size
+      );
+      --md-list-item-trailing-supporting-text-weight: var(
+        --md-sys-typescale-label-small-weight
+      );
+      /* A list item of type "link" renders an <a> inside Material's shadow
        root. The label is coloured by --md-list-item-label-text-color, but
        the anchor itself keeps the user agent's default link colour
        (rgb(0,0,238)) unless the host sets one — so any content in the
        row that is not the label inherited the browser's blue. Setting the
        colour on the host reaches the anchor, and the label still wins
        through its own token. */
-    color: var(--md-sys-color-on-surface);
-  }
+      color: var(--md-sys-color-on-surface);
+    }
 
-  label {
-    display: inline-flex;
-    place-items: center;
-    gap: 12px;
-    font-size: 15px;
-    font-weight: 350;
-    color: var(--md-sys-color-on-background);
-  }
+    label {
+      display: inline-flex;
+      place-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 350;
+      color: var(--md-sys-color-on-background);
+    }
 
-  h2,
-  h3,
-  h4 {
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    font-family: var(--grampsjs-heading-font-family);
-    color: var(--grampsjs-color-shade-40);
-  }
+    h2,
+    h3,
+    h4 {
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      font-family: var(--grampsjs-heading-font-family);
+      color: var(--grampsjs-color-shade-40);
+    }
 
-  h1 {
-    font-weight: 400;
-    font-family: var(--grampsjs-heading-font-family);
-    font-size: 34px;
-  }
+    h1 {
+      font-weight: 400;
+      font-family: var(--grampsjs-heading-font-family);
+      font-size: 34px;
+    }
 
-  h2 {
-    font-weight: 550;
-    font-size: 30px;
-    margin-top: 10px;
-    margin-bottom: 30px;
-  }
+    h2 {
+      font-weight: 550;
+      font-size: 30px;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
 
-  h3 {
-    font-weight: 550;
-    font-size: 18px;
-    margin-top: 40px;
-    margin-bottom: 30px;
-  }
+    h3 {
+      font-weight: 550;
+      font-size: 18px;
+      margin-top: 40px;
+      margin-bottom: 30px;
+    }
 
-  h4 {
-    font-size: 16px;
-  }
+    h4 {
+      font-size: 16px;
+    }
 
-  h4.label {
-    font-family: var(--grampsjs-body-font-family);
-    font-size: 16px;
-  }
+    h4.label {
+      font-family: var(--grampsjs-body-font-family);
+      font-size: 16px;
+    }
 
-  b,
-  strong {
-    font-weight: 600;
-  }
+    b,
+    strong {
+      font-weight: 600;
+    }
 
-  /*
+    /*
    * The colour picker's own label is what names its trigger for
    * assistive technology, but Web Awesome PAINTS that label inside the
    * control -- setting the attribute grew the trigger from 43x43 to
@@ -188,320 +257,321 @@ export const sharedStyles = css`
    * inside each component's own shadow root, and ::part() only reaches
    * a part from the tree that owns the element.
    */
-  wa-color-picker::part(form-control-label) {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    overflow: hidden !important;
-    clip-path: inset(50%) !important;
-    white-space: nowrap !important;
-  }
+    wa-color-picker::part(form-control-label) {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      clip-path: inset(50%) !important;
+      white-space: nowrap !important;
+    }
 
-  a:link,
-  a:visited,
-  span.link {
-    color: var(--grampsjs-color-link-font);
-    text-decoration: none;
-  }
+    a:link,
+    a:visited,
+    span.link {
+      color: var(--grampsjs-color-link-font);
+      text-decoration: none;
+    }
 
-  /*
+    /*
    * A link inside a block of text needs to be distinguishable from the
    * surrounding words without relying on colour alone: either a 3:1
    * contrast against the text around it, or an underline. The accent
    * colour does not reach that contrast against the page's dark text, so
    * links inside text get an underline.
    */
-  a:link,
-  a:visited {
-    text-decoration: underline;
-    text-underline-offset: 0.15em;
-  }
+    a:link,
+    a:visited {
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
 
-  a:hover,
-  span.link:hover {
-    color: var(--grampsjs-color-link-hover);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
-  }
+    a:hover,
+    span.link:hover {
+      color: var(--grampsjs-color-link-hover);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+    }
 
-  .link {
-    cursor: pointer;
-  }
+    .link {
+      cursor: pointer;
+    }
 
-  .linkicon {
-    --md-icon-size: var(--grampsjs-icon-size-xs);
-    margin-right: 8px;
-    position: relative;
-    bottom: -1px;
-    opacity: 0.7;
-  }
+    .linkicon {
+      --md-icon-size: var(--grampsjs-icon-size-xs);
+      margin-right: 8px;
+      position: relative;
+      bottom: -1px;
+      opacity: 0.7;
+    }
 
-  .nopointer {
-    pointer-events: none;
-  }
+    .nopointer {
+      pointer-events: none;
+    }
 
-  i svg {
-    height: 1em;
-    top: 0.125em;
-    position: relative;
-  }
+    i svg {
+      height: 1em;
+      top: 0.125em;
+      position: relative;
+    }
 
-  .md {
-    font-weight: 400;
-  }
+    .md {
+      font-weight: 400;
+    }
 
-  hr {
-    border: 0;
-    height: 1px;
-    background: var(--grampsjs-body-font-color-20);
-  }
+    hr {
+      border: 0;
+      height: 1px;
+      background: var(--grampsjs-body-font-color-20);
+    }
 
-  dt {
-    font-size: 14px;
-    /* 50% black on white is 3.94:1, under the 4.5:1 that 14px text
+    dt {
+      font-size: 14px;
+      /* 50% black on white is 3.94:1, under the 4.5:1 that 14px text
        needs. 60% is 5.74:1 and still reads as a label. */
-    color: var(--grampsjs-body-font-color-60);
-    font-weight: 400;
-    margin-bottom: 0.2em;
-  }
-
-  dd {
-    margin: 0;
-    padding: 0 0 1em 0;
-  }
-
-  dl div {
-    float: left;
-    margin-right: 3rem;
-  }
-
-  p {
-    margin-top: 1.2em;
-    margin-bottom: 1.2em;
-  }
-
-  .avatar.skeleton {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--md-sys-shape-corner-2xl);
-  }
-
-  .float-right {
-    float: right;
-  }
-
-  grampsjs-icon.inline {
-    vertical-align: middle;
-    padding-right: 0.2em;
-    position: relative;
-    bottom: auto;
-    top: auto;
-    color: var(--grampsjs-body-font-color-35);
-  }
-
-  grampsjs-icon.male {
-    color: var(--color-boy);
-  }
-
-  grampsjs-icon.female {
-    color: var(--color-girl);
-  }
-
-  .event {
-    margin-right: 1em;
-  }
-
-  .sym {
-    color: var(--grampsjs-body-font-color-50);
-  }
-
-  .edit {
-    color: var(--mdc-theme-secondary);
-    --mdc-theme-primary: var(--mdc-theme-secondary);
-    --mdc-theme-on-primary: var(--mdc-theme-on-secondary);
-    --md-sys-color-primary: var(--md-sys-color-secondary);
-    --md-sys-color-on-primary: var(--md-sys-color-on-secondary);
-    --md-sys-color-primary-container: var(--md-sys-color-secondary-container);
-    --md-sys-color-on-primary-container: var(
-      --md-sys-color-on-secondary-container
-    );
-  }
-
-  h2 .given-name {
-    text-decoration: underline var(--grampsjs-body-font-color-60);
-    text-underline-offset: 0.15em;
-    text-decoration-thickness: 0.1rem;
-  }
-
-  span.skeleton {
-    display: inline-block;
-    background-color: var(--grampsjs-color-skeleton-background);
-    background: linear-gradient(
-      110deg,
-      var(--grampsjs-color-skeleton-base) 8%,
-      var(--grampsjs-color-skeleton-shine) 18%,
-      var(--grampsjs-color-skeleton-base) 33%
-    );
-    opacity: 0.8;
-    border-radius: var(--md-sys-shape-corner-extra-small);
-    background-size: 200% 100%;
-    animation: 1.5s shine linear infinite;
-  }
-
-  div.skeleton {
-    background-color: var(--grampsjs-color-skeleton-background);
-    background: linear-gradient(
-      110deg,
-      var(--grampsjs-color-skeleton-base) 8%,
-      var(--grampsjs-color-skeleton-shine) 18%,
-      var(--grampsjs-color-skeleton-base) 33%
-    );
-    opacity: 0.8;
-    background-size: 200% 100%;
-    animation: 1.5s shine linear infinite;
-  }
-
-  .card {
-    padding: 1em 1em;
-    border-radius: var(--md-sys-shape-corner-2xl);
-    background-color: var(--grampsjs-color-shade-230);
-  }
-
-  .alert {
-    background-color: var(--grampsjs-alert-background-color);
-    border-left: 4px solid var(--grampsjs-alert-border-color);
-    border-radius: var(--md-sys-shape-corner-small);
-    padding: 0.8em 1em;
-    font-size: 0.8em;
-    color: var(--grampsjs-body-font-color);
-    margin: 1.5em 0;
-  }
-
-  .alert.error {
-    background-color: var(--grampsjs-alert-error-background-color);
-    border-left-color: var(--grampsjs-alert-error-border-color);
-  }
-
-  .alert.warn {
-    background-color: var(--grampsjs-alert-warn-background-color);
-    border-left-color: var(--grampsjs-alert-warn-border-color);
-  }
-
-  .success {
-    color: var(--grampsjs-alert-success-font-color);
-  }
-
-  .error {
-    color: var(--grampsjs-alert-error-font-color);
-  }
-
-  .warn {
-    color: var(--grampsjs-alert-warn-text-color);
-  }
-
-  @keyframes shine {
-    to {
-      background-position-x: -200%;
+      color: var(--grampsjs-body-font-color-60);
+      font-weight: 400;
+      margin-bottom: 0.2em;
     }
-  }
 
-  .button-row {
-    display: flex;
-    align-items: center;
-    gap: 0.6em;
-  }
+    dd {
+      margin: 0;
+      padding: 0 0 1em 0;
+    }
 
-  .button-row > grampsjs-task-progress-indicator {
-    display: flex;
-  }
+    dl div {
+      float: left;
+      margin-right: 3rem;
+    }
 
-  grampsjs-task-progress-indicator.button {
-    position: relative;
-    top: 6px;
-    left: 10px;
-  }
+    p {
+      margin-top: 1.2em;
+      margin-bottom: 1.2em;
+    }
 
-  grampsjs-task-progress-indicator.button-left {
-    position: relative;
-    top: 6px;
-    right: 10px;
-  }
+    .avatar.skeleton {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--md-sys-shape-corner-2xl);
+    }
 
-  .monospace {
-    font-family: var(--grampsjs-mono-font-family);
-    border: 1px solid var(--grampsjs-body-font-color-15);
-    border-radius: var(--md-sys-shape-corner-small);
-    background-color: var(--grampsjs-body-font-color-5);
-    padding: 0.3em;
-    font-size: 0.9em;
-    color: var(--grampsjs-color-monospace);
-  }
+    .float-right {
+      float: right;
+    }
 
-  /* Note highlight; the stored color is blended with the background so that
+    grampsjs-icon.inline {
+      vertical-align: middle;
+      padding-right: 0.2em;
+      position: relative;
+      bottom: auto;
+      top: auto;
+      color: var(--grampsjs-body-font-color-35);
+    }
+
+    grampsjs-icon.male {
+      color: var(--color-boy);
+    }
+
+    grampsjs-icon.female {
+      color: var(--color-girl);
+    }
+
+    .event {
+      margin-right: 1em;
+    }
+
+    .sym {
+      color: var(--grampsjs-body-font-color-50);
+    }
+
+    .edit {
+      color: var(--mdc-theme-secondary);
+      --mdc-theme-primary: var(--mdc-theme-secondary);
+      --mdc-theme-on-primary: var(--mdc-theme-on-secondary);
+      --md-sys-color-primary: var(--md-sys-color-secondary);
+      --md-sys-color-on-primary: var(--md-sys-color-on-secondary);
+      --md-sys-color-primary-container: var(--md-sys-color-secondary-container);
+      --md-sys-color-on-primary-container: var(
+        --md-sys-color-on-secondary-container
+      );
+    }
+
+    h2 .given-name {
+      text-decoration: underline var(--grampsjs-body-font-color-60);
+      text-underline-offset: 0.15em;
+      text-decoration-thickness: 0.1rem;
+    }
+
+    span.skeleton {
+      display: inline-block;
+      background-color: var(--grampsjs-color-skeleton-background);
+      background: linear-gradient(
+        110deg,
+        var(--grampsjs-color-skeleton-base) 8%,
+        var(--grampsjs-color-skeleton-shine) 18%,
+        var(--grampsjs-color-skeleton-base) 33%
+      );
+      opacity: 0.8;
+      border-radius: var(--md-sys-shape-corner-extra-small);
+      background-size: 200% 100%;
+      animation: 1.5s shine linear infinite;
+    }
+
+    div.skeleton {
+      background-color: var(--grampsjs-color-skeleton-background);
+      background: linear-gradient(
+        110deg,
+        var(--grampsjs-color-skeleton-base) 8%,
+        var(--grampsjs-color-skeleton-shine) 18%,
+        var(--grampsjs-color-skeleton-base) 33%
+      );
+      opacity: 0.8;
+      background-size: 200% 100%;
+      animation: 1.5s shine linear infinite;
+    }
+
+    .card {
+      padding: 1em 1em;
+      border-radius: var(--md-sys-shape-corner-2xl);
+      background-color: var(--grampsjs-color-shade-230);
+    }
+
+    .alert {
+      background-color: var(--grampsjs-alert-background-color);
+      border-left: 4px solid var(--grampsjs-alert-border-color);
+      border-radius: var(--md-sys-shape-corner-small);
+      padding: 0.8em 1em;
+      font-size: 0.8em;
+      color: var(--grampsjs-body-font-color);
+      margin: 1.5em 0;
+    }
+
+    .alert.error {
+      background-color: var(--grampsjs-alert-error-background-color);
+      border-left-color: var(--grampsjs-alert-error-border-color);
+    }
+
+    .alert.warn {
+      background-color: var(--grampsjs-alert-warn-background-color);
+      border-left-color: var(--grampsjs-alert-warn-border-color);
+    }
+
+    .success {
+      color: var(--grampsjs-alert-success-font-color);
+    }
+
+    .error {
+      color: var(--grampsjs-alert-error-font-color);
+    }
+
+    .warn {
+      color: var(--grampsjs-alert-warn-text-color);
+    }
+
+    @keyframes shine {
+      to {
+        background-position-x: -200%;
+      }
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+    }
+
+    .button-row > grampsjs-task-progress-indicator {
+      display: flex;
+    }
+
+    grampsjs-task-progress-indicator.button {
+      position: relative;
+      top: 6px;
+      left: 10px;
+    }
+
+    grampsjs-task-progress-indicator.button-left {
+      position: relative;
+      top: 6px;
+      right: 10px;
+    }
+
+    .monospace {
+      font-family: var(--grampsjs-mono-font-family);
+      border: 1px solid var(--grampsjs-body-font-color-15);
+      border-radius: var(--md-sys-shape-corner-small);
+      background-color: var(--grampsjs-body-font-color-5);
+      padding: 0.3em;
+      font-size: 0.9em;
+      color: var(--grampsjs-color-monospace);
+    }
+
+    /* Note highlight; the stored color is blended with the background so that
      it stays readable in dark mode */
-  .note-highlight {
-    background-color: color-mix(
-      in srgb,
-      var(--note-highlight-color) var(--grampsjs-note-highlight-strength),
-      transparent
-    );
-  }
-
-  md-outlined-text-field.drag-hover {
-    --md-outlined-text-field-outline-color: var(--mdc-theme-secondary);
-    --md-outlined-text-field-hover-outline-color: var(--mdc-theme-secondary);
-    --md-outlined-text-field-hover-outline-width: var(--mdc-theme-secondary);
-    --md-outlined-text-field-outline-width: var(--mdc-theme-secondary);
-    --md-outlined-text-field-input-text-color: var(
-      --grampsjs-body-font-color-50
-    );
-    --md-outlined-text-field-hover-input-text-color: var(
-      --grampsjs-body-font-color-40
-    );
-  }
-
-  @media (max-width: 768px) {
-    :host {
-      font-size: 16px;
-      --md-list-item-leading-space: var(--grampsjs-space-8);
-      --md-list-item-trailing-space: var(--grampsjs-space-8);
-      --mdc-list-side-padding: 8px;
+    .note-highlight {
+      background-color: color-mix(
+        in srgb,
+        var(--note-highlight-color) var(--grampsjs-note-highlight-strength),
+        transparent
+      );
     }
 
-    [slot='trailing-supporting-text'] {
-      display: none;
+    md-outlined-text-field.drag-hover {
+      --md-outlined-text-field-outline-color: var(--mdc-theme-secondary);
+      --md-outlined-text-field-hover-outline-color: var(--mdc-theme-secondary);
+      --md-outlined-text-field-hover-outline-width: var(--mdc-theme-secondary);
+      --md-outlined-text-field-outline-width: var(--mdc-theme-secondary);
+      --md-outlined-text-field-input-text-color: var(
+        --grampsjs-body-font-color-50
+      );
+      --md-outlined-text-field-hover-input-text-color: var(
+        --grampsjs-body-font-color-40
+      );
     }
 
-    h1 {
-      font-size: 24px;
+    @media (max-width: 768px) {
+      :host {
+        font-size: 16px;
+        --md-list-item-leading-space: var(--grampsjs-space-8);
+        --md-list-item-trailing-space: var(--grampsjs-space-8);
+        --mdc-list-side-padding: 8px;
+      }
+
+      [slot='trailing-supporting-text'] {
+        display: none;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      h3 {
+        font-size: 20px;
+      }
+
+      h4 {
+        font-size: 18px;
+      }
     }
 
-    h2 {
-      font-size: 24px;
+    /* Hover state layer for clickable list items in view mode */
+    md-list:not(.activatable):not(.toc-list) md-list-item[type='button'] {
+      --md-list-item-hover-state-layer-color: var(--md-sys-color-on-surface);
+      --md-list-item-hover-state-layer-opacity: var(
+        --grampsjs-state-hover-opacity
+      );
+      --md-list-item-pressed-state-layer-color: var(--md-sys-color-on-surface);
+      --md-list-item-pressed-state-layer-opacity: var(
+        --grampsjs-state-press-opacity
+      );
     }
-
-    h3 {
-      font-size: 20px;
-    }
-
-    h4 {
-      font-size: 18px;
-    }
-  }
-
-  /* Hover state layer for clickable list items in view mode */
-  md-list:not(.activatable):not(.toc-list) md-list-item[type='button'] {
-    --md-list-item-hover-state-layer-color: var(--md-sys-color-on-surface);
-    --md-list-item-hover-state-layer-opacity: var(
-      --grampsjs-state-hover-opacity
-    );
-    --md-list-item-pressed-state-layer-color: var(--md-sys-color-on-surface);
-    --md-list-item-pressed-state-layer-opacity: var(
-      --grampsjs-state-press-opacity
-    );
-  }
-`
+  `,
+]
 
 /* A leading list icon or thumbnail as a 40px circle */
 export const listAvatarStyles = css`

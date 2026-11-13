@@ -5,6 +5,7 @@ import '@material/web/button/outlined-button'
 import '@material/web/textfield/outlined-text-field'
 
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
+import {variantStyles} from '../SharedStyles.js'
 import {fireEvent} from '../util.js'
 
 const FIELDS = [
@@ -37,35 +38,38 @@ export class GrampsjsResearcher extends GrampsjsAppStateMixin(LitElement) {
   }
 
   static get styles() {
-    return css`
-      th,
-      td {
-        font-size: 1em;
-        font-weight: 300;
-        padding: 6px 24px 6px 0;
-        text-align: left;
-        vertical-align: top;
-      }
+    return [
+      variantStyles,
+      css`
+        th,
+        td {
+          font-size: 1em;
+          font-weight: 300;
+          padding: 6px 24px 6px 0;
+          text-align: left;
+          vertical-align: top;
+        }
 
-      th {
-        font-weight: 500;
-        color: var(--md-sys-color-on-surface-variant, inherit);
-        white-space: nowrap;
-      }
+        th {
+          font-weight: 500;
+          color: var(--md-sys-color-on-surface-variant, inherit);
+          white-space: nowrap;
+        }
 
-      .form-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 16px 24px;
-        margin-top: 1em;
-      }
+        .form-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 16px 24px;
+          margin-top: 1em;
+        }
 
-      .form-actions {
-        margin-top: 1.2em;
-        display: flex;
-        gap: 0.75em;
-      }
-    `
+        .form-actions {
+          margin-top: 1.2em;
+          display: flex;
+          gap: 0.75em;
+        }
+      `,
+    ]
   }
 
   render() {

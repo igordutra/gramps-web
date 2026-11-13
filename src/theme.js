@@ -60,6 +60,23 @@ export const THEMES = {
     // The document-like default: a small radius, an airy gutter, and a
     // soft wide shadow. This reads as a research tool rather than a
     // consumer app.
+    //
+    // The focus ring is the STYLE's, not the browser's. Material's
+    // default focus colour is a cool blue, which on this warm paper
+    // is the one piece of the app that belongs to neither the style
+    // nor the content. SC 2.4.11 wants 3:1 against the adjacent
+    // colour; this measures 5.49:1 against the lightest surface the
+    // style paints.
+    focus: {
+      light: {
+        '--grampsjs-focus-ring-color': '#8f5433',
+        '--grampsjs-focus-ring-width': '2px',
+      },
+      dark: {
+        '--grampsjs-focus-ring-color': '#e8b49c',
+        '--grampsjs-focus-ring-width': '2px',
+      },
+    },
     shape: {
       '--md-sys-shape-corner-none': '0px',
       '--md-sys-shape-corner-extra-small': '2px',
@@ -103,6 +120,21 @@ export const THEMES = {
     // the same ink family as the Archive style, a shade bluer, so the
     // two styles stay distinct without the button going teal
     secondary: '#2b3a6b',
+    // The style's own focus colour: the blueprint's ink, and in dark
+    // mode a lighter tint of it. Material's default focus blue is
+    // close to this style's primary anyway, which is the point — a
+    // style that happens to agree with Material still gets to OWN
+    // the ring, so a change to the style moves it.
+    focus: {
+      light: {
+        '--grampsjs-focus-ring-color': '#1d4ed8',
+        '--grampsjs-focus-ring-width': '2px',
+      },
+      dark: {
+        '--grampsjs-focus-ring-color': '#a8c0ff',
+        '--grampsjs-focus-ring-width': '2px',
+      },
+    },
     // Square corners throughout: this theme is about the grid.
     shape: {
       '--md-sys-shape-corner-none': '0px',
@@ -182,6 +214,20 @@ export const THEMES = {
     // Ochre, 123 degrees away in hue from the verdigris: two accents
     // of one heritage palette rather than two unrelated brands.
     secondary: '#8a6a1f',
+    // The focus ring is the verdigris — the style's own ink — in light
+    // mode, and a pale tint of it on the dark paper, where a dark
+    // ring would disappear into it. 6.48:1 against the paper in
+    // light, 6.77:1 against the darkest surface in dark.
+    focus: {
+      light: {
+        '--grampsjs-focus-ring-color': '#1f5c4d',
+        '--grampsjs-focus-ring-width': '2px',
+      },
+      dark: {
+        '--grampsjs-focus-ring-color': '#8fd0ba',
+        '--grampsjs-focus-ring-width': '2px',
+      },
+    },
     // The typeface. A serif is the one thing Material's components
     // cannot supply on their own, so the style carries one.
     font: {
@@ -328,6 +374,152 @@ export const THEMES = {
 // visibly changes with it, and one that is hard-coded visibly does
 // not. It was the default while the field treatment was being checked.
 export const DEFAULT_THEME = 'archive'
+
+/**
+ * THE SHARED VARIANT, in tokens.
+ *
+ * ONE treatment, shared by every style. The three styles differ in
+ * their ink, their type, their paper, their corners and their
+ * density; they do NOT differ in how an ACTION is drawn, because a
+ * variant that changes with the style is two variants and a half, and
+ * the styles' job is to be the same interface in three voices.
+ *
+ * The treatment: an action is RULED, not FILLED. Material's filled
+ * tonal button — a slab of colour with white text on it — is the
+ * single most recognisable thing about Material's voice, and it is
+ * what this variant removes. The button keeps the style's own ink
+ * for its label and draws a hairline rule around itself, so a primary
+ * action still reads as primary without being a block of colour.
+ *
+ * These live at the ROOT on purpose. Material's buttons resolve their
+ * public tokens through the custom property they inherit — the
+ * component's own stylesheet asks for the public name and falls back
+ * inside a var() — so a token written on the root element reaches
+ * EVERY button in EVERY component, including the components that do
+ * not adopt the app's shared stylesheet. A rule written in a
+ * stylesheet would reach only the ones that adopt it, and the app
+ * would then have two different buttons.
+ *
+ * The rule ITSELF — the hairline around the button — is drawn by a
+ * stylesheet, because a border cannot be a token. It lives in
+ * `SharedStyles.js`.
+ */
+const VARIANT_TOKENS = {
+  // The rule's ink, and the label's ink, are the same thing, so that a
+  // destructive action can say so in one declaration.
+  '--grampsjs-button-rule-color': 'var(--md-sys-color-primary)',
+  // The primary action keeps a WASH of its own ink — a tint of the
+  // rule's colour, translucent so it composites with whatever is
+  // behind it — rather than Material's solid block of colour. A
+  // rule alone was not enough: the primary action stopped reading
+  // as the primary action, because a hairline does not say
+  // "this is the one". The wash says it, and the rule says it in
+  // the same ink, so the two never disagree.
+  '--md-filled-button-container-color':
+    'color-mix(in srgb, var(--grampsjs-button-rule-color) 10%, transparent)',
+  '--md-filled-button-container-elevation': '0',
+  '--md-filled-button-label-text-color': 'var(--grampsjs-button-rule-color)',
+  '--md-filled-button-icon-color': 'var(--grampsjs-button-rule-color)',
+  '--md-filled-button-hover-label-text-color':
+    'var(--grampsjs-button-rule-color)',
+  '--md-filled-button-pressed-label-text-color':
+    'var(--grampsjs-button-rule-color)',
+  '--md-filled-button-focus-label-text-color':
+    'var(--grampsjs-button-rule-color)',
+  '--md-filled-button-hover-icon-color': 'var(--grampsjs-button-rule-color)',
+  '--md-filled-button-pressed-icon-color': 'var(--grampsjs-button-rule-color)',
+  '--md-filled-button-focus-icon-color': 'var(--grampsjs-button-rule-color)',
+  '--md-filled-button-hover-state-layer-color':
+    'var(--grampsjs-button-rule-color)',
+  '--md-filled-button-pressed-state-layer-color':
+    'var(--grampsjs-button-rule-color)',
+  // A disabled action has no fill to go soft, so the label is what
+  // says so — and it is the app's own muted ink, not the rule's.
+  '--md-filled-button-disabled-container-color': 'transparent',
+  '--md-filled-button-disabled-label-text-color':
+    'var(--md-sys-color-on-surface-variant)',
+  '--md-filled-button-disabled-icon-color':
+    'var(--md-sys-color-on-surface-variant)',
+  // The elevated button has its own set of token names, so it needs
+  // the same treatment spelled out rather than inherited.
+  '--md-elevated-button-container-color':
+    'color-mix(in srgb, var(--grampsjs-button-rule-color) 10%, transparent)',
+  '--md-elevated-button-container-elevation': '0',
+  '--md-elevated-button-label-text-color': 'var(--grampsjs-button-rule-color)',
+  '--md-elevated-button-icon-color': 'var(--grampsjs-button-rule-color)',
+  '--md-elevated-button-hover-label-text-color':
+    'var(--grampsjs-button-rule-color)',
+  '--md-elevated-button-pressed-label-text-color':
+    'var(--grampsjs-button-rule-color)',
+  '--md-elevated-button-hover-state-layer-color':
+    'var(--grampsjs-button-rule-color)',
+  '--md-elevated-button-pressed-state-layer-color':
+    'var(--grampsjs-button-rule-color)',
+  '--md-elevated-button-disabled-container-color': 'transparent',
+  '--md-elevated-button-disabled-label-text-color':
+    'var(--md-sys-color-on-surface-variant)',
+}
+
+/**
+ * What a PRINTED page is.
+ *
+ * Printing is the one context where the app's own palette cannot be
+ * trusted. A browser prints a dark-mode panel as a dark block, and a
+ * style's paper colour usually does not print at all, because
+ * "print backgrounds" is off by default. So the printed page is WHITE
+ * with dark ink — for every style — and the differences that survive
+ * onto paper are the typeface and the weight of the type, which is
+ * exactly right: Almanac prints as a serif document and Blueprint as
+ * a sans one, whatever the screen was showing.
+ *
+ * These are written with `!important` into a stylesheet rather than
+ * set inline on the root, because the live tokens ARE set inline and
+ * an inline declaration beats any stylesheet rule that is not itself
+ * important. (The cascade puts important author declarations above
+ * normal inline ones, whatever the specificity.)
+ */
+const PRINT_PALETTE = {
+  '--md-sys-color-background': '#ffffff',
+  '--md-sys-color-surface': '#ffffff',
+  '--md-sys-color-surface-container-lowest': '#ffffff',
+  '--md-sys-color-surface-container-low': '#ffffff',
+  '--md-sys-color-surface-container': '#f7f7f8',
+  '--md-sys-color-surface-container-high': '#ffffff',
+  '--md-sys-color-surface-container-highest': '#f0f0f2',
+  '--md-sys-color-outline': '#8a8a90',
+  '--md-sys-color-outline-variant': '#c9c9cf',
+  '--md-sys-color-on-surface': '#1b1b1f',
+  '--md-sys-color-on-surface-variant': '#45454c',
+  // A soft shadow prints as a grey smudge, and a hard offset shadow
+  // prints as a grey smudge with a hard edge. A printed page
+  // separates its parts with a rule, or not at all.
+  '--md-sys-elevation-level1': 'none',
+  '--md-sys-elevation-level2': 'none',
+  '--md-sys-elevation-level3': 'none',
+  '--md-sys-elevation-level4': 'none',
+  '--md-sys-elevation-level5': 'none',
+}
+
+/**
+ * Install the print palette.
+ *
+ * @param {Object<string, string>} extra tokens that depend on the
+ *   style or the seed — the primary, which in dark mode is a light
+ *   tone that would vanish on white paper.
+ */
+function applyPrintPalette(extra = {}) {
+  const tokens = {...PRINT_PALETTE, ...extra}
+  let style = document.getElementById('grampsjs-print-palette')
+  if (!style) {
+    style = document.createElement('style')
+    style.id = 'grampsjs-print-palette'
+    document.head.appendChild(style)
+  }
+  const body = Object.entries(tokens)
+    .map(([name, value]) => `      ${name}: ${value} !important;`)
+    .join('\n')
+  style.textContent = `@media print {\n    :root {\n${body}\n    }\n  }`
+}
 
 /**
  * Design-token scales that Gramps Web does not currently define.
@@ -1542,6 +1734,39 @@ export function applyColors(
       root.style.setProperty(name, value)
     }
   }
+
+  // The focus ring is the STYLE's. Material's default focus colour is
+  // a cool blue that belongs to neither the style nor the content, and
+  // on the Almanac paper it is the one piece of the interface that is
+  // visibly not part of the design.
+  const focus = theme.focus?.[isDark ? 'dark' : 'light']
+  if (focus) {
+    for (const [name, value] of Object.entries(focus)) {
+      root.style.setProperty(name, value)
+    }
+  }
+
+  // The shared variant. Written at the ROOT, so that it reaches every
+  // button in every component — the components that do not adopt the
+  // app's shared stylesheet included.
+  for (const [name, value] of Object.entries(VARIANT_TOKENS)) {
+    root.style.setProperty(name, value)
+  }
+
+  // The printed page. The primary is included because in dark mode it
+  // is a LIGHT tone, which would be nearly invisible on white paper;
+  // the printed page uses the light-mode primary, which is the dark
+  // one the style was designed with.
+  const lightPrimaryTone = Math.min(
+    50,
+    Math.max(30, Math.round(primaryHct.tone))
+  )
+  applyPrintPalette({
+    '--md-sys-color-primary': hexFromArgb(
+      primaryPalette.tone(lightPrimaryTone)
+    ),
+    '--md-sys-color-on-primary': '#ffffff',
+  })
 }
 
 /**

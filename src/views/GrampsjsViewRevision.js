@@ -363,7 +363,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
                 ${this._forceRequired
                   ? html`
                       <md-filled-button
-                        style="--md-filled-button-container-color: var(--md-sys-color-error); --md-filled-button-label-text-color: var(--md-sys-color-on-error); --md-filled-button-hover-container-elevation: var(--grampsjs-elevation-level-0);"
+                        style="--grampsjs-button-rule-color: var(--md-sys-color-error); --md-filled-button-hover-container-elevation: var(--grampsjs-elevation-level-0);"
                         @click="${() => this._handleUndoConfirm(true)}"
                         ?disabled="${this._undoInProgress}"
                       >

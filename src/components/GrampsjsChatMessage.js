@@ -143,7 +143,10 @@ class GrampsjsChatMessage extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .slot-wrap code {
-          font-family: monospace;
+          /* The theme's MONO face, not the browser's default: the
+           * style owns the app's voice, and a hard-coded generic
+           * monospace is the one place that voice slips. */
+          font-family: var(--grampsjs-mono-font-family);
           background: var(--grampsjs-color-shade-230);
           padding: 0.1em 0.3em;
           border-radius: 3px;
