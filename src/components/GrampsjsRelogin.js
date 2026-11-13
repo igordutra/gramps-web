@@ -3,7 +3,7 @@ import '@material/web/dialog/dialog'
 import '@material/web/button/text-button'
 import '@material/web/chips/chip-set'
 import '@material/web/chips/filter-chip'
-import '@material/web/textfield/filled-text-field'
+import '@material/web/textfield/outlined-text-field'
 import './GrampsjsOidcButton.js'
 
 import {sharedStyles} from '../SharedStyles.js'

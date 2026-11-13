@@ -2,7 +2,7 @@ import {LitElement, css, html} from 'lit'
 
 import '@material/web/button/filled-button'
 import '@material/web/button/outlined-button'
-import '@material/web/textfield/filled-text-field'
+import '@material/web/textfield/outlined-text-field'
 
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {fireEvent} from '../util.js'

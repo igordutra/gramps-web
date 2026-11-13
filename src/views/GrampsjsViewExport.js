@@ -1,5 +1,5 @@
 import {css, html} from 'lit'
-import '@material/web/select/filled-select'
+import '@material/web/select/outlined-select'
 import '@material/web/select/select-option'
 import '@material/web/button/filled-button'
 import {Warning} from '../icons/phosphor.js'

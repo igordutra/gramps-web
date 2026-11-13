@@ -2,9 +2,9 @@ import {html, css} from 'lit'
 import {keyed} from 'lit/directives/keyed.js'
 
 import '@material/web/button/outlined-button'
-import '@material/web/select/filled-select'
+import '@material/web/select/outlined-select'
 import '@material/web/select/select-option'
-import '@material/web/textfield/filled-text-field'
+import '@material/web/textfield/outlined-text-field'
 
 import {supportsPersistentAccessTokens} from '../components/GrampsjsAccessTokens.js'
 import '../components/GrampsjsCollapsibleSection.js'

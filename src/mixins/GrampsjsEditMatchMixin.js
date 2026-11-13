@@ -1,6 +1,7 @@
 import {html} from 'lit'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/icon/icon.js'
+import '@material/web/textfield/outlined-text-field'
 
 import '../components/GrampsjsConnectedDnaMatchTable.js'
 import '../components/GrampsjsTooltip.js'

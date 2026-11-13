@@ -1,5 +1,6 @@
 import {css, html} from 'lit'
 
+import '@material/web/select/outlined-select'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsConnectedComponent} from './GrampsjsConnectedComponent.js'
 import {fireEvent} from '../util.js'

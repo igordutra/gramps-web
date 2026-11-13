@@ -29,7 +29,7 @@ import {
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsTooltip.js'
 import './GrampsjsViewMediaLightbox.js'
-import '@material/web/select/filled-select'
+import '@material/web/select/outlined-select'
 import '@material/web/select/select-option'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/checkbox/checkbox.js'

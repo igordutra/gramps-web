@@ -1,6 +1,6 @@
 import {css, html} from 'lit'
 import {PencilSimple, Plus} from '../icons/phosphor.js'
-import '@material/web/select/filled-select'
+import '@material/web/select/outlined-select'
 import '../components/GrampsjsIcon.js'
 
 import '../components/GrampsjsTasks.js'

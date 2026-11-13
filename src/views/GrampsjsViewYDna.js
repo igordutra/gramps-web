@@ -1,6 +1,6 @@
 import {html, css} from 'lit'
 
-import '@material/web/select/filled-select'
+import '@material/web/select/outlined-select'
 import {Eye, PencilSimple, Plus} from '../icons/phosphor.js'
 import '../components/GrampsjsYtreeLineage.js'
 import '../components/GrampsjsFormNewYDna.js'

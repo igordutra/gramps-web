@@ -2,7 +2,6 @@
 
 import {css, html} from 'lit'
 
-import '@material/web/select/filled-select'
 import '@material/web/fab/fab.js'
 
 import {GrampsjsView} from './GrampsjsView.js'

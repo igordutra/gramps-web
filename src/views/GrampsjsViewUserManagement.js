@@ -1,6 +1,5 @@
 import {css, html} from 'lit'
 
-import '@material/web/select/filled-select'
 import '@material/web/select/select-option'
 
 import {GrampsjsView} from './GrampsjsView.js'
