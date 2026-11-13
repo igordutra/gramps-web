@@ -106,12 +106,18 @@ export const sharedStyles = [
     /*
    * The focus ring, drawn by the style.
    *
-   * Two rules, because the two cases are different elements. A control
-   * that DELEGATES focus — which every Material button does — is
-   * focused as the host, so the ring belongs around the host: that is
-   * the control's own boundary, and it is the shape the user sees.
-   * A control that does not delegate is focused on an inner element,
-   * and the ring belongs there.
+   * Material's own controls draw their OWN ring, with the
+   * md-focus-ring element, whose colour is the --md-focus-ring-color
+   * token. That token is set on the ROOT, so it reaches every Material
+   * control in every component — and it has to be done that way,
+   * because a control's internals live in the VENDOR's shadow root,
+   * where no stylesheet of ours can reach them.
+   *
+   * So this rule is only for the app's OWN controls: a link or a plain
+   * button in an app template. It names them explicitly rather than
+   * using a descendant selector, because a blanket descendant rule
+   * would also catch the Material component HOSTS and ring every
+   * Material control twice — once by Material and once by this.
    *
    * The colour and the width come from the ROOT, and are NOT given a
    * value here. A declaration in the host block is LOCAL to every
@@ -126,7 +132,12 @@ export const sharedStyles = [
    * changed the layout would move the thing the user was aiming at.
    */
     :host(:focus-visible),
-    :host *:focus-visible {
+    :host a:focus-visible,
+    :host button:focus-visible,
+    :host input:focus-visible,
+    :host textarea:focus-visible,
+    :host select:focus-visible,
+    :host [tabindex]:focus-visible {
       outline: var(--grampsjs-focus-ring-width, 2px) solid
         var(--grampsjs-focus-ring-color, #1d4ed8);
       outline-offset: 2px;

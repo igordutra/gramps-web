@@ -1753,6 +1753,24 @@ export function applyColors(
     root.style.setProperty(name, value)
   }
 
+  // Material's OWN focus ring, in the style's colour.
+  //
+  // Material draws its focus indicator with the md-focus-ring element,
+  // whose colour is a token: --md-focus-ring-color, falling back to
+  // --md-sys-color-secondary. Setting it at the ROOT reaches every
+  // Material control in every component — and it has to be done this
+  // way, because a control's internals live in the VENDOR's shadow
+  // root, where no stylesheet of ours can reach them. The same is
+  // true of a text field's focus outline.
+  root.style.setProperty(
+    '--md-focus-ring-color',
+    'var(--grampsjs-focus-ring-color)'
+  )
+  root.style.setProperty(
+    '--md-outlined-field-focus-outline-color',
+    'var(--grampsjs-focus-ring-color)'
+  )
+
   // The printed page. The primary is included because in dark mode it
   // is a LIGHT tone, which would be nearly invisible on white paper;
   // the printed page uses the light-mode primary, which is the dark
