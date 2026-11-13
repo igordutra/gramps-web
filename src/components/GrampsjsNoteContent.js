@@ -3,6 +3,12 @@ import {classMap} from 'lit/directives/class-map.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {Image} from '../icons/phosphor.js'
 import {hasThumbnail, linkUrls, mediaIconPath} from '../util.js'
+import {
+  adjustForContrast,
+  effectiveBackground,
+  parseColor,
+  toCss,
+} from '../noteColour.js'
 import {getThumbnailUrl} from '../api.js'
 import {IMAGE_PLACEHOLDER} from '../inlineImages.js'
 import './GrampsjsIcon.js'
@@ -237,6 +243,7 @@ export class GrampsjsNoteContent extends LitElement {
     renderInlineImages(noteContent, this.inlineMedia)
     this._wireLinks(noteContent)
     this._styleHighlights(noteContent)
+    this._styleForegroundColours(noteContent)
   }
 
   // Render highlights from the backend HTML like the editor does, blended
@@ -249,6 +256,36 @@ export class GrampsjsNoteContent extends LitElement {
       el.style.removeProperty('background-color')
       el.style.setProperty('--note-highlight-color', color)
       el.classList.add('note-highlight')
+    }
+  }
+
+  // A note's author chooses their own font colour, and that choice is
+  // stored in the tree as an arbitrary value. It was painted exactly
+  // as chosen, straight onto whatever surface it landed on — so a
+  // mid-tone colour was illegible on a light surface, and the same
+  // colour could be illegible on a dark one. The colour belongs to
+  // the author and the surface belongs to the theme, so the only way
+  // to guarantee legibility for an ARBITRARY choice is to move the
+  // colour until it can be read.
+  //
+  // The hue and the saturation are kept and only the lightness moves,
+  // by the least amount that reaches the AA ratio. A colour that
+  // already passes is left exactly as the author chose it.
+  // eslint-disable-next-line class-methods-use-this
+  _styleForegroundColours(container) {
+    for (const el of container.querySelectorAll('span[style], font[style]')) {
+      if (!el.style.color) continue
+      const foreground = parseColor(getComputedStyle(el).color)
+      if (!foreground || foreground.a === 0) continue
+      const background = effectiveBackground(el)
+      const adjusted = adjustForContrast(foreground, background)
+      if (
+        adjusted.r !== foreground.r ||
+        adjusted.g !== foreground.g ||
+        adjusted.b !== foreground.b
+      ) {
+        el.style.color = toCss(adjusted)
+      }
     }
   }
 
