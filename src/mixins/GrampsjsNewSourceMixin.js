@@ -40,22 +40,35 @@ export const GrampsjsNewSourceMixin = superClass =>
             @input="${this.handleName}"
             @blur="${this.handleName}"
             id="source-name"
+            aria-label="${this._('Title')}"
           ></md-outlined-text-field>
         </p>
 
         <h3 class="label">${this._('Author')}</h3>
         <p>
-          <grampsjs-form-string fullwidth id="author"></grampsjs-form-string>
+          <grampsjs-form-string
+            fullwidth
+            id="author"
+            aria-label="${this._('Author')}"
+          ></grampsjs-form-string>
         </p>
 
         <h3 class="label">${this._('Publication info')}</h3>
         <p>
-          <grampsjs-form-string fullwidth id="pubinfo"></grampsjs-form-string>
+          <grampsjs-form-string
+            fullwidth
+            id="pubinfo"
+            aria-label="${this._('Publication info')}"
+          ></grampsjs-form-string>
         </p>
 
         <h3 class="label">${this._('Abbreviation')}</h3>
         <p>
-          <grampsjs-form-string fullwidth id="abbrev"></grampsjs-form-string>
+          <grampsjs-form-string
+            fullwidth
+            id="abbrev"
+            aria-label="${this._('Abbreviation')}"
+          ></grampsjs-form-string>
         </p>
 
         <h3 class="label">${this._('Repository')}</h3>

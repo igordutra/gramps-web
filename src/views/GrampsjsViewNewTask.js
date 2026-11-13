@@ -53,6 +53,7 @@ export class GrampsjsViewNewTask extends GrampsjsViewNewSource {
           @input="${this.handleName}"
           @blur="${this.handleName}"
           id="source-name"
+          aria-label="${this._('Title')}"
         ></md-outlined-text-field>
       </p>
 

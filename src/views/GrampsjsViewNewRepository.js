@@ -31,6 +31,7 @@ export class GrampsjsViewNewRepository extends GrampsjsViewNewObject {
           @input="${this.handleName}"
           @blur="${this.handleName}"
           id="repository-name"
+          aria-label="${this._('Name')}"
         ></md-outlined-text-field>
       </p>
 

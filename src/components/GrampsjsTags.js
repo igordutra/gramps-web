@@ -127,6 +127,7 @@ export class GrampsjsTags extends GrampsjsAppStateMixin(LitElement) {
               <md-icon-button
                 id="btn-tag"
                 class="edit"
+                aria-label="${this._('Add Tag')}"
                 @click="${this._handleNewTag}"
               >
                 <grampsjs-icon

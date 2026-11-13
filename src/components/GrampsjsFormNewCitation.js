@@ -39,7 +39,11 @@ class GrampsjsFormNewCitation extends GrampsjsObjectForm {
 
       <h3 class="label">${this._('Page')}</h3>
       <p>
-        <grampsjs-form-string fullwidth id="page"></grampsjs-form-string>
+        <grampsjs-form-string
+          fullwidth
+          id="page"
+          aria-label="${this._('Page')}"
+        ></grampsjs-form-string>
       </p>
 
       <h3 class="label">${this._('Date')}</h3>
@@ -51,6 +55,7 @@ class GrampsjsFormNewCitation extends GrampsjsObjectForm {
       <h3 class="label">${this._('Confidence')}</h3>
       <md-outlined-select
         id="select-confidence"
+        aria-label="${this._('Confidence')}"
         @change="${this.handleConfidence}"
       >
         ${Object.keys(confidence).map(

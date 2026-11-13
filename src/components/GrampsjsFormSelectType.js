@@ -100,7 +100,11 @@ class GrampsjsFormSelectType extends GrampsjsAppStateMixin(LitElement) {
   }
 
   #renderHeading() {
-    return html`<h4 class="label">${this.heading || this._('Type')}</h4>`
+    // An h3, not an h4: the field labels around it are h3, and a
+    // heading that skips a level is a heading-order violation. The
+    // .label class sets the size, so the level changes nothing
+    // visible.
+    return html`<h3 class="label">${this.heading || this._('Type')}</h3>`
   }
 
   #renderLoading() {
@@ -125,6 +129,7 @@ class GrampsjsFormSelectType extends GrampsjsAppStateMixin(LitElement) {
               @change="${this.#handleSelectChange}"
               @closing="${this.#handleSelectClosing}"
               label="${this.label}"
+              aria-label="${this.label || this.heading || this._('Type')}"
               .value="${this.value}"
               id="select-type"
             >
@@ -149,6 +154,7 @@ class GrampsjsFormSelectType extends GrampsjsAppStateMixin(LitElement) {
               @input="${this.#handleTextFieldInput}"
               @blur="${this.#handleTextFieldBlur}"
               label="${this.label} ${this._('Custom')}"
+              aria-label="${this.label || this.heading || this._('Type')}"
               .value="${this.value}"
               id="custom-type"
             >

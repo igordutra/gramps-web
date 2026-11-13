@@ -49,6 +49,7 @@ export const GrampsjsNewPlaceMixin = superClass =>
             @input="${this.handleName}"
             @blur="${this.handleName}"
             id="place-name"
+            aria-label="${this._('Name')}"
           ></md-outlined-text-field>
         </p>
 

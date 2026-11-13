@@ -33,7 +33,11 @@ export const GrampsjsNewPersonMixin = superClass =>
         ></grampsjs-form-name>
 
         <h3 class="label">${this._('Gender')}</h3>
-        <md-outlined-select id="select-gender" @change="${this.handleGender}">
+        <md-outlined-select
+          id="select-gender"
+          aria-label="${this._('Gender')}"
+          @change="${this.handleGender}"
+        >
           ${Object.keys(this.gender).map(
             genderConst => html`
               <md-select-option

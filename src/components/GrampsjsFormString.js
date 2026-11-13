@@ -25,6 +25,7 @@ class GrampsjsFormString extends GrampsjsAppStateMixin(LitElement) {
     return {
       value: {type: String},
       label: {type: String},
+      ariaLabel: {type: String},
       disabled: {type: Boolean},
       fullwidth: {type: Boolean},
       required: {type: Boolean},
@@ -36,6 +37,7 @@ class GrampsjsFormString extends GrampsjsAppStateMixin(LitElement) {
     super()
     this.value = ''
     this.label = ''
+    this.ariaLabel = ''
     this.disabled = false
     this.fullwidth = false
     this.required = false
@@ -47,6 +49,7 @@ class GrampsjsFormString extends GrampsjsAppStateMixin(LitElement) {
       <md-outlined-text-field
         @input="${this.handleChange}"
         label="${this.label}"
+        aria-label="${this.ariaLabel ?? ''}"
         value="${this.value}"
         type="${this.type}"
         ?disabled="${this.disabled}"
