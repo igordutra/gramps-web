@@ -79,7 +79,7 @@ export class GrampsjsConnectedParents extends GrampsjsConnectedComponent {
   _renderParent(personProfile, extPerson) {
     return html`
       <md-list-item
-        role="none"
+        role="listitem"
         type="button"
         @click="${() =>
           fireEvent(this, 'nav', {

@@ -19,6 +19,7 @@ import {
   TREE_CONFIG_APP_TITLE,
 } from './api.js'
 import './dayjs_locales.js'
+import {installListItemRoles} from './listRoles.js'
 import {
   frontendLanguages,
   getFrontendStrings,
@@ -86,6 +87,11 @@ const OBJECT_PAGES = new Set([
 ])
 
 // Map from route name to translatable title string
+
+// Material's list items carry the listitem role one level too deep;
+// this puts it where it belongs. See listRoles.js for why.
+installListItemRoles()
+
 export class GrampsJs extends LitElement {
   static get properties() {
     return {

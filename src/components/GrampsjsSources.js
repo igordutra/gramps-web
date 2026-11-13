@@ -30,7 +30,7 @@ export class GrampsjsSources extends GrampsjsEditableList {
     const repoRef = this._getRepoRef(obj)
     return html`
       <md-list-item
-        role="none"
+        role="listitem"
         type="button"
         class="${classMap({selected: i === this._selectedIndex})}"
         @click="${() => this._handleClick(obj.gramps_id)}"

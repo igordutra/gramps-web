@@ -347,7 +347,7 @@ class GrampsjsFormExternalSearch extends GrampsjsObjectForm {
     return html`
       <div class="${this.hiddenWebsites[web.key] ? 'item-hidden' : ''}">
         <md-list-item
-          role="none"
+          role="listitem"
           type="button"
           href="${this.editMode ? '' : `${web.baseUrl}${web.params}`}"
           target="${this.editMode ? '' : '_blank'}"

@@ -201,7 +201,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
    */
   _navItem(href, icon, label, selected) {
     return html`<md-list-item
-      role="none"
+      role="listitem"
       type="link"
       href="${href}"
       ?selected="${selected}"
@@ -230,7 +230,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
     const label = this.rail ? this._('Expand menu') : this._('Collapse menu')
     return html`<md-divider inset></md-divider>
       <md-list-item
-        role="none"
+        role="listitem"
         type="button"
         class="rail-toggle"
         @click="${this._handleToggleRail}"
@@ -333,7 +333,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
           )
         : ''}
       <md-list-item
-        role="none"
+        role="listitem"
         type="link"
         href="/notifications"
         ?selected="${p === 'notifications'}"

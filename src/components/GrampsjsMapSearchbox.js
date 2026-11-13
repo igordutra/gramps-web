@@ -565,7 +565,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
     const {label, supportingText, iconPath} = this._listItemMeta(obj)
     return html`
       <md-list-item
-        role="none"
+        role="listitem"
         type="button"
         @click="${() => this._handleSelected(i)}"
       >

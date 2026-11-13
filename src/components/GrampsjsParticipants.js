@@ -107,7 +107,7 @@ export class GrampsjsParticipants extends GrampsjsEditableList {
   row(obj) {
     return html`
       <md-list-item
-        role="none"
+        role="listitem"
         type="button"
         @click="${() => fireEvent(this, 'nav', {path: obj.path})}"
       >

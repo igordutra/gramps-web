@@ -101,7 +101,7 @@ export class GrampsjsViewNewEvent extends GrampsjsNewEventMixin(
             <md-list role="list">
               ${this._participants.map(
                 (p, i) => html`
-                  <md-list-item type="text" role="none">
+                  <md-list-item type="text" role="listitem">
                     ${p.label}
                     <span slot="supporting-text">
                       ${this._isPrimaryRole(p.role?.string || p.role || '')

@@ -27,7 +27,7 @@ export class GrampsjsViewSourceCitations extends GrampsjsViewObjectsDetail {
       <md-list role="list">
         ${this.handles.map(
           () => html`
-            <md-list-item type="text" role="none">
+            <md-list-item type="text" role="listitem">
               <span class="skeleton" style="width:12em;">&nbsp;</span>
               <span slot="supporting-text" class="skeleton" style="width:6em;"
                 >&nbsp;</span

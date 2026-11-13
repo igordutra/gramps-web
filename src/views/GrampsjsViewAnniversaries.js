@@ -91,7 +91,7 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
     }
     return html`
       <md-list-item
-        role="none"
+        role="listitem"
         type="button"
         @click="${() => this._handleClick(event)}"
         @keydown="${this._handleKeyDown}"

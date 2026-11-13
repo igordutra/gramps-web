@@ -172,7 +172,7 @@ export class GrampsjsOidcAccounts extends GrampsjsAppStateMixin(LitElement) {
   _renderAccount(account) {
     const linkedAt = this._unixTime(account.created_at)
     return html`
-      <md-list-item role="none" type="text" noninteractive>
+      <md-list-item role="listitem" type="text" noninteractive>
         <div slot="headline">${this._providerName(account.provider_id)}</div>
         <div slot="supporting-text">
           ${account.email ? html`${account.email} &middot; ` : ''}
