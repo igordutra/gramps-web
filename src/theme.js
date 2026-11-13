@@ -148,6 +148,150 @@ export const THEMES = {
       '--md-sys-elevation-level5': '6px 6px 0 0 rgba(15, 23, 42, 0.2)',
     },
   },
+
+  /**
+   * A third style, and a deliberately different design language.
+   *
+   * Archive is a document in a warm sans; Blueprint is a grid in a
+   * cold sans. This one is a PRINTED ALMANAC: a serif voice, an
+   * aged-paper surface, hairline rules instead of shadows, wide
+   * margins and a dense text block. The differences are structural
+   * rather than cosmetic:
+   *
+   *  - the typeface is a SERIF, which is the strongest single signal
+   *    that an interface is not Material, whose whole voice is a
+   *    geometric sans;
+   *  - the surfaces are paper, not the cool greys Material's tonal
+   *    palette produces, so the canvas reads warm;
+   *  - the elevation is a KEYLINE — a one-pixel rule — not a shadow,
+   *    so the layers are separated by a printed line;
+   *  - the corners are square, the gutter is wide, and the controls
+   *    are short, so the page reads as a printed form.
+   *
+   * It exists to prove the point the other two cannot: that the token
+   * layer really is in charge of the rendering, and not only of the
+   * colours.
+   */
+  almanac: {
+    label: 'Almanac',
+    // Verdigris: the patina on old copper, and the ink of an
+    // eighteenth-century imprint. Far from Archive's russet and
+    // Blueprint's blue, so the three styles never read as one palette
+    // in three colours.
+    primary: '#1f5c4d',
+    // Ochre, 123 degrees away in hue from the verdigris: two accents
+    // of one heritage palette rather than two unrelated brands.
+    secondary: '#8a6a1f',
+    // The typeface. A serif is the one thing Material's components
+    // cannot supply on their own, so the style carries one.
+    font: {
+      '--grampsjs-style-body-font':
+        "'EB Garamond x', 'Gramps Symbols', Georgia, serif",
+      '--grampsjs-style-heading-font':
+        "'EB Garamond x', 'Gramps Symbols', Georgia, serif",
+    },
+    // The paper. These are the surfaces the app paints, so they are
+    // the theme's own rather than Material's tonal greys.
+    surface: {
+      light: {
+        '--md-sys-color-background': '#f4efe3',
+        '--md-sys-color-surface': '#fbf8ef',
+        '--md-sys-color-surface-container-lowest': '#fbf8ef',
+        '--md-sys-color-surface-container-low': '#f7f2e6',
+        '--md-sys-color-surface-container': '#f0ead9',
+        '--md-sys-color-surface-container-high': '#fbf8ef',
+        '--md-sys-color-surface-container-highest': '#e9e1cc',
+        '--md-sys-color-outline': '#b8ad90',
+        '--md-sys-color-outline-variant': '#dcd3ba',
+        '--md-sys-color-on-surface': '#241f16',
+        '--md-sys-color-on-surface-variant': '#4d4636',
+      },
+      dark: {
+        '--md-sys-color-background': '#14120d',
+        '--md-sys-color-surface': '#1c1913',
+        '--md-sys-color-surface-container-lowest': '#100e0a',
+        '--md-sys-color-surface-container-low': '#221e17',
+        '--md-sys-color-surface-container': '#2a251d',
+        '--md-sys-color-surface-container-high': '#322c22',
+        '--md-sys-color-surface-container-highest': '#3d3628',
+        '--md-sys-color-outline': '#6f6754',
+        '--md-sys-color-outline-variant': '#443e31',
+        '--md-sys-color-on-surface': '#ece5d6',
+        '--md-sys-color-on-surface-variant': '#bdb4a0',
+      },
+    },
+    // Square corners, like a printed page.
+    shape: {
+      '--md-sys-shape-corner-none': '0px',
+      '--md-sys-shape-corner-extra-small': '0px',
+      '--md-sys-shape-corner-small': '0px',
+      '--md-sys-shape-corner-medium': '0px',
+      '--md-sys-shape-corner-large': '0px',
+      '--md-sys-shape-corner-extra-large': '0px',
+      '--md-sys-shape-corner-xl': '0px',
+      '--md-sys-shape-corner-2xl': '0px',
+      '--md-sys-shape-corner-3xl': '0px',
+      '--md-sys-shape-corner-4xl': '0px',
+      '--md-sys-shape-corner-full': '0px',
+    },
+    type: {
+      // A serif's optical size is smaller than a sans's, so the text
+      // steps go UP a size rather than down. The weights stay at 400
+      // and 500: EB Garamond ships a single weight, and anything
+      // heavier would be SYNTHESISED by the browser — a faux bold,
+      // which is the one thing a printed face must never have.
+      '--md-sys-typescale-label-large-size': '1rem',
+      '--md-sys-typescale-label-large-weight': '400',
+      '--md-sys-typescale-label-medium-size': '0.875rem',
+      '--md-sys-typescale-label-medium-weight': '400',
+      '--md-sys-typescale-label-small-size': '0.8125rem',
+      '--md-sys-typescale-label-small-weight': '400',
+      '--md-sys-typescale-body-small-size': '0.9375rem',
+      '--md-sys-typescale-body-medium-size': '1.0625rem',
+      '--md-sys-typescale-body-large-size': '1.1875rem',
+      '--md-sys-typescale-title-large-size': '1.5rem',
+      '--md-sys-typescale-title-medium-size': '1.125rem',
+      '--md-sys-typescale-title-small-size': '0.9375rem',
+      '--md-sys-typescale-title-medium-weight': '500',
+      '--md-sys-typescale-title-small-weight': '500',
+      '--md-sys-typescale-headline-small-size': '1.5rem',
+      '--md-sys-typescale-headline-medium-size': '1.75rem',
+      '--md-sys-typescale-headline-large-size': '2.25rem',
+      '--md-sys-typescale-headline-small-weight': '400',
+      '--md-sys-typescale-headline-medium-weight': '500',
+      '--md-sys-typescale-headline-large-weight': '500',
+      // A serif has a large optical contrast already; the tight
+      // tracking a sans wants would crowd its letterforms.
+      '--md-sys-typescale-headline-small-tracking': '0em',
+      '--md-sys-typescale-headline-medium-tracking': '0em',
+      '--md-sys-typescale-headline-large-tracking': '-0.005em',
+    },
+    space: {
+      '--grampsjs-page-gutter': '40px',
+      '--grampsjs-page-gutter-compact': '16px',
+      '--grampsjs-page-gutter-block': '24px',
+      '--grampsjs-column-gap': '56px',
+    },
+    density: {
+      // Short controls: a printed form is dense, and the type does
+      // the separating rather than the padding.
+      '--md-filled-button-container-height': '30px',
+      '--md-outlined-button-container-height': '30px',
+      '--md-text-button-container-height': '30px',
+      '--md-elevated-button-container-height': '30px',
+    },
+    elevation: {
+      // A KEYLINE, not a shadow. The layers are separated by a
+      // printed rule, which is how a page separates a card from the
+      // sheet it sits on — and it is the opposite of Material's soft
+      // drop.
+      '--md-sys-elevation-level1': '0 0 0 1px rgba(36, 31, 22, 0.28)',
+      '--md-sys-elevation-level2': '0 0 0 1px rgba(36, 31, 22, 0.36)',
+      '--md-sys-elevation-level3': '0 0 0 1px rgba(36, 31, 22, 0.44)',
+      '--md-sys-elevation-level4': '0 0 0 1px rgba(36, 31, 22, 0.52)',
+      '--md-sys-elevation-level5': '0 0 0 1px rgba(36, 31, 22, 0.60)',
+    },
+  },
 }
 
 // The lab runs the Archive style by default: the app's own design
@@ -206,9 +350,28 @@ export const SHAPE_SCALE = {
   '--grampsjs-fab-container-shape': '50%',
 }
 
+/**
+ * The typefaces the app and Material's components both draw with.
+ *
+ * These live at the ROOT, so a theme can change them, and they are
+ * referenced rather than written down:
+ *
+ *  - the app's own text reads --grampsjs-body-font-family, which every
+ *    component declares LOCALLY in its shadow root — so a root-level
+ *    override alone would lose to that local declaration. The shared
+ *    stylesheet therefore resolves the local declaration FROM these
+ *    tokens, and the theme changes the token.
+ *  - Material's components read --md-sys-typescale-*-font, which is
+ *    inherited down into their shadow roots, so pointing those at the
+ *    same tokens keeps the app and the controls on one voice.
+ */
+export const FONT_SCALE = {
+  '--grampsjs-style-body-font': "'Inter var', 'Gramps Symbols', sans-serif",
+  '--grampsjs-style-heading-font': "'Inter var', 'Gramps Symbols', sans-serif",
+}
+
 export const TYPE_SCALE = {
-  '--md-sys-typescale-label-large-font':
-    '"Inter var", "Gramps Symbols", sans-serif',
+  '--md-sys-typescale-label-large-font': 'var(--grampsjs-style-body-font)',
   // The label scale is the scale every control's text comes from: button
   // labels, field labels, tab labels. It was left at Material's stock
   // 14px/500, which is why a button and a field label read smaller than
@@ -216,13 +379,11 @@ export const TYPE_SCALE = {
   '--md-sys-typescale-label-large-size': '0.9375rem',
   '--md-sys-typescale-label-large-weight': '450',
   '--md-sys-typescale-label-large-line-height': '1.25rem',
-  '--md-sys-typescale-label-medium-font':
-    '"Inter var", "Gramps Symbols", sans-serif',
+  '--md-sys-typescale-label-medium-font': 'var(--grampsjs-style-body-font)',
   '--md-sys-typescale-label-medium-size': '0.8125rem',
   '--md-sys-typescale-label-medium-weight': '500',
   '--md-sys-typescale-label-medium-line-height': '1.125rem',
-  '--md-sys-typescale-label-small-font':
-    '"Inter var", "Gramps Symbols", sans-serif',
+  '--md-sys-typescale-label-small-font': 'var(--grampsjs-style-body-font)',
   '--md-sys-typescale-label-small-size': '0.75rem',
   '--md-sys-typescale-label-small-weight': '500',
   '--md-sys-typescale-label-small-line-height': '1rem',
@@ -241,11 +402,11 @@ export const TYPE_SCALE = {
   // defaults: a modern interface separates levels by weight and spacing,
   // not only by size.
   '--md-sys-typescale-headline-small-font':
-    '"Inter var", "Gramps Symbols", sans-serif',
+    'var(--grampsjs-style-heading-font)',
   '--md-sys-typescale-headline-medium-font':
-    '"Inter var", "Gramps Symbols", sans-serif',
+    'var(--grampsjs-style-heading-font)',
   '--md-sys-typescale-headline-large-font':
-    '"Inter var", "Gramps Symbols", sans-serif',
+    'var(--grampsjs-style-heading-font)',
   '--md-sys-typescale-headline-small-size': '1.25rem',
   '--md-sys-typescale-headline-medium-size': '1.5rem',
   '--md-sys-typescale-headline-large-size': '1.875rem',
@@ -260,8 +421,8 @@ export const TYPE_SCALE = {
   '--md-sys-typescale-title-small-size': '0.875rem',
   '--md-sys-typescale-title-medium-weight': '600',
   '--md-sys-typescale-title-small-weight': '600',
-  '--md-ref-typeface-plain': '"Inter var", "Gramps Symbols", sans-serif',
-  '--md-ref-typeface-brand': '"Inter var", "Gramps Symbols", sans-serif',
+  '--md-ref-typeface-plain': 'var(--grampsjs-style-body-font)',
+  '--md-ref-typeface-brand': 'var(--grampsjs-style-body-font)',
 }
 
 export const SPACE_SCALE = {
@@ -1264,6 +1425,8 @@ export function applyColors(
     ...SELECTION_SCALE,
     ...DENSITY_SCALE,
     ...COMPONENT_SCALE,
+    ...FONT_SCALE,
+    ...(theme.font ?? {}),
     ...(theme.shape ?? {}),
     ...(theme.type ?? {}),
     ...(theme.space ?? {}),
@@ -1336,6 +1499,24 @@ export function applyColors(
     '--mdc-theme-on-secondary',
     actionTone < 60 ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.87)'
   )
+
+  // A theme's own SURFACES, applied LAST.
+  //
+  // The ladder above is the app's modern look — cool greys, one step
+  // apart. It is written after Material's own scheme on purpose, so
+  // that it wins. A theme that wants a different paper has to be
+  // written after IT, or the ladder would overwrite the theme and
+  // the style would render in the app's greys whatever its name.
+  //
+  // Only the surfaces are overridable here: the seed-derived roles
+  // (primary, secondary, their containers) still come from the
+  // tonal palette, so a theme's colours stay in the M3 contract.
+  const surfaces = theme.surface?.[isDark ? 'dark' : 'light']
+  if (surfaces) {
+    for (const [name, value] of Object.entries(surfaces)) {
+      root.style.setProperty(name, value)
+    }
+  }
 }
 
 /**

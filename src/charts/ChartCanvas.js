@@ -9,7 +9,7 @@ import {
   translate,
 } from './animatedJoin.js'
 import {ChartViewport} from './ChartViewport.js'
-import {chartPalette} from './palette.js'
+import {chartPalette, resolveFontFamily} from './palette.js'
 import {drawChangedCards, updatePersonCardInteraction} from './personCard.js'
 
 export const place = node => [node.x, node.y]
@@ -48,7 +48,7 @@ export const place = node => [node.x, node.y]
 export class ChartCanvas {
   constructor() {
     this._svg = create('svg')
-      .attr('font-family', "'Inter var', 'Gramps Symbols', sans-serif")
+      .attr('font-family', resolveFontFamily())
       .attr('font-size', 13)
     const content = this._svg.append('g').attr('id', 'chart-content')
     this._viewport = new ChartViewport(this._svg, content)

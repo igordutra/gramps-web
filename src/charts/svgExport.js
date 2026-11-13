@@ -1,4 +1,4 @@
-import {resolveExportPalette} from './palette.js'
+import {resolveExportPalette, resolveFontFamily} from './palette.js'
 
 // Space around the chart in an exported SVG, in pixels
 const exportMargin = 20
@@ -75,7 +75,7 @@ export async function chartSvgDocument(
   svg.setAttribute('width', width)
   svg.setAttribute('height', height)
   svg.setAttribute('viewBox', [x, y, width, height].join(' '))
-  svg.setAttribute('font-family', "'Inter var', 'Gramps Symbols', sans-serif")
+  svg.setAttribute('font-family', resolveFontFamily())
   svg.removeAttribute('style')
   for (const child of [...svg.children]) {
     if (child.id !== 'chart-content') {

@@ -3,10 +3,29 @@ import {css} from 'lit'
 export const sharedStyles = css`
   :host {
     line-height: 1.6;
-    --grampsjs-body-font-family: 'Inter var', 'Gramps Symbols', sans-serif;
-    --grampsjs-heading-font-family: 'Inter var', 'Gramps Symbols', sans-serif;
+    /* The typeface is the THEME's, not this component's.
+     *
+     * These two were written down as literals, which meant a style
+     * could not change the app's voice: the declaration below is LOCAL
+     * to every shadow root, so it beats any inherited value, and a
+     * root-level override could never reach it. They are now resolved
+     * from the root tokens, which the theme owns, so a style that
+     * carries a different typeface changes the whole app.
+     */
+    --grampsjs-body-font-family: var(
+      --grampsjs-style-body-font,
+      'Inter var',
+      'Gramps Symbols',
+      sans-serif
+    );
+    --grampsjs-heading-font-family: var(
+      --grampsjs-style-heading-font,
+      'Inter var',
+      'Gramps Symbols',
+      sans-serif
+    );
     --grampsjs-mono-font-family: 'Commit Mono', monospace;
-    --md-ref-typeface-plain: 'Inter var', 'Gramps Symbols', sans-serif;
+    --md-ref-typeface-plain: var(--grampsjs-style-body-font);
     --grampsjs-body-font-size: 16px;
     font-size: var(--grampsjs-body-font-size);
     font-family: var(--grampsjs-body-font-family);

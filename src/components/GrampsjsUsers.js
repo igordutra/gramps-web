@@ -175,57 +175,59 @@ export class GrampsjsUsers extends GrampsjsTableBase {
             </th>
           </tr>
         </thead>
-        ${filtered.map(
-          (obj, index) => html`
-            <tr>
-              <td data-label="${this._('Username: ').replace(':', '')}">
-                ${obj.name}
-              </td>
-              <td data-label="${this._('Full Name')}">${obj.full_name}</td>
-              <td data-label="${this._('E-mail')}">${obj.email}</td>
-              <td data-label="${this._('Role')}">
-                ${this._(userRoles[obj.role])}
-              </td>
-              <td data-label="${this._('Account Source')}">
-                ${obj.account_source || this._('Password')}
-              </td>
-              <td class="actions">
-                <md-icon-button
-                  class="edit"
-                  aria-label="${this._('Edit user')}"
-                  @click="${e => this._handleEditClick(e, obj.name)}"
-                  id="button-edit-${index}"
-                >
-                  <grampsjs-icon
-                    path="${PencilSimple}"
-                    height="20"
-                    width="20"
-                    color="var(--mdc-theme-secondary)"
-                  ></grampsjs-icon>
-                </md-icon-button>
-                <grampsjs-tooltip for="button-edit-${index}">
-                  ${this._('Edit user')}
-                </grampsjs-tooltip>
-                <md-icon-button
-                  class="error"
-                  aria-label="${this._('Delete user')}"
-                  @click="${e => this._handleDeleteClick(e, obj.name)}"
-                  id="button-del-${index}"
-                >
-                  <grampsjs-icon
-                    path="${TrashSimple}"
-                    height="20"
-                    width="20"
-                    color="var(--grampsjs-alert-error-font-color)"
-                  ></grampsjs-icon>
-                </md-icon-button>
-                <grampsjs-tooltip for="button-del-${index}">
-                  ${this._('Delete user')}
-                </grampsjs-tooltip>
-              </td>
-            </tr>
-          `
-        )}
+        <tbody>
+          ${filtered.map(
+            (obj, index) => html`
+              <tr>
+                <td data-label="${this._('Username: ').replace(':', '')}">
+                  ${obj.name}
+                </td>
+                <td data-label="${this._('Full Name')}">${obj.full_name}</td>
+                <td data-label="${this._('E-mail')}">${obj.email}</td>
+                <td data-label="${this._('Role')}">
+                  ${this._(userRoles[obj.role])}
+                </td>
+                <td data-label="${this._('Account Source')}">
+                  ${obj.account_source || this._('Password')}
+                </td>
+                <td class="actions">
+                  <md-icon-button
+                    class="edit"
+                    aria-label="${this._('Edit user')}"
+                    @click="${e => this._handleEditClick(e, obj.name)}"
+                    id="button-edit-${index}"
+                  >
+                    <grampsjs-icon
+                      path="${PencilSimple}"
+                      height="20"
+                      width="20"
+                      color="var(--mdc-theme-secondary)"
+                    ></grampsjs-icon>
+                  </md-icon-button>
+                  <grampsjs-tooltip for="button-edit-${index}">
+                    ${this._('Edit user')}
+                  </grampsjs-tooltip>
+                  <md-icon-button
+                    class="error"
+                    aria-label="${this._('Delete user')}"
+                    @click="${e => this._handleDeleteClick(e, obj.name)}"
+                    id="button-del-${index}"
+                  >
+                    <grampsjs-icon
+                      path="${TrashSimple}"
+                      height="20"
+                      width="20"
+                      color="var(--grampsjs-alert-error-font-color)"
+                    ></grampsjs-icon>
+                  </md-icon-button>
+                  <grampsjs-tooltip for="button-del-${index}">
+                    ${this._('Delete user')}
+                  </grampsjs-tooltip>
+                </td>
+              </tr>
+            `
+          )}
+        </tbody>
       </table>
       ${this.dialogContent}
     `

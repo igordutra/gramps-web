@@ -124,3 +124,38 @@ export function resolveExportPalette() {
 // The fallback palette, for use outside a browser. In the app the
 // resolved palette is what gets exported.
 export const exportPalette = {...EXPORT_FALLBACK}
+
+/**
+ * The typeface the charts draw with.
+ *
+ * The charts are SVG, and an SVG's font-family is an ATTRIBUTE — a
+ * `var()` does not resolve there, so the charts could not simply
+ * inherit the theme's typeface the way the rest of the app does. They
+ * were writing "Inter var" down instead, which meant a style with a
+ * different typeface would show the charts in the app's sans while
+ * everything around them was in the style's own face.
+ *
+ * So the font is read from the live token, the same way the export
+ * palette reads its colours, and written down as a literal because an
+ * SVG attribute has to be one.
+ */
+let cachedFontFamily = null
+let cachedFontStyle = null
+
+export function resolveFontFamily() {
+  if (typeof window === 'undefined' || !document.documentElement) {
+    return "'Inter var', 'Gramps Symbols', sans-serif"
+  }
+  const root = document.documentElement
+  // The cache is keyed on the STYLE, because the style picker can
+  // change the typeface while the app is running — a cache that
+  // ignored that would keep drawing the old face until a reload.
+  const style = root.getAttribute('data-style') || ''
+  if (cachedFontFamily && cachedFontStyle === style) return cachedFontFamily
+  const value = getComputedStyle(root)
+    .getPropertyValue('--grampsjs-style-body-font')
+    .trim()
+  cachedFontFamily = value || "'Inter var', 'Gramps Symbols', sans-serif"
+  cachedFontStyle = style
+  return cachedFontFamily
+}

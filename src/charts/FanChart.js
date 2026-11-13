@@ -14,7 +14,7 @@ import {
 } from './chartButton.js'
 import {joinWithTransitions, transitionColor} from './animatedJoin.js'
 import {invertFrame, placeArc, relateFanLayouts} from './layout/fanLayout.js'
-import {chartPalette} from './palette.js'
+import {chartPalette, resolveFontFamily} from './palette.js'
 import {LegendCategorical, LegendColorBar, isHoverDevice} from './util.js'
 import {chartNameDisplayFormat, fireEvent} from '../util.js'
 
@@ -289,7 +289,7 @@ function arcShape(layout, padding) {
 export class FanChart {
   constructor() {
     this._svg = create('svg')
-      .attr('font-family', 'Inter var')
+      .attr('font-family', resolveFontFamily())
       .attr('font-size', 12)
       .attr('text-anchor', 'middle')
     this._content = this._svg.append('g').attr('id', 'chart-content')

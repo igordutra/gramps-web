@@ -21,10 +21,17 @@ class GrampsjsDnaTabBar extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       css`
         md-tabs {
-          margin: 20px;
-          margin-bottom: 40px;
+          /*
+           * The same trap the main tab bar fell into: a max-width of
+           * 100% is a percentage of the CONTAINING BLOCK, so the strip
+           * was 100% wide PLUS its 20px margins — 40px wider than the
+           * pane, and the pane scrolled sideways by 20px at every
+           * width. The margin has to come out of the max-width.
+           */
+          margin: var(--grampsjs-space-16) var(--grampsjs-space-20);
+          margin-bottom: var(--grampsjs-space-40);
           width: max-content;
-          max-width: 100%;
+          max-width: calc(100% - (2 * var(--grampsjs-space-20)));
         }
 
         md-primary-tab {

@@ -3,7 +3,7 @@ import {scaleBand, scaleLinear, scaleOrdinal} from 'd3-scale'
 import {axisLeft, axisTop} from 'd3-axis'
 import {schemeSet1} from 'd3-scale-chromatic'
 
-import {resolveExportPalette} from './palette.js'
+import {resolveExportPalette, resolveFontFamily} from './palette.js'
 
 const chromosomeLength = {
   1: 249250621,
@@ -54,7 +54,7 @@ const defaultMargin = {top: 24, right: 10, bottom: 0, left: 35}
 export function ChromosomeBrowser(
   data,
   {
-    fontFamily = 'Inter var',
+    fontFamily = resolveFontFamily(),
     fontSize = 16,
     fontWeight = 350,
     fontColor = 'var(--grampsjs-body-font-color)',
@@ -230,7 +230,7 @@ export function chromosomeBrowserSvgDocument(data, legend, {width = 800} = {}) {
   const svg = select(
     ChromosomeBrowser(data, {
       width,
-      fontFamily: "'Inter var', sans-serif",
+      fontFamily: resolveFontFamily(),
       fontWeight: 400,
       fontColor: resolveExportPalette().text,
     })

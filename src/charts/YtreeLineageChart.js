@@ -1,5 +1,6 @@
 import {create} from 'd3-selection'
 import {User} from '../icons/phosphor.js'
+import {resolveFontFamily} from './palette.js'
 const clipString = (s, length) => {
   if (!s) {
     return ''
@@ -32,7 +33,7 @@ export function YtreeLineageChart(chartData, options = {}) {
   const stroke = 'var(--grampsjs-body-font-color-40)'
   const strokeWidth = 3
   const strokeDasharray = '3,3'
-  const fontFamily = 'Inter var'
+  const fontFamily = resolveFontFamily()
   const fontSize = 14
 
   const extraLabelSpace = 80
