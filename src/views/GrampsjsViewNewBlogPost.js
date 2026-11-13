@@ -55,7 +55,7 @@ export class GrampsjsViewNewBlogPost extends GrampsjsViewNewSource {
         <grampsjs-form-string
           fullwidth
           id="author"
-          aria-label="${this._('Author')}"
+          .ariaLabel="${this._('Author')}"
         ></grampsjs-form-string>
       </p>
 

@@ -42,7 +42,7 @@ export class GrampsjsViewNewCitation extends GrampsjsViewNewObject {
         <grampsjs-form-string
           fullwidth
           id="page"
-          aria-label="${this._('Page')}"
+          .ariaLabel="${this._('Page')}"
         ></grampsjs-form-string>
       </p>
 

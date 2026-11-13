@@ -49,7 +49,7 @@ export const GrampsjsNewSourceMixin = superClass =>
           <grampsjs-form-string
             fullwidth
             id="author"
-            aria-label="${this._('Author')}"
+            .ariaLabel="${this._('Author')}"
           ></grampsjs-form-string>
         </p>
 
@@ -58,7 +58,7 @@ export const GrampsjsNewSourceMixin = superClass =>
           <grampsjs-form-string
             fullwidth
             id="pubinfo"
-            aria-label="${this._('Publication info')}"
+            .ariaLabel="${this._('Publication info')}"
           ></grampsjs-form-string>
         </p>
 
@@ -67,7 +67,7 @@ export const GrampsjsNewSourceMixin = superClass =>
           <grampsjs-form-string
             fullwidth
             id="abbrev"
-            aria-label="${this._('Abbreviation')}"
+            .ariaLabel="${this._('Abbreviation')}"
           ></grampsjs-form-string>
         </p>
 

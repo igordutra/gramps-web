@@ -3,6 +3,7 @@ Element for selecting a Gramps type
 */
 
 import {html, css, LitElement} from 'lit'
+import {ifDefined} from 'lit/directives/if-defined.js'
 import '@material/web/textfield/outlined-text-field.js'
 
 import {sharedStyles} from '../SharedStyles.js'
@@ -37,7 +38,6 @@ class GrampsjsFormString extends GrampsjsAppStateMixin(LitElement) {
     super()
     this.value = ''
     this.label = ''
-    this.ariaLabel = ''
     this.disabled = false
     this.fullwidth = false
     this.required = false
@@ -49,7 +49,7 @@ class GrampsjsFormString extends GrampsjsAppStateMixin(LitElement) {
       <md-outlined-text-field
         @input="${this.handleChange}"
         label="${this.label}"
-        aria-label="${this.ariaLabel ?? ''}"
+        aria-label="${ifDefined(this.ariaLabel || undefined)}"
         value="${this.value}"
         type="${this.type}"
         ?disabled="${this.disabled}"
