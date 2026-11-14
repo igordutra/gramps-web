@@ -426,7 +426,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
           value="${this._userInfo?.name || ''}"
         ></md-outlined-text-field>
         <md-outlined-button @click="${this._changeUsername}">
-          ${this._('Save')}
+          ${this._('_Save')}
         </md-outlined-button>
       </p>
     `
@@ -442,7 +442,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
           supporting-text="${this._idpHint()}"
         ></md-outlined-text-field>
         <md-outlined-button @click="${this._changeFullName}">
-          ${this._('Save')}
+          ${this._('_Save')}
         </md-outlined-button>
       </p>
     `

@@ -504,5 +504,21 @@
   "If you intend to synchronize an existing Gramps database with Gramps Web, use the Gramps XML (.gramps) format instead.": "If you intend to synchronize an existing Gramps database with Gramps Web, use the Gramps XML (.gramps) format instead.",
   "Revision History": "Revision History",
   "Select a person": "Select a person",
-  "Filter": "Filter"
+  "Filter": "Filter",
+  "Actions": "Actions",
+  "Collapse menu": "Collapse menu",
+  "Expand menu": "Expand menu",
+  "changed in 30 days": "changed in 30 days",
+  "no changes in 30 days": "no changes in 30 days",
+  "changed in the last 30 days": "changed in the last 30 days",
+  "%s changed in the last 30 days; %s changed in the 30 days before": "%s changed in the last 30 days; %s changed in the 30 days before",
+  "Collapse": "Collapse",
+  "Expand": "Expand",
+  "Loading": "Loading",
+  "Upload progress": "Upload progress",
+  "Error creating note": "Error creating note",
+  "Failed to fetch the ToDo tag": "Failed to fetch the ToDo tag",
+  "outdated backend": "outdated backend",
+  "You do not have permissions to view private records, so the export will be incomplete.": "You do not have permissions to view private records, so the export will be incomplete.",
+  "Almanac": "Almanac"
 }
