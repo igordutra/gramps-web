@@ -1,8 +1,10 @@
 import {LitElement, css, html} from 'lit'
 
 import '@material/web/button/text-button'
+import '@material/web/iconbutton/icon-button.js'
 import {PencilSimple} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
+import './GrampsjsIcon.js'
 import './GrampsjsSearchResultList.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import './GrampsjsFormSelectObject.js'
@@ -14,6 +16,19 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
       css`
         h2 {
           margin-bottom: 15px;
+        }
+
+        /* The pencil sits beside the row rather than inside it. A
+           list item that is a link or a button may not contain
+           another button, and the row is the link: the pencil opens
+           the home person picker, the row goes to the person. */
+        .home-person {
+          display: flex;
+          align-items: center;
+        }
+        .home-person grampsjs-search-result-list {
+          flex: 1;
+          min-width: 0;
         }
       `,
     ]
@@ -40,20 +55,25 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
 
       ${this.homePersonGrampsId && !this.homePersonMissing
         ? html`
-            <div class="content">
+            <div class="content home-person">
               <grampsjs-search-result-list
                 large
                 linked
-                metaIcon="${PencilSimple}"
                 .appState="${this.appState}"
                 ?loading="${!this.homePersonDetails?.handle}"
                 numberLoading="1"
                 .data=${[
                   {object: this.homePersonDetails, object_type: 'person'},
                 ]}
-                @search-result:metaClicked="${this._handleEditClick}"
               >
               </grampsjs-search-result-list>
+              <md-icon-button
+                id="homeperson-edit"
+                aria-label="${this._('Edit')}"
+                @click="${this._handleEditClick}"
+              >
+                <grampsjs-icon path="${PencilSimple}"></grampsjs-icon>
+              </md-icon-button>
             </div>
           `
         : html` <md-text-button trailing-icon @click="${this._handleEditClick}">

@@ -111,6 +111,9 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
               ${renderIcon(obj, 'start')}
               ${this.metaIcon
                 ? html`
+                    <!-- A button inside a button. Only use this when the
+                         item is NOT itself interactive (a text item), or
+                         the item will be a button with a button in it. -->
                     <md-icon-button
                       @click="${e => this._handleMetaClick(e, obj)}"
                       slot="end"
