@@ -14,8 +14,6 @@ import {
   clearMediaCaches,
   cleanOldDrafts,
   getTreeName,
-  TREE_CONFIG_PRIMARY_COLOR,
-  TREE_CONFIG_SECONDARY_COLOR,
 } from './api.js'
 import './dayjs_locales.js'
 import {installListItemRoles} from './listRoles.js'
@@ -69,7 +67,13 @@ import './components/GrampsjsObjectLink.js'
 import './components/GrampsjsObjectPreview.js'
 import '@material/web/dialog/dialog.js'
 import {sharedStyles} from './SharedStyles.js'
-import {applyScheme, DEFAULT_PRIMARY, DEFAULT_SECONDARY} from './theme.js'
+import {
+  applyScheme,
+  resolveTheme,
+  DEFAULT_PRIMARY,
+  DEFAULT_SECONDARY,
+  DEFAULT_THEME,
+} from './theme.js'
 import {handleOIDCCallback, handleOIDCComplete} from './oidc.js'
 
 const MINIMUM_API_VERSION = '3.17.0'
@@ -705,17 +709,21 @@ export class GrampsJs extends LitElement {
 
   _applyColorScheme() {
     const treeConfig = getTreeConfig()
+    const style = this.appState.settings.style ?? DEFAULT_THEME
+    const resolved = resolveTheme(style, treeConfig)
     try {
       applyScheme(
-        treeConfig[TREE_CONFIG_PRIMARY_COLOR] || DEFAULT_PRIMARY,
-        treeConfig[TREE_CONFIG_SECONDARY_COLOR] || DEFAULT_SECONDARY,
-        this.appState.settings.theme
+        resolved.primary,
+        resolved.secondary,
+        this.appState.settings.theme,
+        resolved.name
       )
     } catch {
       applyScheme(
         DEFAULT_PRIMARY,
         DEFAULT_SECONDARY,
-        this.appState.settings.theme
+        this.appState.settings.theme,
+        DEFAULT_THEME
       )
     }
   }
