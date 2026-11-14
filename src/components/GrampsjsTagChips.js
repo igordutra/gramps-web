@@ -1,7 +1,6 @@
 import {LitElement, css, html} from 'lit'
-import {mdiTagOutline} from '@mdi/js'
-
-import {tagColorToCss} from '../color.js'
+import {Tag} from '../icons/phosphor.js'
+import {tagColorToCss, tagLabelColorToCss} from '../color.js'
 
 /* Compact, read-only tag chips for table cells and list rows: a smaller
 version of the tonal chips on the object page: a light tint of the tag
@@ -40,7 +39,7 @@ export class GrampsjsTagChips extends LitElement {
           var(--tag-color) 14%,
           var(--md-sys-color-surface)
         );
-        color: var(--tag-color);
+        color: var(--tag-label-color);
         font-family: var(--grampsjs-body-font-family);
         font-size: 12px;
         font-weight: 500;
@@ -64,6 +63,7 @@ export class GrampsjsTagChips extends LitElement {
 
       .chip.neutral {
         --tag-color: var(--grampsjs-text-secondary-color);
+        --tag-label-color: var(--grampsjs-text-secondary-color);
       }
 
       .chip svg {
@@ -142,7 +142,9 @@ export class GrampsjsTagChips extends LitElement {
           tag => html`<span
             class="chip"
             title="${tag.name}"
-            style="--tag-color:${tagColorToCss(tag.color)}"
+            style="--tag-color:${tagColorToCss(
+              tag.color
+            )};--tag-label-color:${tagLabelColorToCss(tag.color)}"
             ><span class="name">${tag.name}</span></span
           >`
         )}
@@ -155,7 +157,7 @@ export class GrampsjsTagChips extends LitElement {
       </span>
       <span class="chip neutral count" title="${allNames}"
         ><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="currentColor" d="${mdiTagOutline}" /></svg
+          <path fill="currentColor" d="${Tag}" /></svg
         ><span aria-hidden="true">${tags.length}</span
         ><span class="visually-hidden">${allNames}</span></span
       >

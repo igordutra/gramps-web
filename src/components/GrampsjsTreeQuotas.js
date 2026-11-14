@@ -94,42 +94,51 @@ export class GrampsjsTreeQuotas extends GrampsjsConnectedComponent {
     const progressAi = _getProgress(data.usage_ai, data.quota_ai)
     return html`
       <table>
-        <tr>
-          <th>${this._('Number of people')}</th>
-          <td class="progress">
-            <md-linear-progress value="${progressPeople}"></md-linear-progress>
-          </td>
-          <td class="numbers">
-            ${Math.round(100 * progressPeople)}%
-            (&hairsp;${usagePeople}&thinsp;/&thinsp;${quotaPeople}&hairsp;)
-          </td>
-        </tr>
-        <tr>
-          <th>${this._('Total size of media objects')}</th>
-          <td class="progress">
-            <md-linear-progress value="${progressMedia}"></md-linear-progress>
-          </td>
-          <td class="numbers">
-            ${Math.round(100 * progressMedia)}%
-            (&hairsp;${usageMedia}&thinsp;/&thinsp;${quotaMedia}&hairsp;)
-          </td>
-        </tr>
-        ${'usage_ai' in data
-          ? html`
-              <tr>
-                <th>${this._('Chat messages')}</th>
-                <td class="progress">
-                  <md-linear-progress
-                    value="${progressAi}"
-                  ></md-linear-progress>
-                </td>
-                <td class="numbers">
-                  ${Math.round(100 * progressAi)}%
-                  (&hairsp;${usageAi}&thinsp;/&thinsp;${quotaAi}&hairsp;)
-                </td>
-              </tr>
-            `
-          : ''}
+        <tbody>
+          <tr>
+            <th>${this._('Number of people')}</th>
+            <td class="progress">
+              <md-linear-progress
+                value="${progressPeople}"
+                aria-label="${this._('Number of people')}"
+              ></md-linear-progress>
+            </td>
+            <td class="numbers">
+              ${Math.round(100 * progressPeople)}%
+              (&hairsp;${usagePeople}&thinsp;/&thinsp;${quotaPeople}&hairsp;)
+            </td>
+          </tr>
+          <tr>
+            <th>${this._('Total size of media objects')}</th>
+            <td class="progress">
+              <md-linear-progress
+                value="${progressMedia}"
+                aria-label="${this._('Total size of media objects')}"
+              ></md-linear-progress>
+            </td>
+            <td class="numbers">
+              ${Math.round(100 * progressMedia)}%
+              (&hairsp;${usageMedia}&thinsp;/&thinsp;${quotaMedia}&hairsp;)
+            </td>
+          </tr>
+          ${'usage_ai' in data
+            ? html`
+                <tr>
+                  <th>${this._('Chat messages')}</th>
+                  <td class="progress">
+                    <md-linear-progress
+                      value="${progressAi}"
+                      aria-label="${this._('Chat messages')}"
+                    ></md-linear-progress>
+                  </td>
+                  <td class="numbers">
+                    ${Math.round(100 * progressAi)}%
+                    (&hairsp;${usageAi}&thinsp;/&thinsp;${quotaAi}&hairsp;)
+                  </td>
+                </tr>
+              `
+            : ''}
+        </tbody>
       </table>
     `
   }
@@ -137,24 +146,32 @@ export class GrampsjsTreeQuotas extends GrampsjsConnectedComponent {
   renderLoading() {
     return html`
       <table>
-        <tr>
-          <th>${this._('Number of people')}</th>
-          <td class="progress">
-            <md-linear-progress indeterminate></md-linear-progress>
-          </td>
-          <td class="numbers">
-            <span class="skeleton" style="width: 6em;">&nbsp;</span>
-          </td>
-        </tr>
-        <tr>
-          <th>${this._('Total size of media objects')}</th>
-          <td class="progress">
-            <md-linear-progress indeterminate></md-linear-progress>
-          </td>
-          <td class="numbers">
-            <span class="skeleton" style="width: 7em;">&nbsp;</span>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>${this._('Number of people')}</th>
+            <td class="progress">
+              <md-linear-progress
+                indeterminate
+                aria-label="${this._('Number of people')}"
+              ></md-linear-progress>
+            </td>
+            <td class="numbers">
+              <span class="skeleton" style="width: 6em;">&nbsp;</span>
+            </td>
+          </tr>
+          <tr>
+            <th>${this._('Total size of media objects')}</th>
+            <td class="progress">
+              <md-linear-progress
+                indeterminate
+                aria-label="${this._('Total size of media objects')}"
+              ></md-linear-progress>
+            </td>
+            <td class="numbers">
+              <span class="skeleton" style="width: 7em;">&nbsp;</span>
+            </td>
+          </tr>
+        </tbody>
       </table>
     `
   }

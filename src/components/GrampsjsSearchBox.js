@@ -9,8 +9,7 @@ user has left for a result or the search page, or has cancelled.
 */
 
 import {LitElement, html, css} from 'lit'
-import {mdiMagnify} from '@mdi/js'
-
+import {MagnifyingGlass} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {
@@ -208,7 +207,7 @@ export class GrampsjsSearchBox extends GrampsjsAppStateMixin(LitElement) {
         @focusout="${this._handleFocusOut}"
       >
         <grampsjs-icon
-          path="${mdiMagnify}"
+          path="${MagnifyingGlass}"
           color="currentColor"
           height="20"
           width="20"
@@ -217,6 +216,9 @@ export class GrampsjsSearchBox extends GrampsjsAppStateMixin(LitElement) {
           id="search-input"
           type="search"
           autocomplete="off"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-haspopup="listbox"
           placeholder="${this._('Search')}"
           aria-label="${this._('Search')}"
           aria-expanded="${this._open ? 'true' : 'false'}"

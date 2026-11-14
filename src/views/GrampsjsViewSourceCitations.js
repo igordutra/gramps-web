@@ -24,7 +24,7 @@ export class GrampsjsViewSourceCitations extends GrampsjsViewObjectsDetail {
 
   renderLoading() {
     return html`
-      <md-list>
+      <md-list role="list">
         ${this.handles.map(
           () => html`
             <md-list-item type="text">

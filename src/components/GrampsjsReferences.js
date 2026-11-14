@@ -29,7 +29,7 @@ export class GrampsjsReferences extends GrampsjsEditableList {
       ${Object.keys(this.data[0]).map(
         type => html`
           <h4>${this._(objectTypePlural[type] || type)}</h4>
-          <md-list>
+          <md-list role="list">
             ${this.data[0][type].map((obj, index) => {
               const merged = {
                 ...obj,

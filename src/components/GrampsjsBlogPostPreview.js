@@ -80,7 +80,7 @@ export class GrampsjsBlogPostPreview extends GrampsjsAppStateMixin(LitElement) {
     }
     return html`
       <div class="blog-preview">
-        <h3>${this.data.title}</h3>
+        <h2>${this.data.title}</h2>
         <div id="content">
           <div id="note">${this.getPreviewText()}</div>
           ${this.data?.media_list?.length ? this._renderImage() : ''}

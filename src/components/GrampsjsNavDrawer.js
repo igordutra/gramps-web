@@ -5,8 +5,7 @@ or collapsed to an icon rail, or, on small screens, a modal sheet
 
 import {html, css, LitElement} from 'lit'
 import '@material/web/iconbutton/icon-button.js'
-import {mdiMenu} from '@mdi/js'
-
+import {List} from '../icons/phosphor.js'
 import {sharedStyles, appBarIconButtonStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {fireEvent} from '../util.js'
@@ -174,7 +173,7 @@ class GrampsjsNavDrawer extends GrampsjsAppStateMixin(LitElement) {
           aria-label="${this._('Menu')}"
           @click="${this._handleToggle}"
         >
-          <grampsjs-icon path="${mdiMenu}" color="currentColor"></grampsjs-icon>
+          <grampsjs-icon path="${List}" color="currentColor"></grampsjs-icon>
         </md-icon-button>
         <span class="tree-name" title="${treeName}">${treeName}</span>
       </div>
@@ -197,7 +196,17 @@ class GrampsjsNavDrawer extends GrampsjsAppStateMixin(LitElement) {
       `
       /* eslint-enable lit-a11y/click-events-have-key-events */
     }
-    return html`<div class="panel">${content}</div>`
+    // The panel is the navigation landmark. The app bar is already the
+    // banner, so the drawer must not be one too -- two banners is the
+    // `landmark-no-duplicate-banner` finding -- and the drawer's header
+    // has to be inside SOME landmark for the `region` rule.
+    return html`<div
+      class="panel"
+      role="navigation"
+      aria-label="${this._('Menu')}"
+    >
+      ${content}
+    </div>`
   }
 
   updated() {

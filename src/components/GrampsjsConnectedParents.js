@@ -63,12 +63,12 @@ export class GrampsjsConnectedParents extends GrampsjsConnectedComponent {
     return html`
       <div class="parents-row">
         ${showFather
-          ? html`<md-list class="parent-col">
+          ? html`<md-list class="parent-col" role="list">
               ${this._renderParent(father, extFather)}
             </md-list>`
           : ''}
         ${showMother
-          ? html`<md-list class="parent-col">
+          ? html`<md-list class="parent-col" role="list">
               ${this._renderParent(mother, extMother)}
             </md-list>`
           : ''}
