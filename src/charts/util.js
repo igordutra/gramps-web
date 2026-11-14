@@ -6,6 +6,7 @@ import {scaleSequential} from 'd3-scale'
 import {interpolateWarm} from 'd3-scale-chromatic'
 import {getThumbnailUrl, getThumbnailUrlCropped} from '../api.js'
 import {chartNameDisplayFormat, normalizeRect} from '../util.js'
+import {resolveFontFamily} from './palette.js'
 
 // Returns the name of a person profile in a chart name display format
 export function formatChartName(profile, nameDisplayFormat) {
@@ -193,7 +194,7 @@ export const LegendCategorical = (
     .attr('x', legendItemWidth + 8)
     .attr('fill', textColor)
     .attr('text-anchor', 'start')
-    .attr('font-family', 'Inter var')
+    .attr('font-family', resolveFontFamily())
     .attr('font-weight', 350)
     .attr('font-size', 13)
     .attr(
