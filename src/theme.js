@@ -1695,6 +1695,35 @@ export function applyColors(
     )
   }
 
+  // The primary as TEXT is a different colour from the primary as a
+  // FILL.
+  //
+  // A fill carries white text on it, so it can be as light as the
+  // surface scheme wants. The same colour used as text sits on a pale
+  // surface -- a statistic card's tint, a selected pill's wash -- and
+  // a tone that reads well as a fill is too light to read as text:
+  // the archive style's primary on its own card tint measured 4.35:1,
+  // and the tree type bar's label 3.86:1, both under the 4.5:1 the
+  // text needs.
+  //
+  // So the primary-as-text colour is the same hue moved DARKER until
+  // it clears 4.5:1 against the lightest surface it is drawn on. The
+  // hue is kept; only the lightness moves, and only as far as it has
+  // to. On the dark theme the primary is already light enough to read
+  // as text, so it is left alone.
+  if (!isDark) {
+    const textSurface = parseColor('#ffffff')
+    const asText = primary ? adjustForContrast(primary, textSurface, 4.5) : null
+    if (asText) {
+      root.style.setProperty('--grampsjs-primary-text-color', toCss(asText))
+    }
+  } else {
+    root.style.setProperty(
+      '--grampsjs-primary-text-color',
+      'var(--md-sys-color-primary)'
+    )
+  }
+
   // M3 achromatic tones 90-98 are darker than expected for a web app.
   //
   // A modern interface is not a flat white page: it is a layered stack, with

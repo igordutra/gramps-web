@@ -12,7 +12,10 @@ export class GrampsjsPillToggle extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       css`
         :host {
-          --_label-color: var(--md-sys-color-primary, var(--mdc-theme-primary));
+          --_label-color: var(
+            --grampsjs-primary-text-color,
+            var(--md-sys-color-primary, var(--mdc-theme-primary))
+          );
           --_hover-color: var(--md-sys-color-primary, var(--mdc-theme-primary));
           --_selected-container-color: var(
             --md-sys-color-primary,

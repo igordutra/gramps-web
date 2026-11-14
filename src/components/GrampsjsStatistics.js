@@ -166,9 +166,12 @@ export class GrampsjsStatistics extends GrampsjsAppStateMixin(LitElement) {
           flex: none;
         }
 
-        /* More activity than the window before it. */
+        /* More activity than the window before it.
+           The primary as TEXT, not as a fill: a fill carries white text
+           on it, but this sits on the card's own pale tint, where the
+           fill colour measured 4.35:1 -- under the 4.5:1 text needs. */
         .delta.up {
-          color: var(--md-sys-color-primary);
+          color: var(--grampsjs-primary-text-color);
         }
 
         /* Less activity. Not an error, so not the error colour. */
