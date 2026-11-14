@@ -60,7 +60,6 @@ export class GrampsjsViewReports extends GrampsjsView {
     return html`
       <md-divider inset></md-divider>
       <md-list-item
-        role="listitem"
         type="button"
         @click="${() => this._handleItemClick(report.id)}"
       >

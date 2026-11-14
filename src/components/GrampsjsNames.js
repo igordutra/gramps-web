@@ -33,7 +33,6 @@ export class GrampsjsNames extends GrampsjsEditableList {
   row(obj, i) {
     return html`
       <md-list-item
-        role="listitem"
         type="${this.edit ? 'button' : 'text'}"
         style="height: auto"
         class="${classMap({selected: i === this._selectedIndex})}"

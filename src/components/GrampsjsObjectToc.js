@@ -77,7 +77,6 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
         ${tabKeys.map(
           key => html`
             <md-list-item
-              role="listitem"
               type="button"
               id="toc-item-${key}"
               class="${key === this.activeSection ? 'active' : ''}"

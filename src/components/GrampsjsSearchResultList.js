@@ -101,7 +101,6 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
           )
           return html`
             <md-list-item
-              role="listitem"
               type="${this.selectable || this.linked ? 'button' : 'text'}"
               class="${classMap({
                 selected: this.activatable && i === this._selectedIndex,
@@ -150,7 +149,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
       <md-list role="list">
         ${Array(this.numberLoading).fill(
           html`
-            <md-list-item type="${type}" role="listitem">
+            <md-list-item type="${type}">
               <span class="skeleton" style="width:15em;">&nbsp;</span>
               <span slot="supporting-text" class="skeleton" style="width:10em;"
                 >&nbsp;</span

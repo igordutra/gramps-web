@@ -40,7 +40,6 @@ export class GrampsjsAddresses extends GrampsjsEditableList {
   row(obj, i) {
     return html`
       <md-list-item
-        role="listitem"
         type="${this.edit ? 'button' : 'text'}"
         class="${classMap({selected: i === this._selectedIndex})}"
         @click="${() => {

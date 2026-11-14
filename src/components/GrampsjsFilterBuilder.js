@@ -519,7 +519,6 @@ export class GrampsjsFilterBuilder extends GrampsjsAppStateMixin(LitElement) {
             ${rules.map(
               ruleInfo => html`
                 <md-list-item
-                  role="listitem"
                   type="button"
                   @click="${() => this._addCondition(ruleInfo)}"
                 >

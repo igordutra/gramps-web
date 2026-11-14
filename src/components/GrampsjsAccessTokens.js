@@ -221,7 +221,7 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
 
   _renderEntry({scope, id, title, details, error}) {
     return html`
-      <md-list-item role="listitem" type="text" noninteractive>
+      <md-list-item type="text" noninteractive>
         <div slot="headline">${title}</div>
         <div slot="supporting-text" aria-live="polite">
           ${this._('Scope')}: <code>${scope}</code>
