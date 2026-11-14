@@ -10,6 +10,7 @@ import {
   objectIconPath,
   debounce,
   prefixSearchQuery,
+  primaryObjectTypes,
 } from '../util.js'
 import '@material/web/textfield/outlined-text-field'
 import '@material/web/iconbutton/icon-button.js'
@@ -20,17 +21,7 @@ function capitalize(string) {
   return `${string.charAt(0).toUpperCase()}${string.slice(1)}`
 }
 
-const filtrableObjectTypes = [
-  'person',
-  'family',
-  'event',
-  'place',
-  'source',
-  'citation',
-  'repository',
-  'note',
-  'media',
-]
+const filtrableObjectTypes = primaryObjectTypes
 
 const PAGE_SIZE = 20
 
@@ -109,7 +100,7 @@ export class GrampsjsViewSearch extends GrampsjsView {
         /* Caption of the result list, aligned with its avatars */
         p.result-count {
           font-size: 14px;
-          color: var(--grampsjs-body-font-color-50);
+          color: var(--grampsjs-text-secondary-color);
           margin: 24px 0 8px 16px;
         }
       `,
@@ -154,8 +145,6 @@ export class GrampsjsViewSearch extends GrampsjsView {
 
   renderContent() {
     return html`
-      <h2>${this._('Search')}</h2>
-
       <md-outlined-text-field
         id="search-field"
         label="${this._('Search')}"
@@ -195,6 +184,7 @@ export class GrampsjsViewSearch extends GrampsjsView {
       <grampsjs-search-result-list
         .data="${this._data}"
         .appState="${this.appState}"
+        showTags
         large
         noSep
         linked
@@ -361,6 +351,20 @@ export class GrampsjsViewSearch extends GrampsjsView {
   connectedCallback() {
     super.connectedCallback()
     window.addEventListener('nav', event => this._handleNav(event))
+    window.addEventListener('search:query', event => this._handleQuery(event))
+  }
+
+  // a search submitted from the app bar, with the object types selected there
+  _handleQuery(event) {
+    const {query, types} = event.detail
+    if (types) {
+      this._objectTypes = Object.fromEntries(
+        filtrableObjectTypes.map(key => [key, types.includes(key)])
+      )
+    }
+    this._query = query
+    this._lastSearch = ''
+    this._executeSearch()
   }
 
   _handleNav(event) {

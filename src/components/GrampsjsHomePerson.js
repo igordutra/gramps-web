@@ -3,8 +3,9 @@ import {LitElement, css, html} from 'lit'
 import '@material/web/button/text-button'
 import '@material/web/iconbutton/icon-button.js'
 import {PencilSimple} from '../icons/phosphor.js'
-import {sharedStyles} from '../SharedStyles.js'
+import {sharedStyles, iconButtonColorStyles} from '../SharedStyles.js'
 import './GrampsjsIcon.js'
+import './GrampsjsTooltip.js'
 import './GrampsjsSearchResultList.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import './GrampsjsFormSelectObject.js'
@@ -13,22 +14,28 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
   static get styles() {
     return [
       sharedStyles,
+      iconButtonColorStyles,
       css`
-        h2 {
+        h3 {
           margin-bottom: 15px;
         }
 
-        /* The pencil sits beside the row rather than inside it. A
-           list item that is a link or a button may not contain
-           another button, and the row is the link: the pencil opens
-           the home person picker, the row goes to the person. */
-        .home-person {
+        /* the row is as wide as its text, so the edit button follows the
+           name */
+        .content {
           display: flex;
           align-items: center;
+          gap: 4px;
         }
-        .home-person grampsjs-search-result-list {
-          flex: 1;
+
+        .content grampsjs-search-result-list {
+          flex: 0 1 auto;
           min-width: 0;
+        }
+
+        .content md-icon-button {
+          flex: none;
+          --grampsjs-icon-button-color: var(--grampsjs-text-secondary-color);
         }
       `,
     ]
@@ -51,11 +58,11 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
 
   render() {
     return html`
-      <h2>${this._('Home Person')}</h2>
+      <h3>${this._('Home Person')}</h3>
 
       ${this.homePersonGrampsId && !this.homePersonMissing
         ? html`
-            <div class="content home-person">
+            <div class="content">
               <grampsjs-search-result-list
                 large
                 linked
@@ -68,17 +75,27 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
               >
               </grampsjs-search-result-list>
               <md-icon-button
-                id="homeperson-edit"
-                aria-label="${this._('Edit')}"
+                id="btn-edit-home-person"
+                aria-label="${this._('Set _Home Person')}"
                 @click="${this._handleEditClick}"
               >
-                <grampsjs-icon path="${PencilSimple}"></grampsjs-icon>
+                <grampsjs-icon
+                  path="${PencilSimple}"
+                  color="currentColor"
+                  height="20"
+                  width="20"
+                ></grampsjs-icon>
               </md-icon-button>
+              <grampsjs-tooltip
+                for="btn-edit-home-person"
+                .appState="${this.appState}"
+                >${this._('Set _Home Person')}</grampsjs-tooltip
+              >
             </div>
           `
         : html` <md-text-button trailing-icon @click="${this._handleEditClick}">
             ${this._('Set _Home Person')}
-            <svg viewBox="0 0 256 256" slot="icon">
+            <svg viewBox="0 0 24 24" slot="icon">
               <path d="${PencilSimple}" />
             </svg>
           </md-text-button>`}

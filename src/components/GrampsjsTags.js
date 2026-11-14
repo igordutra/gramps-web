@@ -1,6 +1,6 @@
 import {LitElement, css, html} from 'lit'
 
-import {tagColorToCss, tagLabelColorToCss} from '../color.js'
+import {tagColorToCss} from '../color.js'
 import {sharedStyles} from '../SharedStyles.js'
 import '@material/web/chips/chip-set'
 import '@material/web/chips/input-chip'
@@ -21,7 +21,7 @@ export class GrampsjsTags extends GrampsjsAppStateMixin(LitElement) {
           font-weight: 400;
           font-size: 14px;
           font-family: var(--grampsjs-heading-font-family);
-          color: var(--grampsjs-body-font-color-50);
+          color: var(--grampsjs-text-secondary-color);
           margin-top: 15px;
           margin-bottom: 7px;
         }
@@ -36,40 +36,45 @@ export class GrampsjsTags extends GrampsjsAppStateMixin(LitElement) {
           padding: 5px 0px;
         }
 
+        /* tonal: a light tint of the tag colour, label in the tag colour */
+        md-input-chip,
+        md-assist-chip {
+          border-radius: 8px;
+          background-color: color-mix(
+            in srgb,
+            var(--tag-color) 14%,
+            var(--md-sys-color-surface)
+          );
+        }
+
         md-input-chip {
-          --md-input-chip-container-color: var(--tag-color-bg);
+          --md-input-chip-outline-width: 0;
           --md-input-chip-label-text-color: var(--tag-color);
-          --md-input-chip-outline-color: var(--tag-color);
           --md-input-chip-icon-color: var(--tag-color);
           --md-input-chip-trailing-icon-color: var(--tag-color);
           --md-input-chip-hover-label-text-color: var(--tag-color);
           --md-input-chip-hover-trailing-icon-color: var(--tag-color);
           --md-input-chip-hover-icon-color: var(--tag-color);
-          --md-input-chip-hover-outline-color: var(--tag-color);
           --md-input-chip-focus-label-text-color: var(--tag-color);
           --md-input-chip-focus-trailing-icon-color: var(--tag-color);
           --md-input-chip-focus-icon-color: var(--tag-color);
-          --md-input-chip-focus-outline-color: var(--tag-color);
           --md-input-chip-pressed-label-text-color: var(--tag-color);
           --md-input-chip-pressed-trailing-icon-color: var(--tag-color);
           --md-input-chip-pressed-icon-color: var(--tag-color);
         }
 
         md-assist-chip {
-          --md-assist-chip-container-color: var(--tag-color-bg);
+          --md-assist-chip-outline-width: 0;
           --md-assist-chip-label-text-color: var(--tag-color);
-          --md-assist-chip-outline-color: var(--tag-color);
           --md-assist-chip-hover-label-text-color: var(--tag-color);
-          --md-assist-chip-hover-outline-color: var(--tag-color);
           --md-assist-chip-focus-label-text-color: var(--tag-color);
-          --md-assist-chip-focus-outline-color: var(--tag-color);
           --md-assist-chip-pressed-label-text-color: var(--tag-color);
         }
 
         md-icon-button {
-          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
-          --md-icon-button-state-layer-height: var(--grampsjs-space-32);
-          --md-icon-button-state-layer-width: var(--grampsjs-space-32);
+          --md-icon-button-icon-size: 20px;
+          --md-icon-button-state-layer-height: 32px;
+          --md-icon-button-state-layer-width: 32px;
         }
       `,
     ]
@@ -102,13 +107,12 @@ export class GrampsjsTags extends GrampsjsAppStateMixin(LitElement) {
         <md-chip-set>
           ${this.data
             .filter(obj => !this.hideTags.includes(obj.name))
+            .sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0))
             .map(obj =>
               this.edit
                 ? html`<md-input-chip
                     label="${obj.name}"
-                    style="--tag-color:${tagLabelColorToCss(
-                      obj.color
-                    )};--tag-color-bg:${tagColorToCss(obj.color, 0.12)}"
+                    style="--tag-color:${tagColorToCss(obj.color)}"
                     @remove=${e => {
                       e.preventDefault()
                       this._handleClear(obj.handle)
@@ -116,9 +120,7 @@ export class GrampsjsTags extends GrampsjsAppStateMixin(LitElement) {
                   ></md-input-chip>`
                 : html`<md-assist-chip
                     label="${obj.name}"
-                    style="--tag-color:${tagLabelColorToCss(
-                      obj.color
-                    )};--tag-color-bg:${tagColorToCss(obj.color, 0.12)}"
+                    style="--tag-color:${tagColorToCss(obj.color)}"
                   ></md-assist-chip>`
             )}
         </md-chip-set>
@@ -127,7 +129,6 @@ export class GrampsjsTags extends GrampsjsAppStateMixin(LitElement) {
               <md-icon-button
                 id="btn-tag"
                 class="edit"
-                aria-label="${this._('Add Tag')}"
                 @click="${this._handleNewTag}"
               >
                 <grampsjs-icon

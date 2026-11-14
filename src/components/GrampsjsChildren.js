@@ -2,6 +2,7 @@ import {css, html} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
 
 import {fireEvent} from '../util.js'
+import {renderPrivacyIcon, rowPrivacy} from '../objectRender.js'
 import {renderPersonAvatar, renderPersonDates} from './personListUtils.js'
 import {GrampsjsEditableList} from './GrampsjsEditableList.js'
 import {getSymbols} from '../symbols.js'
@@ -58,7 +59,8 @@ export class GrampsjsChildren extends GrampsjsEditableList {
 
     return html`
       <md-list-item
-        type="button"
+        type="${this.edit ? 'button' : 'link'}"
+        href="${this.edit ? '' : `/person/${p.gramps_id}`}"
         class="${classMap({
           selected: i === this._selectedIndex,
           highlight: p.gramps_id === this.highlightId,
@@ -66,12 +68,11 @@ export class GrampsjsChildren extends GrampsjsEditableList {
         @click="${() => {
           if (this.edit) {
             this._handleSelected(i)
-          } else {
-            this._handleClick(p.gramps_id)
           }
         }}"
       >
         ${p.name_given || ''} ${p.name_surname || ''}
+        ${renderPrivacyIcon(rowPrivacy(extPerson, obj), this.appState)}
         ${renderPersonDates(
           p,
           getSymbols(this.appState.settings, s => this._(s))
@@ -82,12 +83,6 @@ export class GrampsjsChildren extends GrampsjsEditableList {
         ${renderPersonAvatar(extPerson, p.sex)}
       </md-list-item>
     `
-  }
-
-  _handleClick(grampsId) {
-    if (!this.edit && grampsId) {
-      fireEvent(this, 'nav', {path: `person/${grampsId}`})
-    }
   }
 
   _handleDelete() {

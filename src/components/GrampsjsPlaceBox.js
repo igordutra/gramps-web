@@ -6,7 +6,6 @@ import './GrampsjsEvents.js'
 import './GrampsjsGallery.js'
 import './GrampsjsIcon.js'
 import {GrampsjsConnectedComponent} from './GrampsjsConnectedComponent.js'
-import {fireEvent} from '../util.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {MapPin} from '../icons/phosphor.js'
 export class GrampsjsPlaceBox extends GrampsjsConnectedComponent {
@@ -36,7 +35,7 @@ export class GrampsjsPlaceBox extends GrampsjsConnectedComponent {
 
         h4 {
           margin-top: 2px;
-          font-weight: 300;
+          font-weight: var(--grampsjs-font-weight-body);
           font-size: 15px;
         }
 
@@ -148,7 +147,7 @@ export class GrampsjsPlaceBox extends GrampsjsConnectedComponent {
           `
         : ''}
       <div class="right">
-        <md-text-button @click="${this._handleDetailClick}"
+        <md-text-button href="/place/${place.gramps_id}"
           >${this._('Show Details')}</md-text-button
         >
       </div>
@@ -163,11 +162,6 @@ export class GrampsjsPlaceBox extends GrampsjsConnectedComponent {
       <span class="skeleton skeleton-text" style="width:60%">&nbsp;</span>
       <span class="skeleton skeleton-text" style="width:80%">&nbsp;</span>
     `
-  }
-
-  _handleDetailClick() {
-    const id = this._data?.data?.gramps_id
-    if (id) fireEvent(this, 'nav', {path: `place/${id}`})
   }
 }
 

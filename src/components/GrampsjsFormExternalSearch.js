@@ -204,7 +204,7 @@ class GrampsjsFormExternalSearch extends GrampsjsObjectForm {
           padding-top: 1em;
           border-top: 1px solid var(--grampsjs-body-font-color-10);
           font-size: 0.9em;
-          color: var(--grampsjs-body-font-color-70);
+          color: var(--grampsjs-text-secondary-color);
           flex-wrap: wrap;
         }
         .legend-item {
@@ -259,7 +259,7 @@ class GrampsjsFormExternalSearch extends GrampsjsObjectForm {
         }
         .add-form-help {
           font-size: 0.85em;
-          color: var(--grampsjs-body-font-color-60);
+          color: var(--grampsjs-text-secondary-color);
           margin-bottom: 0.75em;
           line-height: 1.4;
         }

@@ -3,11 +3,11 @@ import {html, css, LitElement} from 'lit'
 
 import '@material/web/progress/circular-progress.js'
 import '@material/web/button/filled-button'
-import '@material/web/button/outlined-button'
+import '@material/web/button/filled-tonal-button.js'
 
 import {CheckCircle} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
-import './GrampsjsOidcButton.js'
+import {renderOidcButtons} from './GrampsjsOidcButton.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {
   apiGetTokens,
@@ -115,38 +115,30 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
           --button-height: 48px;
         }
 
-        .button-container md-outlined-button,
+        .button-container md-filled-tonal-button,
         .button-container md-filled-button {
           flex: 1;
           height: var(--button-height);
         }
 
-        .button-container md-outlined-button {
-          --md-outlined-button-container-height: var(--button-height);
-          --md-outlined-button-leading-space: var(--grampsjs-space-8);
-          --md-outlined-button-trailing-space: var(--grampsjs-space-8);
-          --md-outlined-button-top-space: var(--grampsjs-space-0);
-          --md-outlined-button-bottom-space: var(--grampsjs-space-0);
+        .button-container md-filled-tonal-button {
+          --md-filled-tonal-button-container-height: var(--button-height);
+          --md-filled-tonal-button-leading-space: 8px;
+          --md-filled-tonal-button-trailing-space: 8px;
+          --md-filled-tonal-button-top-space: 0px;
+          --md-filled-tonal-button-bottom-space: 0px;
           min-height: var(--button-height);
           max-height: var(--button-height);
         }
 
-        .button-container md-outlined-button::part(outline) {
-          height: var(--button-height);
-        }
-
         .button-container md-filled-button {
           --md-filled-button-container-height: var(--button-height);
-          --md-filled-button-leading-space: var(--grampsjs-space-8);
-          --md-filled-button-trailing-space: var(--grampsjs-space-8);
-          --md-filled-button-with-leading-icon-leading-space: var(
-            --grampsjs-space-8
-          );
-          --md-filled-button-with-leading-icon-trailing-space: var(
-            --grampsjs-space-8
-          );
-          --md-filled-button-top-space: var(--grampsjs-space-0);
-          --md-filled-button-bottom-space: var(--grampsjs-space-0);
+          --md-filled-button-leading-space: 8px;
+          --md-filled-button-trailing-space: 8px;
+          --md-filled-button-with-leading-icon-leading-space: 8px;
+          --md-filled-button-with-leading-icon-trailing-space: 8px;
+          --md-filled-button-top-space: 0px;
+          --md-filled-button-bottom-space: 0px;
           min-height: var(--button-height);
           max-height: var(--button-height);
         }
@@ -178,7 +170,7 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
         }
 
         md-filled-button md-circular-progress {
-          --md-circular-progress-size: var(--grampsjs-icon-size-medium);
+          --md-circular-progress-size: 22px;
           --md-circular-progress-active-indicator-width: 18;
           --md-circular-progress-active-indicator-color: var(
             --md-sys-color-on-primary
@@ -310,11 +302,14 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
                   ${window.grampsjsConfig.hideRegisterLink
                     ? ''
                     : html`
-                        <md-outlined-button
-                          @click="${() => this._handleNav('register')}"
+                        <md-filled-tonal-button
+                          @click="${() =>
+                            this._handleNav(
+                              this.tree ? `register/${this.tree}` : 'register'
+                            )}"
                         >
                           ${this._('Register new account')}
-                        </md-outlined-button>
+                        </md-filled-tonal-button>
                       `}
                   <md-filled-button type="submit">
                     ${this._loggingIn
@@ -342,21 +337,11 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
             ? html`<hr />`
             : ''}
           ${this.oidcConfig?.enabled && this.oidcConfig?.providers
-            ? this.oidcConfig.providers.map(
-                provider => html`
-                  <grampsjs-oidc-button
-                    .provider="${provider.id}"
-                    .providerName="${provider.name}"
-                    .onClick="${() => this._submitOIDCLogin(provider.id)}"
-                    .buttonText="${this._getOIDCButtonText(
-                      provider.id,
-                      provider.name
-                    )}"
-                    .signingInText="${this._('Signing in...')}"
-                    .loading="${this._oidcProvider === provider.id}"
-                  ></grampsjs-oidc-button>
-                `
-              )
+            ? renderOidcButtons(this.oidcConfig.providers, {
+                translate: (...args) => this._(...args),
+                loadingProvider: this._oidcProvider,
+                onClick: id => this._submitOIDCLogin(id),
+              })
             : ''}
         </form>
       </div>
@@ -365,10 +350,6 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
 
   _handleNav(path) {
     fireEvent(this, 'nav', {path})
-  }
-
-  _getOIDCButtonText(providerId, providerName) {
-    return `${this._('Continue with %s', providerName)}`
   }
 
   _credChanged(e) {
@@ -465,7 +446,7 @@ class GrampsjsLogin extends GrampsjsAppStateMixin(LitElement) {
       return
     }
     this._oidcProvider = providerId
-    const res = await apiOIDCLogin(providerId)
+    const res = await apiOIDCLogin(providerId, this.tree)
     if ('error' in res) {
       this._oidcProvider = ''
       this._showError(res.error)

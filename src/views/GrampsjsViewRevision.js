@@ -10,14 +10,13 @@ import '@material/web/dialog/dialog.js'
 import '../components/GrampsjsTimedelta.js'
 import '../components/GrampsjsSearchResultList.js'
 import '../components/GrampsjsDiffJson.js'
-import '../components/GrampsjsBreadcrumbs.js'
+import '../components/GrampsjsObjectActions.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsTaskProgressIndicator.js'
 
 import {
   ArrowCounterClockwise,
   ArrowSquareOut,
-  GitCommit,
   Warning,
   X,
 } from '../icons/phosphor.js'
@@ -32,19 +31,8 @@ export class GrampsjsViewRevision extends GrampsjsView {
       super.styles,
       css`
         md-list-item {
-          /*
-           * The revision list reads as a log rather than as a set of
-           * controls, so its text is LARGER than a list row's but LIGHTER
-           * — a body weight, not a label weight. Upstream wrote 17px at
-           * 350; the size is the body-large step and the weight is the
-           * body weight, which is the same relationship on the scale.
-           */
-          --md-list-item-label-text-weight: var(
-            --md-sys-typescale-body-large-weight
-          );
-          --md-list-item-label-text-size: var(
-            --md-sys-typescale-body-large-size
-          );
+          --md-list-item-label-text-weight: 350;
+          --md-list-item-label-text-size: 17px;
           --md-list-item-supporting-text-color: var(
             --grampsjs-body-font-color-50
           );
@@ -60,7 +48,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
         }
 
         md-divider {
-          --md-divider-thickness: var(--grampsjs-outline-width);
+          --md-divider-thickness: 1px;
           --md-divider-color: var(--grampsjs-body-font-color-10);
         }
 
@@ -104,7 +92,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
 
         p.user-time {
           font-size: 0.95em;
-          color: var(--grampsjs-body-font-color-60);
+          color: var(--grampsjs-text-secondary-color);
         }
 
         span.user {
@@ -119,16 +107,24 @@ export class GrampsjsViewRevision extends GrampsjsView {
           gap: 0.5em;
         }
 
+        .revision-title {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+        }
+
         .revision-header h2 {
           margin-top: 0;
+        }
+
+        .revision-title grampsjs-object-actions {
+          margin-top: 2px;
         }
 
         .undo-button {
           margin-top: 0.2em;
           flex-shrink: 0;
-          --md-filled-button-hover-container-elevation: var(
-            --grampsjs-elevation-level-0
-          );
+          --md-filled-button-hover-container-elevation: 0;
         }
 
         .dialog-warning {
@@ -196,18 +192,15 @@ export class GrampsjsViewRevision extends GrampsjsView {
       return ''
     }
     return html`
-      ${this.renderPageHeading()}
-      <grampsjs-breadcrumbs
-        hideLock
-        hideBookmark
-        .data="${{gramps_id: this.transactionId}}"
-        .appState="${this.appState}"
-        objectsName="Revisions"
-        .objectIcon="${GitCommit}"
-      ></grampsjs-breadcrumbs>
-
       <div class="revision-header">
-        <h2>${this._getDescription()}</h2>
+        <div class="revision-title">
+          <h2>${this._getDescription()}</h2>
+          <grampsjs-object-actions
+            hideLock
+            hideBookmark
+            .appState="${this.appState}"
+          ></grampsjs-object-actions>
+        </div>
         ${this.appState.permissions.canEdit
           ? html`
               <md-filled-button
@@ -274,8 +267,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
       <div id="detail-buttons">
         ${objectType && grampsId
           ? html`
-              <md-text-button
-                @click="${() => this._handleOpenObject(objectType, grampsId)}"
+              <md-text-button href="/${objectType}/${grampsId}"
                 >${renderIconSvg(
                   ArrowSquareOut,
                   '--md-sys-color-primary',
@@ -297,10 +289,6 @@ export class GrampsjsViewRevision extends GrampsjsView {
         .appState="${this.appState}"
       ></grampsjs-diff-json>
     `
-  }
-
-  _handleOpenObject(objectType, grampsId) {
-    fireEvent(this, 'nav', {path: `${objectType}/${grampsId}`})
   }
 
   _handleCloseDetail() {
@@ -363,7 +351,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
                 ${this._forceRequired
                   ? html`
                       <md-filled-button
-                        style="--grampsjs-button-rule-color: var(--md-sys-color-error); --md-filled-button-hover-container-elevation: var(--grampsjs-elevation-level-0);"
+                        style="--md-filled-button-container-color: var(--md-sys-color-error); --md-filled-button-label-text-color: var(--md-sys-color-on-error); --md-filled-button-hover-container-elevation: 0;"
                         @click="${() => this._handleUndoConfirm(true)}"
                         ?disabled="${this._undoInProgress}"
                       >
@@ -450,6 +438,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
     return html`<grampsjs-search-result-list
       @search-result:clicked=${this._handleEditedClicked}
       selectable
+      showTags
       .data="${this._getChanges(0).map(change => ({
         object_type: change.obj_class?.toLowerCase(),
         object: change.new_data,
@@ -464,6 +453,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
       <grampsjs-search-result-list
         @search-result:clicked=${this._handleEditedClicked}
         selectable
+        showTags
         .data="${this._getChanges(2).map(change => ({
           object_type: change.obj_class?.toLowerCase(),
           object: change.old_data,
@@ -479,6 +469,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
       <grampsjs-search-result-list
         @search-result:clicked=${this._handleEditedClicked}
         selectable
+        showTags
         .data="${this._getChanges(1).map(change => ({
           object_type: change.obj_class?.toLowerCase(),
           object: change.old_data,

@@ -2,7 +2,6 @@ import {LitElement, css, html, nothing} from 'lit'
 import {ArrowSquareOut} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
-import {fireEvent} from '../util.js'
 import './GrampsjsIcon.js'
 import './GrampsjsPerson.js'
 import './GrampsjsFamily.js'
@@ -143,11 +142,9 @@ export class GrampsjsObjectPreview extends GrampsjsAppStateMixin(LitElement) {
     this._showTimer = null
     this._hideTimer = null
     this._mouseInPopup = false
+    this._pinned = false
     this._boundShow = this._handleShow.bind(this)
     this._boundHide = this._handleHide.bind(this)
-    this._boundNav = () => {
-      this._visible = false
-    }
     this._boundDbChanged = () => {
       this._cache.clear()
     }
@@ -159,7 +156,6 @@ export class GrampsjsObjectPreview extends GrampsjsAppStateMixin(LitElement) {
     super.connectedCallback()
     window.addEventListener('object:preview-show', this._boundShow)
     window.addEventListener('object:preview-hide', this._boundHide)
-    window.addEventListener('nav', this._boundNav)
     window.addEventListener('db:changed', this._boundDbChanged)
     window.addEventListener('pointerdown', this._boundOutsideInput, true)
     window.addEventListener('wheel', this._boundOutsideInput, {
@@ -173,13 +169,22 @@ export class GrampsjsObjectPreview extends GrampsjsAppStateMixin(LitElement) {
     super.disconnectedCallback()
     window.removeEventListener('object:preview-show', this._boundShow)
     window.removeEventListener('object:preview-hide', this._boundHide)
-    window.removeEventListener('nav', this._boundNav)
     window.removeEventListener('db:changed', this._boundDbChanged)
     window.removeEventListener('pointerdown', this._boundOutsideInput, true)
     window.removeEventListener('wheel', this._boundOutsideInput, true)
     window.removeEventListener('keydown', this._boundKeyDown, true)
     clearTimeout(this._showTimer)
     clearTimeout(this._hideTimer)
+  }
+
+  willUpdate(changed) {
+    super.willUpdate(changed)
+    // Going to another page hides the preview
+    const previous = changed.get('appState')
+    if (previous && previous.path !== this.appState.path) {
+      this._pinned = false
+      this._visible = false
+    }
   }
 
   _cacheKey(objectType, grampsId) {
@@ -191,9 +196,22 @@ export class GrampsjsObjectPreview extends GrampsjsAppStateMixin(LitElement) {
   // cursor across many chart nodes in quick succession) resolves to a
   // single preview once the cursor settles on one target for SHOW_DELAY ms
   // (CHART_SHOW_DELAY ms in charts).
+  //
+  // A `pinned` preview, opened by a click, shows at once and stays open when
+  // the pointer leaves its anchor or the popup, and other previews do not
+  // replace it. A press outside the popup, a wheel event or Escape closes it.
   _handleShow(e) {
     const detail = e.detail
     clearTimeout(this._showTimer)
+    if (detail.pinned) {
+      clearTimeout(this._hideTimer)
+      this._pinned = true
+      this._showPreview(detail)
+      return
+    }
+    if (this._pinned) {
+      return
+    }
     // Returning to the anchor of the open popup keeps it open. When moving to
     // a different object, the open popup still closes after HIDE_DELAY, so it
     // does not linger over the chart while the new preview is pending.
@@ -234,7 +252,7 @@ export class GrampsjsObjectPreview extends GrampsjsAppStateMixin(LitElement) {
 
   _handleHide() {
     clearTimeout(this._showTimer)
-    if (this._mouseInPopup) return
+    if (this._mouseInPopup || this._pinned) return
     this._hideTimer = setTimeout(() => {
       this._visible = false
     }, HIDE_DELAY)
@@ -247,6 +265,7 @@ export class GrampsjsObjectPreview extends GrampsjsAppStateMixin(LitElement) {
     clearTimeout(this._showTimer)
     clearTimeout(this._hideTimer)
     this._mouseInPopup = false
+    this._pinned = false
     this._visible = false
   }
 
@@ -354,14 +373,10 @@ export class GrampsjsObjectPreview extends GrampsjsAppStateMixin(LitElement) {
 
   _handlePopupMouseLeave() {
     this._mouseInPopup = false
+    if (this._pinned) return
     this._hideTimer = setTimeout(() => {
       this._visible = false
     }, HIDE_DELAY)
-  }
-
-  _handleOpen() {
-    this._visible = false
-    fireEvent(this, 'nav', {path: `${this._objectType}/${this._grampsId}`})
   }
 
   _renderContent() {
@@ -441,7 +456,7 @@ export class GrampsjsObjectPreview extends GrampsjsAppStateMixin(LitElement) {
       >
         <md-icon-button
           id="open-btn"
-          @click="${this._handleOpen}"
+          href="/${this._objectType}/${this._grampsId}"
           title="${this._('_Open')}"
           aria-label="${this._('_Open')}"
         >

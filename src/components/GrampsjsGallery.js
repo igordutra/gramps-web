@@ -1,6 +1,14 @@
 import {LitElement, css, html} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {ArrowLeft, ArrowRight, Link, Plus, Trash} from '../icons/phosphor.js'
+import {
+  ArrowLeft,
+  ArrowRight,
+  Link,
+  Lock,
+  LockOpen,
+  Plus,
+  Trash,
+} from '../icons/phosphor.js'
 import {reorderableStyles, sharedStyles} from '../SharedStyles.js'
 import './GrampsjsImg.js'
 import './GrampsjsIcon.js'
@@ -11,6 +19,7 @@ import '@material/web/iconbutton/icon-button.js'
 import {fireEvent} from '../util.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {DragReorderController} from '../dragReorderController.js'
+import {renderPrivacyIcon, rowPrivacy} from '../objectRender.js'
 
 export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
   static get styles() {
@@ -49,9 +58,9 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
           position: absolute;
           top: 4px;
           left: 4px;
-          right: 4px;
+          right: 40px;
           width: fit-content;
-          max-width: calc(100% - 8px);
+          max-width: calc(100% - 44px);
           box-sizing: border-box;
           padding: 4px 8px;
           border-radius: var(--md-sys-shape-corner-small, 8px);
@@ -65,6 +74,23 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
           pointer-events: none;
         }
 
+        .privacy-badge {
+          position: absolute;
+          top: 4px;
+          right: 4px;
+          display: flex;
+          padding: 4px;
+          border-radius: 50%;
+          background: var(--md-sys-color-surface-container-highest);
+          pointer-events: none;
+        }
+
+        .privacy-button {
+          position: absolute;
+          top: 4px;
+          right: 4px;
+        }
+
         .tile-overlay {
           position: absolute;
           bottom: 4px;
@@ -73,10 +99,11 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
           gap: 2px;
         }
 
-        .tile-overlay md-icon-button {
-          --md-icon-button-container-width: var(--grampsjs-space-32);
-          --md-icon-button-container-height: var(--grampsjs-space-32);
-          --md-icon-button-icon-size: var(--grampsjs-icon-size);
+        .tile-overlay md-icon-button,
+        .privacy-button {
+          --md-icon-button-container-width: 32px;
+          --md-icon-button-container-height: 32px;
+          --md-icon-button-icon-size: 18px;
           background: rgba(255, 255, 255, 0.5);
           border-radius: 50%;
         }
@@ -193,6 +220,11 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
   _renderThumbnail(i, profilePictureIndex) {
     const {handle, mime, checksum} = this.media[i]
     const {rect} = this.mediaRef[i]
+    const privacyIcon = renderPrivacyIcon(
+      rowPrivacy(this.media[i], this.mediaRef[i]),
+      this.appState,
+      {inline: false}
+    )
     return html`
       <div class="tile">
         <grampsjs-img
@@ -209,6 +241,11 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
           ? html`<span class="profile-picture-badge"
               >${this._('Profile picture')}</span
             >`
+          : ''}
+        ${this.edit
+          ? this._renderPrivacyButton(i)
+          : privacyIcon
+          ? html`<span class="privacy-badge">${privacyIcon}</span>`
           : ''}
         ${this.edit
           ? html`
@@ -262,6 +299,42 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
           : ''}
       </div>
     `
+  }
+
+  /*
+  Toggles the privacy of the media object, for every object it is linked
+  to. The icon also shows a private link, which is set elsewhere.
+  */
+  _renderPrivacyButton(i) {
+    const media = this.media[i]
+    const privacy = rowPrivacy(media, this.mediaRef[i])
+    const paths = {private: Lock, link: Lock}
+    return html`
+      <md-icon-button
+        class="privacy-button"
+        aria-label="${media.private
+          ? this._('Record is private')
+          : this._('Record is public')}"
+        @click="${e => {
+          e.stopPropagation()
+          this._handleMediaPrivacy(i)
+        }}"
+      >
+        <grampsjs-icon
+          path="${paths[privacy] ?? LockOpen}"
+          color="var(--mdc-theme-secondary)"
+        ></grampsjs-icon>
+      </md-icon-button>
+    `
+  }
+
+  _handleMediaPrivacy(index) {
+    const media = this.media[index]
+    fireEvent(this, 'edit:action', {
+      action: 'updateLinkedMedia',
+      media,
+      data: {private: !media.private},
+    })
   }
 
   _handleRectClick(event) {

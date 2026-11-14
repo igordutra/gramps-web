@@ -7,7 +7,7 @@ import '../components/GrampsjsIcon.js'
 import {GrampsjsStaleDataMixin} from '../mixins/GrampsjsStaleDataMixin.js'
 
 import {fireEvent, toWritableObject} from '../util.js'
-import {sortTasks} from '../taskConstants.js'
+import {rulesEqual} from '../filterDefinitions.js'
 
 export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
   static get styles() {
@@ -16,23 +16,8 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
       css`
         md-fab {
           position: fixed;
-          /* The button belongs to the content column, not to the window.
-             The column now reaches the viewport edge and the page scrollbar
-             sits outside it, so the button is inset by the page gutter plus
-             the scrollbar width — otherwise it hangs into the scrollbar. */
-          bottom: var(--grampsjs-space-24, 24px);
-          right: calc(
-            var(--grampsjs-page-gutter, 24px) +
-              var(--grampsjs-scrollbar-width, 0px)
-          );
-          /* Material's FAB is a large saturated disc with a heavy shadow.
-             A modern action button is smaller, softer and matches the
-             density of the rest of the toolbar. */
-          --md-fab-container-height: var(--grampsjs-space-48);
-          --md-fab-container-width: var(--grampsjs-space-48);
-          --md-fab-icon-size: var(--grampsjs-icon-size-medium);
-          --md-fab-container-elevation: var(--grampsjs-elevation-level-2);
-          --md-fab-container-shadow-color: var(--grampsjs-shadow-color);
+          bottom: 32px;
+          right: 32px;
         }
       `,
     ]
@@ -54,9 +39,7 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
   }
 
   render() {
-    return html`${this.renderPageHeading()}
-      <h2>${this._('Tasks')}</h2>
-
+    return html`
       <grampsjs-tasks
         .appState="${this.appState}"
         .data="${this._data}"
@@ -65,20 +48,17 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
         @filters:changed="${this._handleFiltersChanged}"
       ></grampsjs-tasks>
 
-      ${this.appState.permissions.canAdd ? this.renderFab() : ''} `
+      ${this.appState.permissions.canAdd ? this.renderFab() : ''}
+    `
   }
 
   renderFab() {
     return html`
-      <md-fab
-        variant="secondary"
-        @click=${this._handleClickAdd}
-        aria-label="${this._('Add')}"
-      >
+      <md-fab variant="primary" @click=${this._handleClickAdd}>
         <grampsjs-icon
           slot="icon"
           .path="${Plus}"
-          color="var(--mdc-theme-on-secondary)"
+          color="currentColor"
         ></grampsjs-icon>
       </md-fab>
     `
@@ -113,7 +93,7 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
     this.loading = false
     if ('data' in data) {
       this.error = false
-      this._data = sortTasks(data.data)
+      this._data = data.data
     }
     if ('error' in data) {
       this.error = true
@@ -147,10 +127,14 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
     }
   }
 
+  // the list filters the status and priority itself, so only a change of
+  // the other filters needs a new request
   _handleFiltersChanged(e) {
-    this._filters = e.detail.filters
-    e.preventDefault()
     e.stopPropagation()
+    if (rulesEqual(e.detail.filters, this._filters)) {
+      return
+    }
+    this._filters = e.detail.filters
     this._fetchData()
   }
 

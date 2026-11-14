@@ -11,24 +11,38 @@ import '@material/web/button/filled-button.js'
 import '@material/web/dialog/dialog.js'
 import '@material/web/button/text-button.js'
 import '@material/web/checkbox/checkbox.js'
-import '@material/web/select/outlined-select.js'
+import '@material/web/select/filled-select.js'
 import '@material/web/select/select-option.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsTable.js'
+import '../components/GrampsjsTagChips.js'
 import '../components/GrampsjsTaskProgressIndicator.js'
 
 import {GrampsjsView} from './GrampsjsView.js'
 import '../components/GrampsjsPagination.js'
 import '../components/GrampsjsFilterChip.js'
 import '../components/GrampsjsFilters.js'
+import '../components/GrampsjsGetStarted.js'
 import {GrampsjsStaleDataMixin} from '../mixins/GrampsjsStaleDataMixin.js'
 
-import {fireEvent} from '../util.js'
+import {fireEvent, treeIsEmpty} from '../util.js'
 import {awaitTaskResponse} from '../taskResponse.js'
 import {tagFilter} from '../filterDefinitions.js'
 
 // Deleting more objects than this runs in a background task
 const BACKGROUND_DELETE_THRESHOLD = 10
+
+/* Column showing the tags of a row, expects `tags` as a list of tag objects
+(from `extend=tag_list`) */
+export const tagsColumn = {
+  name: 'Tags',
+  key: 'tags',
+  hideWhenEmpty: true,
+  format: tags =>
+    tags?.length
+      ? html`<grampsjs-tag-chips dense .data="${tags}"></grampsjs-tag-chips>`
+      : '',
+}
 
 export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
   GrampsjsView
@@ -43,23 +57,8 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
 
         md-fab {
           position: fixed;
-          /* The button belongs to the content column, not to the window.
-             The column now reaches the viewport edge and the page scrollbar
-             sits outside it, so the button is inset by the page gutter plus
-             the scrollbar width — otherwise it hangs into the scrollbar. */
-          bottom: var(--grampsjs-space-24, 24px);
-          right: calc(
-            var(--grampsjs-page-gutter, 24px) +
-              var(--grampsjs-scrollbar-width, 0px)
-          );
-          /* Material's FAB is a large saturated disc with a heavy shadow.
-             A modern action button is smaller, softer and matches the
-             density of the rest of the toolbar. */
-          --md-fab-container-height: var(--grampsjs-space-48);
-          --md-fab-container-width: var(--grampsjs-space-48);
-          --md-fab-icon-size: var(--grampsjs-icon-size-medium);
-          --md-fab-container-elevation: var(--grampsjs-elevation-level-2);
-          --md-fab-container-shadow-color: var(--grampsjs-shadow-color);
+          bottom: 32px;
+          right: 32px;
         }
 
         .hidden {
@@ -80,15 +79,13 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
           align-items: center;
           gap: 8px;
           font-size: 16px;
-          color: var(--grampsjs-body-font-color-70);
+          color: var(--grampsjs-text-secondary-color);
         }
 
-        .batch-toolbar md-outlined-select {
-          --md-outlined-select-text-field-container-height: var(
-            --grampsjs-space-32
-          );
-          --md-outlined-select-text-field-top-space: var(--grampsjs-space-0);
-          --md-outlined-select-text-field-bottom-space: var(--grampsjs-space-0);
+        .batch-toolbar md-filled-select {
+          --md-filled-select-text-field-container-height: 36px;
+          --md-filled-select-text-field-top-space: 0px;
+          --md-filled-select-text-field-bottom-space: 0px;
         }
 
         .column-picker-row {
@@ -211,7 +208,9 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
     return html`
       ${this._renderFilter()}
       ${this._selectionMode ? this._renderBatchToolbar() : ''}
-      ${this.altView
+      ${this._showGetStarted
+        ? this._renderGetStarted()
+        : this.altView
         ? this.renderAltView()
         : html`
             <grampsjs-table
@@ -226,11 +225,39 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
               sortDescriptor="${this._sort}"
               breakPoint="${this._tableBreakPoint}"
               .appState="${this.appState}"
+              .rowHrefs="${this._data.map(
+                item => `/${this._getItemPath(item)}`
+              )}"
               @table:row-click="${this._handleTableRowClick}"
               @table:sort-changed="${this._handleTableSortChanged}"
               @selection:changed="${this._handleSelectionChanged}"
             ></grampsjs-table>
           `}
+      ${this._showGetStarted ? '' : this._renderPagination()}
+      ${this.canAdd ? this.renderFab() : ''} ${this._renderColumnPickerDialog()}
+    `
+  }
+
+  get canAdd() {
+    return this.appState.permissions.canAdd
+  }
+
+  // In an empty tree, users who can add people see how to start in place of
+  // an empty list. Filters cannot match anything there, so they don't matter.
+  // This uses the global permission: views override canAdd for their own
+  // objects, such as families, which need edit permission too.
+  get _showGetStarted() {
+    return this.appState.permissions.canAdd && treeIsEmpty(this.appState.dbInfo)
+  }
+
+  _renderGetStarted() {
+    return html`<grampsjs-get-started
+      .appState="${this.appState}"
+    ></grampsjs-get-started>`
+  }
+
+  _renderPagination() {
+    return html`
       <grampsjs-pagination
         page="${this._page}"
         pages="${this._pages}"
@@ -239,13 +266,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
         @page:changed="${this._handlePageChanged}"
         .appState="${this.appState}"
       ></grampsjs-pagination>
-
-      ${this.canAdd ? this.renderFab() : ''} ${this._renderColumnPickerDialog()}
     `
-  }
-
-  get canAdd() {
-    return this.appState.permissions.canAdd
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -326,7 +347,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
               ${this._('_Select All')} (${this._totalCount})
             </md-text-button>`
           : ''}
-        <md-outlined-select
+        <md-filled-select
           .value="${this._currentAction}"
           label="${this._('Action')}"
           style="min-width:140px"
@@ -344,7 +365,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
                 ${this._('Delete')}
               </md-select-option>`
             : ''}
-        </md-outlined-select>
+        </md-filled-select>
         <md-outlined-button
           ?disabled="${!this._currentAction ||
           this._deleting ||
@@ -570,15 +591,11 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
 
   renderFab() {
     return html`
-      <md-fab
-        variant="secondary"
-        @click=${this._handleClickAdd}
-        aria-label="${this._('Add')}"
-      >
+      <md-fab variant="primary" @click=${this._handleClickAdd}>
         <grampsjs-icon
           slot="icon"
           .path="${Plus}"
-          color="var(--mdc-theme-on-secondary)"
+          color="currentColor"
         ></grampsjs-icon>
       </md-fab>
     `

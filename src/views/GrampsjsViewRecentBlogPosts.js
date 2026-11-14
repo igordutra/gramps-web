@@ -2,7 +2,6 @@ import {html, css} from 'lit'
 
 import {GrampsjsConnectedComponent} from '../components/GrampsjsConnectedComponent.js'
 import '../components/GrampsjsSearchResultList.js'
-import {fireEvent} from '../util.js'
 
 export class GrampsjsViewRecentBlogPosts extends GrampsjsConnectedComponent {
   static get styles() {
@@ -11,7 +10,7 @@ export class GrampsjsViewRecentBlogPosts extends GrampsjsConnectedComponent {
       css`
         .change {
           font-size: 0.8em;
-          color: var(--grampsjs-body-font-color-50);
+          color: var(--grampsjs-text-secondary-color);
           margin-top: 0.3em;
         }
 
@@ -33,11 +32,11 @@ export class GrampsjsViewRecentBlogPosts extends GrampsjsConnectedComponent {
       <h2>${this._('Latest Blog Post')}</h2>
       <grampsjs-search-result-list
         large
-        selectable
-        @search-result:clicked="${this._handleClick}"
+        linked
         .data="${this._data.data.slice(0, 1).map(obj => ({
           object: obj,
           object_type: 'source',
+          path: `blog/${obj.gramps_id}`,
         }))}"
         .appState="${this.appState}"
         date
@@ -58,13 +57,6 @@ export class GrampsjsViewRecentBlogPosts extends GrampsjsConnectedComponent {
         noSep
       ></grampsjs-search-result-list>
     `
-  }
-
-  _handleClick(event) {
-    const grampsId = event?.detail?.object?.gramps_id
-    if (grampsId) {
-      fireEvent(this, 'nav', {path: `blog/${grampsId}`})
-    }
   }
 
   getUrl() {

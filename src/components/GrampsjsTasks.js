@@ -4,28 +4,35 @@ The list of tasks with its filters and bulk actions
 
 import {html, css, LitElement, nothing} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-
+import {SortAscending} from '../icons/phosphor.js'
 import '@material/web/checkbox/checkbox'
 import '@material/web/iconbutton/icon-button'
 import '@material/web/button/outlined-button'
 import '@material/web/menu/menu'
 import '@material/web/menu/menu-item'
+import '@material/web/select/filled-select'
+import '@material/web/select/select-option'
 
 import './GrampsjsFilters.js'
-import './GrampsjsTagsSmall.js'
+import './GrampsjsTagChips.js'
 import './GrampsjsIcon.js'
 import './GrampsjsTooltip.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {fireEvent} from '../util.js'
-import {tagFilter} from '../filterDefinitions.js'
+import {tagFilter, textFilter} from '../filterDefinitions.js'
 import {
   PRIORITY_ICONS,
   TASK_PRIORITIES,
+  TASK_SORT_ORDERS,
   TASK_STATUSES,
+  filterTasks,
   priorityLabel,
+  sortTasks,
   statusIcon,
   taskAttribute,
+  taskPriorityFilter,
+  taskStatusFilter,
 } from '../taskConstants.js'
 
 class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
@@ -39,18 +46,17 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
           margin-bottom: 85px;
         }
 
+        .task-item + .task-item {
+          border-top: 1px solid var(--grampsjs-divider-color);
+        }
+
         .task-item {
-          border-top: 1px solid var(--grampsjs-body-font-color-10);
           display: flex;
           align-items: center;
           width: 100%;
           box-sizing: border-box;
           padding-left: 10px;
           gap: 8px;
-        }
-
-        .task-item:last-child {
-          border-bottom: 1px solid var(--grampsjs-body-font-color-10);
         }
 
         .task-item {
@@ -137,7 +143,7 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
           align-items: center;
           gap: 8px;
           font-size: 16px;
-          color: var(--grampsjs-body-font-color-70);
+          color: var(--grampsjs-text-secondary-color);
         }
 
         .batch-actions {
@@ -161,7 +167,7 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
           top: 2px;
         }
 
-        grampsjs-tags-small {
+        grampsjs-tag-chips {
           margin-left: 1em;
         }
 
@@ -169,9 +175,17 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
           padding-right: 8px;
         }
 
+        .sort-control md-filled-select {
+          min-width: 180px;
+          --md-filled-select-text-field-container-color: transparent;
+          --md-filled-select-text-field-container-height: 40px;
+          --md-filled-select-text-field-top-space: 0px;
+          --md-filled-select-text-field-bottom-space: 0px;
+        }
+
         .empty {
           margin-top: 32px;
-          color: var(--grampsjs-body-font-color-60);
+          color: var(--grampsjs-text-secondary-color);
         }
       `,
     ]
@@ -183,6 +197,10 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
       loading: {type: Boolean},
       _selectedHandles: {type: Array},
       _statusMenuTask: {type: Object},
+      // rules of the status and priority filters
+      _localFilters: {type: Array},
+      // a key of TASK_SORT_ORDERS
+      _sortKey: {type: String},
     }
   }
 
@@ -193,6 +211,10 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
     this._selectedHandles = []
     // the task whose status icon opened the status menu
     this._statusMenuTask = null
+    this._localFilters = []
+    this._sortKey = 'status'
+    // the filtered and sorted tasks
+    this._tasks = []
   }
 
   get _canEdit() {
@@ -202,8 +224,14 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
   // Selected tasks that are no longer listed, e.g. after a filter change or
   // a reload, are deselected
   willUpdate(changed) {
-    if (changed.has('data')) {
-      const handles = this.data.map(task => task.handle)
+    if (['data', '_localFilters', '_sortKey'].some(prop => changed.has(prop))) {
+      this._tasks = sortTasks(
+        filterTasks(this.data, this._localFilters),
+        this._sortKey,
+        // Intl needs `pt-BR` for the app's `pt_BR`
+        (this.appState?.i18n?.lang || 'en').replace('_', '-')
+      )
+      const handles = this._tasks.map(task => task.handle)
       const selected = this._selectedHandles.filter(handle =>
         handles.includes(handle)
       )
@@ -213,21 +241,68 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
     }
   }
 
+  get _filterDefinitions() {
+    const _ = s => this._(s)
+    return [
+      textFilter(_, {label: 'Title', rule: 'MatchesTitleSubstringOf'}),
+      taskStatusFilter(_),
+      taskPriorityFilter(_),
+      tagFilter(_),
+    ]
+  }
+
   render() {
     return html`
       <grampsjs-filters
         .appState="${this.appState}"
-        .definitions="${[tagFilter(s => this._(s))]}"
+        .definitions="${this._filterDefinitions}"
         namespace="sources"
-      ></grampsjs-filters>
+        @filters:changed="${this._handleFiltersChanged}"
+      >
+        <div slot="trailing" class="sort-control">${this._renderSort()}</div>
+      </grampsjs-filters>
       ${this._canEdit ? this._renderBatchToolbar() : ''}
-      ${this.data.length === 0 && !this.loading
+      ${this._tasks.length === 0 && !this.loading
         ? html`<p class="empty">${this._('None')}</p>`
         : html`<div class="tasks-list">
-            ${this.data.map(task => this._renderTask(task))}
+            ${this._tasks.map(task => this._renderTask(task))}
           </div>`}
       ${this._canEdit ? this._renderStatusMenu() : ''}
     `
+  }
+
+  _renderSort() {
+    return html`
+      <md-filled-select
+        aria-label="${this._('Sort by')}"
+        title="${this._('Sort by')}"
+        @change="${e => {
+          this._sortKey = e.target.value
+        }}"
+      >
+        <grampsjs-icon
+          slot="leading-icon"
+          path="${SortAscending}"
+          color="currentColor"
+        ></grampsjs-icon>
+        ${Object.entries(TASK_SORT_ORDERS).map(
+          ([key, {label}]) => html`
+            <md-select-option
+              value="${key}"
+              ?selected="${key === this._sortKey}"
+            >
+              ${this._(label)}
+            </md-select-option>
+          `
+        )}
+      </md-filled-select>
+    `
+  }
+
+  // The status and priority filters apply here; the event goes on to the
+  // view, which loads the tasks for the other filters
+  _handleFiltersChanged(e) {
+    this._localFilters = e.detail.localFilters ?? []
   }
 
   get _statusItems() {
@@ -282,12 +357,13 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
 
   _renderBatchToolbar() {
     const count = this._selectedHandles.length
+    const total = this._tasks.length
     return html`
       <div class="batch-toolbar">
         <span class="selection-count">
           <md-checkbox
-            ?checked="${count > 0 && count === this.data.length}"
-            ?indeterminate="${count > 0 && count < this.data.length}"
+            ?checked="${count > 0 && count === total}"
+            ?indeterminate="${count > 0 && count < total}"
             aria-label="${this._('_Select All')}"
             @change="${this._handleSelectAll}"
           ></md-checkbox>
@@ -346,9 +422,10 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
             href="/task/${task.gramps_id}"
             >${task.title}</a
           >
-          <grampsjs-tags-small
+          <grampsjs-tag-chips
+            dense
             .data="${task.extended.tags.filter(tag => tag.name !== 'ToDo')}"
-          ></grampsjs-tags-small>
+          ></grampsjs-tag-chips>
         </div>
       </div>
       <div class="task-meta">
@@ -463,9 +540,9 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
 
   _handleSelectAll() {
     this._selectedHandles =
-      this._selectedHandles.length === this.data.length
+      this._selectedHandles.length === this._tasks.length
         ? []
-        : this.data.map(task => task.handle)
+        : this._tasks.map(task => task.handle)
   }
 
   // Each update sends the whole task, so a second action before the list

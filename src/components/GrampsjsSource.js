@@ -1,6 +1,6 @@
 import {html} from 'lit'
 
-import '@material/web/button/outlined-button'
+import '@material/web/button/filled-tonal-button.js'
 import '@material/web/iconbutton/icon-button.js'
 
 import {PencilSimple} from '../icons/phosphor.js'
@@ -88,14 +88,10 @@ export class GrampsjsSource extends GrampsjsObject {
     }
     if (this.preview) return ''
     return html` <p style="clear: both; padding-top: 1em;">
-      <md-outlined-button @click="${this._handleButtonClick}">
+      <md-filled-tonal-button href="/blog/${this.data.gramps_id}">
         ${this._('Show in blog')}
-      </md-outlined-button>
+      </md-filled-tonal-button>
     </p>`
-  }
-
-  _handleButtonClick() {
-    fireEvent(this, 'nav', {path: `blog/${this.data.gramps_id}`})
   }
 
   _handleSaveProps(e) {

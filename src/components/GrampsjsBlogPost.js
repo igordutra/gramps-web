@@ -28,7 +28,7 @@ export class GrampsjsBlogPost extends GrampsjsAppStateMixin(LitElement) {
 
         h3.author {
           font-family: var(--grampsjs-body-font-family);
-          font-weight: 300;
+          font-weight: var(--grampsjs-font-weight-body);
           font-size: 16px;
           text-transform: uppercase;
           letter-spacing: 0.15em;
@@ -117,11 +117,13 @@ export class GrampsjsBlogPost extends GrampsjsAppStateMixin(LitElement) {
         <div id="note">
           <div id="note-wrapper">
             <grampsjs-note-content
-              grampsId="${this.note.grampsId}"
+              grampsId="${this.note?.grampsId}"
               .inlineMedia="${this._inlineMedia}"
-              content="${this.note?.formatted?.html ||
-              this.note?.text?.string ||
-              'Error loading note'}"
+              content="${this.note
+                ? this.note.formatted?.html ||
+                  this.note.text?.string ||
+                  'Error loading note'
+                : ''}"
             >
             </grampsjs-note-content>
 
@@ -137,7 +139,7 @@ export class GrampsjsBlogPost extends GrampsjsAppStateMixin(LitElement) {
 
             <md-text-button
               id="btn-details"
-              @click="${() => this._clickDetails(this.source.gramps_id)}"
+              href="/source/${this.source.gramps_id}"
               >${this._('Details')}</md-text-button
             >
           </div>
@@ -154,16 +156,6 @@ export class GrampsjsBlogPost extends GrampsjsAppStateMixin(LitElement) {
     const {note} = this
     const inlineMedia = await fetchInlineMedia(this.appState, note?.text)
     if (note === this.note) this._inlineMedia = inlineMedia
-  }
-
-  _clickDetails(grampsId) {
-    this.dispatchEvent(
-      new CustomEvent('nav', {
-        bubbles: true,
-        composed: true,
-        detail: {path: `source/${grampsId}`},
-      })
-    )
   }
 
   _renderImage() {

@@ -197,6 +197,16 @@ export function saveMapLayerSettings({
 }
 
 export const TREE_CONFIG_APP_TITLE = 'frontend.appTitle'
+
+// The name the app shows for the tree: the app title set for it, else the
+// name of its database, or '' when it has neither
+export function getTreeName(appState) {
+  return (
+    appState?.treeConfig?.[TREE_CONFIG_APP_TITLE] ||
+    appState?.dbInfo?.database?.name ||
+    ''
+  )
+}
 export const TREE_CONFIG_PRIMARY_COLOR = 'frontend.primaryColor'
 export const TREE_CONFIG_SECONDARY_COLOR = 'frontend.secondaryColor'
 export const TREE_CONFIG_HOME_PAGE_NOTE = 'frontend.homePageNote'
@@ -578,14 +588,18 @@ export async function apiGetOIDCConfig() {
   }
 }
 
-export async function apiOIDCLogin(providerId) {
+// `tree` names the tree a new account is created in; multi-tree servers
+// need it for identities that are not linked to an account yet.
+export async function apiOIDCLogin(providerId, tree = '') {
   try {
     if (!providerId) {
       throw new Error('Provider ID is required')
     }
-    window.location.href = `${__APIHOST__}/api/oidc/login/?provider=${encodeURIComponent(
-      providerId
-    )}`
+    const params = new URLSearchParams({provider: providerId})
+    if (tree) {
+      params.append('tree', tree)
+    }
+    window.location.href = `${__APIHOST__}/api/oidc/login/?${params}`
     return {success: true}
   } catch (error) {
     return {error: error.message}
@@ -742,6 +756,29 @@ export function getExporterUrl(id, options) {
 export function getExporterDownloadUrl(url) {
   const jwt = localStorage.getItem('access_token')
   return `${__APIHOST__}${url}?jwt=${jwt}`
+}
+
+/**
+ * Whether a task result URL points to a finished export or media archive,
+ * the files the UI offers to download with the access token.
+ */
+export function isExportDownloadUrl(url) {
+  return (
+    typeof url === 'string' &&
+    (url.startsWith('/api/exporters/') || url.startsWith('/api/media/archive/'))
+  )
+}
+
+/**
+ * Downloads an export file through `anchor`, an `<a>` in the caller's
+ * template. The URL carries the access token, so the token is refreshed
+ * first.
+ */
+export async function downloadExportFile(appState, anchor, url, fileName) {
+  await appState.refreshTokenIfNeeded()
+  anchor.href = getExporterDownloadUrl(url)
+  anchor.download = fileName
+  anchor.click()
 }
 
 export function getTileUrl(handle, checksum = null) {
@@ -1054,11 +1091,16 @@ export class Auth {
   }
 }
 
-export async function apiGet(auth, endpoint) {
+// With `etag`, the request is conditional: an unchanged resource returns
+// `{notModified: true}` with the response headers and no data.
+export async function apiGet(auth, endpoint, {etag} = {}) {
   let status
   let resJson
   try {
     const headers = {}
+    if (etag) {
+      headers['If-None-Match'] = etag
+    }
     try {
       const accessToken = await auth.getValidAccessToken()
       headers.Authorization = `Bearer ${accessToken}`
@@ -1071,6 +1113,13 @@ export async function apiGet(auth, endpoint) {
       headers,
     })
     status = resp.status
+    if (etag && resp.status === 304) {
+      return {
+        notModified: true,
+        total_count: resp.headers.get('X-Total-Count'),
+        etag: resp.headers.get('ETag'),
+      }
+    }
     try {
       resJson = await resp.json()
     } catch (error) {

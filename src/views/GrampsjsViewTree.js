@@ -1045,9 +1045,16 @@ export class GrampsjsViewTree extends GrampsjsStaleDataMixin(GrampsjsView) {
 
   // Opens the page of the person shown below the controls bar, who is the
   // previous person while a newly selected person is loading
+  //
+  // The path is a getter so that the link in the template and the
+  // navigation this method performs cannot disagree: both read the same
+  // value.
+  get _selectedPersonPath() {
+    return `person/${this._selectedPerson?.gramps_id ?? this.grampsId}`
+  }
+
   _goToPerson() {
-    const grampsId = this._selectedPerson?.gramps_id ?? this.grampsId
-    fireEvent(this, 'nav', {path: `person/${grampsId}`})
+    fireEvent(this, 'nav', {path: this._selectedPersonPath})
   }
 
   // Shows a person selected in a chart or elsewhere, such as on a person's

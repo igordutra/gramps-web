@@ -1,13 +1,14 @@
 import {css, html} from 'lit'
 import {Plus} from '../icons/phosphor.js'
 import '@material/web/fab/fab.js'
+import '@material/web/button/filled-tonal-button.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import '../components/GrampsjsBlogPostPreview.js'
 import '../components/GrampsjsIcon.js'
 
 import {GrampsjsStaleDataMixin} from '../mixins/GrampsjsStaleDataMixin.js'
 
-import {fireEvent, clickKeyHandler} from '../util.js'
+import {fireEvent} from '../util.js'
 
 export class GrampsjsViewBlog extends GrampsjsStaleDataMixin(GrampsjsView) {
   static get styles() {
@@ -18,17 +19,9 @@ export class GrampsjsViewBlog extends GrampsjsStaleDataMixin(GrampsjsView) {
           margin-left: 15px;
         }
 
-        .muted {
-          /* 40% opacity left this at a 2.5:1 contrast against the white
-             panel. Use the app's muted text colour instead, which is
-             already tuned for readability. */
-          opacity: 1;
-          color: var(--grampsjs-body-font-color-60);
-        }
-
         #posts {
           display: grid;
-          gap: 1em;
+          gap: 40px 24px;
           grid-template-columns: repeat(
             auto-fill,
             minmax(min(420px, 100%), 1fr)
@@ -36,37 +29,36 @@ export class GrampsjsViewBlog extends GrampsjsStaleDataMixin(GrampsjsView) {
         }
 
         .post {
-          padding: 0.8em 1em;
+          display: block;
+          padding: 16px;
+          border-radius: 8px;
           cursor: pointer;
-          outline: 2px solid var(--grampsjs-body-font-color-0);
-          transition: outline-color 0.3s ease-in;
+          outline: none;
+          transition: background-color 150ms;
         }
 
-        .post:focus,
-        .post:focus-within {
-          outline: 2px solid var(--grampsjs-body-font-color-10);
-          border-radius: var(--md-sys-shape-corner-small);
+        /* the whole post is the link: a neutral hover layer shows it */
+        .post:hover {
+          background-color: var(--grampsjs-body-font-color-5);
+        }
+
+        a.post:link,
+        a.post:visited,
+        a.post:hover {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        .post:focus-visible {
+          background-color: var(--grampsjs-body-font-color-5);
+          outline: 2px solid var(--md-sys-color-primary);
+          outline-offset: -2px;
         }
 
         md-fab {
           position: fixed;
-          /* The button belongs to the content column, not to the window.
-             The column now reaches the viewport edge and the page scrollbar
-             sits outside it, so the button is inset by the page gutter plus
-             the scrollbar width — otherwise it hangs into the scrollbar. */
-          bottom: var(--grampsjs-space-24, 24px);
-          right: calc(
-            var(--grampsjs-page-gutter, 24px) +
-              var(--grampsjs-scrollbar-width, 0px)
-          );
-          /* Material's FAB is a large saturated disc with a heavy shadow.
-             A modern action button is smaller, softer and matches the
-             density of the rest of the toolbar. */
-          --md-fab-container-height: var(--grampsjs-space-48);
-          --md-fab-container-width: var(--grampsjs-space-48);
-          --md-fab-icon-size: var(--grampsjs-icon-size-medium);
-          --md-fab-container-elevation: var(--grampsjs-elevation-level-2);
-          --md-fab-container-shadow-color: var(--grampsjs-shadow-color);
+          bottom: 32px;
+          right: 32px;
         }
       `,
     ]
@@ -103,15 +95,11 @@ export class GrampsjsViewBlog extends GrampsjsStaleDataMixin(GrampsjsView) {
 
   renderFab() {
     return html`
-      <md-fab
-        variant="secondary"
-        @click=${this._handleClickAdd}
-        aria-label="${this._('Add')}"
-      >
+      <md-fab variant="primary" @click=${this._handleClickAdd}>
         <grampsjs-icon
           slot="icon"
           .path="${Plus}"
-          color="var(--mdc-theme-on-secondary)"
+          color="currentColor"
         ></grampsjs-icon>
       </md-fab>
     `
@@ -123,18 +111,24 @@ export class GrampsjsViewBlog extends GrampsjsStaleDataMixin(GrampsjsView) {
 
   renderPosts() {
     if (this._firstLoaded && this._dataSources.length === 0) {
+      if (!this.appState.permissions.canAdd) {
+        return ''
+      }
       return html`
-        <h2>${this._('Blog')}</h2>
-        <p class="muted">
-          ${this._("To start using the blog, add a source with tag 'Blog'.")}
-        </p>
+        <md-filled-tonal-button href="/new_blog_post">
+          <grampsjs-icon
+            slot="icon"
+            .path="${Plus}"
+            color="currentColor"
+          ></grampsjs-icon>
+          ${this._('New Blog Post')}
+        </md-filled-tonal-button>
       `
     }
     if (this.loading) {
       return html``
     }
     return html`
-      <h2>${this._('Blog')}</h2>
       <div id="posts">
         ${this._dataSources.map(
           (source, i) => this.renderPost(source, this._dataNotes[i]),
@@ -165,28 +159,19 @@ export class GrampsjsViewBlog extends GrampsjsStaleDataMixin(GrampsjsView) {
   // eslint-disable-next-line no-dupe-class-members
   renderPost(source) {
     return html`
-      <div
-        class="post"
-        tabindex="0"
-        @click="${() => this._handlePreviewClick(source.gramps_id)}"
-        @keydown="${clickKeyHandler}"
-      >
+      <a class="post" href="/blog/${source.gramps_id}">
         <div>
           <grampsjs-blog-post-preview
             .data="${source}"
             .appState="${this.appState}"
           ></grampsjs-blog-post-preview>
         </div>
-      </div>
+      </a>
     `
   }
 
   firstUpdated() {
     this._fetchData()
-  }
-
-  _handlePreviewClick(grampsId) {
-    fireEvent(this, 'nav', {path: `blog/${grampsId}`})
   }
 
   handleUpdateStaleData() {

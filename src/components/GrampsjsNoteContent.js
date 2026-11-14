@@ -132,7 +132,7 @@ export class GrampsjsNoteContent extends LitElement {
         }
 
         .note {
-          font-weight: 350;
+          font-weight: var(--grampsjs-font-weight-body);
         }
 
         .note.columns {

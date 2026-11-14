@@ -8,24 +8,15 @@ import {PencilSimple, Trash} from '../icons/phosphor.js'
 import {GrampsjsTableBase} from './GrampsjsTableBase.js'
 import './GrampsjsIcon.js'
 import './GrampsjsFormString.js'
+import './GrampsjsTagChips.js'
 import {fireEvent} from '../util.js'
-import {tagColorToCss, colorForPicker, tagLabelColorToCss} from '../color.js'
+import {colorForPicker} from '../color.js'
 
 export class GrampsjsTagsManager extends GrampsjsTableBase {
   static get styles() {
     return [
       super.styles,
       css`
-        .tag-chip {
-          display: inline-block;
-          border-radius: var(--md-sys-shape-corner-small, 8px);
-          padding: 4px 12px;
-          font-size: 14px;
-          border: 1px solid var(--tag-color);
-          color: var(--tag-color);
-          background-color: var(--tag-color-bg);
-        }
-
         .actions {
           display: flex;
           gap: 4px;
@@ -79,9 +70,7 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
               <thead>
                 <tr>
                   <th>${this._('Tags')}</th>
-                  <th>
-                    <span class="visually-hidden">${this._('Actions')}</span>
-                  </th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -89,14 +78,10 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
                   tag => html`
                     <tr>
                       <td>
-                        <span
-                          class="tag-chip"
-                          style="
-                            --tag-color: ${tagLabelColorToCss(tag.color)};
-                            --tag-color-bg: ${tagColorToCss(tag.color, 0.12)};
-                          "
-                          >${tag.name}</span
-                        >
+                        <grampsjs-tag-chips
+                          expanded
+                          .data="${[tag]}"
+                        ></grampsjs-tag-chips>
                       </td>
                       <td>
                         <div class="actions">
@@ -155,7 +140,6 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
             ></grampsjs-form-string>
             <wa-color-picker
               format="hex"
-              label="${this._('Color')}"
               value="${this._editColor}"
               swatches="#1f77b4;#ff7f0e;#2ca02c;#d62728;#9467bd;#8c564b;#e377c2;#7f7f7f;#bcbd22;#17becf"
               @change="${this._handleColorChange}"

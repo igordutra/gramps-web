@@ -173,6 +173,62 @@ body {
      5.39:1 on the dark one. */
   --grampsjs-tag-label-lightness-min: 0;
   --grampsjs-tag-label-lightness-max: 0.42;
+
+  /* ---- The compatibility bridge ---------------------------------------
+     Upstream's #1659 shell refresh renamed a group of the app's tokens
+     and introduced new ones, and the components it added (the nav
+     drawer, the search box, the new main menu) READ those names. Our
+     token layer owns a different set -- the type, space, shape, density
+     and elevation scales -- so after the port those names were
+     referenced by the new components but defined nowhere.
+
+     A token that is referenced and not defined is a SILENT failure: the
+     declaration is invalid at computed-value time, the browser falls
+     back to the initial value, and the component quietly stops
+     obeying the design system -- with nothing reporting it.
+
+     So the names upstream's components use are bridged here, with
+     upstream's own values. This is the one place the two token sets
+     meet: the app's scales stay in theme.js, and the names the newer
+     components expect are declared here.
+
+     These are NOT the app's scales -- they are the names upstream
+     introduced, and upstream's values for them. */
+  --grampsjs-divider-color: var(--grampsjs-body-font-color-10);
+  --grampsjs-divider-strong-color: var(--grampsjs-body-font-color-20);
+  --grampsjs-text-secondary-color: color-mix(
+    in srgb,
+    var(--md-sys-color-on-surface-variant) 80%,
+    var(--md-sys-color-surface)
+  );
+  --grampsjs-font-weight-body: 380;
+  --grampsjs-font-weight-heading: 590;
+  --grampsjs-font-weight-medium: 500;
+  --grampsjs-tonal-color: color-mix(
+    in srgb,
+    var(--md-sys-color-primary) 14%,
+    var(--md-sys-color-surface)
+  );
+  --grampsjs-on-tonal-color: color-mix(
+    in srgb,
+    var(--md-sys-color-primary) 70%,
+    var(--md-sys-color-on-surface)
+  );
+  --grampsjs-drawer-background-color: color-mix(
+    in srgb,
+    var(--md-sys-color-primary) 6%,
+    var(--md-sys-color-surface)
+  );
+  --grampsjs-drawer-selected-color: var(--grampsjs-tonal-color);
+  --grampsjs-drawer-selected-font-color: var(--grampsjs-on-tonal-color);
+  --grampsjs-panel-color: var(--grampsjs-drawer-background-color);
+  --grampsjs-field-color: color-mix(
+    in srgb,
+    var(--md-sys-color-primary) 6%,
+    var(--md-sys-color-surface-container-highest)
+  );
+  --grampsjs-popover-color: var(--md-sys-color-surface-container);
+  --grampsjs-tag-lightness-max: 0.55;
 }
 
 :root[data-theme='light'] {

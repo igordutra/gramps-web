@@ -6,6 +6,7 @@ import './GrampsjsFormEditAddress.js'
 import './GrampsjsIcon.js'
 
 import {dateIsEmpty, fireEvent} from '../util.js'
+import {renderPrivacyIcon, rowPrivacy} from '../objectRender.js'
 import {toDate} from '../date.js'
 
 import '@material/web/list/list-item.js'
@@ -52,6 +53,7 @@ export class GrampsjsAddresses extends GrampsjsEditableList {
           .map(key => obj[key])
           .filter(value => value)
           .join(', ')}
+        ${renderPrivacyIcon(rowPrivacy(obj), this.appState)}
         ${this._supportingText(obj, i)}
         <grampsjs-icon
           slot="start"

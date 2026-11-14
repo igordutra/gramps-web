@@ -16,7 +16,6 @@ import {
   filterCounts,
   clickKeyHandler,
 } from '../util.js'
-import {tagColorToCss, tagLabelColorToCss} from '../color.js'
 import {
   associationsFilter,
   mimeFilter,
@@ -28,8 +27,9 @@ import {
 } from '../filterDefinitions.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsTooltip.js'
+import '../components/GrampsjsTagChips.js'
 import './GrampsjsViewMediaLightbox.js'
-import '@material/web/select/outlined-select'
+import '@material/web/select/filled-select'
 import '@material/web/select/select-option'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/checkbox/checkbox.js'
@@ -50,14 +50,12 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
           gap: 4px;
         }
 
-        .sort-control md-outlined-select {
+        .sort-control md-filled-select {
           min-width: 180px;
-          --md-outlined-select-text-field-container-color: transparent;
-          --md-outlined-select-text-field-container-height: var(
-            --grampsjs-space-40
-          );
-          --md-outlined-select-text-field-top-space: var(--grampsjs-space-0);
-          --md-outlined-select-text-field-bottom-space: var(--grampsjs-space-0);
+          --md-filled-select-text-field-container-color: transparent;
+          --md-filled-select-text-field-container-height: 40px;
+          --md-filled-select-text-field-top-space: 0px;
+          --md-filled-select-text-field-bottom-space: 0px;
         }
 
         /* Gallery (grid) view */
@@ -75,7 +73,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
         .tile {
           position: relative;
           cursor: pointer;
-          border-radius: var(--md-sys-shape-corner-medium);
+          border-radius: 6px;
           overflow: hidden;
           aspect-ratio: 1;
         }
@@ -101,7 +99,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
 
         .tile.selected grampsjs-img {
           transform: scale(0.88);
-          border-radius: var(--md-sys-shape-corner-small);
+          border-radius: 4px;
           overflow: hidden;
         }
 
@@ -110,7 +108,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
           top: 6px;
           left: 6px;
           display: flex;
-          border-radius: var(--md-sys-shape-corner-small);
+          border-radius: 4px;
           background-color: var(--grampsjs-color-shade-255);
           pointer-events: none;
         }
@@ -145,8 +143,12 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
           align-items: center;
           gap: 16px;
           padding: 8px 4px;
-          border-bottom: 1px solid var(--grampsjs-body-font-color-10);
+          border-bottom: 1px solid var(--grampsjs-divider-color);
           cursor: pointer;
+        }
+
+        .media-list-item:last-child {
+          border-bottom: none;
         }
 
         .media-list-item:hover {
@@ -163,7 +165,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
           flex-shrink: 0;
           width: 88px;
           height: 88px;
-          border-radius: var(--md-sys-shape-corner-small);
+          border-radius: 4px;
           overflow: hidden;
         }
 
@@ -186,7 +188,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
         }
 
         .media-list-meta {
-          color: var(--grampsjs-body-font-color-60);
+          color: var(--grampsjs-text-secondary-color);
           font-size: 14px;
           white-space: nowrap;
           overflow: hidden;
@@ -194,20 +196,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
         }
 
         .tags-row {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 4px;
           margin-top: 4px;
-        }
-
-        .tag-chip {
-          display: inline-block;
-          border-radius: var(--md-sys-shape-corner-small, 8px);
-          padding: 1px 8px;
-          font-size: 12px;
-          border: 1px solid var(--tag-color);
-          color: var(--tag-color);
-          background-color: var(--tag-color-bg);
         }
       `,
     ]
@@ -253,18 +242,14 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
 
   renderContent() {
     return html`
-      <h2>${this._('Media')}</h2>
       ${this._renderFilter()}
       ${this._selectionMode ? this._renderBatchToolbar() : ''}
-      ${this._galleryView ? this.renderAltView() : this._renderMediaList()}
-      <grampsjs-pagination
-        page="${this._page}"
-        pages="${this._pages}"
-        total="${this._totalCount}"
-        pageSize="${this._pageSize}"
-        @page:changed="${this._handlePageChanged}"
-        .appState="${this.appState}"
-      ></grampsjs-pagination>
+      ${this._showGetStarted
+        ? this._renderGetStarted()
+        : html`${this._galleryView
+            ? this.renderAltView()
+            : this._renderMediaList()}
+          ${this._renderPagination()}`}
       ${this.canAdd ? this.renderFab() : ''}
       <grampsjs-view-media-lightbox
         active
@@ -412,15 +397,10 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
           </div>
           ${row.extended?.tags?.length
             ? html`<div class="tags-row">
-                ${row.extended.tags.map(
-                  tag => html`<span
-                    class="tag-chip"
-                    style="--tag-color:${tagLabelColorToCss(
-                      tag.color
-                    )};--tag-color-bg:${tagColorToCss(tag.color, 0.1)}"
-                    >${tag.name}</span
-                  >`
-                )}
+                <grampsjs-tag-chips
+                  dense
+                  .data="${row.extended.tags}"
+                ></grampsjs-tag-chips>
               </div>`
             : ''}
         </div>
@@ -432,7 +412,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
     const sortKey = this._sort ? this._sort.substring(1) : 'change'
     const isAscending = this._sort.startsWith('+')
     return html`
-      <md-outlined-select
+      <md-filled-select
         aria-label="${this._('Sort by')}"
         title="${this._('Sort by')}"
         @change="${this._handleSortKeyChange}"
@@ -449,7 +429,7 @@ export class GrampsjsViewMediaObjects extends GrampsjsViewObjectsBase {
               </md-select-option>
             `
           )}
-      </md-outlined-select>
+      </md-filled-select>
       <md-icon-button
         id="btn-sort-direction"
         aria-label="${isAscending ? this._('Ascending') : this._('Descending')}"

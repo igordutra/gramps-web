@@ -7,6 +7,7 @@ import './GrampsjsIcon.js'
 
 import {fireEvent} from '../util.js'
 import {fixUrl} from '../urlUtil.js'
+import {renderPrivacyIcon, rowPrivacy} from '../objectRender.js'
 
 import '@material/web/list/list-item.js'
 
@@ -35,6 +36,7 @@ export class GrampsjsUrls extends GrampsjsEditableList {
           class="${classMap({nopointer: this.edit})}"
           >${obj.path}</a
         >
+        ${renderPrivacyIcon(rowPrivacy(obj), this.appState)}
         <span slot="supporting-text"
           >${this._(obj.type)}${obj.type && obj.desc
             ? html` &ndash; `
@@ -67,6 +69,7 @@ export class GrampsjsUrls extends GrampsjsEditableList {
       type: url.type || '',
       path: url.path || '',
       desc: url.desc || '',
+      private: !!url.private,
     }
     this.dialogContent = html`
       <grampsjs-form-edit-url

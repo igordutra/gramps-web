@@ -1,20 +1,9 @@
-import {css, html} from 'lit'
+import {html} from 'lit'
 
 import {GrampsjsView} from './GrampsjsView.js'
 import '../components/GrampsjsBlogPost.js'
 
 export class GrampsjsViewBlogPost extends GrampsjsView {
-  static get styles() {
-    return [
-      super.styles,
-      css`
-        .muted {
-          opacity: 0.4;
-        }
-      `,
-    ]
-  }
-
   static get properties() {
     return {
       grampsId: {type: String},
@@ -38,10 +27,8 @@ export class GrampsjsViewBlogPost extends GrampsjsView {
   renderPosts() {
     if (this._firstLoaded && this._dataSources.length === 0) {
       return html`
-        <h2>${this._('Blog')}</h2>
-        <p class="muted">
-          ${this._("To start using the blog, add a source with tag 'Blog'.")}
-        </p>
+        <p>${this._('Not found')}</p>
+        <p><a href="/blog">${this._('Blog')}</a></p>
       `
     }
     if (this.loading) {
@@ -114,6 +101,7 @@ export class GrampsjsViewBlogPost extends GrampsjsView {
         this._errorMessage = data.error
       }
     })
+    this._dataNotes = []
     const uriNotes = this._getNotesUrl()
     if (uriNotes) {
       await this.appState.apiGet(uriNotes).then(data => {

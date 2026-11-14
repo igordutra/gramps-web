@@ -11,60 +11,12 @@ import {GrampsjsView} from './GrampsjsView.js'
 import {
   fireEvent,
   moveTo,
-  objectIconPath,
   objectTypeToEndpoint,
+  changeParticipantRefs,
   toWritableObject,
 } from '../util.js'
 import {clearDraftsWithPrefix} from '../api.js'
-import '../components/GrampsjsBreadcrumbs.js'
-
-const BREADCRUMB_META = {
-  person: {
-    objectsName: 'People',
-    objectIcon: objectIconPath.person,
-    objectEndpoint: 'people',
-  },
-  family: {
-    objectsName: 'Families',
-    objectIcon: objectIconPath.family,
-    objectEndpoint: 'families',
-  },
-  place: {
-    objectsName: 'Places',
-    objectIcon: objectIconPath.place,
-    objectEndpoint: 'places',
-  },
-  event: {
-    objectsName: 'Events',
-    objectIcon: objectIconPath.event,
-    objectEndpoint: 'events',
-  },
-  citation: {
-    objectsName: 'Citations',
-    objectIcon: objectIconPath.citation,
-    objectEndpoint: 'citations',
-  },
-  source: {
-    objectsName: 'Sources',
-    objectIcon: objectIconPath.source,
-    objectEndpoint: 'sources',
-  },
-  repository: {
-    objectsName: 'Repositories',
-    objectIcon: objectIconPath.repository,
-    objectEndpoint: 'repositories',
-  },
-  media: {
-    objectsName: 'Media Objects',
-    objectIcon: objectIconPath.media,
-    objectEndpoint: 'media',
-  },
-  note: {
-    objectsName: 'Notes',
-    objectIcon: objectIconPath.note,
-    objectEndpoint: 'notes',
-  },
-}
+import '../components/GrampsjsObjectActions.js'
 
 const editTitle = {
   person: 'Edit Person',
@@ -92,15 +44,8 @@ export class GrampsjsViewObject extends GrampsjsView {
 
         md-fab {
           position: fixed;
-          /* The button belongs to the content column, not to the window.
-             The column now reaches the viewport edge and the page scrollbar
-             sits outside it, so the button is inset by the page gutter plus
-             the scrollbar width — otherwise it hangs into the scrollbar. */
-          bottom: var(--grampsjs-space-24, 24px);
-          right: calc(
-            var(--grampsjs-page-gutter, 24px) +
-              var(--grampsjs-scrollbar-width, 0px)
-          );
+          bottom: 32px;
+          right: 32px;
         }
       `,
     ]
@@ -142,18 +87,17 @@ export class GrampsjsViewObject extends GrampsjsView {
     return ''
   }
 
-  renderBreadcrumbs() {
-    const meta = BREADCRUMB_META[this._className]
-    if (!meta) return html``
+  // The object's toolbar, which the object element shows next to its heading
+  renderActions() {
+    const endpoint = objectTypeToEndpoint[this._className]
+    if (!endpoint) return ''
     return html`
-      <grampsjs-breadcrumbs
+      <grampsjs-object-actions
         .data="${this._data}"
         .appState="${this.appState}"
         ?edit="${this.edit}"
-        objectsName="${meta.objectsName}"
-        .objectIcon="${meta.objectIcon}"
-        objectEndpoint="${meta.objectEndpoint}"
-      ></grampsjs-breadcrumbs>
+        objectEndpoint="${endpoint}"
+      ></grampsjs-object-actions>
     `
   }
 
@@ -165,7 +109,7 @@ export class GrampsjsViewObject extends GrampsjsView {
       return html``
     }
     return html`
-      ${this.renderBreadcrumbs()} ${this.renderElement()}
+      ${this.renderElement()}
       ${this.canEdit && !this.edit ? this.renderFab() : ''}
       ${this.editDialogContent}
     `
@@ -173,15 +117,11 @@ export class GrampsjsViewObject extends GrampsjsView {
 
   renderFab() {
     return html`
-      <md-fab
-        variant="secondary"
-        @click="${this._activateEditMode}"
-        aria-label="${this._('Edit')}"
-      >
+      <md-fab variant="primary" @click="${this._activateEditMode}">
         <grampsjs-icon
           slot="icon"
           .path="${PencilSimple}"
-          color="var(--mdc-theme-on-secondary)"
+          color="currentColor"
         ></grampsjs-icon>
       </md-fab>
     `
@@ -399,6 +339,12 @@ export class GrampsjsViewObject extends GrampsjsView {
         this._className,
         'event_ref_list'
       )
+    } else if (e.detail.action === 'updateLinkedEvent') {
+      this.updateLinkedEvent(e.detail.event, e.detail.data)
+    } else if (e.detail.action === 'updateLinkedMedia') {
+      this.updateLinkedMedia(e.detail.media, e.detail.data)
+    } else if (e.detail.action === 'changeParticipantRef') {
+      this.changeParticipantRef(e.detail.change)
     } else if (e.detail.action === 'addPlaceRef') {
       this.addObject(
         e.detail.data,
@@ -872,6 +818,44 @@ export class GrampsjsViewObject extends GrampsjsView {
       })
       return _obj
     })
+  }
+
+  // update an event linked to the object of this view
+  updateLinkedEvent(event, data) {
+    return this._updateObject(event, 'event', _obj => ({..._obj, ...data}))
+  }
+
+  // update a media object linked to the object of this view
+  updateLinkedMedia(media, data) {
+    return this._updateObject(media, 'media', _obj => ({..._obj, ...data}))
+  }
+
+  /*
+  Add, update or remove a reference to the event of this view. The
+  reference is stored on the participating person or family, so this
+  fetches and saves that object. See changeParticipantRefs for `change`.
+  */
+  async changeParticipantRef({objectType, handle, ...change}) {
+    // the view may show another event once the fetch returns
+    const eventHandle = this._data.handle
+    const endpoint = objectTypeToEndpoint[objectType]
+    const res = await this.appState.apiGet(`/api/${endpoint}/${handle}`)
+    if ('error' in res) {
+      fireEvent(this, 'grampsjs:error', {message: res.error})
+      return false
+    }
+    const refList = changeParticipantRefs(
+      res.data?.event_ref_list,
+      eventHandle,
+      change
+    )
+    if (refList === null) {
+      return false
+    }
+    return this._updateObject(res.data, objectType, _obj => ({
+      ..._obj,
+      event_ref_list: refList,
+    }))
   }
 
   // add a handle to a list of handle

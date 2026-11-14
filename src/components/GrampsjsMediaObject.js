@@ -25,6 +25,7 @@ import './GrampsjsIcon.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/dialog/dialog.js'
 import '@material/web/button/text-button.js'
+import '@material/web/button/filled-tonal-button.js'
 
 export class GrampsjsMediaObject extends GrampsjsObject {
   static get styles() {
@@ -380,14 +381,14 @@ export class GrampsjsMediaObject extends GrampsjsObject {
       ${this.dbInfo?.server?.ocr
         ? html`
             <p>
-              <md-outlined-button @click="${this._handleOcrClick}">
+              <md-filled-tonal-button @click="${this._handleOcrClick}">
                 <grampsjs-icon
                   slot="icon"
                   path="${Scan}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('Text Recognition')}
-              </md-outlined-button>
+              </md-filled-tonal-button>
             </p>
           `
         : ''}

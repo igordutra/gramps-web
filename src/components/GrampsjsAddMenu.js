@@ -1,5 +1,6 @@
 /*
-The dropdown menu for adding objects in the top app bar
+The dropdown menu for adding objects in the top app bar, a labelled button or,
+on small screens, an icon button
 */
 
 import {html, css, LitElement} from 'lit'
@@ -8,6 +9,7 @@ import {
   BookOpenText,
   BookmarkSimple,
   Calendar,
+  CaretDown,
   Image,
   ListChecks,
   MapPin,
@@ -18,13 +20,14 @@ import {
   Users,
 } from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
+import '@material/web/button/filled-button.js'
 import '@material/web/menu/menu'
 import '@material/web/menu/menu-item'
-import '@material/web/divider/divider'
 
 import {sharedStyles, appBarIconButtonStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import './GrampsjsIcon.js'
+import './GrampsjsTooltip.js'
 
 const menuItems = [
   ['Person', '/new_person', User],
@@ -46,47 +49,40 @@ class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       appBarIconButtonStyles,
       css`
-        md-menu {
-          --md-divider-thickness: var(--grampsjs-outline-width);
-          --md-divider-color: var(--grampsjs-body-font-color-30);
+        md-filled-button {
+          margin: 0 4px;
+          --md-filled-button-leading-space: 16px;
+          --md-filled-button-trailing-space: 12px;
         }
 
-        md-menu-item {
-          --md-menu-item-top-space: var(--grampsjs-space-0);
-          --md-menu-item-bottom-space: var(--grampsjs-space-0);
-          --md-menu-item-one-line-container-height: var(--grampsjs-space-48);
-        }
-
+        /* a small label above the items */
         md-menu-item.header {
-          --md-menu-item-disabled-opacity: var(
-            --grampsjs-menu-item-disabled-opacity
-          );
-          --md-menu-item-one-line-container-height: var(--grampsjs-space-32);
-          /*
-           * A menu item is a small control. Upstream wrote 14px; the
-           * size is the body-small step.
-           */
-          --md-menu-item-label-text-size: var(
-            --md-sys-typescale-body-small-size
-          );
-          --md-menu-item-label-text-weight: var(
-            --md-sys-typescale-body-small-weight
-          );
+          --md-menu-item-disabled-opacity: 1;
+          --md-menu-item-label-text-color: var(--grampsjs-text-secondary-color);
+          --md-menu-item-one-line-container-height: 32px;
+          --md-menu-item-label-text-size: 13px;
         }
       `,
     ]
   }
 
+  static get properties() {
+    return {
+      labelled: {type: Boolean},
+    }
+  }
+
+  constructor() {
+    super()
+    this.labelled = false
+  }
+
   render() {
     return html`
       <div style="position: relative;">
-        <md-icon-button
-          aria-label="${this._('Add')}"
-          @click="${this._handleClickAdd}"
-          id="button_add"
-        >
-          <grampsjs-icon path="${Plus}" color="currentColor"></grampsjs-icon>
-        </md-icon-button>
+        ${this.labelled
+          ? this._renderLabelledButton()
+          : this._renderIconButton()}
 
         <md-menu
           id="menu_add"
@@ -97,11 +93,39 @@ class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
           <md-menu-item disabled class="header"
             ><div slot="headline">${this._('Add')}</div></md-menu-item
           >
-          <md-divider role="separator" tabindex="-1"></md-divider>
           ${menuItems.map(menuItem => this._menuItem(...menuItem))}
         </md-menu>
       </div>
     `
+  }
+
+  _renderLabelledButton() {
+    return html`<md-filled-button
+      id="button_add"
+      has-icon
+      trailing-icon
+      @click="${this._handleClickAdd}"
+    >
+      ${this._('Add')}
+      <grampsjs-icon
+        slot="icon"
+        path="${CaretDown}"
+        color="currentColor"
+      ></grampsjs-icon>
+    </md-filled-button>`
+  }
+
+  _renderIconButton() {
+    return html`<md-icon-button
+        aria-label="${this._('Add')}"
+        @click="${this._handleClickAdd}"
+        id="button_add"
+      >
+        <grampsjs-icon path="${Plus}" color="currentColor"></grampsjs-icon>
+      </md-icon-button>
+      <grampsjs-tooltip for="button_add" .appState="${this.appState}"
+        >${this._('Add')}</grampsjs-tooltip
+      >`
   }
 
   _menuItem(title, url, iconPath) {

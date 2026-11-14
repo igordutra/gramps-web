@@ -236,6 +236,29 @@ MAPPING = {
     # Not a Material Design Icon: the tree view has always used a
     # hand-drawn hourglass, and Phosphor has a matching one.
     "mdiHourglass": "hourglass",
+
+    # --- added by the port onto upstream's #1659 shell ---------------
+    # Upstream's shell refresh introduced sixteen MDI names this
+    # mapping did not carry. Each one is the OUTLINE twin of a name
+    # already mapped (or a filled name upstream added), so it takes
+    # the same Phosphor target -- the outline/filled pair is one
+    # shape here, as it is elsewhere in the table.
+    "mdiAccountCircleOutline": "user-circle",
+    "mdiAccountCogOutline": "user-gear",
+    "mdiAccountMultipleOutline": "users",
+    "mdiBellBadgeOutline": "bell-ringing",
+    "mdiBellOutline": "bell",
+    "mdiCloudOutline": "cloud",
+    "mdiCreationOutline": "sparkle",
+    "mdiDownloadOutline": "download-simple",
+    "mdiFileExport": "file-arrow-down",
+    "mdiHomeOutline": "house",
+    "mdiImageOutline": "image",
+    "mdiMapOutline": "map-trifold",
+    "mdiMenuDown": "caret-down",
+    "mdiTagOutline": "tag",
+    "mdiTimeline": "chart-line-up",
+    "mdiWrenchOutline": "wrench",
 }
 
 

@@ -4,7 +4,7 @@ import '@material/web/list/list-item'
 
 import '../components/GrampsjsTimedelta.js'
 import {GrampsjsConnectedComponent} from '../components/GrampsjsConnectedComponent.js'
-import {eventTitleFromProfile, fireEvent} from '../util.js'
+import {eventTitleFromProfile} from '../util.js'
 
 export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
   static get styles() {
@@ -13,7 +13,7 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
       css`
         .date {
           font-size: 0.9em;
-          color: var(--grampsjs-body-font-color-50);
+          color: var(--grampsjs-text-secondary-color);
         }
 
         .title {
@@ -21,42 +21,36 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
           margin-bottom: 0.7em;
         }
 
-        h2 {
+        h3 {
           margin-bottom: 15px;
         }
 
+        /* the size of a person's avatar, so the text lines up with the
+           other lists on the dashboard */
         .years {
-          height: 38px;
-          width: 38px;
-          border-radius: var(--md-sys-shape-corner-2xl);
-          /* The badge was the primary colour at 60% opacity with white
-             text, which is only a 2.9:1 contrast. A pale tint of the same
-             hue with the primary colour as the label keeps the soft look
-             and passes the 4.5:1 minimum. */
-          background-color: color-mix(
-            in srgb,
-            var(--mdc-theme-primary) 22%,
-            white
-          );
-          color: var(--mdc-theme-primary);
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+          background-color: var(--mdc-theme-primary);
+          opacity: 0.6;
+          color: var(--mdc-theme-on-primary);
           font-size: 15px;
-          line-height: 38px;
+          line-height: 40px;
           display: inline-block;
           text-align: center;
           font-family: var(--grampsjs-heading-font-family);
-          font-weight: 300;
-          margin-right: 10px;
+          font-weight: var(--grampsjs-font-weight-body);
         }
       `,
     ]
   }
 
   renderLoading() {
-    return html`<h2>${this._('Anniversaries')}</h2>
+    return html`<h3>${this._('Anniversaries')}</h3>
       <md-list role="list">
         ${Array(2).fill(
           html`
-            <md-list-item type="button" noninteractive role="presentation">
+            <md-list-item type="button" noninteractive>
               <span slot="headline" class="skeleton" style="width:15em;"
                 >&nbsp;</span
               >
@@ -71,11 +65,11 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
   }
 
   renderContent() {
-    return html`<h2>${this._('Anniversaries')}</h2>
+    return html`<h3>${this._('Anniversaries')}</h3>
       ${this._data.data.length === 0
         ? html`<p>${this._('None')}.</p>`
         : html`
-            <md-list class="large" role="list">
+            <md-list role="list" class="large">
               ${this._data.data.map(event => this._renderEvent(event))}
             </md-list>
           `} `
@@ -91,8 +85,8 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
     }
     return html`
       <md-list-item
-        type="button"
-        @click="${() => this._handleClick(event)}"
+        type="link"
+        href="/event/${event.gramps_id}"
         @keydown="${this._handleKeyDown}"
       >
         <span slot="headline"
@@ -128,11 +122,6 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
       this._boundHandleVisibility
     )
     super.disconnectedCallback()
-  }
-
-  _handleClick(event) {
-    const path = `event/${event.gramps_id}`
-    fireEvent(this, 'nav', {path})
   }
 
   // eslint-disable-next-line class-methods-use-this

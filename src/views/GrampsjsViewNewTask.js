@@ -17,6 +17,7 @@ import {
   priorityLabel,
   taskAttribute,
 } from '../taskConstants.js'
+import {clearTagCache, fetchAllTags} from '../tags.js'
 
 const dataDefault = {
   _class: 'Source',
@@ -205,10 +206,7 @@ export class GrampsjsViewNewTask extends GrampsjsViewNewSource {
   // Finds the ToDo tag, or creates it, on submit: opening the form does not
   // change the database
   async _fetchTodoTagHandle(retry = true) {
-    const lang = this.appState?.i18n?.lang || 'en'
-    const data = await this.appState.apiGet(
-      `/api/tags/?locale=${lang}&pagesize=500`
-    )
+    const data = await fetchAllTags(this.appState)
     if ('data' in data) {
       this._allTags = data.data
       const tags = data.data.filter(tag => tag.name === 'ToDo')
@@ -217,6 +215,7 @@ export class GrampsjsViewNewTask extends GrampsjsViewNewSource {
       } else {
         const newTag = {name: 'ToDo'}
         await this.appState.apiPost('/api/tags/', newTag)
+        clearTagCache()
         if (retry) {
           await this._fetchTodoTagHandle(false)
         }

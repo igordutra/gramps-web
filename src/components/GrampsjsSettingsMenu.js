@@ -1,5 +1,5 @@
 /*
-The dropdown menu for adding objects in the top app bar
+The account menu in the top app bar, with settings, help, and logging out
 */
 
 import {html, css, LitElement} from 'lit'
@@ -7,7 +7,7 @@ import '@material/web/iconbutton/icon-button.js'
 import '@material/web/icon/icon'
 import '@material/web/menu/menu'
 import '@material/web/menu/menu-item'
-import '@material/web/divider/divider'
+import '@material/web/divider/divider.js'
 
 import {
   ArrowSquareOut,
@@ -22,7 +22,6 @@ import {
 } from '../icons/phosphor.js'
 import {sharedStyles, appBarIconButtonStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
-import {renderIconSvg} from '../icons.js'
 import './GrampsjsIcon.js'
 import {clickKeyHandler} from '../util.js'
 
@@ -40,24 +39,29 @@ class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       appBarIconButtonStyles,
       css`
-        md-menu {
-          --md-divider-thickness: var(--grampsjs-outline-width);
-          --md-divider-color: var(--grampsjs-body-font-color-30);
+        /* a faint line between the groups of items */
+        md-divider {
+          --md-divider-thickness: 1px;
+          --md-divider-color: var(--grampsjs-divider-color);
+          margin: 4px 0;
+        }
+
+        /* md-menu-item keeps 16px between icon and text; 12px is enough
+           for the smaller icons */
+        md-menu-item [slot='start'] {
+          margin-inline-end: -4px;
         }
 
         md-menu-item {
-          --md-menu-item-top-space: var(--grampsjs-space-0);
-          --md-menu-item-bottom-space: var(--grampsjs-space-0);
-          --md-menu-item-one-line-container-height: var(--grampsjs-space-56);
-          --icon-color: var(--grampsjs-body-font-color-35);
+          --icon-color: color-mix(
+            in srgb,
+            var(--grampsjs-text-secondary-color) 80%,
+            transparent
+          );
         }
         md-menu-item.red {
           --md-menu-item-label-text-color: var(--grampsjs-logout-font-color);
           --icon-color: var(--grampsjs-logout-font-color);
-        }
-        md-menu {
-          --md-divider-thickness: var(--grampsjs-outline-width);
-          --md-divider-color: var(--grampsjs-body-font-color-30);
         }
       `,
     ]
@@ -83,19 +87,24 @@ class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
           anchor-corner="start-end"
           menu-corner="end-end"
         >
-        ${menuItems.map(menuItem => this._menuItem(...menuItem))}
+          ${menuItems.map(menuItem => this._menuItem(...menuItem))}
           ${this._renderAccountItem()}
-          <md-divider role="separator" tabindex="-1"></md-divider>
-          <md-menu-item class="red"
+          <md-divider inset role="separator" tabindex="-1"></md-divider>
+          <md-menu-item
+            class="red"
             @click="${() => this.appState.signout()}"
             @keydown="${clickKeyHandler}"
           >
             <div slot="headline">${this._('Log out')}</div>
-            <md-icon slot="start">${renderIconSvg(
-              SignOut,
-              'var(--icon-color)'
-            )}</md-icon>
+            <grampsjs-icon
+              slot="start"
+              path="${SignOut}"
+              color="var(--icon-color)"
+              height="20"
+              width="20"
+            ></grampsjs-icon>
           </md-menu-item>
+        </md-menu>
       </div>
     `
   }
@@ -114,13 +123,15 @@ class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
       return ''
     }
     return html`
-      <md-divider role="separator" tabindex="-1"></md-divider>
+      <md-divider inset role="separator" tabindex="-1"></md-divider>
       <md-menu-item href="${accountUrl}" target="_blank">
         <div slot="headline">${accountName}</div>
         <grampsjs-icon
           slot="start"
           path="${Cloud}"
           color="var(--icon-color)"
+          height="20"
+          width="20"
         ></grampsjs-icon>
         <grampsjs-icon
           slot="end"
@@ -140,9 +151,13 @@ class GrampsjsSettingsMenu extends GrampsjsAppStateMixin(LitElement) {
     return html`
       <md-menu-item href="${url}">
         <div slot="headline">${this._(title)}</div>
-        <md-icon slot="start"
-          >${renderIconSvg(icon, 'var(--icon-color)')}</md-icon
-        >
+        <grampsjs-icon
+          slot="start"
+          path="${icon}"
+          color="var(--icon-color)"
+          height="20"
+          width="20"
+        ></grampsjs-icon>
       </md-menu-item>
     `
   }
