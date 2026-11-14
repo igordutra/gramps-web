@@ -168,7 +168,7 @@ class GrampsjsNavDrawer extends GrampsjsAppStateMixin(LitElement) {
     const rail = this.mode === DRAWER_RAIL
     const treeName = getTreeName(this.appState) || 'Gramps Web'
     const content = html`
-      <div class="header" role="banner">
+      <div class="header">
         <md-icon-button
           aria-label="${this._('Menu')}"
           @click="${this._handleToggle}"
@@ -196,7 +196,17 @@ class GrampsjsNavDrawer extends GrampsjsAppStateMixin(LitElement) {
       `
       /* eslint-enable lit-a11y/click-events-have-key-events */
     }
-    return html`<div class="panel">${content}</div>`
+    // The panel is the navigation landmark. The app bar is already the
+    // banner, so the drawer must not be one too -- two banners is the
+    // `landmark-no-duplicate-banner` finding -- and the drawer's header
+    // has to be inside SOME landmark for the `region` rule.
+    return html`<div
+      class="panel"
+      role="navigation"
+      aria-label="${this._('Menu')}"
+    >
+      ${content}
+    </div>`
   }
 
   updated() {

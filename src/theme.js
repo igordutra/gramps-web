@@ -872,7 +872,7 @@ export const COMPONENT_SCALE = {
   '--md-outlined-text-field-label-text-color':
     'var(--md-sys-color-on-surface-variant)',
   '--md-outlined-text-field-focus-label-text-color':
-    'var(--md-sys-color-primary)',
+    'var(--grampsjs-primary-text-color, var(--md-sys-color-primary))',
   '--md-outlined-text-field-label-text-populated-weight':
     'var(--md-sys-typescale-label-medium-weight)',
   '--md-outlined-text-field-input-text-color': 'var(--md-sys-color-on-surface)',
@@ -899,7 +899,7 @@ export const COMPONENT_SCALE = {
   '--md-outlined-select-text-field-label-text-color':
     'var(--md-sys-color-on-surface-variant)',
   '--md-outlined-select-text-field-focus-label-text-color':
-    'var(--md-sys-color-primary)',
+    'var(--grampsjs-primary-text-color, var(--md-sys-color-primary))',
   '--md-outlined-select-text-field-input-text-color':
     'var(--md-sys-color-on-surface)',
   '--md-outlined-select-text-field-input-text-size':
@@ -1694,6 +1694,28 @@ export function applyColors(
       toCss(adjustForContrast(onPrimary, primary, 4.5))
     )
   }
+  /**
+   * Mix two colours in sRGB: `weight` is how much of `a` goes into the
+   * result, so 0.14 is 14% of `a` and 86% of `b`.
+   *
+   * The tint of a colour over a surface is what a tonal surface is, and
+   * the contrast of a label on that tint is the contrast that has to be
+   * measured -- not the contrast against the page the tint sits on.
+   *
+   * @param {{r: number, g: number, b: number}} a
+   * @param {{r: number, g: number, b: number}} b
+   * @param {number} weight
+   * @return {{r: number, g: number, b: number}} the mixed colour
+   */
+  function mixColors(a, b, weight) {
+    if (!a || !b) return null
+    const w = Math.min(1, Math.max(0, weight))
+    return {
+      r: Math.round(a.r * w + b.r * (1 - w)),
+      g: Math.round(a.g * w + b.g * (1 - w)),
+      b: Math.round(a.b * w + b.b * (1 - w)),
+    }
+  }
 
   // The primary as TEXT is a different colour from the primary as a
   // FILL.
@@ -1712,8 +1734,19 @@ export function applyColors(
   // to. On the dark theme the primary is already light enough to read
   // as text, so it is left alone.
   if (!isDark) {
-    const textSurface = parseColor('#ffffff')
-    const asText = primary ? adjustForContrast(primary, textSurface, 4.5) : null
+    // The surface it has to read on is NOT the page surface: the
+    // controls that use this token draw a TINT of the primary behind
+    // the text -- the tree type bar's selected label, the statistics
+    // card's comparison -- and that tint is darker than the page.
+    //
+    // Measured in the archive style: the primary reads 4.52:1 on white
+    // and 4.35:1 on the statistics card's own surface, and 3.86:1 on
+    // the type bar's 14% tint of itself. So the tint is the surface
+    // that has to be cleared, and the colour is moved until it does.
+    const surface = parseColor('#ffffff')
+    const tint = mixColors(primary, surface, 0.14)
+    const asText =
+      primary && tint ? adjustForContrast(primary, tint, 4.5) : null
     if (asText) {
       root.style.setProperty('--grampsjs-primary-text-color', toCss(asText))
     }

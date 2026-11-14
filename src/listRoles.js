@@ -75,6 +75,13 @@ const normalised = new WeakSet()
  * child, which is the `aria-required-children` finding: the role is
  * right on the `li` and the list still says it has no items.
  *
+ * And the inner element must NOT keep the role either, because the
+ * host is now the listitem and not a list -- an inner `li` still
+ * carrying `role="listitem"` has a listitem parent that is not a
+ * list, which is the `aria-required-parent` finding. Removing the
+ * role leaves the `li` generic, its text still read out, with the
+ * host's listitem role naming it.
+ *
  * @param {HTMLElement} host the md-list-item element
  * @return {boolean} whether the item was normalised
  */
@@ -86,11 +93,6 @@ function normaliseListItem(host) {
   if (!normalised.has(host)) {
     normalised.add(host)
     host.setAttribute('role', ITEM_ROLE)
-  }
-  if (inner.tagName.toLowerCase() === 'li') {
-    // The `li` keeps its own listitem role -- it is a listitem, and
-    // removing the role would leave the text unlabelled.
-    return true
   }
   if (inner.getAttribute('role') === ITEM_ROLE) {
     inner.removeAttribute('role')

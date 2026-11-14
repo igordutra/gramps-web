@@ -108,7 +108,7 @@ class GrampsjsMainMenu extends GrampsjsAppStateMixin(LitElement) {
           display: block;
         }
 
-        nav {
+        .menu {
           display: flex;
           flex-direction: column;
           gap: 2px;
@@ -234,7 +234,7 @@ class GrampsjsMainMenu extends GrampsjsAppStateMixin(LitElement) {
 
   render() {
     return html`
-      <nav aria-label="${this._('Menu')}">
+      <div class="menu">
         ${GROUPS.map(group => group.filter(item => this._isShown(item.id)))
           .filter(group => group.length > 0)
           .map(
@@ -243,7 +243,7 @@ class GrampsjsMainMenu extends GrampsjsAppStateMixin(LitElement) {
                 ${group.map(item => this._item(item))}
               </div>`
           )}
-      </nav>
+      </div>
     `
   }
 }
