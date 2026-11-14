@@ -1,31 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Gramps Web - research & organize your family tree together"
+    />
+    <base href="/" />
+    <link rel="stylesheet" href="webawesome-styles/themes/default.css" />
+    <link rel="stylesheet" href="fonts/fonts.css" />
+    <link rel="stylesheet" href="global.css" />
+    <link rel="stylesheet" href="tippy.css" />
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="manifest" href="manifest.json" crossorigin="use-credentials" />
+    <!--
+    The browser's own chrome is painted with this. The app sets it to
+    the active style's primary as soon as it starts; this is the value
+    for the moment before that, so it must match the DEFAULT style's
+    primary or the chrome flashes the wrong colour on load.
+  -->
+    <meta name="theme-color" content="#8F5433" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Gramps" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar" content="#8F5433" />
+    <meta name="apple-mobile-web-app-title" content="Gramps" />
+    <link rel="apple-touch-icon" sizes="192x192" href="images/icon192.png" />
+    <title>Gramps Web</title>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="Gramps Web - research & organize your family tree together">
-  <base href="/">
-  <link rel="stylesheet" href="webawesome-styles/themes/default.css">
-  <link rel="stylesheet" href="fonts/fonts.css">
-  <link rel="stylesheet" href="global.css">
-  <link rel="stylesheet" href="tippy.css">
-  <link rel="icon" href="images/favicon.ico">
-  <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Gramps">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar" content="#6D4C41">
-  <meta name="apple-mobile-web-app-title" content="Gramps">
-  <link rel="apple-touch-icon" sizes="192x192" href="images/icon192.png">
-  <title>Gramps Web</title>
-</head>
+  <body>
+    <gramps-js></gramps-js>
 
-<body>
-  <gramps-js></gramps-js>
-
-  <script type="module" src="./src/gramps-js.js"></script>
-</body>
-
+    <script type="module" src="./src/gramps-js.js"></script>
+  </body>
 </html>

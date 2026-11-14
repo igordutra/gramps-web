@@ -83,6 +83,14 @@ body {
   --grampsjs-alert-warn-background-color: rgba(251, 192, 45, 0.2);
   --grampsjs-alert-warn-border-color: rgba(251, 192, 45, 0.7);
   --grampsjs-alert-warn-font-color: #f9a825;
+  /* The TEXT of a warning, which is not the amber of the warning ICON.
+     The amber is a graphic: it reads as "amber" on a light surface but
+     it measures 1.78:1 as text on the warning's own tint, which is
+     below the 4.5:1 WCAG AA wants. So the text takes a deeper amber --
+     5.05:1 on the tint over the page surface, 5.40:1 on the surface
+     itself -- and the icon keeps the amber, which is what makes the
+     warning look like a warning. */
+  --grampsjs-alert-warn-text-color: #8a5a00;
   --grampsjs-alert-success-font-color: #41ad49;
   --grampsjs-task-open: #007bff;
   --grampsjs-task-progress: #ff9800;
@@ -109,6 +117,7 @@ body {
   );
   --grampsjs-connection-chart-person-box: #e6e6e6;
   --grampsjs-chart-person-box: rgb(230, 230, 230);
+  --grampsjs-chart-family-marker-fill: rgb(220, 220, 220);
   --grampsjs-chart-link: rgb(153, 153, 153);
   --grampsjs-editable-list-hover-background-color: color-mix(
     in srgb,
@@ -136,21 +145,65 @@ body {
     transparent
   );
   --grampsjs-color-link-font: var(--mdc-theme-secondary);
-  /* towards the text colour: darker in the light theme, lighter in the dark */
   --grampsjs-color-link-hover: color-mix(
     in srgb,
     var(--mdc-theme-secondary) 80%,
-    var(--md-sys-color-on-surface)
+    black
   );
-  --grampsjs-color-page-loading-progress: var(--md-sys-color-primary);
-  /* faint tints of the tree's primary colour */
-  --grampsjs-drawer-background-color: color-mix(
+  /* MapLibre paints its attribution bar WHITE in every theme -- it is
+     the widget's own surface and no token of the app's reaches it. So
+     the links on it take a fixed ink that reads on white (11.6:1)
+     rather than the app's themed link colour, which resolves to a
+     light indigo in the dark theme and measured 3.17:1 on white.
+     The ink is the app's own secondary, the indigo of old ink. */
+  --grampsjs-map-attribution-link-color: #2e3566;
+  --grampsjs-color-page-loading-progress: var(--mdc-theme-secondary);
+  /* The lightness range a tag chip's LABEL may take.
+
+     The chip sits on a TINT of the tag's own colour, so the label has
+     to read against that tint -- and the tint follows the theme. On the
+     light theme the tint is light, so the label is darkened until it
+     reads; on the dark theme the tint is dark, so the label is the
+     light version of the tag colour. The range lives here, in the
+     theme, rather than in a JavaScript branch on the mode, so the
+     label follows the theme the moment the theme changes.
+
+     Measured over the ten tag colours Gramps ships with, plus black,
+     white and the primaries: 5.92:1 worst case on the light theme,
+     5.39:1 on the dark one. */
+  --grampsjs-tag-label-lightness-min: 0;
+  --grampsjs-tag-label-lightness-max: 0.42;
+
+  /* ---- The compatibility bridge ---------------------------------------
+     Upstream's #1659 shell refresh renamed a group of the app's tokens
+     and introduced new ones, and the components it added (the nav
+     drawer, the search box, the new main menu) READ those names. Our
+     token layer owns a different set -- the type, space, shape, density
+     and elevation scales -- so after the port those names were
+     referenced by the new components but defined nowhere.
+
+     A token that is referenced and not defined is a SILENT failure: the
+     declaration is invalid at computed-value time, the browser falls
+     back to the initial value, and the component quietly stops
+     obeying the design system -- with nothing reporting it.
+
+     So the names upstream's components use are bridged here, with
+     upstream's own values. This is the one place the two token sets
+     meet: the app's scales stay in theme.js, and the names the newer
+     components expect are declared here.
+
+     These are NOT the app's scales -- they are the names upstream
+     introduced, and upstream's values for them. */
+  --grampsjs-divider-color: var(--grampsjs-body-font-color-10);
+  --grampsjs-divider-strong-color: var(--grampsjs-body-font-color-20);
+  --grampsjs-text-secondary-color: color-mix(
     in srgb,
-    var(--md-sys-color-primary) 6%,
+    var(--md-sys-color-on-surface-variant) 80%,
     var(--md-sys-color-surface)
   );
-  /* tonal: a light tint of the primary colour with dark primary text, for
-     selected menu items, tonal buttons and the floating action button */
+  --grampsjs-font-weight-body: 380;
+  --grampsjs-font-weight-heading: 590;
+  --grampsjs-font-weight-medium: 500;
   --grampsjs-tonal-color: color-mix(
     in srgb,
     var(--md-sys-color-primary) 14%,
@@ -161,60 +214,35 @@ body {
     var(--md-sys-color-primary) 70%,
     var(--md-sys-color-on-surface)
   );
+  --grampsjs-drawer-background-color: color-mix(
+    in srgb,
+    var(--md-sys-color-primary) 6%,
+    var(--md-sys-color-surface)
+  );
   --grampsjs-drawer-selected-color: var(--grampsjs-tonal-color);
-  /* keep light tag colors such as yellow readable on light surfaces (see
-     tagColorToCss); the dark theme lifts the limit */
-  --grampsjs-tag-lightness-max: 0.55;
-  /* menus: compact rows and a soft shadow */
-  --md-menu-item-one-line-container-height: 44px;
-  --md-menu-item-label-text-size: 14px;
-  --md-menu-item-label-text-weight: var(--grampsjs-font-weight-body);
-  --md-menu-item-leading-space: 12px;
-  --md-menu-container-shadow-color: rgba(0, 0, 0, 0.6);
-  /* menus and other popovers, such as the search results; the dark theme
-     raises them a step, as their shadow does not show there */
-  --grampsjs-popover-color: var(--md-sys-color-surface-container);
-  --md-menu-container-color: var(--grampsjs-popover-color);
-  /* row dividers in tables, and the stronger line under a table's header */
-  --grampsjs-divider-color: var(--grampsjs-body-font-color-10);
-  --grampsjs-divider-strong-color: var(--grampsjs-body-font-color-20);
-  /* panels that group a page's independent blocks, such as the dashboard's */
-  --grampsjs-panel-color: var(--grampsjs-drawer-background-color);
   --grampsjs-drawer-selected-font-color: var(--grampsjs-on-tonal-color);
-  /* font weights of the variable font */
-  --grampsjs-font-weight-body: 380;
-  --grampsjs-font-weight-medium: 500;
-  --grampsjs-font-weight-heading: 590;
-  /* filled text fields and selects: a warm tint of the field grey, 8px
-     corners (also used by menus) and readable helper text */
-  --md-sys-shape-corner-extra-small: 8px;
+  --grampsjs-panel-color: var(--grampsjs-drawer-background-color);
   --grampsjs-field-color: color-mix(
     in srgb,
     var(--md-sys-color-primary) 6%,
     var(--md-sys-color-surface-container-highest)
   );
-  --md-filled-text-field-container-color: var(--grampsjs-field-color);
-  --md-filled-select-text-field-container-color: var(--grampsjs-field-color);
-  --md-filled-text-field-supporting-text-size: 13px;
-  --md-filled-select-text-field-supporting-text-size: 13px;
-  --md-filled-text-field-supporting-text-color: var(
-    --grampsjs-text-secondary-color
-  );
-  --md-filled-select-text-field-supporting-text-color: var(
-    --grampsjs-text-secondary-color
-  );
-  /* secondary text such as labels, dates and muted rows; content text uses
-     --grampsjs-body-font-color */
-  --grampsjs-text-secondary-color: color-mix(
-    in srgb,
-    var(--md-sys-color-on-surface-variant) 80%,
-    var(--md-sys-color-surface)
-  );
+  --grampsjs-popover-color: var(--md-sys-color-surface-container);
+  --grampsjs-tag-lightness-max: 0.55;
 }
 
 :root[data-theme='light'] {
-  --grampsjs-top-app-bar-background-color: var(--md-sys-color-surface);
+  /* A solid saturated brand bar across the top is the single strongest
+     "2015 admin template" signal in the light theme. The dark theme
+     already uses a surface-coloured bar; this aligns light with it, and
+     moves the brand colour to where it earns its keep — the primary
+     action, the active tab, the focus ring. */
+  --grampsjs-top-app-bar-background-color: var(
+    --md-sys-color-surface-container-lowest
+  );
   --grampsjs-top-app-bar-font-color: var(--md-sys-color-on-surface);
+  /* A hairline separates the bar from the canvas without a heavy shadow. */
+  --grampsjs-top-app-bar-border-color: var(--md-sys-color-outline-variant);
   --grampsjs-body-font-color: rgba(0, 0, 0, 0.8);
   --grampsjs-body-font-color-0: rgba(0, 0, 0, 0);
   --grampsjs-body-font-color-2: rgba(0, 0, 0, 0.02);
@@ -238,7 +266,7 @@ body {
   --grampsjs-body-font-color-87: rgba(0, 0, 0, 0.87);
   --grampsjs-body-font-color-90: rgba(0, 0, 0, 0.9);
   --grampsjs-body-font-color-100: rgba(0, 0, 0, 1);
-  --grampsjs-color-shade-40: rgb(40, 40, 40);
+  --grampsjs-color-shade-40: var(--md-sys-color-on-surface);
   --grampsjs-color-shade-120: rgb(120, 120, 120);
   --grampsjs-color-shade-200: rgb(200, 200, 200);
   --grampsjs-color-shade-220: rgb(220, 220, 220);
@@ -246,23 +274,46 @@ body {
   --grampsjs-color-shade-240: rgb(240, 240, 240);
   --grampsjs-color-shade-255: rgb(255, 255, 255);
   --grampsjs-color-monospace: rgba(125, 0, 0, 0.8);
-  --grampsjs-color-icon-default: #9e9e9e;
-  --grampsjs-color-icon-selected: #393939;
-  --grampsjs-color-skeleton-background: #eee;
-  --grampsjs-color-skeleton-base: #ececec;
-  --grampsjs-color-skeleton-shine: #f5f5f5;
-  --grampsjs-color-revision-deleted-background-red: #ffebe9;
-  --grampsjs-color-revision-added-background-green: #dafbe1;
-  --grampsjs-color-revision-moved-background-blue: #ddf4ff;
-  --grampsjs-color-revision-moved-font: #888;
-  --grampsjs-color-revision-error-background: #f00;
-  --grampsjs-color-revision-error-font: #fff;
+  /* The drawer text was a fixed #444 and the icons a fixed #9e9e9e /
+     #393939. Those are the on-surface and on-surface-variant roles of
+     the Material palette, so they are named rather than written down —
+     which is what lets the dark theme and the seed colours reach them.
+
+     The default (inactive) icon is a MUTED grey, deliberately lighter
+     than the label beside it, so it is mixed from the palette rather
+     than taken straight from on-surface-variant. */
+  --grampsjs-color-drawer-text: var(--md-sys-color-on-surface-variant);
+  --grampsjs-color-icon-default: color-mix(
+    in srgb,
+    var(--md-sys-color-on-surface-variant) 60%,
+    var(--md-sys-color-surface)
+  );
+  --grampsjs-color-icon-selected: var(--md-sys-color-on-surface);
+  --grampsjs-color-skeleton-background: var(--md-sys-color-surface-container);
+  --grampsjs-color-skeleton-base: var(--md-sys-color-surface-container);
+  --grampsjs-color-skeleton-shine: var(--md-sys-color-surface-container-low);
+  --grampsjs-color-revision-deleted-background-red: var(
+    --md-sys-color-error-container
+  );
+  --grampsjs-color-revision-added-background-green: var(
+    --md-sys-color-primary-container
+  );
+  --grampsjs-color-revision-moved-background-blue: var(
+    --md-sys-color-surface-container-high
+  );
+  --grampsjs-color-revision-moved-font: var(--md-sys-color-on-surface-variant);
+  --grampsjs-color-revision-error-background: var(--md-sys-color-error);
+  --grampsjs-color-revision-error-font: var(--md-sys-color-on-error);
   --grampsjs-color-icon-background: rgba(0, 0, 0, 0.25);
   --grampsjs-color-icon: #fff;
-  --grampsjs-color-ytree-expand-background: #eee;
-  --grampsjs-color-ytree-expand-font: #555;
-  --grampsjs-color-ytree-default-person-icon-background: #bbb;
-  --grampsjs-note-color: #333;
+  --grampsjs-color-ytree-expand-background: var(
+    --md-sys-color-surface-container
+  );
+  --grampsjs-color-ytree-expand-font: var(--md-sys-color-on-surface);
+  --grampsjs-color-ytree-default-person-icon-background: var(
+    --md-sys-color-surface-container
+  );
+  --grampsjs-note-color: var(--md-sys-color-on-surface);
   --grampsjs-note-highlight-strength: 45%;
   /* GOQL syntax highlighting, after VS Code's Light+ theme */
   --grampsjs-color-code-keyword: #0000ff;
@@ -282,7 +333,9 @@ body {
 }
 
 :root[data-theme='dark'] {
-  --grampsjs-top-app-bar-background-color: var(--md-sys-color-surface);
+  --grampsjs-top-app-bar-background-color: var(
+    --md-sys-color-surface-container
+  );
   --grampsjs-top-app-bar-font-color: var(--md-sys-color-on-surface);
   --grampsjs-body-font-color: rgba(255, 255, 255, 0.8);
   --grampsjs-body-font-color-0: rgba(255, 255, 255, 0);
@@ -307,27 +360,39 @@ body {
   --grampsjs-body-font-color-87: rgba(255, 255, 255, 0.87);
   --grampsjs-body-font-color-90: rgba(255, 255, 255, 0.9);
   --grampsjs-body-font-color-100: rgba(255, 255, 255, 1);
-  --grampsjs-color-shade-40: rgb(215, 215, 215);
+  --grampsjs-color-shade-40: var(--md-sys-color-on-surface);
   --grampsjs-color-shade-120: rgb(135, 135, 135);
   --grampsjs-color-shade-200: rgb(55, 55, 55);
   --grampsjs-color-shade-220: rgb(35, 35, 35);
   --grampsjs-color-shade-230: rgb(25, 25, 25);
   --grampsjs-color-shade-240: rgb(15, 15, 15);
   --grampsjs-chart-person-box: rgb(48, 48, 48);
+  --grampsjs-chart-family-marker-fill: rgb(62, 62, 62);
   --grampsjs-chart-link: rgb(117, 117, 117);
   --grampsjs-color-shade-255: rgb(0, 0, 0);
   --grampsjs-color-monospace: rgba(255, 100, 100, 0.85);
-  --grampsjs-color-icon-default: #616161;
-  --grampsjs-color-icon-selected: #c6c6c6;
-  --grampsjs-color-skeleton-background: #222;
-  --grampsjs-color-skeleton-base: #232323;
-  --grampsjs-color-skeleton-shine: #1a1a1a;
-  --grampsjs-color-revision-deleted-background-red: rgba(248, 81, 73, 0.3);
-  --grampsjs-color-revision-added-background-green: rgba(46, 160, 67, 0.15);
-  --grampsjs-color-revision-moved-background-blue: rgba(56, 139, 253, 0.1);
-  --grampsjs-color-revision-moved-font: #777;
-  --grampsjs-color-revision-error-background: #f00;
-  --grampsjs-color-revision-error-font: #fff;
+  --grampsjs-color-drawer-text: var(--md-sys-color-on-surface-variant);
+  --grampsjs-color-icon-default: color-mix(
+    in srgb,
+    var(--md-sys-color-on-surface-variant) 60%,
+    var(--md-sys-color-surface)
+  );
+  --grampsjs-color-icon-selected: var(--md-sys-color-on-surface);
+  --grampsjs-color-skeleton-background: var(--md-sys-color-surface-container);
+  --grampsjs-color-skeleton-base: var(--md-sys-color-surface-container);
+  --grampsjs-color-skeleton-shine: var(--md-sys-color-surface-container-low);
+  --grampsjs-color-revision-deleted-background-red: var(
+    --md-sys-color-error-container
+  );
+  --grampsjs-color-revision-added-background-green: var(
+    --md-sys-color-primary-container
+  );
+  --grampsjs-color-revision-moved-background-blue: var(
+    --md-sys-color-surface-container-high
+  );
+  --grampsjs-color-revision-moved-font: var(--md-sys-color-on-surface-variant);
+  --grampsjs-color-revision-error-background: var(--md-sys-color-error);
+  --grampsjs-color-revision-error-font: var(--md-sys-color-on-error);
   --grampsjs-color-icon-background: rgba(255, 255, 255, 0.15);
   --grampsjs-color-icon: rgba(255, 255, 255, 0.6);
   --grampsjs-color-ytree-expand-background: var(
@@ -337,21 +402,21 @@ body {
   --grampsjs-color-ytree-default-person-icon-background: var(
     --md-sys-color-surface-container
   );
-  --grampsjs-note-color: #ccc;
+  --grampsjs-note-color: var(--md-sys-color-on-surface);
   --grampsjs-note-highlight-strength: 30%;
   /* keep tag colors readable on dark surfaces (see tagColorToCss) */
   --grampsjs-tag-lightness-min: 0.7;
-  --grampsjs-tag-lightness-max: 1;
+  /* The warning TEXT on the dark theme: the amber reads on a dark
+     surface, where the deeper amber of the light theme would not. */
+  --grampsjs-alert-warn-text-color: #f9a825;
+  /* The tag chip's LABEL on the dark theme: the chip's tint is dark
+     here, so the label is the LIGHT version of the tag colour rather
+     than the darkened one. 5.39:1 worst case, measured over the ten
+     tag colours Gramps ships with, plus black, white and the
+     primaries. */
+  --grampsjs-tag-label-lightness-min: 0.75;
+  --grampsjs-tag-label-lightness-max: 1;
   --grampsjs-map-marker-color: #bb1f11;
-  /* the dark primary is light, so a small share adds little colour: a
-     stronger tint keeps tonal elements apart from panels */
-  --grampsjs-tonal-color: color-mix(
-    in srgb,
-    var(--md-sys-color-primary) 24%,
-    var(--md-sys-color-surface)
-  );
-  --grampsjs-popover-color: var(--md-sys-color-surface-container-high);
-  --grampsjs-logout-font-color: var(--md-sys-color-error);
   /* --md-sys-color-* tokens are set dynamically by applyColors() in theme.js */
   --mdc-select-fill-color: var(--md-sys-color-surface-container-highest);
   --mdc-select-ink-color: var(--md-sys-color-on-surface);
