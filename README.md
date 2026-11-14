@@ -1,3 +1,29 @@
+# Note on this fork
+
+This fork carries **a custom frontend** for Gramps Web. It is not a proposal to change Gramps Web itself.
+
+Upstream's maintainer was asked, in [issue #1686](https://github.com/gramps-project/gramps-web/issues/1686), whether the work on the `feature/modern-visual-identity` branch — a design-token layer with three styles — should go into the project. The answer was no:
+
+> come up with a default that most people can live with, offer light and dark mode, and make theme colors customizable […] Anything beyond that would be a custom frontend, or perhaps, in the future, a frontend plugin.
+
+So the styling work stays here, where it is a custom frontend, and the ordinary fixes it carries are being sent upstream as small separate pull requests.
+
+## What is in here
+
+| branch | what it is |
+| :--- | :--- |
+| `feature/modern-visual-identity` | the work: a token layer, three styles, the Phosphor icon migration, and the accessibility fixes |
+| `design-preview` | screenshots only — the three styles in both colour modes, and a 1:1 comparison |
+| `pr-1-infra` … `pr-6-layout-nav` | the branch stack the work was cut into, kept for review |
+
+Everything below this note is upstream's own README, unchanged.
+
+## Licence
+
+AGPL-3.0, as upstream.
+
+---
+
 # Gramps Web &ndash; Frontend
 
 Welcome to **Gramps Web**, a modern, feature-packed, free & open-source web app for browsing and collaboratively editing genealogical databases. Fully interoperable with the [Gramps](https://gramps-project.org) desktop application, Gramps Web brings your family history to the web, making it accessible from anywhere and easy to share.
