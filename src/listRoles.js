@@ -77,12 +77,28 @@ function normaliseListItem(host) {
     return false
   }
   if (inner.tagName.toLowerCase() === 'li') {
-    // An `li` must have a list parent, and its parent here is the
-    // host — so the host is presentational and lets the `li` be the
-    // list's item.
+    // A text item needs BOTH halves set, and neither naive version is
+    // valid on its own:
+    //
+    //   host `role="none"`     the list's child is presentational, and a
+    //                          `list` may not have a `none` child —
+    //                          `aria-required-children`, measured on
+    //                          /revisions
+    //
+    //   host `role="listitem"` correct for the list, but the inner `li`
+    //   with the `li`'s role   then has a listitem parent that is not a
+    //   simply removed         list — `listitem`, measured
+    //
+    // So the host takes the listitem role and the inner `li` is made
+    // explicitly presentational. `role="none"` takes the `li` out of the
+    // tree; removing its role attribute does NOT, because a `li` with no
+    // role attribute is still a listitem. Its text is still read out.
     if (!normalised.has(host)) {
       normalised.add(host)
-      host.setAttribute('role', 'none')
+      host.setAttribute('role', ITEM_ROLE)
+    }
+    if (inner.getAttribute('role') !== 'none') {
+      inner.setAttribute('role', 'none')
     }
     return true
   }
