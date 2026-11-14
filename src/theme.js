@@ -8,6 +8,7 @@ import {
   hexFromArgb,
 } from '@material/material-color-utilities'
 import {TREE_CONFIG_PRIMARY_COLOR, TREE_CONFIG_SECONDARY_COLOR} from './api.js'
+import {adjustForContrast, parseColor, toCss} from './colourContrast.js'
 
 /**
  * Russet: the Archive style's primary.
@@ -1666,10 +1667,33 @@ export function applyColors(
   const primaryTone = isDark
     ? Math.min(80, Math.max(60, Math.round(primaryHct.tone)))
     : Math.min(50, Math.max(30, Math.round(primaryHct.tone)))
-  root.style.setProperty(
-    '--md-sys-color-primary',
-    hexFromArgb(primaryPalette.tone(primaryTone))
+  const primaryColour = hexFromArgb(primaryPalette.tone(primaryTone))
+  root.style.setProperty('--md-sys-color-primary', primaryColour)
+
+  // The text that sits ON the primary has to clear 4.5:1 against the
+  // primary that is actually painted.
+  //
+  // Material pairs its own tones: a scheme's on-primary is chosen to
+  // sit on the scheme's primary. The app does not use the scheme's
+  // primary - it clamps the seed's own tone so the user's chosen
+  // colour is what shows on the app bar - and that breaks the pairing.
+  // A dark scheme's on-primary is a tone 20 colour, and against a
+  // tone 60 primary of the same hue it does not always clear 4.5:1.
+  // Measured on the dark schemes: #5f0644 on #d56da9 is 4.12:1.
+  //
+  // So the pair is checked, and the text is moved until it passes. The
+  // hue is kept; only the lightness moves, and only as far as it has
+  // to.
+  const onPrimary = parseColor(
+    root.style.getPropertyValue('--md-sys-color-on-primary')
   )
+  const primary = parseColor(primaryColour)
+  if (onPrimary && primary) {
+    root.style.setProperty(
+      '--md-sys-color-on-primary',
+      toCss(adjustForContrast(onPrimary, primary, 4.5))
+    )
+  }
 
   // M3 achromatic tones 90-98 are darker than expected for a web app.
   //

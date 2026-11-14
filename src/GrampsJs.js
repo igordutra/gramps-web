@@ -508,7 +508,10 @@ export class GrampsJs extends LitElement {
   _renderInitial() {
     return html`<div class="center-xy">
       <div>
-        <md-linear-progress indeterminate></md-linear-progress>
+        <md-linear-progress
+          indeterminate
+          aria-label="${this._('Loading')}"
+        ></md-linear-progress>
       </div>
     </div> `
   }
@@ -671,12 +674,13 @@ export class GrampsJs extends LitElement {
             ?saving="${this._saving}"
             ?saveComplete="${this._saveComplete}"
           ></grampsjs-app-bar>
-          <md-linear-progress
-            ?indeterminate="${this.progress}"
-            class="${this.progress ? 'active' : ''}"
-          ></md-linear-progress>
-
           <main>
+            <md-linear-progress
+              ?indeterminate="${this.progress}"
+              class="${this.progress ? 'active' : ''}"
+              aria-label="${this._('Loading')}"
+            ></md-linear-progress>
+
             <grampsjs-tab-bar .appState="${this.appState}"></grampsjs-tab-bar>
             <grampsjs-dna-tab-bar
               .appState="${this.appState}"

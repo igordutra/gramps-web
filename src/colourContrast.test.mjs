@@ -1,7 +1,7 @@
 /**
  * Checks for the user-colour legibility helper.
  *
- * Run with: node src/noteColour.test.mjs
+ * Run with: node src/colourContrast.test.mjs
  *
  * The cases come from a real measurement: the lab tree stores its note
  * colour as #e611bf, which is illegible on the light surface (4.04:1),
@@ -15,7 +15,7 @@ import {
   effectiveBackground,
   parseColor,
   toCss,
-} from './noteColour.js'
+} from './colourContrast.js'
 
 let failures = 0
 const check = (name, fn) => {

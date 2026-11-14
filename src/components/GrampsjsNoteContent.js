@@ -8,7 +8,7 @@ import {
   effectiveBackground,
   parseColor,
   toCss,
-} from '../noteColour.js'
+} from '../colourContrast.js'
 import {getThumbnailUrl} from '../api.js'
 import {IMAGE_PLACEHOLDER} from '../inlineImages.js'
 import './GrampsjsIcon.js'

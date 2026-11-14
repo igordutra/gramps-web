@@ -120,6 +120,7 @@ export class GrampsjsViewNewMedia extends GrampsjsNewMediaMixin(
                 value="${this.uploadTotal > 0
                   ? this.uploadProgress / this.uploadTotal
                   : 0}"
+                aria-label="${this._('Upload progress')}"
               ></md-linear-progress>
               <p style="text-align: center; margin-top: 8px;">
                 ${this._(

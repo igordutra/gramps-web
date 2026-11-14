@@ -128,6 +128,7 @@ export class GrampsjsTreeQuotas extends GrampsjsConnectedComponent {
                   <td class="progress">
                     <md-linear-progress
                       value="${progressAi}"
+                      aria-label="${this._('Chat messages')}"
                     ></md-linear-progress>
                   </td>
                   <td class="numbers">
@@ -149,7 +150,10 @@ export class GrampsjsTreeQuotas extends GrampsjsConnectedComponent {
           <tr>
             <th>${this._('Number of people')}</th>
             <td class="progress">
-              <md-linear-progress indeterminate></md-linear-progress>
+              <md-linear-progress
+                indeterminate
+                aria-label="${this._('Number of people')}"
+              ></md-linear-progress>
             </td>
             <td class="numbers">
               <span class="skeleton" style="width: 6em;">&nbsp;</span>
@@ -158,7 +162,10 @@ export class GrampsjsTreeQuotas extends GrampsjsConnectedComponent {
           <tr>
             <th>${this._('Total size of media objects')}</th>
             <td class="progress">
-              <md-linear-progress indeterminate></md-linear-progress>
+              <md-linear-progress
+                indeterminate
+                aria-label="${this._('Total size of media objects')}"
+              ></md-linear-progress>
             </td>
             <td class="numbers">
               <span class="skeleton" style="width: 7em;">&nbsp;</span>
