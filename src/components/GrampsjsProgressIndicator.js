@@ -2,8 +2,7 @@ import {css, LitElement, html} from 'lit'
 
 import '@material/web/progress/circular-progress.js'
 
-import {mdiCheckCircle, mdiCloseCircle} from '@mdi/js'
-
+import {CheckCircle, XCircle} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {fireEvent} from '../util.js'
@@ -139,7 +138,7 @@ export class GrampsjsProgressIndicator extends GrampsjsAppStateMixin(
     return html`
       <grampsjs-icon
         class="success"
-        path="${mdiCheckCircle}"
+        path="${CheckCircle}"
         color="currentColor"
         width="${this.size}"
         height="${this.size}"
@@ -152,7 +151,7 @@ export class GrampsjsProgressIndicator extends GrampsjsAppStateMixin(
       <grampsjs-icon
         id="error-icon"
         class="error"
-        path="${mdiCloseCircle}"
+        path="${XCircle}"
         color="currentColor"
         width="${this.size}"
         height="${this.size}"

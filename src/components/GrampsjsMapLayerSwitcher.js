@@ -7,7 +7,7 @@ import '@material/web/switch/switch.js'
 
 import './GrampsjsIcon.js'
 import './GrampsjsImg.js'
-import {mdiLayers, mdiCircleOpacity} from '@mdi/js'
+import {CircleHalf, Stack} from '../icons/phosphor.js'
 import {fireEvent, objectIconPath} from '../util.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -37,9 +37,9 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
 
         .button {
           background: var(--md-sys-color-surface-container-high);
-          border-radius: 12px;
-          box-shadow: 0 1px 4px var(--grampsjs-body-font-color-20);
-          padding: 2px;
+          border-radius: var(--md-sys-shape-corner-extra-large);
+          box-shadow: var(--md-sys-elevation-level2);
+          padding: var(--grampsjs-space-2);
           display: flex;
           align-items: center;
           position: relative;
@@ -48,49 +48,49 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         /* Shown while any overlay is on. */
         .dot {
           position: absolute;
-          top: 5px;
-          right: 5px;
+          top: var(--grampsjs-space-4);
+          right: var(--grampsjs-space-4);
           width: 8px;
           height: 8px;
           border-radius: 50%;
           background: var(--md-sys-color-primary);
-          box-shadow: 0 0 0 2px var(--md-sys-color-surface-container-high);
+          box-shadow: var(--md-sys-elevation-level2);
           pointer-events: none;
         }
 
         .button md-icon-button {
-          --md-icon-button-icon-size: 18px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size);
           width: 32px;
           height: 32px;
         }
 
         #panel {
           position: absolute;
-          bottom: calc(100% + 8px);
+          bottom: calc(100% + var(--grampsjs-space-8));
           left: 0;
           width: 300px;
           max-height: calc(100vh - 260px);
           overflow-y: auto;
           box-sizing: border-box;
-          padding: 12px;
+          padding: var(--grampsjs-space-12);
           background: var(--md-sys-color-surface-container-high);
           color: var(--md-sys-color-on-surface);
-          border-radius: 16px;
-          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-          font-size: 14px;
+          border-radius: var(--md-sys-shape-corner-2xl);
+          box-shadow: var(--md-sys-elevation-level2);
+          font-size: var(--md-sys-typescale-label-large-size);
         }
 
         .styles {
           display: flex;
-          gap: 8px;
+          gap: var(--grampsjs-space-8);
         }
 
         .style-card {
           flex: 1;
           min-width: 0;
-          padding: 4px;
+          padding: var(--grampsjs-space-4);
           border: 2px solid transparent;
-          border-radius: 12px;
+          border-radius: var(--md-sys-shape-corner-extra-large);
           background: none;
           color: inherit;
           font: inherit;
@@ -111,25 +111,25 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           width: 100%;
           height: 56px;
           object-fit: cover;
-          border-radius: 8px;
+          border-radius: var(--md-sys-shape-corner-medium);
         }
 
         .style-label {
           display: block;
-          margin-top: 4px;
-          font-size: 13px;
+          margin-top: var(--grampsjs-space-4);
+          font-size: var(--md-sys-typescale-label-medium-size);
           font-weight: 500;
         }
 
         .style-year {
           display: block;
-          font-size: 12px;
+          font-size: var(--md-sys-typescale-label-small-size);
           color: var(--md-sys-color-on-surface-variant);
         }
 
         h3 {
           margin: 16px 0 4px;
-          font-size: 12px;
+          font-size: var(--md-sys-typescale-label-small-size);
           font-weight: 500;
           letter-spacing: 0.04em;
           text-transform: uppercase;
@@ -140,7 +140,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         .row {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: var(--grampsjs-space-12);
           padding: 6px 0;
           cursor: pointer;
         }
@@ -149,7 +149,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           flex: none;
           width: 40px;
           height: 40px;
-          border-radius: 8px;
+          border-radius: var(--md-sys-shape-corner-medium);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -167,7 +167,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           height: 14px;
           border-radius: 50%;
           border: 2px solid #ffffff;
-          box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+          box-shadow: var(--md-sys-elevation-level2);
         }
 
         .text {
@@ -184,7 +184,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .sub {
-          font-size: 12px;
+          font-size: var(--md-sys-typescale-label-small-size);
           color: var(--md-sys-color-on-surface-variant);
         }
 
@@ -192,8 +192,8 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         .opacity {
           display: flex;
           align-items: center;
-          gap: 8px;
-          margin-top: -8px;
+          gap: var(--grampsjs-space-8);
+          margin-top: calc(-1 * var(--grampsjs-space-8));
           padding: 0 0 4px 52px;
         }
 
@@ -204,30 +204,30 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
         .opacity md-slider {
           flex: 1;
           min-width: 0;
-          --md-slider-handle-height: 16px;
-          --md-slider-handle-width: 16px;
-          --md-slider-active-track-height: 3px;
-          --md-slider-inactive-track-height: 3px;
+          --md-slider-handle-height: var(--grampsjs-icon-size-small);
+          --md-slider-handle-width: var(--grampsjs-icon-size-small);
+          --md-slider-active-track-height: var(--grampsjs-space-2);
+          --md-slider-inactive-track-height: var(--grampsjs-space-2);
         }
 
         md-switch {
           flex: none;
-          --md-switch-track-height: 22px;
-          --md-switch-track-width: 38px;
-          --md-switch-handle-height: 16px;
-          --md-switch-handle-width: 16px;
-          --md-switch-selected-handle-height: 16px;
-          --md-switch-selected-handle-width: 16px;
-          --md-switch-pressed-handle-height: 18px;
-          --md-switch-pressed-handle-width: 18px;
+          --md-switch-track-height: var(--grampsjs-space-20);
+          --md-switch-track-width: var(--grampsjs-space-40);
+          --md-switch-handle-height: var(--grampsjs-icon-size-small);
+          --md-switch-handle-width: var(--grampsjs-icon-size-small);
+          --md-switch-selected-handle-height: var(--grampsjs-icon-size-small);
+          --md-switch-selected-handle-width: var(--grampsjs-icon-size-small);
+          --md-switch-pressed-handle-height: var(--grampsjs-icon-size);
+          --md-switch-pressed-handle-width: var(--grampsjs-icon-size);
         }
 
         @media (max-width: 512px) {
           #panel {
             position: fixed;
-            left: 8px;
-            right: 8px;
-            bottom: 8px;
+            left: var(--grampsjs-space-8);
+            right: var(--grampsjs-space-8);
+            bottom: var(--grampsjs-space-8);
             width: auto;
             max-height: 70vh;
           }
@@ -270,7 +270,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
           @click="${this._handleButtonClick}"
         >
           <grampsjs-icon
-            path="${mdiLayers}"
+            path="${Stack}"
             color="var(--grampsjs-body-font-color-70)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -377,7 +377,7 @@ class GrampsjsMapLayerSwitcher extends GrampsjsAppStateMixin(LitElement) {
     return html`
       <div class="opacity">
         <grampsjs-icon
-          path="${mdiCircleOpacity}"
+          path="${CircleHalf}"
           color="var(--md-sys-color-on-surface-variant)"
           height="18"
           width="18"

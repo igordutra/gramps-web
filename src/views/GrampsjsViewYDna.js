@@ -1,8 +1,7 @@
 import {html, css} from 'lit'
 
-import '@material/web/select/filled-select'
-import {mdiEye, mdiPencil, mdiPlus} from '@mdi/js'
-
+import '@material/web/select/outlined-select'
+import {Eye, PencilSimple, Plus} from '../icons/phosphor.js'
 import '../components/GrampsjsYtreeLineage.js'
 import '../components/GrampsjsFormNewYDna.js'
 import '../components/GrampsjsFormEditYDna.js'
@@ -23,7 +22,7 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
         md-outlined-text-field {
           width: 100%;
           resize: both;
-          min-width: 300px;
+          min-width: min(300px, 100%);
         }
 
         .raw-data {
@@ -40,11 +39,15 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
   }
 
   renderFab() {
-    return html`<md-fab variant="primary" @click="${this._handleClickAdd}">
+    return html`<md-fab
+      variant="secondary"
+      @click="${this._handleClickAdd}"
+      aria-label="${this._('Add')}"
+    >
       <grampsjs-icon
         slot="icon"
-        .path="${mdiPlus}"
-        color="currentColor"
+        .path="${Plus}"
+        color="var(--mdc-theme-on-secondary)"
       ></grampsjs-icon>
     </md-fab>`
   }
@@ -91,7 +94,7 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
       <p>
         <md-text-button @click="${this._showRawSnpData}">
           <grampsjs-icon
-            .path="${mdiEye}"
+            .path="${Eye}"
             slot="icon"
             color="currentColor"
           ></grampsjs-icon>
@@ -101,7 +104,7 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
           ? html`
               <md-text-button @click="${this._editRawSnpData}">
                 <grampsjs-icon
-                  .path="${mdiPencil}"
+                  .path="${PencilSimple}"
                   slot="icon"
                   color="currentColor"
                 ></grampsjs-icon>
@@ -163,12 +166,15 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
 
   _renderSelect() {
     if (this._selectDataLoading) {
-      return html`<md-filled-select disabled id="placeholder"
-        >${this._('Loading items...')}</md-filled-select
+      return html`<md-outlined-select disabled id="placeholder"
+        >${this._('Loading items...')}</md-outlined-select
       >`
     }
     return html`
-      <md-filled-select @change="${this._handleSelectChange}">
+      <md-outlined-select
+        aria-label="${this._('Select a person')}"
+        @change="${this._handleSelectChange}"
+      >
         ${this._data.map(
           person => html`
             <md-select-option
@@ -178,7 +184,7 @@ export class GrampsjsViewYDna extends GrampsjsViewDnaBase {
             >
           `
         )}
-      </md-filled-select>
+      </md-outlined-select>
     `
   }
 

@@ -5,7 +5,7 @@ Element for selecting a Gramps type
 import {html, css, LitElement} from 'lit'
 import '@material/web/switch/switch.js'
 
-import {mdiLock, mdiLockOpen} from '@mdi/js'
+import {Lock, LockOpen} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 
@@ -38,11 +38,11 @@ class GrampsjsFormPrivate extends GrampsjsAppStateMixin(LitElement) {
           ?selected="${this.checked}"
           ?disabled="${this.disabled}"
         >
-          <svg viewBox="0 0 24 24" slot="on-icon">
-            <path d="${mdiLock}" />
+          <svg viewBox="0 0 256 256" slot="on-icon">
+            <path d="${Lock}" />
           </svg>
-          <svg viewBox="0 0 24 24" slot="off-icon">
-            <path d="${mdiLockOpen}" />
+          <svg viewBox="0 0 256 256" slot="off-icon">
+            <path d="${LockOpen}" />
           </svg>
         </md-switch>
       </label>

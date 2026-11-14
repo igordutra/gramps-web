@@ -1,7 +1,6 @@
 import {html, css} from 'lit'
 import '@material/web/button/outlined-button.js'
-import {mdiDeleteSweep} from '@mdi/js'
-
+import {Trash} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import {getRecentObjects, setRecentObjects} from '../api.js'
 import '../components/GrampsjsSearchResultList.js'
@@ -84,7 +83,7 @@ export class GrampsjsViewRecentObject extends GrampsjsView {
         >
           <grampsjs-icon
             slot="icon"
-            path="${mdiDeleteSweep}"
+            path="${Trash}"
             color="currentColor"
             height="20"
             width="20"

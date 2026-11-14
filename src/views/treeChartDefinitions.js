@@ -4,8 +4,7 @@ import '@material/web/chips/input-chip'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/menu/menu'
 import '@material/web/menu/menu-item'
-import {mdiPalette} from '@mdi/js'
-
+import {Palette} from '../icons/phosphor.js'
 import '../components/GrampsjsFanChart.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsRelationshipChart.js'
@@ -156,8 +155,8 @@ function renderFanColorControls(view) {
               setColor('')
             }}
           >
-            <svg viewBox="0 0 24 24" slot="icon">
-              <path d="${mdiPalette}" />
+            <svg viewBox="0 0 256 256" slot="icon">
+              <path d="${Palette}" />
             </svg>
           </md-input-chip>
         `
@@ -168,7 +167,7 @@ function renderFanColorControls(view) {
             id="btn-color"
           >
             <grampsjs-icon
-              path="${mdiPalette}"
+              path="${Palette}"
               color="currentColor"
             ></grampsjs-icon>
           </md-icon-button>

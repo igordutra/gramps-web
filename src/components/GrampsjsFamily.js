@@ -2,8 +2,7 @@ import {css, html} from 'lit'
 
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiLinkOff, mdiLinkPlus, mdiPencil, mdiPlus} from '@mdi/js'
-
+import {Link, LinkSimple, PencilSimple, Plus} from '../icons/phosphor.js'
 import {fireEvent, objectIconPath} from '../util.js'
 import './GrampsjsIcon.js'
 import './GrampsjsObjectLink.js'
@@ -135,7 +134,7 @@ export class GrampsjsFamily extends GrampsjsObject {
                       @click="${this._handleEditFamily}"
                     >
                       <grampsjs-icon
-                        path="${mdiPencil}"
+                        path="${PencilSimple}"
                         color="var(--mdc-theme-secondary)"
                       ></grampsjs-icon>
                     </md-icon-button>
@@ -198,7 +197,7 @@ export class GrampsjsFamily extends GrampsjsObject {
                               this._handleParentChanged(e, parent)}"
                           >
                             <grampsjs-icon
-                              path="${mdiLinkOff}"
+                              path="${LinkSimple}"
                               color="var(--mdc-theme-secondary)"
                             ></grampsjs-icon>
                           </md-icon-button>
@@ -211,7 +210,7 @@ export class GrampsjsFamily extends GrampsjsObject {
                       @click="${() => this._handleParentShare(parent)}"
                     >
                       <grampsjs-icon
-                        path="${mdiLinkPlus}"
+                        path="${Link}"
                         color="var(--mdc-theme-secondary)"
                       ></grampsjs-icon>
                     </md-icon-button>
@@ -222,7 +221,7 @@ export class GrampsjsFamily extends GrampsjsObject {
                       @click="${() => this._handleAddNewParent(parent)}"
                     >
                       <grampsjs-icon
-                        path="${mdiPlus}"
+                        path="${Plus}"
                         color="var(--mdc-theme-secondary)"
                       ></grampsjs-icon>
                     </md-icon-button>

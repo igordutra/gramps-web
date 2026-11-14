@@ -2,8 +2,7 @@ import {css, html} from 'lit'
 import '@material/web/progress/circular-progress.js'
 import '@material/web/dialog/dialog.js'
 
-import {mdiAlertCircle, mdiCheckCircle} from '@mdi/js'
-
+import {CheckCircle, WarningCircle} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import {objectIconPath} from '../util.js'
 import {sharedStyles} from '../SharedStyles.js'
@@ -11,7 +10,7 @@ import {GrampsjsConnectedComponent} from './GrampsjsConnectedComponent.js'
 
 export const iconSuccess = html`<grampsjs-icon
   class="success"
-  path="${mdiCheckCircle}"
+  path="${CheckCircle}"
   color="currentColor"
 ></grampsjs-icon>`
 
@@ -37,7 +36,7 @@ export class GrampsjsMediaStatus extends GrampsjsConnectedComponent {
         }
 
         md-circular-progress {
-          --md-circular-progress-size: 24px;
+          --md-circular-progress-size: var(--grampsjs-icon-size-large);
           --md-circular-progress-active-indicator-width: 15;
           margin: -2px;
           --md-circular-progress-active-indicator-color: var(
@@ -87,7 +86,7 @@ export class GrampsjsMediaStatus extends GrampsjsConnectedComponent {
     return html`
       <grampsjs-icon
         class="error link"
-        path="${mdiAlertCircle}"
+        path="${WarningCircle}"
         color="currentColor"
         @click="${this._handleErrorClick}"
       ></grampsjs-icon>

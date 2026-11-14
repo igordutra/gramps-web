@@ -5,22 +5,16 @@ translation function `_` of the calling element.
 */
 
 import {html} from 'lit'
-import {
-  mdiAlertCircleOutline,
-  mdiCheckCircleOutline,
-  mdiInformationOutline,
-  mdiAlertOutline,
-} from '@mdi/js'
-
+import {CheckCircle, Info, Warning, WarningCircle} from './icons/phosphor.js'
 import {isExportDownloadUrl} from './api.js'
 import './components/GrampsjsIcon.js'
 import './components/GrampsjsTimedelta.js'
 
 const TYPE_ICON = {
-  error: mdiAlertCircleOutline,
-  warning: mdiAlertOutline,
-  info: mdiInformationOutline,
-  success: mdiCheckCircleOutline,
+  error: WarningCircle,
+  warning: Warning,
+  info: Info,
+  success: CheckCircle,
 }
 
 const TYPE_COLOR = {

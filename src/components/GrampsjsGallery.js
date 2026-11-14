@@ -1,16 +1,14 @@
 import {LitElement, css, html} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
 import {
-  mdiArrowLeft,
-  mdiArrowRight,
-  mdiDelete,
-  mdiLinkPlus,
-  mdiLock,
-  mdiLockOpenVariantOutline,
-  mdiLockOutline,
-  mdiPlus,
-} from '@mdi/js'
-
+  ArrowLeft,
+  ArrowRight,
+  Link,
+  Lock,
+  LockOpen,
+  Plus,
+  Trash,
+} from '../icons/phosphor.js'
 import {reorderableStyles, sharedStyles} from '../SharedStyles.js'
 import './GrampsjsImg.js'
 import './GrampsjsIcon.js'
@@ -173,7 +171,7 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this.openMediaRef}"
               >
                 <grampsjs-icon
-                  path="${mdiLinkPlus}"
+                  path="${Link}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -182,7 +180,7 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this.openNewMedia}"
               >
                 <grampsjs-icon
-                  path="${mdiPlus}"
+                  path="${Plus}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -262,7 +260,7 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
                         }}"
                       >
                         <grampsjs-icon
-                          path="${mdiArrowLeft}"
+                          path="${ArrowLeft}"
                           color="var(--mdc-theme-secondary)"
                         ></grampsjs-icon>
                       </md-icon-button>
@@ -278,7 +276,7 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
                         }}"
                       >
                         <grampsjs-icon
-                          path="${mdiArrowRight}"
+                          path="${ArrowRight}"
                           color="var(--mdc-theme-secondary)"
                         ></grampsjs-icon>
                       </md-icon-button>
@@ -292,7 +290,7 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
                   }}"
                 >
                   <grampsjs-icon
-                    path="${mdiDelete}"
+                    path="${Trash}"
                     color="var(--mdc-theme-secondary)"
                   ></grampsjs-icon>
                 </md-icon-button>
@@ -310,7 +308,7 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
   _renderPrivacyButton(i) {
     const media = this.media[i]
     const privacy = rowPrivacy(media, this.mediaRef[i])
-    const paths = {private: mdiLock, link: mdiLockOutline}
+    const paths = {private: Lock, link: Lock}
     return html`
       <md-icon-button
         class="privacy-button"
@@ -323,7 +321,7 @@ export class GrampsjsGallery extends GrampsjsAppStateMixin(LitElement) {
         }}"
       >
         <grampsjs-icon
-          path="${paths[privacy] ?? mdiLockOpenVariantOutline}"
+          path="${paths[privacy] ?? LockOpen}"
           color="var(--mdc-theme-secondary)"
         ></grampsjs-icon>
       </md-icon-button>

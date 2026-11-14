@@ -1,13 +1,6 @@
 import {LitElement, css, html, nothing} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {
-  mdiAlertCircleOutline,
-  mdiChevronRight,
-  mdiFilter,
-  mdiFilterCogOutline,
-  mdiFilterOff,
-} from '@mdi/js'
-
+import {CaretRight, Funnel, FunnelX, WarningCircle} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import '@material/web/button/filled-button'
 import '@material/web/button/outlined-button'
@@ -52,15 +45,68 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
-          gap: 4px 8px;
+          gap: 8px 12px;
+          /*
+           * The toolbar row mixed a 34px button, a 40px icon button
+           * and a 54px select, each centred on its own height, so the
+           * row was ragged and the controls looked like they belonged
+           * to different applications.
+           *
+           * Every control in the row is now the same height, and that
+           * height is a step of the space scale. The select is the one
+           * that needed telling: a field's height comes from the
+           * spacing around its content, not from the container height
+           * the app uses for buttons, so it is the field's spacing
+           * that is set here.
+           */
+          --md-outlined-field-top-space: var(--grampsjs-space-8);
+          --md-outlined-field-bottom-space: var(--grampsjs-space-8);
+          --md-filled-button-container-height: var(--grampsjs-space-40);
+          --md-outlined-button-container-height: var(--grampsjs-space-40);
+          --md-text-button-container-height: var(--grampsjs-space-40);
+          --md-elevated-button-container-height: var(--grampsjs-space-40);
+          /*
+           * The toolbar had a gutter of its own, on top of the one the
+           * page already applies, so its controls sat 24px to the right
+           * of the heading and of the content below them — the table's
+           * first column, the media gallery's first tile.
+           *
+           * The content is flush with the page's gutter, so the toolbar
+           * is too: its controls' boxes line up with the content's
+           * left edge, and their labels line up with the table's column
+           * headings.
+           */
+          padding: var(--grampsjs-space-12, 12px) 0;
+        }
+
+        /*
+         * The leading controls are a group of their own, and the group
+         * is what carries the free space.
+         *
+         * The trailing controls used to carry an auto margin of their
+         * own, which pushed them to the right — right, as long as they
+         * shared a line with the leading ones. On a narrow screen they
+         * wrap onto a second line, the auto margin still applied, and
+         * the row was indented 50px from the content it sat above.
+         *
+         * The margin belongs on the group before them: when the
+         * trailing controls wrap onto their own line, the group keeps
+         * the free space and they start at the left, with the content
+         * above them.
+         */
+        .leading-group {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 8px 12px;
+          margin-right: auto;
         }
 
         slot[name='trailing'] {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
-          gap: 4px 8px;
-          margin-left: auto;
+          gap: 8px 12px;
         }
 
         .chips {
@@ -71,7 +117,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
         }
 
         #filteroff {
-          --md-icon-button-icon-size: 20px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
         }
 
         #input-goql-container {
@@ -104,7 +150,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
         summary {
           display: flex;
           align-items: center;
-          gap: 2px;
+          gap: 4px;
           padding: 8px 0;
           cursor: pointer;
           list-style: none;
@@ -213,39 +259,41 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
   render() {
     return html`
       <div class="filtermenu">
-        <slot name="leading"></slot>
-        ${this.open
-          ? html`
-              <md-filled-button @click="${this._handleFilterButton}">
-                <grampsjs-icon
-                  slot="icon"
-                  path="${mdiFilter}"
-                  color="currentColor"
-                ></grampsjs-icon>
-                ${this._('filter')}
-              </md-filled-button>
-            `
-          : html`
-              <md-outlined-button @click="${this._handleFilterButton}">
-                <grampsjs-icon
-                  slot="icon"
-                  path="${mdiFilter}"
-                  color="currentColor"
-                ></grampsjs-icon>
-                ${this._('filter')}
-              </md-outlined-button>
-            `}
-        <md-icon-button
-          id="filteroff"
-          aria-label="${this._('Clear all filters')}"
-          ?disabled="${!this._hasChips}"
-          @click="${this._handleFilterOff}"
-        >
-          <grampsjs-icon path="${mdiFilterOff}"></grampsjs-icon>
-        </md-icon-button>
-        <grampsjs-tooltip for="filteroff" .appState="${this.appState}"
-          >${this._('Clear all filters')}</grampsjs-tooltip
-        >
+        <div class="leading-group">
+          <slot name="leading"></slot>
+          ${this.open
+            ? html`
+                <md-filled-button @click="${this._handleFilterButton}">
+                  <grampsjs-icon
+                    slot="icon"
+                    path="${Funnel}"
+                    color="currentColor"
+                  ></grampsjs-icon>
+                  ${this._('Filter')}
+                </md-filled-button>
+              `
+            : html`
+                <md-outlined-button @click="${this._handleFilterButton}">
+                  <grampsjs-icon
+                    slot="icon"
+                    path="${Funnel}"
+                    color="currentColor"
+                  ></grampsjs-icon>
+                  ${this._('Filter')}
+                </md-outlined-button>
+              `}
+          <md-icon-button
+            id="filteroff"
+            aria-label="${this._('Clear all filters')}"
+            ?disabled="${!this._hasChips}"
+            @click="${this._handleFilterOff}"
+          >
+            <grampsjs-icon path="${FunnelX}"></grampsjs-icon>
+          </md-icon-button>
+          <grampsjs-tooltip for="filteroff" .appState="${this.appState}"
+            >${this._('Clear all filters')}</grampsjs-tooltip
+          >
+        </div>
         <slot name="trailing"></slot>
       </div>
       ${this._hasChips
@@ -276,7 +324,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
           ? html`<md-text-button @click="${this._openBuilder}">
               <grampsjs-icon
                 slot="icon"
-                path="${mdiFilterCogOutline}"
+                path="${Funnel}"
                 color="currentColor"
               ></grampsjs-icon>
               ${this._('Advanced filter')}
@@ -356,7 +404,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
       <details data-section="${id}">
         <summary>
           <grampsjs-icon
-            path="${mdiChevronRight}"
+            path="${CaretRight}"
             height="20"
             width="20"
             color="var(--mdc-theme-primary)"
@@ -428,7 +476,7 @@ export class GrampsjsFilters extends GrampsjsAppStateMixin(LitElement) {
           ?error="${this._hasGoqlError}"
         >
           ${this._hasGoqlError
-            ? renderIconSvg(mdiAlertCircleOutline, null, 0, 'trailing-icon')
+            ? renderIconSvg(WarningCircle, null, 0, 'trailing-icon')
             : ''}
         </grampsjs-goql-input>
         <span

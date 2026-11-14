@@ -5,13 +5,12 @@ import '@material/web/button/text-button.js'
 import '@material/web/dialog/dialog.js'
 import '@material/web/iconbutton/icon-button.js'
 import {
-  mdiAlertOutline,
-  mdiBackupRestore,
-  mdiDatabaseExport,
-  mdiDelete,
-  mdiDownload,
-} from '@mdi/js'
-
+  ArrowCounterClockwise,
+  Database,
+  DownloadSimple,
+  Trash,
+  Warning,
+} from '../icons/phosphor.js'
 import {sharedStyles, buttonColorStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import './GrampsjsIcon.js'
@@ -170,7 +169,7 @@ export class GrampsjsBackups extends GrampsjsAppStateMixin(LitElement) {
         >
           <grampsjs-icon
             slot="icon"
-            path="${mdiBackupRestore}"
+            path="${ArrowCounterClockwise}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('Restore')}
@@ -220,7 +219,7 @@ export class GrampsjsBackups extends GrampsjsAppStateMixin(LitElement) {
         >
           <grampsjs-icon
             slot="icon"
-            path="${mdiDatabaseExport}"
+            path="${Database}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('Make Backup...')}
@@ -294,7 +293,7 @@ export class GrampsjsBackups extends GrampsjsAppStateMixin(LitElement) {
         ? ''
         : html`<span style="display:inline-flex;"
             ><grampsjs-icon
-              path="${mdiAlertOutline}"
+              path="${Warning}"
               color="var(--grampsjs-alert-warn-font-color)"
               height="18"
               width="18"
@@ -319,7 +318,7 @@ export class GrampsjsBackups extends GrampsjsAppStateMixin(LitElement) {
         @click="${() => this._download(backup)}"
       >
         <grampsjs-icon
-          path="${mdiDownload}"
+          path="${DownloadSimple}"
           color="var(--mdc-theme-secondary)"
         ></grampsjs-icon>
       </md-icon-button>
@@ -330,7 +329,7 @@ export class GrampsjsBackups extends GrampsjsAppStateMixin(LitElement) {
         @click="${() => this._startRestore(backup)}"
       >
         <grampsjs-icon
-          path="${mdiBackupRestore}"
+          path="${ArrowCounterClockwise}"
           color="var(--grampsjs-alert-error-font-color)"
         ></grampsjs-icon>
       </md-icon-button>
@@ -342,7 +341,7 @@ export class GrampsjsBackups extends GrampsjsAppStateMixin(LitElement) {
         }}"
       >
         <grampsjs-icon
-          path="${mdiDelete}"
+          path="${Trash}"
           color="var(--mdc-theme-secondary)"
         ></grampsjs-icon>
       </md-icon-button>

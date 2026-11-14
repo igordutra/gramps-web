@@ -1,21 +1,28 @@
 import {select} from 'd3-selection'
-import {
-  mdiChevronDown,
-  mdiChevronLeft,
-  mdiChevronRight,
-  mdiChevronUp,
-} from '@mdi/js'
-
+import {CaretDown, CaretLeft, CaretRight, CaretUp} from '../icons/phosphor.js'
 // The chevron buttons of the charts. Their radius, in pixels.
 export const buttonRadius = 20
 // Radius of the backdrop around the chevron, in pixels
 const backdropRadius = 12
+// The size of the chevron glyph, in pixels.
+const iconSize = 24
+/*
+ * Phosphor draws its icons on a 256x256 grid, while the chart canvas works
+ * in screen pixels with one viewBox unit to one pixel. The path therefore
+ * has to be scaled down to the icon's size before it is positioned, or the
+ * chevron renders at 256 units — a huge arrow across the chart.
+ *
+ * The chart buttons used to hold Material Design Icons, whose paths are on
+ * a 24-unit grid and needed no scaling. Swapping the icon set without
+ * scaling is what produced the oversized arrow.
+ */
+const iconScale = iconSize / 256
 
 const chevrons = {
-  left: mdiChevronLeft,
-  right: mdiChevronRight,
-  top: mdiChevronUp,
-  bottom: mdiChevronDown,
+  left: CaretLeft,
+  right: CaretRight,
+  top: CaretUp,
+  bottom: CaretDown,
 }
 
 // Appends buttons to the `enter` selection that call `activate(event, d)`
@@ -58,8 +65,13 @@ export function enterChartButtons(enter, activate, {backdrop = true} = {}) {
     .attr('class', 'shade')
     .attr('r', buttonRadius)
     .attr('fill-opacity', 0)
-  // The 24px icon is centred on the button
-  button.append('path').attr('transform', 'translate(-12,-12)')
+  // The icon is scaled to its size and centred on the button
+  button
+    .append('path')
+    .attr(
+      'transform',
+      `translate(${-iconSize / 2},${-iconSize / 2}) scale(${iconScale})`
+    )
   return button
 }
 

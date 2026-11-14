@@ -14,7 +14,12 @@ import '../components/GrampsjsObjectActions.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsTaskProgressIndicator.js'
 
-import {mdiClose, mdiUndo, mdiAlertOutline, mdiOpenInNew} from '@mdi/js'
+import {
+  ArrowCounterClockwise,
+  ArrowSquareOut,
+  Warning,
+  X,
+} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 
 import {renderIconSvg} from '../icons.js'
@@ -205,7 +210,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
               >
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiUndo}"
+                  path="${ArrowCounterClockwise}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('Undo')}
@@ -264,7 +269,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
           ? html`
               <md-text-button href="/${objectType}/${grampsId}"
                 >${renderIconSvg(
-                  mdiOpenInNew,
+                  ArrowSquareOut,
                   '--md-sys-color-primary',
                   0,
                   'icon'
@@ -274,7 +279,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
             `
           : html`<span></span>`}
         <md-text-button @click="${this._handleCloseDetail}"
-          >${renderIconSvg(mdiClose, '--md-sys-color-primary', 0, 'icon')}
+          >${renderIconSvg(X, '--md-sys-color-primary', 0, 'icon')}
           ${this._('Close')}</md-text-button
         >
       </div>
@@ -314,11 +319,7 @@ export class GrampsjsViewRevision extends GrampsjsView {
           ${this._forceRequired
             ? html`
                 <div class="dialog-warning">
-                  ${renderIconSvg(
-                    mdiAlertOutline,
-                    'var(--md-sys-color-error)',
-                    0
-                  )}
+                  ${renderIconSvg(Warning, 'var(--md-sys-color-error)', 0)}
                   <span>
                     ${this._(
                       'This revision cannot be cleanly undone because some objects have been modified after this transaction. Forcing the undo may result in data inconsistencies.'

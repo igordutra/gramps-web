@@ -4,16 +4,15 @@ import '@material/web/list/list'
 import '@material/web/list/list-item'
 
 import {
-  mdiAccount,
-  mdiChevronDown,
-  mdiChevronUp,
-  mdiClose,
-  mdiEarth,
-  mdiFilterVariant,
-  mdiMagnify,
-  mdiMapMarker,
-  mdiMapMarkerOff,
-} from '@mdi/js'
+  CaretDown,
+  CaretUp,
+  FunnelSimple,
+  GlobeHemisphereWest,
+  MagnifyingGlass,
+  MapPin,
+  User,
+  X,
+} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import './GrampsjsButtonToggle.js'
 import './GrampsjsMapFilters.js'
@@ -41,27 +40,35 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
     return [
       sharedStyles,
       css`
+        /*
+         * The search panel floats over the map.
+         *
+         * It was a fixed 380px wide and pinned 20px from the left, so on
+         * a 320px phone it ran 92px past the edge of the screen and the
+         * page scrolled sideways. It now takes the space it can have and
+         * leaves a margin on both sides.
+         */
         #container {
           position: absolute;
-          left: 20px;
+          left: var(--grampsjs-space-20);
+          right: var(--grampsjs-space-20);
           top: 90px;
           z-index: 999;
-          width: 380px;
+          max-width: 380px;
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: var(--grampsjs-space-8);
         }
 
         #searchbar {
           background-color: var(--md-sys-color-surface-container-high);
-          border-radius: 9999px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.08);
+          border-radius: var(--md-sys-shape-corner-full);
+          box-shadow: var(--md-sys-elevation-level2);
           display: flex;
           align-items: center;
-          padding: 0 4px 0 16px;
+          padding: 0 var(--grampsjs-space-4) 0 var(--grampsjs-space-16);
           height: 48px;
-          gap: 4px;
+          gap: var(--grampsjs-space-4);
         }
 
         #searchfield {
@@ -70,7 +77,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           border: none;
           background: transparent;
           outline: none;
-          font-size: 16px;
+          font-size: var(--md-sys-typescale-body-large-size);
           font-family: inherit;
           color: var(--md-sys-color-on-surface);
           caret-color: var(--md-sys-color-primary);
@@ -91,7 +98,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           display: flex;
           flex-wrap: nowrap;
           align-items: center;
-          gap: 6px;
+          gap: var(--grampsjs-space-4);
           height: 28px;
           padding: 0 4px;
           overflow-x: auto;
@@ -110,8 +117,9 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         #filter-pills {
           display: flex;
           flex-wrap: wrap;
-          gap: 6px;
-          padding: 12px 16px 4px;
+          gap: var(--grampsjs-space-4);
+          padding: var(--grampsjs-space-12) var(--grampsjs-space-16)
+            var(--grampsjs-space-4);
           position: sticky;
           top: 0;
           background: var(--md-sys-color-surface-container-high);
@@ -121,10 +129,10 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         .chip {
           display: inline-flex;
           align-items: center;
-          gap: 4px;
-          border-radius: 9999px;
-          padding: 6px 14px;
-          font-size: 13px;
+          gap: var(--grampsjs-space-4);
+          border-radius: var(--md-sys-shape-corner-full);
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-16);
+          font-size: var(--md-sys-typescale-label-medium-size);
           font-weight: 500;
           font-family: inherit;
           cursor: pointer;
@@ -151,8 +159,8 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
 
         .filter-dot {
           position: absolute;
-          top: 9px;
-          right: 9px;
+          top: var(--grampsjs-space-8);
+          right: var(--grampsjs-space-8);
           width: 8px;
           height: 8px;
           border-radius: 50%;
@@ -161,22 +169,22 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .chip-close {
-          font-size: 15px;
+          font-size: var(--md-sys-typescale-body-medium-size);
           line-height: 1;
-          margin-left: 2px;
+          margin-left: var(--grampsjs-space-2);
           opacity: 0.7;
         }
 
         #panel {
           background-color: var(--md-sys-color-surface-container-high);
-          border-radius: 18px;
+          border-radius: var(--md-sys-shape-corner-2xl);
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.08);
           overflow-x: hidden;
           overflow-y: auto;
           scrollbar-width: thin;
           max-height: calc(100vh - 240px);
-          font-size: 14px;
+          font-size: var(--md-sys-typescale-label-large-size);
           line-height: 20px;
         }
 
@@ -192,7 +200,8 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           font-size: 0.8em;
           color: var(--md-sys-color-on-surface-variant);
           text-align: right;
-          padding: 6px 16px 10px;
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-16)
+            var(--grampsjs-space-12);
           opacity: 0.6;
         }
 
@@ -203,7 +212,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .panel-section {
-          padding: 15px 20px;
+          padding: var(--grampsjs-space-16) var(--grampsjs-space-20);
         }
 
         .hidden {
@@ -216,8 +225,8 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
 
         @media (max-width: 512px) {
           #container {
-            left: 12px;
-            right: 12px;
+            left: var(--grampsjs-space-12);
+            right: var(--grampsjs-space-12);
             top: 68px;
             width: auto;
             z-index: 4;
@@ -250,7 +259,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
             border: none;
             cursor: pointer;
             background: var(--md-sys-color-surface-container-high);
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--md-sys-elevation-level2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -302,7 +311,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
       <div id="container">
         <div id="searchbar">
           <grampsjs-icon
-            path="${mdiMagnify}"
+            path="${MagnifyingGlass}"
             color="var(--md-sys-color-on-surface-variant)"
           ></grampsjs-icon>
           <input
@@ -316,7 +325,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           ${showClearButton
             ? html`
                 <md-icon-button @click="${this._handleClear}">
-                  <grampsjs-icon path="${mdiClose}"></grampsjs-icon>
+                  <grampsjs-icon path="${X}"></grampsjs-icon>
                 </md-icon-button>
               `
             : ''}
@@ -327,7 +336,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
               ?disabled="${this.filtersSuspended}"
               @click="${this._toggleFilters}"
             >
-              <grampsjs-icon path="${mdiFilterVariant}"></grampsjs-icon>
+              <grampsjs-icon path="${FunnelSimple}"></grampsjs-icon>
             </md-icon-button>
             ${this._filtersActive ? html`<span class="filter-dot"></span>` : ''}
           </span>
@@ -345,7 +354,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
             ${this._renderFilterPills()}
             ${this.data.length === 0
               ? html`<div class="panel-section">${this._('Not found')}</div>`
-              : html`<md-list id="searchresult-list">
+              : html`<md-list id="searchresult-list" role="list">
                   ${this.data.map((obj, i) => this._renderListItem(obj, i))}
                 </md-list>`}
             ${this._activeFilter === TYPE_EXTERNAL && this.data.length > 0
@@ -387,7 +396,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
             }}"
           >
             <grampsjs-icon
-              path="${this._collapsed ? mdiChevronDown : mdiChevronUp}"
+              path="${this._collapsed ? CaretDown : CaretUp}"
               color="var(--md-sys-color-on-surface-variant)"
             ></grampsjs-icon>
           </button>
@@ -466,7 +475,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
       <div id="filter-pills">
         <grampsjs-button-toggle
           label="${this._('Places')}"
-          .iconPath="${mdiMapMarker}"
+          .iconPath="${MapPin}"
           ?checked="${this._activeFilter.split(',').includes(TYPE_PLACE)}"
           .appState="${this.appState}"
           @grampsjs-button-toggle:toggle="${() =>
@@ -474,7 +483,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         ></grampsjs-button-toggle>
         <grampsjs-button-toggle
           label="${this._('People')}"
-          .iconPath="${mdiAccount}"
+          .iconPath="${User}"
           ?checked="${this._activeFilter.split(',').includes(TYPE_PERSON)}"
           .appState="${this.appState}"
           @grampsjs-button-toggle:toggle="${() =>
@@ -482,7 +491,7 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
         ></grampsjs-button-toggle>
         <grampsjs-button-toggle
           label="${this._('External')}"
-          .iconPath="${mdiEarth}"
+          .iconPath="${GlobeHemisphereWest}"
           ?checked="${this._activeFilter === TYPE_EXTERNAL}"
           .appState="${this.appState}"
           @grampsjs-button-toggle:toggle="${() =>
@@ -528,14 +537,14 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
           this.appState.i18n.strings,
           this.appState.settings
         ).trim(),
-        iconPath: mdiAccount,
+        iconPath: User,
       }
     }
     if (obj.object_type === TYPE_EXTERNAL) {
       return {
         label: obj.object?.name || obj.object?.display_name || '',
         supportingText: obj.object?.name ? obj.object.display_name : '',
-        iconPath: mdiEarth,
+        iconPath: GlobeHemisphereWest,
       }
     }
     return {
@@ -547,8 +556,8 @@ class GrampsjsMapSearchbox extends GrampsjsAppStateMixin(LitElement) {
       ).trim(),
       iconPath:
         obj.object?.profile?.lat != null && obj.object?.profile?.long != null
-          ? mdiMapMarker
-          : mdiMapMarkerOff,
+          ? MapPin
+          : MapPin,
     }
   }
 

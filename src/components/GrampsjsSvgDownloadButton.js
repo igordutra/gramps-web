@@ -1,6 +1,5 @@
 import {html, css, LitElement} from 'lit'
-import {mdiDownload} from '@mdi/js'
-
+import {DownloadSimple} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -51,7 +50,7 @@ export class GrampsjsSvgDownloadButton extends GrampsjsAppStateMixin(
         ?disabled=${this._preparing}
         @click=${this._download}
         ><grampsjs-icon
-          path="${mdiDownload}"
+          path="${DownloadSimple}"
           color="currentColor"
         ></grampsjs-icon
       ></md-icon-button>

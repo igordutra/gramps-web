@@ -6,8 +6,7 @@ import '@material/web/button/outlined-button.js'
 import '@material/web/button/text-button.js'
 import '@material/web/dialog/dialog.js'
 import '@material/web/iconbutton/icon-button.js'
-import {mdiDeleteSweep, mdiChevronRight, mdiContentCopy} from '@mdi/js'
-
+import {CaretRight, Copy, Trash} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import {downloadExportFile} from '../api.js'
 import {
@@ -160,7 +159,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
         >
           <grampsjs-icon
             slot="icon"
-            path="${mdiDeleteSweep}"
+            path="${Trash}"
             color="currentColor"
             height="20"
             width="20"
@@ -173,7 +172,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
         ? html`
             <div class="active-tasks">
               <h3>${this._('Running tasks')}</h3>
-              <md-list>
+              <md-list role="list">
                 ${this._runningTasks.map(
                   task => html`
                     <md-list-item type="text" noninteractive>
@@ -210,7 +209,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
             ${this._runningTasks.length > 0
               ? html`<h3>${this._('Notifications')}</h3>`
               : ''}
-            <md-list>
+            <md-list role="list">
               ${this._notifications.map(
                 n => html`
                   <md-list-item
@@ -228,7 +227,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
                     ${this._itemType(n) !== 'text'
                       ? html`<grampsjs-icon
                           slot="end"
-                          path="${mdiChevronRight}"
+                          path="${CaretRight}"
                           color="var(--grampsjs-body-font-color-60)"
                           height="20"
                           width="20"
@@ -271,7 +270,7 @@ export class GrampsjsViewNotificationLog extends GrampsjsView {
                       this._copyDetail(this._selectedNotification.detail)}"
                   >
                     <grampsjs-icon
-                      path="${mdiContentCopy}"
+                      path="${Copy}"
                       height="20"
                       width="20"
                     ></grampsjs-icon>

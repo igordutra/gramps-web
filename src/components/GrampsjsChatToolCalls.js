@@ -1,28 +1,27 @@
 import {html, css, LitElement} from 'lit'
 import {
-  mdiWrench,
-  mdiCalendarToday,
-  mdiMagnify,
-  mdiAccount,
-  mdiAccountMultiple,
-  mdiAccountFilter,
-  mdiFilter,
-} from '@mdi/js'
-
+  CalendarDots,
+  Funnel,
+  MagnifyingGlass,
+  User,
+  UserFocus,
+  Users,
+  Wrench,
+} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import './GrampsjsIcon.js'
 
 const TOOL_ICONS = {
-  get_current_date: mdiCalendarToday,
-  search_genealogy_database: mdiMagnify,
-  get_person: mdiAccount,
-  get_family: mdiAccountMultiple,
-  filter_people: mdiAccountFilter,
-  filter_events: mdiFilter,
-  filter_families: mdiFilter,
+  get_current_date: CalendarDots,
+  search_genealogy_database: MagnifyingGlass,
+  get_person: User,
+  get_family: Users,
+  filter_people: UserFocus,
+  filter_events: Funnel,
+  filter_families: Funnel,
 }
 
-const toolIcon = name => TOOL_ICONS[name] ?? mdiWrench
+const toolIcon = name => TOOL_ICONS[name] ?? Wrench
 
 class GrampsjsChatToolCalls extends LitElement {
   static get styles() {

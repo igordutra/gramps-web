@@ -5,20 +5,20 @@ on small screens, an icon button
 
 import {html, css, LitElement} from 'lit'
 import {
-  mdiAccount,
-  mdiAccountMultiple,
-  mdiCalendar,
-  mdiMapMarker,
-  mdiBookOpenVariant,
-  mdiBookmark,
-  mdiArchive,
-  mdiTextBox,
-  mdiImage,
-  mdiFormatListChecks,
-  mdiMenuDown,
-  mdiPlus,
-  mdiRss,
-} from '@mdi/js'
+  Archive,
+  BookOpenText,
+  BookmarkSimple,
+  Calendar,
+  CaretDown,
+  Image,
+  ListChecks,
+  MapPin,
+  Plus,
+  Rss,
+  Textbox,
+  User,
+  Users,
+} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/button/filled-button.js'
 import '@material/web/menu/menu'
@@ -30,17 +30,17 @@ import './GrampsjsIcon.js'
 import './GrampsjsTooltip.js'
 
 const menuItems = [
-  ['Person', '/new_person', mdiAccount],
-  ['Family', '/new_family', mdiAccountMultiple],
-  ['Event', '/new_event', mdiCalendar],
-  ['Place', '/new_place', mdiMapMarker],
-  ['Source', '/new_source', mdiBookOpenVariant],
-  ['Citation', '/new_citation', mdiBookmark],
-  ['Repository', '/new_repository', mdiArchive],
-  ['Note', '/new_note', mdiTextBox],
-  ['Media Object', '/new_media', mdiImage],
-  ['Task', '/new_task', mdiFormatListChecks],
-  ['Blog Post', '/new_blog_post', mdiRss],
+  ['Person', '/new_person', User],
+  ['Family', '/new_family', Users],
+  ['Event', '/new_event', Calendar],
+  ['Place', '/new_place', MapPin],
+  ['Source', '/new_source', BookOpenText],
+  ['Citation', '/new_citation', BookmarkSimple],
+  ['Repository', '/new_repository', Archive],
+  ['Note', '/new_note', Textbox],
+  ['Media Object', '/new_media', Image],
+  ['Task', '/new_task', ListChecks],
+  ['Blog Post', '/new_blog_post', Rss],
 ]
 
 class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
@@ -109,7 +109,7 @@ class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
       ${this._('Add')}
       <grampsjs-icon
         slot="icon"
-        path="${mdiMenuDown}"
+        path="${CaretDown}"
         color="currentColor"
       ></grampsjs-icon>
     </md-filled-button>`
@@ -121,7 +121,7 @@ class GrampsjsAddMenu extends GrampsjsAppStateMixin(LitElement) {
         @click="${this._handleClickAdd}"
         id="button_add"
       >
-        <grampsjs-icon path="${mdiPlus}" color="currentColor"></grampsjs-icon>
+        <grampsjs-icon path="${Plus}" color="currentColor"></grampsjs-icon>
       </md-icon-button>
       <grampsjs-tooltip for="button_add" .appState="${this.appState}"
         >${this._('Add')}</grampsjs-tooltip

@@ -1,5 +1,5 @@
 import {css, html, LitElement} from 'lit'
-import {mdiHelpCircleOutline} from '@mdi/js'
+import {Question} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 
 import {sharedStyles} from '../SharedStyles.js'
@@ -58,7 +58,7 @@ export class GrampsjsHelpButton extends GrampsjsAppStateMixin(LitElement) {
         aria-label="${this._('Help')}"
       >
         <grampsjs-icon
-          path="${mdiHelpCircleOutline}"
+          path="${Question}"
           color="var(--md-sys-color-on-surface-variant)"
         ></grampsjs-icon>
       </md-icon-button>

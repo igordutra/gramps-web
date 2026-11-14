@@ -2,8 +2,7 @@ import {LitElement, html, css} from 'lit'
 
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiCheck, mdiShareVariant} from '@mdi/js'
-
+import {Check, ShareNetwork} from '../icons/phosphor.js'
 import {sharedStyles, iconButtonColorStyles} from '../SharedStyles.js'
 import {clickKeyHandler} from '../util.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -24,8 +23,8 @@ export class GrampsjsShareUrl extends GrampsjsAppStateMixin(LitElement) {
 
         md-icon-button {
           --grampsjs-icon-button-color: currentColor;
-          --md-icon-button-state-layer-width: 28px;
-          --md-icon-button-state-layer-height: 28px;
+          --md-icon-button-state-layer-width: var(--grampsjs-space-24);
+          --md-icon-button-state-layer-height: var(--grampsjs-space-24);
           position: relative;
         }
       `,
@@ -54,7 +53,7 @@ export class GrampsjsShareUrl extends GrampsjsAppStateMixin(LitElement) {
         @keydown="${clickKeyHandler}"
       >
         <grampsjs-icon
-          path="${this._copied ? mdiCheck : mdiShareVariant}"
+          path="${this._copied ? Check : ShareNetwork}"
           color="currentColor"
         ></grampsjs-icon>
       </md-icon-button>

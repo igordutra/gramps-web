@@ -1,6 +1,6 @@
 import {create} from 'd3-selection'
-import {mdiAccount} from '@mdi/js'
-
+import {User} from '../icons/phosphor.js'
+import {resolveFontFamily} from './palette.js'
 const clipString = (s, length) => {
   if (!s) {
     return ''
@@ -33,7 +33,7 @@ export function YtreeLineageChart(chartData, options = {}) {
   const stroke = 'var(--grampsjs-body-font-color-40)'
   const strokeWidth = 3
   const strokeDasharray = '3,3'
-  const fontFamily = 'Inter var'
+  const fontFamily = resolveFontFamily()
   const fontSize = 14
 
   const extraLabelSpace = 80
@@ -50,7 +50,7 @@ export function YtreeLineageChart(chartData, options = {}) {
 
   const g = svg.append('g')
   const defs = svg.append('defs')
-  const personPath = mdiAccount
+  const personPath = User
   const iconRadius = 24
   const imgRadius = (boxHeight - imgPadding * 2) / 2
   const leftPad = padding
@@ -123,7 +123,14 @@ export function YtreeLineageChart(chartData, options = {}) {
         .attr('fill', 'var(--grampsjs-body-font-color-50)')
         .attr(
           'transform',
-          `translate(${iconCx - 18},${iconCy - 18}) scale(1.5,1.5)`
+          // Phosphor draws on a 256-unit grid; the icon is 24 units across
+          // before the 1.5x enlargement, so the scale has to bring the
+          // path down to the icon's own size first. The old Material
+          // Design Icons were already on a 24-unit grid and needed only
+          // the enlargement.
+          `translate(${iconCx - 18},${iconCy - 18}) scale(${(24 * 1.5) / 256},${
+            (24 * 1.5) / 256
+          })`
         )
     }
     // Texts

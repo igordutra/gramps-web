@@ -1,6 +1,10 @@
 import {html, css, LitElement} from 'lit'
-import {mdiEarth, mdiMapMarker, mdiOpenInNew, mdiPlus} from '@mdi/js'
-
+import {
+  ArrowSquareOut,
+  GlobeHemisphereWest,
+  MapPin,
+  Plus,
+} from '../icons/phosphor.js'
 import '@material/web/button/text-button.js'
 
 import './GrampsjsFormNewPlace.js'
@@ -198,7 +202,7 @@ export class GrampsjsWikidataBuildingBox extends GrampsjsAppStateMixin(
       ${this._renderSubtitle()}
       <p class="source">
         <grampsjs-icon
-          path="${mdiEarth}"
+          path="${GlobeHemisphereWest}"
           height="16"
           width="16"
           color="var(--grampsjs-map-building-color, ${BUILDING_COLOR})"
@@ -223,7 +227,7 @@ export class GrampsjsWikidataBuildingBox extends GrampsjsAppStateMixin(
         <md-text-button @click="${this._handleShowPlace}">
           ${this._('Open saved place')}
           <grampsjs-icon
-            .path="${mdiMapMarker}"
+            .path="${MapPin}"
             slot="icon"
             color="currentColor"
           ></grampsjs-icon>
@@ -238,7 +242,7 @@ export class GrampsjsWikidataBuildingBox extends GrampsjsAppStateMixin(
       >
         ${this._('Save as place')}
         <grampsjs-icon
-          .path="${mdiPlus}"
+          .path="${Plus}"
           slot="icon"
           color="currentColor"
         ></grampsjs-icon>
@@ -312,7 +316,7 @@ export class GrampsjsWikidataBuildingBox extends GrampsjsAppStateMixin(
       <md-text-button href="${url}" target="_blank">
         ${label}
         <grampsjs-icon
-          .path="${mdiOpenInNew}"
+          .path="${ArrowSquareOut}"
           slot="icon"
           color="currentColor"
         ></grampsjs-icon>

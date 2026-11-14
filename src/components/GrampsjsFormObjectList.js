@@ -6,8 +6,7 @@ import {html, css, LitElement} from 'lit'
 
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiArrowDown, mdiArrowUp, mdiDelete} from '@mdi/js'
-
+import {ArrowDown, ArrowUp, Trash} from '../icons/phosphor.js'
 import {fireEvent} from '../util.js'
 import './GrampsjsIcon.js'
 import './GrampsjsSearchResultList.js'
@@ -67,7 +66,7 @@ class GrampsjsFormObjectList extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this._handleDelete}"
               >
                 <grampsjs-icon
-                  path="${mdiDelete}"
+                  path="${Trash}"
                   color="currentColor"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -80,7 +79,7 @@ class GrampsjsFormObjectList extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this._handleUp}"
               >
                 <grampsjs-icon
-                  path="${mdiArrowUp}"
+                  path="${ArrowUp}"
                   color="currentColor"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -92,7 +91,7 @@ class GrampsjsFormObjectList extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this._handleDown}"
               >
                 <grampsjs-icon
-                  path="${mdiArrowDown}"
+                  path="${ArrowDown}"
                   color="currentColor"
                 ></grampsjs-icon>
               </md-icon-button>`

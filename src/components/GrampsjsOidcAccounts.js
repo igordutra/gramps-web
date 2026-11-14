@@ -5,7 +5,7 @@ import '@material/web/button/text-button'
 import '@material/web/dialog/dialog'
 import '@material/web/list/list'
 import '@material/web/list/list-item'
-import '@material/web/textfield/filled-text-field'
+import '@material/web/textfield/outlined-text-field'
 
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -61,7 +61,9 @@ export class GrampsjsOidcAccounts extends GrampsjsAppStateMixin(LitElement) {
         }
 
         md-list-item {
-          --md-list-item-label-text-size: 1rem;
+          --md-list-item-label-text-size: var(
+            --md-sys-typescale-label-large-size
+          );
           --md-list-item-supporting-text-color: var(
             --md-sys-color-on-surface-variant
           );
@@ -71,7 +73,7 @@ export class GrampsjsOidcAccounts extends GrampsjsAppStateMixin(LitElement) {
           color: var(--md-sys-color-error);
         }
 
-        md-filled-text-field {
+        md-outlined-text-field {
           width: 100%;
         }
 
@@ -142,7 +144,7 @@ export class GrampsjsOidcAccounts extends GrampsjsAppStateMixin(LitElement) {
           </p>`
         : html`
             ${this._accounts.length
-              ? html`<md-list>
+              ? html`<md-list role="list">
                   ${this._accounts.map(account => this._renderAccount(account))}
                 </md-list>`
               : html`<p>
@@ -216,11 +218,11 @@ export class GrampsjsOidcAccounts extends GrampsjsAppStateMixin(LitElement) {
                     'This is your last linked sign-in method. To unlink it, enter your password; you will then sign in with your user name and password.'
                   )}
                 </p>
-                <md-filled-text-field
+                <md-outlined-text-field
                   id="unlink-password"
                   type="password"
                   label="${this._('Password: ').replace(':', '')}"
-                ></md-filled-text-field>
+                ></md-outlined-text-field>
               `
             : ''}
           ${this._unlinkError

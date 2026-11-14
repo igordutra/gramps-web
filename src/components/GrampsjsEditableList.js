@@ -5,13 +5,13 @@ import {classMap} from 'lit/directives/class-map.js'
 
 import {fireEvent} from '../util.js'
 import {
-  mdiArrowDown,
-  mdiArrowUp,
-  mdiDelete,
-  mdiLinkPlus,
-  mdiPencil,
-  mdiPlus,
-} from '@mdi/js'
+  ArrowDown,
+  ArrowUp,
+  Link,
+  PencilSimple,
+  Plus,
+  Trash,
+} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/list/list.js'
 import '@material/web/list/list-item.js'
@@ -33,8 +33,8 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
       css`
         md-list.activatable,
         md-list.activatable > * {
-          --md-ripple-hover-opacity: 0;
-          --md-ripple-pressed-opacity: 0;
+          --md-ripple-hover-opacity: var(--grampsjs-state-hover-opacity);
+          --md-ripple-pressed-opacity: var(--grampsjs-state-press-opacity);
         }
 
         md-list.activatable > * {
@@ -137,6 +137,7 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
         : html`
             ${this.edit ? this._renderActionBtns() : ''}
             <md-list
+              role="list"
               class="${classMap({
                 activatable: this.edit,
                 reorderable: this.edit && this.hasReorder,
@@ -172,7 +173,7 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
         ? html`
             <md-icon-button class="edit" @click="${this._handleShare}">
               <grampsjs-icon
-                path="${mdiLinkPlus}"
+                path="${Link}"
                 color="var(--mdc-theme-secondary)"
               ></grampsjs-icon>
             </md-icon-button>
@@ -182,7 +183,7 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
         ? html`
             <md-icon-button class="edit" @click="${this._handleAdd}">
               <grampsjs-icon
-                path="${mdiPlus}"
+                path="${Plus}"
                 color="var(--mdc-theme-secondary)"
               ></grampsjs-icon>
             </md-icon-button>
@@ -196,7 +197,7 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
               @click="${this._handleEdit}"
             >
               <grampsjs-icon
-                path="${mdiPencil}"
+                path="${PencilSimple}"
                 color="var(--mdc-theme-secondary)"
               ></grampsjs-icon>
             </md-icon-button>
@@ -211,7 +212,7 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
               @click="${this._handleUp}"
             >
               <grampsjs-icon
-                path="${mdiArrowUp}"
+                path="${ArrowUp}"
                 color="var(--mdc-theme-secondary)"
               ></grampsjs-icon>
             </md-icon-button>
@@ -222,7 +223,7 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
               @click="${this._handleDown}"
             >
               <grampsjs-icon
-                path="${mdiArrowDown}"
+                path="${ArrowDown}"
                 color="var(--mdc-theme-secondary)"
               ></grampsjs-icon>
             </md-icon-button>
@@ -234,7 +235,7 @@ export class GrampsjsEditableList extends GrampsjsAppStateMixin(LitElement) {
         @click="${this._handleDelete}"
       >
         <grampsjs-icon
-          path="${mdiDelete}"
+          path="${Trash}"
           color="var(--mdc-theme-secondary)"
         ></grampsjs-icon>
       </md-icon-button>

@@ -2,23 +2,41 @@
 Base class for Gramps views
 */
 
-import {LitElement, css} from 'lit'
+import {LitElement, css, html} from 'lit'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
+import {PAGE_TITLES} from '../pageTitles.js'
 
 export class GrampsjsView extends GrampsjsAppStateMixin(LitElement) {
   static get styles() {
     return [
       sharedStyles,
       css`
+        /*
+         * The page gutter.
+         *
+         * This used to be a margin of 25px/40px around a white panel, so
+         * every page showed a grey band of canvas around its content and
+         * the table then added a second gutter of its own on the inside —
+         * 64px from the window edge to the first table cell.
+         *
+         * The gutter is now padding on the view itself, so the content
+         * plane reaches the pane edge and there is exactly one gutter
+         * between the window edge and the content.
+         */
         :host {
-          margin: 25px 40px;
+          display: block;
+          margin: 0;
+          padding: var(--grampsjs-page-gutter, 24px);
+          padding-top: var(--grampsjs-page-gutter-block, 16px);
           background-color: var(--md-sys-color-surface);
         }
 
         @media (max-width: 768px) {
           :host {
-            margin: 25px 20px;
+            padding: var(--grampsjs-page-gutter-compact, 12px);
+            padding-top: var(--grampsjs-page-gutter-compact, 12px);
+            --grampsjs-page-margin-inline: 20px;
           }
         }
       `,
@@ -55,7 +73,24 @@ export class GrampsjsView extends GrampsjsAppStateMixin(LitElement) {
   }
 
   render() {
-    return this.renderContent()
+    return html`${this.renderPageHeading()}${this.renderContent()}`
+  }
+
+  /**
+   * The page's level-one heading.
+   *
+   * Rendered for assistive technology only: the visible page title comes
+   * from the tab bar, and a second visible heading would be redundant.
+   *
+   * Views that override render() call this themselves.
+   */
+  renderPageHeading() {
+    const {page} = this.appState?.path ?? {}
+    const title = page ? PAGE_TITLES[page] : null
+    if (!title) {
+      return ''
+    }
+    return html`<h1 class="visually-hidden">${this._(title)}</h1>`
   }
 
   updated(changed) {

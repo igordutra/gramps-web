@@ -3,20 +3,19 @@ import {html, css} from 'lit'
 import '@material/web/dialog/dialog.js'
 import '@material/web/button/text-button.js'
 import '@material/web/button/filled-button.js'
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/iconbutton/icon-button.js'
 
 import {
-  mdiAccountMultiplePlus,
-  mdiAccountPlus,
-  mdiDeleteForever,
-  mdiDownload,
-  mdiFilterOff,
-  mdiPencil,
-} from '@mdi/js'
-
+  DownloadSimple,
+  FunnelX,
+  PencilSimple,
+  TrashSimple,
+  UserPlus,
+  UsersThree,
+} from '../icons/phosphor.js'
 import {GrampsjsTableBase} from './GrampsjsTableBase.js'
 import {userRoles} from './GrampsjsFormUser.js'
 import {fireEvent} from '../util.js'
@@ -31,6 +30,58 @@ export class GrampsjsUsers extends GrampsjsTableBase {
     return [
       super.styles,
       css`
+        /*
+         * The users table is its own table, not the shared one, so it
+         * never picked up the card layout: six columns stayed side by
+         * side and the table was 519px wide on a 320px screen, which
+         * pushed the whole content pane sideways. On a narrow viewport
+         * it becomes cards, the way the other lists do.
+         */
+        @media (max-width: 600px) {
+          table {
+            width: 100%;
+          }
+
+          thead {
+            display: none;
+          }
+
+          tbody tr {
+            display: grid;
+            gap: var(--grampsjs-space-8);
+            border-top: 1px solid var(--grampsjs-body-font-color-10);
+            padding: var(--grampsjs-space-12) 0;
+          }
+
+          tbody td {
+            display: block;
+            padding: 0;
+            min-width: 0;
+            overflow-wrap: break-word;
+          }
+
+          tbody td::before {
+            content: attr(data-label);
+            display: block;
+            margin-bottom: var(--grampsjs-space-2);
+            font-size: var(--md-sys-typescale-label-small-size);
+            line-height: 1.4;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--grampsjs-body-font-color-50);
+            font-weight: 600;
+          }
+
+          tbody td.actions {
+            display: flex;
+            justify-content: flex-end;
+          }
+
+          tbody td.actions::before {
+            content: none;
+          }
+        }
+
         .filter-bar {
           display: flex;
           flex-wrap: wrap;
@@ -41,12 +92,12 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           margin-bottom: 4px;
         }
 
-        md-filled-text-field {
+        md-outlined-text-field {
           flex: 1 1 200px;
           min-width: 140px;
         }
 
-        md-filled-select {
+        md-outlined-select {
           flex: 0 1 160px;
           min-width: 130px;
         }
@@ -119,54 +170,64 @@ export class GrampsjsUsers extends GrampsjsTableBase {
             <th>${this._('E-mail')}</th>
             <th>${this._('Role')}</th>
             <th>${this._('Account Source')}</th>
-            <th></th>
+            <th>
+              <span class="visually-hidden">${this._('Actions')}</span>
+            </th>
           </tr>
         </thead>
-        ${filtered.map(
-          (obj, index) => html`
-            <tr>
-              <td>${obj.name}</td>
-              <td>${obj.full_name}</td>
-              <td>${obj.email}</td>
-              <td>${this._(userRoles[obj.role])}</td>
-              <td>${obj.account_source || this._('Password')}</td>
-              <td>
-                <md-icon-button
-                  class="edit"
-                  aria-label="${this._('Edit user')}"
-                  @click="${e => this._handleEditClick(e, obj.name)}"
-                  id="button-edit-${index}"
-                >
-                  <grampsjs-icon
-                    path="${mdiPencil}"
-                    height="20"
-                    width="20"
-                    color="var(--mdc-theme-secondary)"
-                  ></grampsjs-icon>
-                </md-icon-button>
-                <grampsjs-tooltip for="button-edit-${index}">
-                  ${this._('Edit user')}
-                </grampsjs-tooltip>
-                <md-icon-button
-                  class="error"
-                  aria-label="${this._('Delete user')}"
-                  @click="${e => this._handleDeleteClick(e, obj.name)}"
-                  id="button-del-${index}"
-                >
-                  <grampsjs-icon
-                    path="${mdiDeleteForever}"
-                    height="20"
-                    width="20"
-                    color="var(--grampsjs-alert-error-font-color)"
-                  ></grampsjs-icon>
-                </md-icon-button>
-                <grampsjs-tooltip for="button-del-${index}">
-                  ${this._('Delete user')}
-                </grampsjs-tooltip>
-              </td>
-            </tr>
-          `
-        )}
+        <tbody>
+          ${filtered.map(
+            (obj, index) => html`
+              <tr>
+                <td data-label="${this._('Username: ').replace(':', '')}">
+                  ${obj.name}
+                </td>
+                <td data-label="${this._('Full Name')}">${obj.full_name}</td>
+                <td data-label="${this._('E-mail')}">${obj.email}</td>
+                <td data-label="${this._('Role')}">
+                  ${this._(userRoles[obj.role])}
+                </td>
+                <td data-label="${this._('Account Source')}">
+                  ${obj.account_source || this._('Password')}
+                </td>
+                <td class="actions">
+                  <md-icon-button
+                    class="edit"
+                    aria-label="${this._('Edit user')}"
+                    @click="${e => this._handleEditClick(e, obj.name)}"
+                    id="button-edit-${index}"
+                  >
+                    <grampsjs-icon
+                      path="${PencilSimple}"
+                      height="20"
+                      width="20"
+                      color="var(--mdc-theme-secondary)"
+                    ></grampsjs-icon>
+                  </md-icon-button>
+                  <grampsjs-tooltip for="button-edit-${index}">
+                    ${this._('Edit user')}
+                  </grampsjs-tooltip>
+                  <md-icon-button
+                    class="error"
+                    aria-label="${this._('Delete user')}"
+                    @click="${e => this._handleDeleteClick(e, obj.name)}"
+                    id="button-del-${index}"
+                  >
+                    <grampsjs-icon
+                      path="${TrashSimple}"
+                      height="20"
+                      width="20"
+                      color="var(--grampsjs-alert-error-font-color)"
+                    ></grampsjs-icon>
+                  </md-icon-button>
+                  <grampsjs-tooltip for="button-del-${index}">
+                    ${this._('Delete user')}
+                  </grampsjs-tooltip>
+                </td>
+              </tr>
+            `
+          )}
+        </tbody>
       </table>
       ${this.dialogContent}
     `
@@ -175,15 +236,15 @@ export class GrampsjsUsers extends GrampsjsTableBase {
   _renderFilterBar() {
     return html`
       <div class="filter-bar">
-        <md-filled-text-field
+        <md-outlined-text-field
           type="search"
           label="${this._('Search')}"
           .value="${this._filterText}"
           @input="${e => {
             this._filterText = e.target.value
           }}"
-        ></md-filled-text-field>
-        <md-filled-select
+        ></md-outlined-text-field>
+        <md-outlined-select
           label="${this._('Role')}"
           .value="${this._filterRole}"
           @change="${e => {
@@ -203,7 +264,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
                 </md-select-option>
               `
             )}
-        </md-filled-select>
+        </md-outlined-select>
         ${this._filterText || this._filterRole !== ALL_ROLES
           ? html`
               <button
@@ -212,7 +273,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
                 @click="${this._clearFilters}"
               >
                 <grampsjs-icon
-                  path="${mdiFilterOff}"
+                  path="${FunnelX}"
                   height="24"
                   width="24"
                   color="var(--mdc-theme-secondary)"
@@ -242,7 +303,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           id="button-add"
         >
           <grampsjs-icon
-            path="${mdiAccountPlus}"
+            path="${UserPlus}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -257,7 +318,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           @click="${this._handleImportClick}"
         >
           <grampsjs-icon
-            path="${mdiAccountMultiplePlus}"
+            path="${UsersThree}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -272,7 +333,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           @click="${this._handleExportClick}"
         >
           <grampsjs-icon
-            path="${mdiDownload}"
+            path="${DownloadSimple}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -283,6 +344,7 @@ export class GrampsjsUsers extends GrampsjsTableBase {
           download="grampsweb-export-users.json"
           href="${this._downloadUrl}"
           id="downloadanchor"
+          aria-label="${this._('Download')}"
           >&nbsp;</a
         >
       </p>

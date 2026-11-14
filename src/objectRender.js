@@ -1,6 +1,5 @@
 import {html} from 'lit'
-import {mdiLock, mdiLockOutline} from '@mdi/js'
-
+import {Lock} from './icons/phosphor.js'
 import {tagColorToCss} from './color.js'
 import {
   familyTitleFromProfile,
@@ -225,7 +224,7 @@ export function renderPrivacyIcon(privacy, appState, {inline = true} = {}) {
     style="${inline
       ? 'vertical-align: calc(0.36em - 8px); margin-left: 3px'
       : ''}"
-    path="${privacy === 'link' ? mdiLockOutline : mdiLock}"
+    path="${privacy === 'link' ? Lock : Lock}"
     color="var(--grampsjs-body-font-color-30)"
     role="img"
     aria-label="${translate(appState.i18n?.strings ?? {}, 'Private')}"

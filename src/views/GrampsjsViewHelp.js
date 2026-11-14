@@ -1,6 +1,6 @@
 import {css, html} from 'lit'
 
-import {mdiOpenInNew} from '@mdi/js'
+import {ArrowSquareOut} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import {fireEvent} from '../util.js'
 import '@material/web/button/filled-tonal-button.js'
@@ -32,7 +32,7 @@ export class GrampsjsViewHelp extends GrampsjsView {
           >
             ${this._('User Documentation')}
             <grampsjs-icon
-              .path="${mdiOpenInNew}"
+              .path="${ArrowSquareOut}"
               slot="icon"
               color="currentColor"
             ></grampsjs-icon>
@@ -43,7 +43,7 @@ export class GrampsjsViewHelp extends GrampsjsView {
           >
             ${this._('Administrator Documentation')}
             <grampsjs-icon
-              .path="${mdiOpenInNew}"
+              .path="${ArrowSquareOut}"
               slot="icon"
               color="currentColor"
             ></grampsjs-icon>
@@ -59,7 +59,7 @@ export class GrampsjsViewHelp extends GrampsjsView {
         >
           ${this._('Forum')}
           <grampsjs-icon
-            .path="${mdiOpenInNew}"
+            .path="${ArrowSquareOut}"
             slot="icon"
             color="currentColor"
           ></grampsjs-icon>

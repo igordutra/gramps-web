@@ -1,13 +1,11 @@
 import {html, css} from 'lit'
 import {
-  mdiDownload,
-  mdiFilePdfBox,
-  mdiMagnifyMinus,
-  mdiMagnifyPlus,
-  mdiSelect,
-  mdiSelectOff,
-} from '@mdi/js'
-
+  DownloadSimple,
+  FilePdf,
+  MagnifyingGlassMinus,
+  MagnifyingGlassPlus,
+  Selection,
+} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/button/filled-button.js'
 
@@ -150,7 +148,7 @@ export class GrampsjsViewMediaLightbox extends GrampsjsView {
             @click="${this._handleToggleRectButtonClick}"
           >
             <grampsjs-icon
-              path="${this.rectHidden ? mdiSelect : mdiSelectOff}"
+              path="${this.rectHidden ? Selection : Selection}"
               color="var(--mdc-theme-primary)"
             ></grampsjs-icon>
           </md-icon-button>
@@ -162,7 +160,7 @@ export class GrampsjsViewMediaLightbox extends GrampsjsView {
             @click="${this._handleZoomIn}"
           >
             <grampsjs-icon
-              path="${mdiMagnifyPlus}"
+              path="${MagnifyingGlassPlus}"
               color="var(--mdc-theme-primary)"
             ></grampsjs-icon>
           </md-icon-button>
@@ -172,7 +170,7 @@ export class GrampsjsViewMediaLightbox extends GrampsjsView {
             @click="${this._handleZoomOut}"
           >
             <grampsjs-icon
-              path="${mdiMagnifyMinus}"
+              path="${MagnifyingGlassMinus}"
               color="var(--mdc-theme-primary)"
             ></grampsjs-icon>
           </md-icon-button>
@@ -181,7 +179,7 @@ export class GrampsjsViewMediaLightbox extends GrampsjsView {
             @click="${this._handleDownload}"
           >
             <grampsjs-icon
-              path="${mdiDownload}"
+              path="${DownloadSimple}"
               color="var(--mdc-theme-primary)"
             ></grampsjs-icon>
           </md-icon-button>
@@ -230,7 +228,7 @@ export class GrampsjsViewMediaLightbox extends GrampsjsView {
         ${this._renderImage()}
         <span class="pdf-badge">
           <grampsjs-icon
-            path="${mdiFilePdfBox}"
+            path="${FilePdf}"
             height="18"
             width="18"
             color="var(--md-sys-color-on-secondary-container)"

@@ -3,8 +3,7 @@ import {html} from 'lit'
 import '@material/web/button/filled-tonal-button.js'
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiPencil} from '@mdi/js'
-
+import {PencilSimple} from '../icons/phosphor.js'
 import {GrampsjsObject} from './GrampsjsObject.js'
 import './GrampsjsEditableTitle.js'
 import './GrampsjsIcon.js'
@@ -66,7 +65,7 @@ export class GrampsjsSource extends GrampsjsObject {
                 @click="${this._handleSourceData}"
               >
                 <grampsjs-icon
-                  path="${mdiPencil}"
+                  path="${PencilSimple}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>

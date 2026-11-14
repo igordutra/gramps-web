@@ -3,7 +3,7 @@ import {html, css} from 'lit'
 import '@material/web/button/filled-tonal-button.js'
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiTimelineOutline, mdiPencil} from '@mdi/js'
+import {ChartLineUp, PencilSimple} from '../icons/phosphor.js'
 import {GrampsjsObject} from './GrampsjsObject.js'
 import './GrampsjsFormEditEventDetails.js'
 import './GrampsjsFormEditTitle.js'
@@ -45,7 +45,7 @@ export class GrampsjsEvent extends GrampsjsObject {
                 @click="${this._handleEditType}"
               >
                 <grampsjs-icon
-                  path="${mdiPencil}"
+                  path="${PencilSimple}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -71,7 +71,7 @@ export class GrampsjsEvent extends GrampsjsObject {
               @click="${this._handleEditDesc}"
             >
               <grampsjs-icon
-                path="${mdiPencil}"
+                path="${PencilSimple}"
                 color="var(--mdc-theme-secondary)"
               ></grampsjs-icon>
             </md-icon-button>
@@ -111,7 +111,7 @@ export class GrampsjsEvent extends GrampsjsObject {
               @click="${this._handleEditDetails}"
             >
               <grampsjs-icon
-                path="${mdiPencil}"
+                path="${PencilSimple}"
                 color="var(--mdc-theme-secondary)"
               ></grampsjs-icon>
             </md-icon-button>
@@ -126,7 +126,7 @@ export class GrampsjsEvent extends GrampsjsObject {
               >
                 ${this._('Show on timeline')}
                 <grampsjs-icon
-                  path="${mdiTimelineOutline}"
+                  path="${ChartLineUp}"
                   color="currentColor"
                   slot="icon"
                 ></grampsjs-icon>

@@ -12,9 +12,18 @@ export class GrampsjsButtonToggle extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       css`
         md-filter-chip {
-          --md-filter-chip-label-text-size: 13px;
-          --md-filter-chip-label-text-weight: 400;
-          --md-filter-chip-outline-width: 0px;
+          /*
+           * A chip is a small control. Its text is the body-small step —
+           * the size upstream wrote as 13px — with the body weight, so the
+           * size and the weight come from the SAME step of the scale.
+           */
+          --md-filter-chip-label-text-size: var(
+            --md-sys-typescale-body-small-size
+          );
+          --md-filter-chip-label-text-weight: var(
+            --md-sys-typescale-body-small-weight
+          );
+          --md-filter-chip-outline-width: var(--grampsjs-space-0);
           --md-filter-chip-label-text-color: var(--md-sys-color-primary);
           --md-filter-chip-hover-label-text-color: var(--md-sys-color-primary);
           --md-filter-chip-focus-label-text-color: var(--md-sys-color-primary);

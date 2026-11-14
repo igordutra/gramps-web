@@ -1,5 +1,5 @@
 import {css, html, LitElement} from 'lit'
-import {mdiOpenInNew} from '@mdi/js'
+import {ArrowSquareOut} from '../icons/phosphor.js'
 import '@material/web/button/text-button.js'
 
 import {sharedStyles} from '../SharedStyles.js'
@@ -50,7 +50,7 @@ export class GrampsjsDocButton extends GrampsjsAppStateMixin(LitElement) {
         ${this.label}
         <grampsjs-icon
           slot="icon"
-          path="${mdiOpenInNew}"
+          path="${ArrowSquareOut}"
           color="currentColor"
         ></grampsjs-icon>
       </md-text-button>

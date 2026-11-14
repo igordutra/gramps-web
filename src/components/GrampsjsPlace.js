@@ -3,7 +3,7 @@ import {css, html} from 'lit'
 import '@material/web/button/filled-tonal-button.js'
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiArrowExpandAll, mdiPencil} from '@mdi/js'
+import {ArrowsOutSimple, PencilSimple} from '../icons/phosphor.js'
 import {GrampsjsObject} from './GrampsjsObject.js'
 import './GrampsjsFormEditLatLong.js'
 import './GrampsjsFormEditPlaceName.js'
@@ -46,7 +46,7 @@ export class GrampsjsPlace extends GrampsjsObject {
                 @click="${this._handleEditName}"
               >
                 <grampsjs-icon
-                  path="${mdiPencil}"
+                  path="${PencilSimple}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -66,7 +66,7 @@ export class GrampsjsPlace extends GrampsjsObject {
                     @click="${this._handleEditType}"
                   >
                     <grampsjs-icon
-                      path="${mdiPencil}"
+                      path="${PencilSimple}"
                       color="var(--mdc-theme-secondary)"
                     ></grampsjs-icon>
                   </md-icon-button>
@@ -108,7 +108,7 @@ export class GrampsjsPlace extends GrampsjsObject {
             <md-filled-tonal-button @click="${this._handleMapButtonClick}">
               ${this._('Open in map')}
               <grampsjs-icon
-                path="${mdiArrowExpandAll}"
+                path="${ArrowsOutSimple}"
                 color="currentColor"
                 slot="icon"
               ></grampsjs-icon>

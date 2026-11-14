@@ -2,8 +2,7 @@ import {LitElement, css, html} from 'lit'
 
 import '@material/web/button/text-button'
 import '@material/web/iconbutton/icon-button.js'
-import {mdiPencil} from '@mdi/js'
-
+import {PencilSimple} from '../icons/phosphor.js'
 import {sharedStyles, iconButtonColorStyles} from '../SharedStyles.js'
 import './GrampsjsIcon.js'
 import './GrampsjsTooltip.js'
@@ -81,7 +80,7 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
                 @click="${this._handleEditClick}"
               >
                 <grampsjs-icon
-                  path="${mdiPencil}"
+                  path="${PencilSimple}"
                   color="currentColor"
                   height="20"
                   width="20"
@@ -97,7 +96,7 @@ export class GrampsjsHomePerson extends GrampsjsAppStateMixin(LitElement) {
         : html` <md-text-button trailing-icon @click="${this._handleEditClick}">
             ${this._('Set _Home Person')}
             <svg viewBox="0 0 24 24" slot="icon">
-              <path d="${mdiPencil}" />
+              <path d="${PencilSimple}" />
             </svg>
           </md-text-button>`}
       <grampsjs-form-select-object

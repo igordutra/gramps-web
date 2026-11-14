@@ -24,14 +24,14 @@ import {
 } from '../api.js'
 import {DEFAULT_PRIMARY, DEFAULT_SECONDARY} from '../theme.js'
 import {
-  mdiAlertCircle,
-  mdiAlertOutline,
-  mdiCheckCircle,
-  mdiDeleteForever,
-  mdiDownload,
-  mdiPlus,
-  mdiUpload,
-} from '@mdi/js'
+  CheckCircle,
+  DownloadSimple,
+  Plus,
+  TrashSimple,
+  UploadSimple,
+  Warning,
+  WarningCircle,
+} from '../icons/phosphor.js'
 import '../components/GrampsjsIcon.js'
 import '../components/GrampsjsFormUpload.js'
 import '../components/GrampsjsFormSelectObject.js'
@@ -43,7 +43,7 @@ import '@material/web/button/text-button.js'
 import '@material/web/button/filled-button.js'
 import '@awesome.me/webawesome/dist/components/color-picker/color-picker.js'
 import '@material/web/button/outlined-button.js'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/switch/switch.js'
 
 const VERIFY_OPTIONS_DEFAULTS = {
@@ -80,7 +80,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
           font-size: 16px;
           padding: 0 1.4em;
           border: 1px solid var(--grampsjs-alert-error-font-color);
-          border-radius: 8px;
+          border-radius: var(--md-sys-shape-corner-medium);
         }
 
         .danger-zone-row {
@@ -185,14 +185,14 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
         }
 
         .verify-option-bool md-switch {
-          --md-switch-track-height: 22px;
-          --md-switch-track-width: 38px;
-          --md-switch-handle-height: 16px;
-          --md-switch-handle-width: 16px;
-          --md-switch-selected-handle-height: 16px;
-          --md-switch-selected-handle-width: 16px;
-          --md-switch-pressed-handle-height: 18px;
-          --md-switch-pressed-handle-width: 18px;
+          --md-switch-track-height: var(--grampsjs-space-20);
+          --md-switch-track-width: var(--grampsjs-space-40);
+          --md-switch-handle-height: var(--grampsjs-icon-size-small);
+          --md-switch-handle-width: var(--grampsjs-icon-size-small);
+          --md-switch-selected-handle-height: var(--grampsjs-icon-size-small);
+          --md-switch-selected-handle-width: var(--grampsjs-icon-size-small);
+          --md-switch-pressed-handle-height: var(--grampsjs-icon-size);
+          --md-switch-pressed-handle-width: var(--grampsjs-icon-size);
         }
       `,
     ]
@@ -325,7 +325,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
       >
         <h3>${this._('Family Tree name')}</h3>
         <p>
-          <md-filled-text-field
+          <md-outlined-text-field
             class="settings-text-field"
             id="tree-name-field"
             label="${this._('Family Tree name')}"
@@ -333,7 +333,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
             @input="${e => {
               this._treeName = e.target.value
             }}"
-          ></md-filled-text-field>
+          ></md-outlined-text-field>
         </p>
         <p>
           <md-outlined-button @click="${this._renameTree}"
@@ -355,6 +355,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
             <span class="color-label">${this._('Primary color')}</span>
             <wa-color-picker
               format="hex"
+              label="${this._('Primary color')}"
               .value="${this._primaryColor}"
               @change="${e => {
                 this._primaryColor = e.target.value
@@ -365,6 +366,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
             <span class="color-label">${this._('Accent color')}</span>
             <wa-color-picker
               format="hex"
+              label="${this._('Accent color')}"
               .value="${this._secondaryColor}"
               @change="${e => {
                 this._secondaryColor = e.target.value
@@ -383,7 +385,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
 
         <h3>${this._('App title')}</h3>
         <p>
-          <md-filled-text-field
+          <md-outlined-text-field
             class="settings-text-field"
             id="app-title-field"
             label="${this._('App title')}"
@@ -391,7 +393,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
               'If set, overrides the family tree name in the title bar'
             )}"
             .value="${this.appState.treeConfig?.[TREE_CONFIG_APP_TITLE] ?? ''}"
-          ></md-filled-text-field>
+          ></md-outlined-text-field>
         </p>
         <p>
           <md-outlined-button @click="${this._saveAppTitle}"
@@ -450,7 +452,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
           <md-outlined-button @click="${this._handleExportTreeConfig}">
             <grampsjs-icon
               slot="icon"
-              path="${mdiDownload}"
+              path="${DownloadSimple}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('Export')}
@@ -458,7 +460,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
           <md-outlined-button @click="${this._handleImportClick}">
             <grampsjs-icon
               slot="icon"
-              path="${mdiUpload}"
+              path="${UploadSimple}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('Import')}
@@ -565,7 +567,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
           <md-outlined-button @click="${this._openCreateTag}">
             <grampsjs-icon
               slot="icon"
-              path="${mdiPlus}"
+              path="${Plus}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('New Tag')}
@@ -610,7 +612,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
               >
                 <grampsjs-icon
                   slot="icon"
-                  path="${mdiDeleteForever}"
+                  path="${TrashSimple}"
                   color="currentColor"
                 ></grampsjs-icon>
                 ${this._('Delete')}
@@ -648,12 +650,12 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
     )
     const iconError = html`<grampsjs-icon
       class="error status"
-      path="${mdiAlertCircle}"
+      path="${WarningCircle}"
       color="currentColor"
     ></grampsjs-icon>`
     const iconOk = html`<grampsjs-icon
       class="success status"
-      path="${mdiCheckCircle}"
+      path="${CheckCircle}"
       color="currentColor"
     ></grampsjs-icon>`
     const icon = objCount === 0 || count / objCount > 0.98 ? iconOk : iconError
@@ -858,7 +860,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
         ${intOptions.map(
           ([key, label]) => html`
             <div class="verify-option">
-              <md-filled-text-field
+              <md-outlined-text-field
                 class="verify-option-field"
                 type="number"
                 label="${label}"
@@ -868,7 +870,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
                   if (!Number.isNaN(v))
                     this._verifyOptions = {...this._verifyOptions, [key]: v}
                 }}"
-              ></md-filled-text-field>
+              ></md-outlined-text-field>
             </div>
           `
         )}
@@ -907,7 +909,7 @@ export class GrampsjsViewAdminSettings extends GrampsjsView {
             style="display:flex;align-items:center;gap:4px;white-space:nowrap;"
           >
             <grampsjs-icon
-              path="${severity === 'error' ? mdiAlertCircle : mdiAlertOutline}"
+              path="${severity === 'error' ? WarningCircle : Warning}"
               color="${severity === 'error'
                 ? 'var(--grampsjs-alert-error-font-color)'
                 : 'var(--md-sys-color-tertiary)'}"

@@ -1,7 +1,6 @@
 import {html} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {mdiOpenInNew} from '@mdi/js'
-
+import {ArrowSquareOut} from '../icons/phosphor.js'
 import {GrampsjsEditableList} from './GrampsjsEditableList.js'
 import './GrampsjsFormEditUrl.js'
 import './GrampsjsIcon.js'
@@ -45,7 +44,7 @@ export class GrampsjsUrls extends GrampsjsEditableList {
         >
         <grampsjs-icon
           slot="start"
-          path="${mdiOpenInNew}"
+          path="${ArrowSquareOut}"
           color="var(--grampsjs-color-icon)"
         ></grampsjs-icon>
       </md-list-item>

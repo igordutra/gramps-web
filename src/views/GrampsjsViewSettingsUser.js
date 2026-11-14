@@ -2,9 +2,9 @@ import {html, css} from 'lit'
 import {keyed} from 'lit/directives/keyed.js'
 
 import '@material/web/button/outlined-button'
-import '@material/web/select/filled-select'
+import '@material/web/select/outlined-select'
 import '@material/web/select/select-option'
-import '@material/web/textfield/filled-text-field'
+import '@material/web/textfield/outlined-text-field'
 
 import {supportsPersistentAccessTokens} from '../components/GrampsjsAccessTokens.js'
 import '../components/GrampsjsCollapsibleSection.js'
@@ -19,18 +19,24 @@ import '../components/GrampsjsTreeQuotas.js'
 import '../components/GrampsjsUsers.js'
 import {GrampsjsView} from './GrampsjsView.js'
 
-import {mdiCheck, mdiContentCopy} from '@mdi/js'
+import {Check, Copy} from '../icons/phosphor.js'
 import {
   __APIHOST__,
   ACCESS_TOKEN_EXPIRY_MS,
   apiGetOIDCConfig,
   storeAuthToken,
   storeRefreshToken,
-  TREE_CONFIG_PRIMARY_COLOR,
-  TREE_CONFIG_SECONDARY_COLOR,
+  getTreeConfig,
 } from '../api.js'
 import {fireEvent} from '../util.js'
-import {applyScheme, DEFAULT_PRIMARY, DEFAULT_SECONDARY} from '../theme.js'
+import {
+  applyScheme,
+  resolveTheme,
+  DEFAULT_PRIMARY,
+  DEFAULT_SECONDARY,
+  DEFAULT_THEME,
+  THEMES,
+} from '../theme.js'
 import {DEFAULT_TREE_VIEW, TREE_VIEWS} from '../treeDefaults.js'
 import {
   SYMBOL_SET_DEFAULT,
@@ -63,7 +69,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
           align-items: start;
         }
 
-        .tree-preferences md-filled-select {
+        .tree-preferences md-outlined-select {
           width: 100%;
         }
 
@@ -73,7 +79,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
           gap: 8px;
         }
 
-        .profile-field md-filled-text-field {
+        .profile-field md-outlined-text-field {
           flex: 1;
         }
       `,
@@ -166,6 +172,8 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
         ${this.renderLangSelect()}
         <h3>${this._('Select theme')}</h3>
         ${this.renderThemeSelect()}
+        <h3>${this._('Select style')}</h3>
+        ${this.renderStyleSelect()}
         <h3>${this._('Genealogical symbols')}</h3>
         ${this.renderSymbolsSelect()}
         <h3>${this._('Family tree preferences')}</h3>
@@ -187,7 +195,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
     return keyed(
       this._translations.length,
       html`
-        <md-filled-select
+        <md-outlined-select
           id="select-language"
           label="${this._langLoading
             ? this._('Loading items...')
@@ -205,7 +213,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
             `,
             this
           )}
-        </md-filled-select>
+        </md-outlined-select>
       `
     )
   }
@@ -254,7 +262,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderThemeSelect() {
     const theme = this.appState.settings.theme ?? 'system'
     return html`
-      <md-filled-select
+      <md-outlined-select
         id="select-theme"
         label="${this._('Theme')}"
         @change="${this._handleThemeSelected}"
@@ -268,30 +276,78 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
         <md-select-option value="dark" ?selected="${theme === 'dark'}"
           >${this._('Dark')}</md-select-option
         >
-      </md-filled-select>
+      </md-outlined-select>
     `
+  }
+
+  /**
+   * The style picker.
+   *
+   * A theme here is a whole design language, not a hue: it carries the
+   * shape, type, spacing and density scales as well as the seed colours.
+   * Switching one must change the whole interface, which is the only way
+   * to know the token layer is really in charge of the rendering.
+   */
+  renderStyleSelect() {
+    const style = this.appState.settings.style ?? DEFAULT_THEME
+    return html`
+      <md-outlined-select
+        id="select-style"
+        label="${this._('Style')}"
+        @change="${this._handleStyleSelected}"
+      >
+        ${Object.entries(THEMES).map(
+          ([id, theme]) => html`
+            <md-select-option value="${id}" ?selected="${style === id}"
+              >${this._(theme.label)}</md-select-option
+            >
+          `
+        )}
+      </md-outlined-select>
+    `
+  }
+
+  _handleStyleSelected(event) {
+    const style = event.target.value
+    if (!(style in THEMES)) return
+    this.appState.updateSettings({style})
+    const resolved = resolveTheme(style, getTreeConfig())
+    try {
+      applyScheme(
+        resolved.primary,
+        resolved.secondary,
+        this.appState.settings.theme,
+        resolved.name
+      )
+    } catch {
+      applyScheme(
+        DEFAULT_PRIMARY,
+        DEFAULT_SECONDARY,
+        this.appState.settings.theme,
+        DEFAULT_THEME
+      )
+    }
   }
 
   _handleThemeSelected(event) {
     const theme = event.target.value
     this.appState.updateSettings({theme})
+    // Changing the light/dark mode must keep the chosen STYLE: the two
+    // are independent axes — a square-cornered theme stays square in
+    // dark mode.
+    const style = this.appState.settings.style ?? DEFAULT_THEME
+    const resolved = resolveTheme(style, getTreeConfig())
     try {
-      applyScheme(
-        this.appState.treeConfig?.[TREE_CONFIG_PRIMARY_COLOR] ||
-          DEFAULT_PRIMARY,
-        this.appState.treeConfig?.[TREE_CONFIG_SECONDARY_COLOR] ||
-          DEFAULT_SECONDARY,
-        theme
-      )
+      applyScheme(resolved.primary, resolved.secondary, theme, resolved.name)
     } catch {
-      applyScheme(DEFAULT_PRIMARY, DEFAULT_SECONDARY, theme)
+      applyScheme(DEFAULT_PRIMARY, DEFAULT_SECONDARY, theme, DEFAULT_THEME)
     }
   }
 
   renderSymbolsSelect() {
     const symbolSet = this.appState.settings.symbolSet ?? SYMBOL_SET_DEFAULT
     return html`
-      <md-filled-select
+      <md-outlined-select
         id="select-symbols"
         label="${this._('Genealogical symbols')}"
         @change="${this._handleSymbolsSelected}"
@@ -303,7 +359,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
             </md-select-option>
           `
         )}
-      </md-filled-select>
+      </md-outlined-select>
     `
   }
 
@@ -320,7 +376,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
       this.appState.settings.treeDefaultView ?? DEFAULT_TREE_VIEW
     return html`
       <div class="tree-preferences">
-        <md-filled-select
+        <md-outlined-select
           id="tree-default-view"
           label="${this._('Default family tree view')}"
           @change=${this._handleDefaultTreeViewChange}
@@ -335,7 +391,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
               </md-select-option>
             `
           )}
-        </md-filled-select>
+        </md-outlined-select>
       </div>
     `
   }
@@ -364,13 +420,13 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderChangeUsername() {
     return html`
       <p class="profile-field">
-        <md-filled-text-field
+        <md-outlined-text-field
           id="change-username"
           label="${this._('Username: ').replace(':', '')}"
           value="${this._userInfo?.name || ''}"
-        ></md-filled-text-field>
+        ></md-outlined-text-field>
         <md-outlined-button @click="${this._changeUsername}">
-          ${this._('Save')}
+          ${this._('_Save')}
         </md-outlined-button>
       </p>
     `
@@ -379,14 +435,14 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderChangeFullName() {
     return html`
       <p class="profile-field">
-        <md-filled-text-field
+        <md-outlined-text-field
           id="change-full-name"
           label="${this._('Full Name')}"
           value="${this._userInfo?.full_name || ''}"
           supporting-text="${this._idpHint()}"
-        ></md-filled-text-field>
+        ></md-outlined-text-field>
         <md-outlined-button @click="${this._changeFullName}">
-          ${this._('Save')}
+          ${this._('_Save')}
         </md-outlined-button>
       </p>
     `
@@ -395,12 +451,12 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderChangeEmail() {
     return html`
       <p>
-        <md-filled-text-field
+        <md-outlined-text-field
           id="change-email"
           label="${this._('New E-mail')}"
           value="${this._userInfo?.email ? this._userInfo.email : ''}"
           supporting-text="${this._idpHint()}"
-        ></md-filled-text-field>
+        ></md-outlined-text-field>
       </p>
       <p>
         <md-outlined-button @click="${this._changeEmail}">
@@ -413,16 +469,16 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
   renderChangePw() {
     return html`
       <p>
-        <md-filled-text-field
+        <md-outlined-text-field
           id="old-pw"
           label="${this._('Old password')}"
           type="password"
-        ></md-filled-text-field>
-        <md-filled-text-field
+        ></md-outlined-text-field>
+        <md-outlined-text-field
           id="new-pw"
           label="${this._('New password')}"
           type="password"
-        ></md-filled-text-field>
+        ></md-outlined-text-field>
       </p>
       <p>
         <md-outlined-button @click="${this._changePw}">
@@ -443,7 +499,7 @@ export class GrampsjsViewSettingsUser extends GrampsjsView {
         <md-outlined-button @click="${this._copyToken}">
           <grampsjs-icon
             slot="icon"
-            path="${this._tokenCopied ? mdiCheck : mdiContentCopy}"
+            path="${this._tokenCopied ? Check : Copy}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('_Copy')}

@@ -3,8 +3,7 @@ import {html, css} from 'lit'
 import '@material/web/button/outlined-button.js'
 import '@material/web/button/filled-button.js'
 
-import {mdiClose, mdiContentSave} from '@mdi/js'
-
+import {FloppyDisk, X} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import '../components/GrampsjsIcon.js'
 import {clearDraftsWithPrefix} from '../api.js'
@@ -82,7 +81,7 @@ export class GrampsjsViewNewObject extends GrampsjsNewObjectTagsMixin(
       )
       .forEach(element => element.reset())
     this.shadowRoot
-      .querySelectorAll('md-filled-text-field')
+      .querySelectorAll('md-outlined-text-field')
       .forEach(element => {
         // eslint-disable-next-line no-param-reassign
         element.value = ''
@@ -131,7 +130,7 @@ export class GrampsjsViewNewObject extends GrampsjsNewObjectTagsMixin(
         <md-outlined-button @click="${this._reset}">
           <grampsjs-icon
             slot="icon"
-            path="${mdiClose}"
+            path="${X}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('Reset')}
@@ -142,7 +141,7 @@ export class GrampsjsViewNewObject extends GrampsjsNewObjectTagsMixin(
         >
           <grampsjs-icon
             slot="icon"
-            path="${mdiContentSave}"
+            path="${FloppyDisk}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('Add')}

@@ -28,18 +28,26 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
         /* the size of a person's avatar, so the text lines up with the
            other lists on the dashboard */
         .years {
-          height: 40px;
-          width: 40px;
-          border-radius: 50%;
-          background-color: var(--mdc-theme-primary);
-          opacity: 0.6;
-          color: var(--mdc-theme-on-primary);
+          height: 38px;
+          width: 38px;
+          border-radius: var(--md-sys-shape-corner-2xl);
+          /* The badge was the primary colour at 60% opacity with white
+             text, which is only a 2.32:1 contrast. A pale tint of the
+             same hue with the primary colour as the label keeps the
+             soft look and passes the 4.5:1 minimum. */
+          background-color: color-mix(
+            in srgb,
+            var(--mdc-theme-primary) 22%,
+            white
+          );
+          color: var(--grampsjs-primary-text-color);
           font-size: 15px;
-          line-height: 40px;
+          line-height: 38px;
           display: inline-block;
           text-align: center;
           font-family: var(--grampsjs-heading-font-family);
-          font-weight: var(--grampsjs-font-weight-body);
+          font-weight: 300;
+          margin-right: 10px;
         }
       `,
     ]
@@ -47,7 +55,7 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
 
   renderLoading() {
     return html`<h3>${this._('Anniversaries')}</h3>
-      <md-list>
+      <md-list role="list">
         ${Array(2).fill(
           html`
             <md-list-item type="button" noninteractive>
@@ -69,7 +77,7 @@ export class GrampsjsViewAnniversaries extends GrampsjsConnectedComponent {
       ${this._data.data.length === 0
         ? html`<p>${this._('None')}.</p>`
         : html`
-            <md-list class="large">
+            <md-list role="list" class="large">
               ${this._data.data.map(event => this._renderEvent(event))}
             </md-list>
           `} `

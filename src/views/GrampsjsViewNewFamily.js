@@ -1,7 +1,6 @@
 import {html, css} from 'lit'
 
-import {mdiClose, mdiPlus} from '@mdi/js'
-
+import {Plus, X} from '../icons/phosphor.js'
 import {GrampsjsViewNewObject} from './GrampsjsViewNewObject.js'
 import {clearDraftsWithPrefix} from '../api.js'
 import '../components/GrampsjsFormPrivate.js'
@@ -19,7 +18,7 @@ export class GrampsjsViewNewFamily extends GrampsjsViewNewObject {
       css`
         .child-slot-wrapper {
           border: 1px solid var(--md-sys-color-outline-variant, #ccc);
-          border-radius: 8px;
+          border-radius: var(--md-sys-shape-corner-medium);
           padding: 1em 1.25em;
           margin-bottom: 1em;
         }
@@ -83,7 +82,7 @@ export class GrampsjsViewNewFamily extends GrampsjsViewNewObject {
                 @click="${() => this._removeChild(key)}"
               >
                 <grampsjs-icon
-                  path="${mdiClose}"
+                  path="${X}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>
@@ -103,7 +102,7 @@ export class GrampsjsViewNewFamily extends GrampsjsViewNewObject {
       <md-outlined-button @click="${this._addChild}">
         <grampsjs-icon
           slot="icon"
-          path="${mdiPlus}"
+          path="${Plus}"
           color="currentColor"
         ></grampsjs-icon>
         ${this._('Add child')}

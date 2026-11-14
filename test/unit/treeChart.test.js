@@ -10,11 +10,11 @@ import {
 import {chartNameDisplayFormat} from '../../src/util.js'
 import {chartPalette} from '../../src/charts/palette.js'
 import {
-  mdiChevronDown,
-  mdiChevronLeft,
-  mdiChevronRight,
-  mdiChevronUp,
-} from '@mdi/js'
+  CaretDown,
+  CaretLeft,
+  CaretRight,
+  CaretUp,
+} from '../../src/icons/phosphor.js'
 
 const family = (handle, father, mother, children) => ({
   handle,
@@ -153,19 +153,19 @@ describe('TreeChart', () => {
     chart.update(layout, {...size, childrenTriangle: true})
     // 8px from the colour stripe on the left and from the box on the right
     expect(triangle().getAttribute('transform')).toBe('translate(-127,0)')
-    expect(shape().getAttribute('d')).toBe(mdiChevronLeft)
+    expect(shape().getAttribute('d')).toBe(CaretLeft)
     const element = triangle()
     chart.update(layout, {...size, childrenTriangle: true, menuSide: 'right'})
     expect(triangle()).toBe(element)
     expect(triangle().getAttribute('transform')).toBe('translate(123,0)')
-    expect(shape().getAttribute('d')).toBe(mdiChevronRight)
+    expect(shape().getAttribute('d')).toBe(CaretRight)
     // 8px from the box above and below
     chart.update(layout, {...size, childrenTriangle: true, menuSide: 'bottom'})
     expect(triangle().getAttribute('transform')).toBe('translate(0,73)')
-    expect(shape().getAttribute('d')).toBe(mdiChevronDown)
+    expect(shape().getAttribute('d')).toBe(CaretDown)
     chart.update(layout, {...size, childrenTriangle: true, menuSide: 'top'})
     expect(triangle().getAttribute('transform')).toBe('translate(0,-73)')
-    expect(shape().getAttribute('d')).toBe(mdiChevronUp)
+    expect(shape().getAttribute('d')).toBe(CaretUp)
     chart.update(layout, size)
     expect(triangle()).toBeNull()
   })
@@ -412,9 +412,7 @@ describe('TreeChart', () => {
       expect(button.getAttribute('aria-label')).toBe('Parents')
       // Beyond the card like the menu button
       expect(button.getAttribute('transform')).toBe('translate(123,0)')
-      expect(button.querySelector('path').getAttribute('d')).toBe(
-        mdiChevronRight
-      )
+      expect(button.querySelector('path').getAttribute('d')).toBe(CaretRight)
       chart.update(layoutAncestors(graph, 'R', {depth: 2, vertical: true}), {
         ...size,
         expandLabels,
@@ -424,7 +422,7 @@ describe('TreeChart', () => {
       )
       expect(
         buttonOf(chart, 'pf').querySelector('path').getAttribute('d')
-      ).toBe(mdiChevronUp)
+      ).toBe(CaretUp)
     })
 
     it('fades lines under the chevron with the background colour', () => {

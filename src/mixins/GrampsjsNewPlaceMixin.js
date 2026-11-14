@@ -1,10 +1,9 @@
 import {html} from 'lit'
 
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/button/outlined-button.js'
 
-import {mdiMapMarker} from '@mdi/js'
-
+import {MapPin} from '../icons/phosphor.js'
 import '../components/GrampsjsFormSelectObjectList.js'
 import '../components/GrampsjsFormSelectType.js'
 import '../components/GrampsjsFormPrivate.js'
@@ -42,7 +41,7 @@ export const GrampsjsNewPlaceMixin = superClass =>
       return html`
         <h3 class="label">${this._('Name')}</h3>
         <p>
-          <md-filled-text-field
+          <md-outlined-text-field
             required
             supporting-text="&nbsp;"
             style="width:100%;"
@@ -50,7 +49,8 @@ export const GrampsjsNewPlaceMixin = superClass =>
             @input="${this.handleName}"
             @blur="${this.handleName}"
             id="place-name"
-          ></md-filled-text-field>
+            aria-label="${this._('Name')}"
+          ></md-outlined-text-field>
         </p>
 
         <h3 class="label">${this._('Type')}</h3>
@@ -98,7 +98,7 @@ export const GrampsjsNewPlaceMixin = superClass =>
           >
             <grampsjs-icon
               slot="icon"
-              path="${mdiMapMarker}"
+              path="${MapPin}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('Pick on map')}

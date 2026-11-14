@@ -3,7 +3,7 @@ import {html, css, LitElement} from 'lit'
 import '@material/web/button/filled-button.js'
 import '@material/web/textfield/outlined-text-field.js'
 
-import {mdiCheckCircle} from '@mdi/js'
+import {CheckCircle} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {
   __APIHOST__,
@@ -133,7 +133,7 @@ class GrampsjsFirstRun extends GrampsjsAppStateMixin(LitElement) {
               ? html`
                   <span class="icon">
                     ${renderIcon(
-                      mdiCheckCircle,
+                      CheckCircle,
                       'var(--grampsjs-alert-success-font-color)'
                     )}
                   </span>

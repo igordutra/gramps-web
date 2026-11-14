@@ -3,7 +3,7 @@ Element for selecting a Gramps type
 */
 
 import {html, css, LitElement} from 'lit'
-import {mdiUpload, mdiFile} from '@mdi/js'
+import {File, UploadSimple} from '../icons/phosphor.js'
 import '@material/web/button/filled-button.js'
 import '@material/web/button/outlined-button.js'
 
@@ -105,7 +105,7 @@ class GrampsjsFormUpload extends GrampsjsAppStateMixin(LitElement) {
           >
             <grampsjs-icon
               slot="icon"
-              path="${mdiUpload}"
+              path="${UploadSimple}"
               color="currentColor"
             ></grampsjs-icon>
             ${this.label ||
@@ -117,7 +117,7 @@ class GrampsjsFormUpload extends GrampsjsAppStateMixin(LitElement) {
           >
             <grampsjs-icon
               slot="icon"
-              path="${mdiUpload}"
+              path="${UploadSimple}"
               color="currentColor"
             ></grampsjs-icon>
             ${this.label ||
@@ -156,7 +156,7 @@ class GrampsjsFormUpload extends GrampsjsAppStateMixin(LitElement) {
   renderIcon() {
     return html`<grampsjs-icon
       class="file-icon"
-      path="${mdiFile}"
+      path="${File}"
       height="100"
       width="100"
       color="var(--grampsjs-body-font-color-60)"

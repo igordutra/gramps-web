@@ -2,7 +2,7 @@
 /* eslint-disable class-methods-use-this */
 import {css, html} from 'lit'
 
-import {mdiPencil} from '@mdi/js'
+import {PencilSimple} from '../icons/phosphor.js'
 import '@material/web/fab/fab.js'
 import '../components/GrampsjsIcon.js'
 
@@ -117,10 +117,14 @@ export class GrampsjsViewObject extends GrampsjsView {
 
   renderFab() {
     return html`
-      <md-fab variant="primary" @click="${this._activateEditMode}">
+      <md-fab
+        variant="primary"
+        @click="${this._activateEditMode}"
+        aria-label="${this._('Edit')}"
+      >
         <grampsjs-icon
           slot="icon"
-          .path="${mdiPencil}"
+          .path="${PencilSimple}"
           color="currentColor"
         ></grampsjs-icon>
       </md-fab>

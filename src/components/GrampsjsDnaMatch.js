@@ -1,6 +1,5 @@
 import {html, LitElement, css} from 'lit'
-import {mdiArrowLeft} from '@mdi/js'
-
+import {ArrowLeft} from '../icons/phosphor.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {sharedStyles} from '../SharedStyles.js'
 import './GrampsjsDnaMatchTable.js'
@@ -132,7 +131,7 @@ export class GrampsjsDnaMatch extends GrampsjsAppStateMixin(LitElement) {
         <md-icon-button @click="${this.handleBackToAllMatches}">
           <md-icon
             >${renderIconSvg(
-              mdiArrowLeft,
+              ArrowLeft,
               'var(--grampsjs-body-font-color-60)'
             )}</md-icon
           >

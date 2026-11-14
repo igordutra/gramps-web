@@ -1,10 +1,9 @@
 import {css, html, LitElement} from 'lit'
 import {
-  mdiMagnifyMinus,
-  mdiMagnifyPlus,
-  mdiArrowExpandHorizontal,
-} from '@mdi/js'
-
+  ArrowsHorizontal,
+  MagnifyingGlassMinus,
+  MagnifyingGlassPlus,
+} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -204,7 +203,7 @@ export class GrampsjsTimeline extends GrampsjsAppStateMixin(LitElement) {
               aria-label="${this._('Zoom in')}"
               @click=${() => this._chart?.zoomIn()}
             >
-              <grampsjs-icon path="${mdiMagnifyPlus}"></grampsjs-icon>
+              <grampsjs-icon path="${MagnifyingGlassPlus}"></grampsjs-icon>
             </md-icon-button>
             <grampsjs-tooltip for="btn-zoom-in" .appState="${this.appState}">
               ${this._('Zoom in')}
@@ -214,7 +213,7 @@ export class GrampsjsTimeline extends GrampsjsAppStateMixin(LitElement) {
               aria-label="${this._('Reset')}"
               @click=${() => this._chart?.reset()}
             >
-              <grampsjs-icon path="${mdiArrowExpandHorizontal}"></grampsjs-icon>
+              <grampsjs-icon path="${ArrowsHorizontal}"></grampsjs-icon>
             </md-icon-button>
             <grampsjs-tooltip for="btn-reset" .appState="${this.appState}">
               ${this._('Reset')}
@@ -224,7 +223,7 @@ export class GrampsjsTimeline extends GrampsjsAppStateMixin(LitElement) {
               aria-label="${this._('Zoom out')}"
               @click=${() => this._chart?.zoomOut()}
             >
-              <grampsjs-icon path="${mdiMagnifyMinus}"></grampsjs-icon>
+              <grampsjs-icon path="${MagnifyingGlassMinus}"></grampsjs-icon>
             </md-icon-button>
             <grampsjs-tooltip for="btn-zoom-out" .appState="${this.appState}">
               ${this._('Zoom out')}

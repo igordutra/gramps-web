@@ -10,12 +10,11 @@ import '@material/web/menu/menu'
 import '@material/web/menu/menu-item'
 import '@material/web/divider/divider.js'
 import {
-  mdiBellOutline,
-  mdiBellBadgeOutline,
-  mdiChevronRight,
-  mdiDownload,
-} from '@mdi/js'
-
+  Bell,
+  BellRinging,
+  CaretRight,
+  DownloadSimple,
+} from '../icons/phosphor.js'
 import {sharedStyles, appBarIconButtonStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {downloadExportFile} from '../api.js'
@@ -137,9 +136,7 @@ class GrampsjsNotificationMenu extends GrampsjsAppStateMixin(LitElement) {
           @click="${this._handleClickBell}"
         >
           <grampsjs-icon
-            path="${this._unreadCount > 0
-              ? mdiBellBadgeOutline
-              : mdiBellOutline}"
+            path="${this._unreadCount > 0 ? BellRinging : Bell}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -159,7 +156,7 @@ class GrampsjsNotificationMenu extends GrampsjsAppStateMixin(LitElement) {
             <div slot="headline">${this._('Show all')}</div>
             <grampsjs-icon
               slot="end"
-              path="${mdiChevronRight}"
+              path="${CaretRight}"
               color="var(--grampsjs-body-font-color-60)"
               height="20"
               width="20"
@@ -210,7 +207,7 @@ class GrampsjsNotificationMenu extends GrampsjsAppStateMixin(LitElement) {
     ) {
       return html`<div class="empty">
         <grampsjs-icon
-          path="${mdiBellOutline}"
+          path="${Bell}"
           color="var(--grampsjs-text-secondary-color)"
           height="32"
           width="32"
@@ -240,7 +237,7 @@ class GrampsjsNotificationMenu extends GrampsjsAppStateMixin(LitElement) {
         ${downloadUrl
           ? html`<grampsjs-icon
               slot="end"
-              path="${mdiDownload}"
+              path="${DownloadSimple}"
               color="var(--grampsjs-body-font-color-60)"
               height="20"
               width="20"

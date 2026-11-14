@@ -8,19 +8,34 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       css`
         md-list.toc-list {
-          --md-list-item-label-text-weight: 400;
-          --md-list-item-label-text-size: 14px;
+          /*
+           * The table of contents is a quiet index beside the record, so
+           * its entries are the smallest text in the app. Upstream wrote
+           * 14px at 400; the size and the weight are the body-small step.
+           */
+          --md-list-item-label-text-weight: var(
+            --md-sys-typescale-body-small-weight
+          );
+          --md-list-item-label-text-size: var(
+            --md-sys-typescale-body-small-size
+          );
           --md-list-item-label-text-color: var(
             --md-sys-color-on-surface-variant
           );
           --md-list-item-hover-state-layer-color: var(--md-sys-color-surface);
-          --md-list-item-top-space: 0px;
-          --md-list-item-bottom-space: 0px;
-          --md-list-item-one-line-container-height: 40px;
+          --md-list-item-top-space: var(--grampsjs-space-0);
+          --md-list-item-bottom-space: var(--grampsjs-space-0);
+          --md-list-item-one-line-container-height: var(--grampsjs-space-40);
         }
 
         md-list-item.active {
-          --md-list-item-label-text-weight: var(--grampsjs-font-weight-heading);
+          /*
+           * The active row is the one emphasis in the list, so it takes
+           * a heavier weight than the rows around it.
+           */
+          --md-list-item-label-text-weight: var(
+            --md-sys-typescale-title-small-weight
+          );
         }
 
         h3 {
@@ -28,8 +43,8 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
           margin-bottom: 12px;
           margin-top: 0;
           font-size: 16px;
-          font-weight: var(--grampsjs-font-weight-medium);
-          color: var(--grampsjs-text-secondary-color);
+          font-weight: 420;
+          opacity: 0.55;
         }
       `,
     ]
@@ -58,7 +73,7 @@ export class GrampsjsObjectToc extends GrampsjsAppStateMixin(LitElement) {
 
     return html`
       ${this.heading ? html`<h3>${this._('Table Of Contents')}</h3>` : ''}
-      <md-list class="toc-list">
+      <md-list class="toc-list" role="list">
         ${tabKeys.map(
           key => html`
             <md-list-item

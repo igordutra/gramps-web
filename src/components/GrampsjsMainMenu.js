@@ -7,30 +7,22 @@ import '@material/web/ripple/ripple.js'
 import '@material/web/focus/md-focus-ring.js'
 
 import {
-  mdiFamilyTree,
-  mdiCreation,
-  mdiCreationOutline,
-  mdiDna,
-  mdiHome,
-  mdiHomeOutline,
-  mdiImage,
-  mdiImageOutline,
-  mdiRss,
-  mdiFormatListBulleted,
-  mdiMap,
-  mdiMapOutline,
-  mdiHistory,
-  mdiBookmark,
-  mdiBookmarkOutline,
-  mdiFormatListChecks,
-  mdiDownload,
-  mdiDownloadOutline,
-  mdiFileExport,
-  mdiFileExportOutline,
-  mdiSourceCommit,
-  mdiTimeline,
-  mdiTimelineOutline,
-} from '@mdi/js'
+  BookmarkSimple,
+  ChartLineUp,
+  ClockCounterClockwise,
+  Dna,
+  DownloadSimple,
+  FileArrowDown,
+  GitCommit,
+  House,
+  Image,
+  ListBullets,
+  ListChecks,
+  MapTrifold,
+  Rss,
+  Sparkle,
+  TreeStructure,
+} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {LISTS_PAGES} from '../routing.js'
@@ -90,21 +82,21 @@ const GROUPS = [
 
 // [outline, filled] icons; a single one where MDI has no outline variant
 const ICONS = {
-  home: [mdiHomeOutline, mdiHome],
-  blog: [mdiRss],
-  tree: [mdiFamilyTree],
-  timeline: [mdiTimelineOutline, mdiTimeline],
-  map: [mdiMapOutline, mdiMap],
-  dna: [mdiDna],
-  lists: [mdiFormatListBulleted],
-  media: [mdiImageOutline, mdiImage],
-  chat: [mdiCreationOutline, mdiCreation],
-  recent: [mdiHistory],
-  bookmarks: [mdiBookmarkOutline, mdiBookmark],
-  tasks: [mdiFormatListChecks],
-  reports: [mdiFileExportOutline, mdiFileExport],
-  export: [mdiDownloadOutline, mdiDownload],
-  revisions: [mdiSourceCommit],
+  home: [House, House],
+  blog: [Rss],
+  tree: [TreeStructure],
+  timeline: [ChartLineUp, ChartLineUp],
+  map: [MapTrifold, MapTrifold],
+  dna: [Dna],
+  lists: [ListBullets],
+  media: [Image, Image],
+  chat: [Sparkle, Sparkle],
+  recent: [ClockCounterClockwise],
+  bookmarks: [BookmarkSimple, BookmarkSimple],
+  tasks: [ListChecks],
+  reports: [FileArrowDown, FileArrowDown],
+  export: [DownloadSimple, DownloadSimple],
+  revisions: [GitCommit],
 }
 
 class GrampsjsMainMenu extends GrampsjsAppStateMixin(LitElement) {
@@ -116,7 +108,7 @@ class GrampsjsMainMenu extends GrampsjsAppStateMixin(LitElement) {
           display: block;
         }
 
-        nav {
+        .menu {
           display: flex;
           flex-direction: column;
           gap: 2px;
@@ -242,7 +234,7 @@ class GrampsjsMainMenu extends GrampsjsAppStateMixin(LitElement) {
 
   render() {
     return html`
-      <nav aria-label="${this._('Menu')}">
+      <div class="menu">
         ${GROUPS.map(group => group.filter(item => this._isShown(item.id)))
           .filter(group => group.length > 0)
           .map(
@@ -251,7 +243,7 @@ class GrampsjsMainMenu extends GrampsjsAppStateMixin(LitElement) {
                 ${group.map(item => this._item(item))}
               </div>`
           )}
-      </nav>
+      </div>
     `
   }
 }

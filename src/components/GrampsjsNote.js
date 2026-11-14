@@ -2,8 +2,7 @@ import {html, css} from 'lit'
 
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiPencil} from '@mdi/js'
-
+import {PencilSimple} from '../icons/phosphor.js'
 import {objectIconPath} from '../util.js'
 import {GrampsjsObject} from './GrampsjsObject.js'
 import './GrampsjsIcon.js'
@@ -50,7 +49,7 @@ export class GrampsjsNote extends GrampsjsObject {
                 @click="${this._handleEditType}"
               >
                 <grampsjs-icon
-                  path="${mdiPencil}"
+                  path="${PencilSimple}"
                   color="var(--mdc-theme-secondary)"
                 ></grampsjs-icon>
               </md-icon-button>

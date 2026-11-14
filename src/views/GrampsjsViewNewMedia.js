@@ -3,8 +3,7 @@ import {repeat} from 'lit/directives/repeat.js'
 
 import '@material/web/progress/linear-progress.js'
 import '@material/web/iconbutton/icon-button.js'
-import {mdiClose, mdiFileDocumentOutline} from '@mdi/js'
-
+import {FileDoc, X} from '../icons/phosphor.js'
 import '../components/GrampsjsFormUpload.js'
 import '../components/GrampsjsIcon.js'
 
@@ -23,7 +22,7 @@ export class GrampsjsViewNewMedia extends GrampsjsNewMediaMixin(
       css`
         .file-entry {
           border: 1px solid var(--grampsjs-body-font-color-20);
-          border-radius: 12px;
+          border-radius: var(--md-sys-shape-corner-extra-large);
           padding: 16px;
           margin-bottom: 24px;
           position: relative;
@@ -45,7 +44,7 @@ export class GrampsjsViewNewMedia extends GrampsjsNewMediaMixin(
           justify-content: center;
           background: var(--mdc-theme-surface, #fff);
           border: 1px solid var(--grampsjs-body-font-color-25);
-          border-radius: 4px;
+          border-radius: var(--md-sys-shape-corner-small);
           overflow: hidden;
         }
 
@@ -121,6 +120,7 @@ export class GrampsjsViewNewMedia extends GrampsjsNewMediaMixin(
                 value="${this.uploadTotal > 0
                   ? this.uploadProgress / this.uploadTotal
                   : 0}"
+                aria-label="${this._('Upload progress')}"
               ></md-linear-progress>
               <p style="text-align: center; margin-top: 8px;">
                 ${this._(
@@ -174,7 +174,7 @@ export class GrampsjsViewNewMedia extends GrampsjsNewMediaMixin(
             @click="${() => this._removeFile(index)}"
             style="--md-icon-button-icon-color: var(--grampsjs-body-font-color-60);"
           >
-            <grampsjs-icon path="${mdiClose}"></grampsjs-icon>
+            <grampsjs-icon path="${X}"></grampsjs-icon>
           </md-icon-button>
         </div>
 
@@ -185,9 +185,7 @@ export class GrampsjsViewNewMedia extends GrampsjsNewMediaMixin(
                   src="${this._getFilePreviewUrl(file)}"
                   alt="${file.name}"
                 />`
-              : html`<grampsjs-icon
-                  path="${mdiFileDocumentOutline}"
-                ></grampsjs-icon>`}
+              : html`<grampsjs-icon path="${FileDoc}"></grampsjs-icon>`}
           </div>
 
           <div class="file-metadata">

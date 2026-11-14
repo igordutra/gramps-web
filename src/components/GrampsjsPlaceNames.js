@@ -1,7 +1,6 @@
 import {html} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {mdiSignRealEstate} from '@mdi/js'
-
+import {HouseLine} from '../icons/phosphor.js'
 import {fireEvent} from '../util.js'
 import {GrampsjsEditableList} from './GrampsjsEditableList.js'
 import './GrampsjsFormEditPlaceName.js'
@@ -39,7 +38,7 @@ export class GrampsjsPlaceNames extends GrampsjsEditableList {
         ${dateStr ? html`<span slot="supporting-text">${dateStr}</span>` : ''}
         <grampsjs-icon
           slot="start"
-          path="${mdiSignRealEstate}"
+          path="${HouseLine}"
           color="var(--grampsjs-color-icon)"
         ></grampsjs-icon>
       </md-list-item>

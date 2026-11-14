@@ -11,8 +11,7 @@ import {css, html, LitElement} from 'lit'
 import '@material/web/button/text-button.js'
 import '@material/web/iconbutton/icon-button.js'
 
-import {mdiClose} from '@mdi/js'
-
+import {X} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import {buttonColorStyles, iconButtonColorStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -111,9 +110,9 @@ class GrampsjsSnackbar extends GrampsjsAppStateMixin(LitElement) {
 
         md-icon-button {
           --grampsjs-icon-button-color: var(--md-sys-color-inverse-on-surface);
-          --md-icon-button-icon-size: 18px;
-          --md-icon-button-state-layer-width: 36px;
-          --md-icon-button-state-layer-height: 36px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size);
+          --md-icon-button-state-layer-width: var(--grampsjs-space-32);
+          --md-icon-button-state-layer-height: var(--grampsjs-space-32);
           flex-shrink: 0;
         }
       `,
@@ -169,10 +168,7 @@ class GrampsjsSnackbar extends GrampsjsAppStateMixin(LitElement) {
               aria-label="${this._('Close')}"
               @click="${this.dismiss}"
             >
-              <grampsjs-icon
-                path="${mdiClose}"
-                color="currentColor"
-              ></grampsjs-icon>
+              <grampsjs-icon path="${X}" color="currentColor"></grampsjs-icon>
             </md-icon-button>`
           : ''}
       </div>

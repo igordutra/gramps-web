@@ -3,20 +3,15 @@ import '@material/web/list/list'
 import '@material/web/list/list-item'
 import '@material/web/divider/divider'
 
-import {
-  mdiFileDocument,
-  mdiChartPie,
-  mdiFileTree,
-  mdiBookOpenVariant,
-} from '@mdi/js'
-
+import {BookOpenText, ChartPie, FileCode, FileDoc} from '../icons/phosphor.js'
 import {GrampsjsView} from './GrampsjsView.js'
+import {fireEvent} from '../util.js'
 import '../components/GrampsjsIcon.js'
 
 const categoryIconPath = {
-  0: mdiFileDocument,
-  1: mdiChartPie,
-  5: mdiFileTree,
+  0: FileDoc,
+  1: ChartPie,
+  5: FileCode,
 }
 
 export class GrampsjsViewReports extends GrampsjsView {
@@ -29,8 +24,8 @@ export class GrampsjsViewReports extends GrampsjsView {
         }
 
         md-divider {
-          --md-divider-thickness: 1px;
-          --md-divider-color: rgba(0, 0, 0, 0.12);
+          --md-divider-thickness: var(--grampsjs-outline-width);
+          --md-divider-color: var(--grampsjs-divider-color);
         }
       `,
     ]
@@ -53,20 +48,30 @@ export class GrampsjsViewReports extends GrampsjsView {
 
   renderContent() {
     return html`
-      <md-list> ${this.data.map(item => this._selectListItem(item))} </md-list>
+      <h2>${this._('_Reports').replace('_', '')}</h2>
+      <md-list role="list">
+        ${this.data.map(item => this._selectListItem(item))}
+      </md-list>
     `
   }
 
   _selectListItem(report) {
-    const iconPath = categoryIconPath[report.category] || mdiBookOpenVariant
+    const iconPath = categoryIconPath[report.category] || BookOpenText
     return html`
       <md-divider inset></md-divider>
-      <md-list-item type="link" href="/report/${report.id}">
+      <md-list-item
+        type="button"
+        @click="${() => this._handleItemClick(report.id)}"
+      >
         <grampsjs-icon slot="start" path="${iconPath}"></grampsjs-icon>
         ${this._(report.name)}
         <span slot="supporting-text">${this._(report.description)}</span>
       </md-list-item>
     `
+  }
+
+  _handleItemClick(reportId) {
+    fireEvent(this, 'nav', {path: `report/${reportId}`})
   }
 
   async _fetchData() {

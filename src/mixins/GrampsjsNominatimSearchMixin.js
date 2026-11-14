@@ -3,8 +3,7 @@ import {html, css} from 'lit'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/progress/circular-progress.js'
 
-import {mdiDotsHorizontal, mdiMagnify} from '@mdi/js'
-
+import {DotsThree, MagnifyingGlass} from '../icons/phosphor.js'
 import {queryNominatim} from '../api.js'
 
 export const nominatimSearchStyles = css`
@@ -115,7 +114,7 @@ export const GrampsjsNominatimSearchMixin = superclass =>
               @click="${this._executeSearch}"
               aria-label="${this._('Search')}"
             >
-              <grampsjs-icon path="${mdiMagnify}"></grampsjs-icon>
+              <grampsjs-icon path="${MagnifyingGlass}"></grampsjs-icon>
             </md-icon-button>
           </div>
         </div>
@@ -150,7 +149,7 @@ export const GrampsjsNominatimSearchMixin = superclass =>
                 @click="${this._handleShowMore}"
                 aria-label="${this._('Show more')}"
               >
-                <grampsjs-icon path="${mdiDotsHorizontal}"></grampsjs-icon>
+                <grampsjs-icon path="${DotsThree}"></grampsjs-icon>
               </md-icon-button>
             `}
         <div class="attribution">

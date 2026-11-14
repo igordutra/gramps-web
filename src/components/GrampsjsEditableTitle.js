@@ -9,8 +9,7 @@ an `edit:action` that updates the property `prop` of the object.
 
 import {html, css, LitElement} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {mdiCheck, mdiClose, mdiPencil} from '@mdi/js'
-
+import {Check, PencilSimple, X} from '../icons/phosphor.js'
 import '@material/web/iconbutton/icon-button.js'
 
 import './GrampsjsIcon.js'
@@ -124,7 +123,7 @@ export class GrampsjsEditableTitle extends GrampsjsAppStateMixin(LitElement) {
               @click="${this._handleEdit}"
             >
               <grampsjs-icon
-                path="${mdiPencil}"
+                path="${PencilSimple}"
                 color="var(--mdc-theme-secondary)"
               ></grampsjs-icon>
             </md-icon-button>
@@ -158,7 +157,7 @@ export class GrampsjsEditableTitle extends GrampsjsAppStateMixin(LitElement) {
           @click="${() => this._save()}"
         >
           <grampsjs-icon
-            path="${mdiCheck}"
+            path="${Check}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>
@@ -173,7 +172,7 @@ export class GrampsjsEditableTitle extends GrampsjsAppStateMixin(LitElement) {
           @click="${() => this._cancel()}"
         >
           <grampsjs-icon
-            path="${mdiClose}"
+            path="${X}"
             color="var(--mdc-theme-secondary)"
           ></grampsjs-icon>
         </md-icon-button>

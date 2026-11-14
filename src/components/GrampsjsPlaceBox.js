@@ -7,8 +7,7 @@ import './GrampsjsGallery.js'
 import './GrampsjsIcon.js'
 import {GrampsjsConnectedComponent} from './GrampsjsConnectedComponent.js'
 import {sharedStyles} from '../SharedStyles.js'
-import {mdiMapMarkerOff} from '@mdi/js'
-
+import {MapPin} from '../icons/phosphor.js'
 export class GrampsjsPlaceBox extends GrampsjsConnectedComponent {
   static get styles() {
     return [
@@ -118,7 +117,7 @@ export class GrampsjsPlaceBox extends GrampsjsConnectedComponent {
         ? ''
         : html`<p class="no-coords">
             <grampsjs-icon
-              path="${mdiMapMarkerOff}"
+              path="${MapPin}"
               height="16"
               width="16"
             ></grampsjs-icon>

@@ -3,14 +3,13 @@ Element for editing a Gramps date
 */
 
 import {html, css, LitElement} from 'lit'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/button/text-button.js'
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 
-import {mdiCalendar, mdiChevronDown} from '@mdi/js'
-
+import {Calendar, CaretDown} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import './GrampsjsChipChoice.js'
 import {sharedStyles, iconButtonColorStyles} from '../SharedStyles.js'
@@ -164,13 +163,24 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
           margin-bottom: 16px;
         }
 
+        /*
+         * The date part fields.
+         *
+         * They are sized in em, so the width follows the field's own
+         * font size. The month field was 5em, which was not enough for
+         * the word "Month" — the label was ellipsised to "Mo…". The
+         * width now fits the longest label it has to carry.
+         */
         .row .year {
-          width: 6.5em;
+          width: 7em;
         }
 
-        .row .month,
+        .row .month {
+          width: 7em;
+        }
+
         .row .day {
-          width: 5em;
+          width: 5.5em;
         }
 
         input[type='date'] {
@@ -271,7 +281,7 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
         ${this._('More options')}
         <grampsjs-icon
           slot="icon"
-          path="${mdiChevronDown}"
+          path="${CaretDown}"
           color="currentColor"
         ></grampsjs-icon>
       </md-text-button>
@@ -285,7 +295,7 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
     )
     return html`
       <div class="row">
-        <md-filled-text-field
+        <md-outlined-text-field
           class="year"
           label="${this._('Year')}"
           type="number"
@@ -293,8 +303,8 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
           .value="${y}"
           ?error="${error}"
           @input="${e => this._handleField(index, 2, e)}"
-        ></md-filled-text-field>
-        <md-filled-text-field
+        ></md-outlined-text-field>
+        <md-outlined-text-field
           class="month"
           label="${this._('Month')}"
           type="number"
@@ -307,8 +317,8 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
           .value="${m}"
           ?error="${error}"
           @input="${e => this._handleField(index, 1, e)}"
-        ></md-filled-text-field>
-        <md-filled-text-field
+        ></md-outlined-text-field>
+        <md-outlined-text-field
           class="day"
           label="${this._('Day')}"
           type="number"
@@ -318,7 +328,7 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
           .value="${d}"
           ?error="${error}"
           @input="${e => this._handleField(index, 0, e)}"
-        ></md-filled-text-field>
+        ></md-outlined-text-field>
         <input
           type="date"
           id="input-date${index}"
@@ -331,7 +341,7 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
           @click="${() => this._openPicker(index)}"
         >
           <grampsjs-icon
-            path="${mdiCalendar}"
+            path="${Calendar}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -342,7 +352,7 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
   _renderMore() {
     return html`
       <div class="more-fields">
-        <md-filled-select
+        <md-outlined-select
           id="select-quality"
           label="${this._('Quality')}"
           @change="${this._handleQuality}"
@@ -357,8 +367,8 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
               </md-select-option>
             `
           )}
-        </md-filled-select>
-        <md-filled-select
+        </md-outlined-select>
+        <md-outlined-select
           id="select-calendar"
           label="${this._('Calendar')}"
           @change="${this._handleCalendar}"
@@ -375,7 +385,7 @@ class GrampsjsFormSelectDate extends GrampsjsAppStateMixin(LitElement) {
               </md-select-option>
             `
           )}
-        </md-filled-select>
+        </md-outlined-select>
       </div>
     `
   }

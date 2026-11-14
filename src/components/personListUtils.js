@@ -1,6 +1,5 @@
 import {html} from 'lit'
-import {mdiAccount} from '@mdi/js'
-
+import {User} from '../icons/phosphor.js'
 import {objectIconPath, sexColor} from '../util.js'
 import {SYMBOL_SETS, SYMBOL_SET_DEFAULT} from '../symbols.js'
 import './GrampsjsImg.js'
@@ -27,7 +26,7 @@ export function renderPersonAvatar(extPerson, sex) {
   }
   return html`<grampsjs-icon
     slot="start"
-    path="${mdiAccount}"
+    path="${User}"
     color="var(--grampsjs-color-icon)"
     style="${style}"
   ></grampsjs-icon>`

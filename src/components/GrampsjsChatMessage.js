@@ -2,7 +2,7 @@ import {html, css, LitElement} from 'lit'
 import {unsafeHTML} from 'lit/directives/unsafe-html.js'
 import {classMap} from 'lit/directives/class-map.js'
 import '@material/web/icon/icon.js'
-import {mdiFamilyTree} from '@mdi/js'
+import {TreeStructure} from '../icons/phosphor.js'
 import {marked} from 'marked'
 import DOMPurify from 'dompurify'
 
@@ -143,7 +143,10 @@ class GrampsjsChatMessage extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .slot-wrap code {
-          font-family: monospace;
+          /* The theme's MONO face, not the browser's default: the
+           * style owns the app's voice, and a hard-coded generic
+           * monospace is the one place that voice slips. */
+          font-family: var(--grampsjs-mono-font-family);
           background: var(--grampsjs-color-shade-230);
           padding: 0.1em 0.3em;
           border-radius: 3px;
@@ -188,7 +191,7 @@ class GrampsjsChatMessage extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .avatar md-icon {
-          --md-icon-size: 20px;
+          --md-icon-size: var(--grampsjs-icon-size-medium);
           position: relative;
           top: 3px;
         }
@@ -237,7 +240,7 @@ class GrampsjsChatMessage extends GrampsjsAppStateMixin(LitElement) {
                 <div class="avatar">
                   <md-icon
                     >${renderIconSvg(
-                      mdiFamilyTree,
+                      TreeStructure,
                       'var(--grampsjs-body-font-color-40)',
                       270
                     )}</md-icon

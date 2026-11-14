@@ -5,14 +5,7 @@ element for editing a name
 import {html, css, LitElement} from 'lit'
 import '@material/web/iconbutton/icon-button.js'
 
-import {
-  mdiArrowDown,
-  mdiArrowUp,
-  mdiDelete,
-  mdiDotsHorizontal,
-  mdiPlus,
-} from '@mdi/js'
-
+import {ArrowDown, ArrowUp, DotsThree, Plus, Trash} from '../icons/phosphor.js'
 import {classMap} from 'lit/directives/class-map.js'
 import {sharedStyles, iconButtonColorStyles} from '../SharedStyles.js'
 import {fireEvent} from '../util.js'
@@ -140,7 +133,7 @@ class GrampsjsFormName extends GrampsjsAppStateMixin(LitElement) {
             aria-label="${this._('Delete')}"
             @click="${() => this._handleDeleteSurname(i)}"
           >
-            <grampsjs-icon path="${mdiDelete}" color="currentColor">
+            <grampsjs-icon path="${Trash}" color="currentColor">
             </grampsjs-icon>
           </md-icon-button>
 
@@ -150,7 +143,7 @@ class GrampsjsFormName extends GrampsjsAppStateMixin(LitElement) {
             aria-label="${this._('Move Up')}"
             @click="${() => this._handleUpSurname(i)}"
           >
-            <grampsjs-icon path="${mdiArrowUp}" color="currentColor">
+            <grampsjs-icon path="${ArrowUp}" color="currentColor">
             </grampsjs-icon>
           </md-icon-button>
 
@@ -161,7 +154,7 @@ class GrampsjsFormName extends GrampsjsAppStateMixin(LitElement) {
             aria-label="${this._('Move Down')}"
             @click="${() => this._handleDownSurname(i)}"
           >
-            <grampsjs-icon path="${mdiArrowDown}" color="currentColor">
+            <grampsjs-icon path="${ArrowDown}" color="currentColor">
             </grampsjs-icon>
           </md-icon-button>
 
@@ -186,8 +179,7 @@ class GrampsjsFormName extends GrampsjsAppStateMixin(LitElement) {
           aria-label="${this._('Add')}"
           @click="${this._handleAddSurname}"
         >
-          <grampsjs-icon path="${mdiPlus}" color="currentColor">
-          </grampsjs-icon>
+          <grampsjs-icon path="${Plus}" color="currentColor"> </grampsjs-icon>
         </md-icon-button>
       </p>
 
@@ -200,7 +192,7 @@ class GrampsjsFormName extends GrampsjsAppStateMixin(LitElement) {
               aria-label="${this._('Show more')}"
               @click="${this._handleShowMore}"
             >
-              <grampsjs-icon path="${mdiDotsHorizontal}" color="currentColor">
+              <grampsjs-icon path="${DotsThree}" color="currentColor">
               </grampsjs-icon>
             </md-icon-button>
             <grampsjs-tooltip

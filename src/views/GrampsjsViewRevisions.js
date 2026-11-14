@@ -3,36 +3,27 @@ import {css, html} from 'lit'
 import '@material/web/list/list'
 import '@material/web/list/list-item'
 import {
-  mdiSourceCommit,
-  mdiAccountPlus,
-  mdiAccountMultiplePlus,
-  mdiCalendarPlus,
-  mdiLabel,
-  mdiBookmarkPlus,
-  mdiArchivePlus,
-  mdiImagePlus,
-  mdiMapMarkerPlus,
-  mdiTextBoxPlus,
-  mdiBookOpenVariant,
-  mdiAccountEdit,
-  mdiAccountMultiple,
-  mdiCalendarEdit,
-  mdiBookmark,
-  mdiArchiveEdit,
-  mdiImageEdit,
-  mdiMapMarker,
-  mdiTextBoxEdit,
-  mdiAccountMinus,
-  mdiAccountMultipleMinus,
-  mdiCalendarMinus,
-  mdiBookmarkMinus,
-  mdiArchiveMinus,
-  mdiImageMinus,
-  mdiMapMarkerMinus,
-  mdiTextBoxMinus,
-  mdiTimelineQuestionOutline,
-} from '@mdi/js'
-
+  Archive,
+  BookOpenText,
+  BookmarkSimple,
+  Calendar,
+  CalendarMinus,
+  CalendarPlus,
+  ChartLineUp,
+  GitCommit,
+  Image,
+  ImageSquare,
+  MapPin,
+  MapPinLine,
+  MapPinPlus,
+  Tag,
+  Textbox,
+  UserCircleGear,
+  UserMinus,
+  UserPlus,
+  Users,
+  UsersThree,
+} from '../icons/phosphor.js'
 import '../components/GrampsjsPagination.js'
 import '../components/GrampsjsIcon.js'
 
@@ -40,36 +31,36 @@ import {GrampsjsView} from './GrampsjsView.js'
 import {GrampsjsStaleDataMixin} from '../mixins/GrampsjsStaleDataMixin.js'
 
 const changeIcons = {
-  Person_0: mdiAccountPlus,
-  Family_0: mdiAccountMultiplePlus,
-  Event_0: mdiCalendarPlus,
-  Place_0: mdiMapMarkerPlus,
-  Source_0: mdiBookOpenVariant,
-  Citation_0: mdiBookmarkPlus,
-  Repository_0: mdiArchivePlus,
-  Note_0: mdiTextBoxPlus,
-  Tag_0: mdiLabel,
-  Media_0: mdiImagePlus,
-  Person_1: mdiAccountEdit,
-  Family_1: mdiAccountMultiple,
-  Event_1: mdiCalendarEdit,
-  Place_1: mdiMapMarker,
-  Source_1: mdiBookOpenVariant,
-  Citation_1: mdiBookmark,
-  Repository_1: mdiArchiveEdit,
-  Note_1: mdiTextBoxEdit,
-  Tag_1: mdiLabel,
-  Media_1: mdiImageEdit,
-  Person_2: mdiAccountMinus,
-  Family_2: mdiAccountMultipleMinus,
-  Event_2: mdiCalendarMinus,
-  Place_2: mdiMapMarkerMinus,
-  Source_2: mdiBookOpenVariant,
-  Citation_2: mdiBookmarkMinus,
-  Repository_2: mdiArchiveMinus,
-  Note_2: mdiTextBoxMinus,
-  Tag_2: mdiLabel,
-  Media_2: mdiImageMinus,
+  Person_0: UserPlus,
+  Family_0: UsersThree,
+  Event_0: CalendarPlus,
+  Place_0: MapPinPlus,
+  Source_0: BookOpenText,
+  Citation_0: BookmarkSimple,
+  Repository_0: Archive,
+  Note_0: Textbox,
+  Tag_0: Tag,
+  Media_0: Image,
+  Person_1: UserCircleGear,
+  Family_1: Users,
+  Event_1: Calendar,
+  Place_1: MapPin,
+  Source_1: BookOpenText,
+  Citation_1: BookmarkSimple,
+  Repository_1: Archive,
+  Note_1: Textbox,
+  Tag_1: Tag,
+  Media_1: ImageSquare,
+  Person_2: UserMinus,
+  Family_2: Users,
+  Event_2: CalendarMinus,
+  Place_2: MapPinLine,
+  Source_2: BookOpenText,
+  Citation_2: BookmarkSimple,
+  Repository_2: Archive,
+  Note_2: Textbox,
+  Tag_2: Tag,
+  Media_2: Image,
 }
 
 function localDayKey(date) {
@@ -188,10 +179,11 @@ export class GrampsjsViewRevisions extends GrampsjsStaleDataMixin(
 
   render() {
     return html`
+      ${this.renderPageHeading()}
       ${groupByDay(this._data).map(
         group => html`
-          <h3 class="day">${this._formatDay(group.date)}</h3>
-          <md-list>
+          <h2 class="day">${this._formatDay(group.date)}</h2>
+          <md-list role="list">
             ${group.transactions.map(txn => this._renderTransaction(txn))}
           </md-list>
         `
@@ -238,7 +230,7 @@ export class GrampsjsViewRevisions extends GrampsjsStaleDataMixin(
       <div slot="headline">${this._(txn.description)}</div>
       <grampsjs-icon
         slot="start"
-        path="${mdiSourceCommit}"
+        path="${GitCommit}"
         color="var(--grampsjs-body-font-color-50)"
       ></grampsjs-icon>
       <div slot="end" class="changes">
@@ -258,7 +250,7 @@ export class GrampsjsViewRevisions extends GrampsjsStaleDataMixin(
             )
           : html`<span class="change">
               <grampsjs-icon
-                path="${mdiTimelineQuestionOutline}"
+                path="${ChartLineUp}"
                 color="var(--grampsjs-body-font-color-45)"
               ></grampsjs-icon>
             </span>`}

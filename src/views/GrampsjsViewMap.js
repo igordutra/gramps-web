@@ -53,24 +53,30 @@ export class GrampsjsViewMap extends GrampsjsStaleDataMixin(GrampsjsView) {
     return [
       super.styles,
       css`
+        /*
+         * The map fills the pane.
+         *
+         * The view now carries the page gutter as padding, so the map has
+         * to cancel it rather than set a margin of its own: the map's
+         * canvas reaches the pane edge and the controls float inside it.
+         */
         :host {
-          display: block;
-          margin: 0;
-          border-top: 1px solid var(--grampsjs-divider-strong-color);
+          padding: 0;
+          margin-top: calc(-1 * var(--grampsjs-page-gutter-block, 16px));
         }
 
         .wikidata-hint {
           position: absolute;
-          bottom: 44px;
+          bottom: var(--grampsjs-space-40);
           left: 50%;
           transform: translateX(-50%);
           z-index: 1;
-          padding: 4px 12px;
-          border-radius: 9999px;
-          font-size: 13px;
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-12);
+          border-radius: var(--md-sys-shape-corner-full);
+          font-size: var(--md-sys-typescale-label-medium-size);
           background: var(--md-sys-color-surface-container-high);
           color: var(--md-sys-color-on-surface);
-          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: var(--md-sys-elevation-level2);
           white-space: nowrap;
           pointer-events: none;
         }
@@ -302,7 +308,7 @@ export class GrampsjsViewMap extends GrampsjsStaleDataMixin(GrampsjsView) {
         layerSwitcher
         locateControl
         width="100%"
-        height="calc(var(--grampsjs-content-height) - 37px)"
+        height="calc(100dvh - 64px - 36px)"
         latitude="${center[0]}"
         longitude="${center[1]}"
         year="${this._year}"

@@ -3,14 +3,13 @@ import '@material/web/button/outlined-button'
 import '@material/web/button/filled-tonal-button.js'
 import '@material/web/iconbutton/icon-button.js'
 import {
-  mdiAccountMultiple,
-  mdiAccountMultiplePlus,
-  mdiArrowDown,
-  mdiArrowUp,
-  mdiLinkOff,
-  mdiLinkVariantPlus,
-} from '@mdi/js'
-
+  ArrowDown,
+  ArrowUp,
+  Link,
+  LinkSimple,
+  Users,
+  UsersThree,
+} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {fireEvent} from '../util.js'
 import './GrampsjsConnectedChildren.js'
@@ -48,7 +47,7 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .reorder-buttons md-icon-button {
-          --md-icon-button-icon-size: 20px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
           width: 34px;
           height: 34px;
         }
@@ -60,9 +59,9 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
         }
 
         .edit-buttons > md-icon-button {
-          --md-icon-button-icon-size: 24px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-large);
           --md-icon-button-icon-color: var(--mdc-theme-secondary);
-          --md-icon-button-icon-opacity: 1;
+          --md-icon-button-icon-opacity: var(--grampsjs-icon-button-opacity);
           width: 40px;
           height: 40px;
         }
@@ -189,7 +188,7 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
     return html`
       <md-icon-button class="edit" @click="${onClick}" title="${title}">
         <grampsjs-icon
-          path="${mdiLinkOff}"
+          path="${LinkSimple}"
           color="var(--mdc-theme-secondary)"
         ></grampsjs-icon>
       </md-icon-button>
@@ -231,7 +230,7 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
         >
           ${this._('Add person as child to an existing family')}
           <grampsjs-icon
-            path="${mdiLinkVariantPlus}"
+            path="${Link}"
             color="var(--mdc-theme-secondary)"
             slot="icon"
           ></grampsjs-icon>
@@ -239,7 +238,7 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
         <md-outlined-button class="edit" @click="${this._handleAddNewParents}">
           ${this._('Add a new set of parents')}
           <grampsjs-icon
-            path="${mdiAccountMultiplePlus}"
+            path="${UsersThree}"
             color="var(--mdc-theme-secondary)"
             slot="icon"
           ></grampsjs-icon>
@@ -257,7 +256,7 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
         >
           ${this._('Add a new family with person as parent')}
           <grampsjs-icon
-            path="${mdiAccountMultiplePlus}"
+            path="${UsersThree}"
             color="var(--mdc-theme-secondary)"
             slot="icon"
           ></grampsjs-icon>
@@ -346,7 +345,7 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
           title="${this._('Move Up')}"
         >
           <grampsjs-icon
-            path="${mdiArrowUp}"
+            path="${ArrowUp}"
             color="var(--mdc-theme-secondary)"
             height="20"
             width="20"
@@ -358,7 +357,7 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
           title="${this._('Move Down')}"
         >
           <grampsjs-icon
-            path="${mdiArrowDown}"
+            path="${ArrowDown}"
             color="var(--mdc-theme-secondary)"
             height="20"
             width="20"
@@ -433,7 +432,7 @@ export class GrampsjsRelationships extends GrampsjsAppStateMixin(LitElement) {
       href="/family/${grampsId}"
     >
       <grampsjs-icon
-        path="${mdiAccountMultiple}"
+        path="${Users}"
         color="currentColor"
         slot="icon"
       ></grampsjs-icon>

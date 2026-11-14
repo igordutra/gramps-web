@@ -5,10 +5,9 @@ import '@material/web/button/text-button'
 import '@material/web/dialog/dialog'
 import '@material/web/list/list'
 import '@material/web/list/list-item'
-import '@material/web/textfield/filled-text-field'
+import '@material/web/textfield/outlined-text-field'
 
-import {mdiCheck, mdiContentCopy} from '@mdi/js'
-
+import {Check, Copy} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {apiVersionAtLeast, fireEvent} from '../util.js'
@@ -65,7 +64,9 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
         }
 
         md-list-item {
-          --md-list-item-label-text-size: 1rem;
+          --md-list-item-label-text-size: var(
+            --md-sys-typescale-label-large-size
+          );
           --md-list-item-supporting-text-color: var(
             --md-sys-color-on-surface-variant
           );
@@ -79,7 +80,7 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
           overflow-wrap: anywhere;
         }
 
-        md-filled-text-field {
+        md-outlined-text-field {
           width: 100%;
         }
       `,
@@ -149,7 +150,7 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
       </p>
       ${entries.length
         ? html`
-            <md-list>
+            <md-list role="list">
               ${entries.map(entry => this._renderEntry(entry))}
             </md-list>
           `
@@ -420,14 +421,14 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
           ${this._(scopeInfo(this._creatingScope)?.addLabel)}
         </span>
         <div slot="content">
-          <md-filled-text-field
+          <md-outlined-text-field
             id="token-label"
             label="${this._('Device name')}"
             maxlength="${TOKEN_LABEL_MAX_LENGTH}"
             required
             ?disabled="${this._creating}"
             @keydown="${this._handleLabelKeydown}"
-          ></md-filled-text-field>
+          ></md-outlined-text-field>
         </div>
         <div slot="actions">
           <md-text-button @click="${this._closeCreation}">
@@ -493,7 +494,7 @@ export class GrampsjsAccessTokens extends GrampsjsAppStateMixin(LitElement) {
           <md-text-button @click="${this._copyCreatedToken}">
             <grampsjs-icon
               slot="icon"
-              path="${this._createdTokenCopied ? mdiCheck : mdiContentCopy}"
+              path="${this._createdTokenCopied ? Check : Copy}"
               color="currentColor"
             ></grampsjs-icon>
             ${this._('_Copy')}

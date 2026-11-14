@@ -3,8 +3,7 @@ Server configuration options that are deprecated but still in use.
 */
 
 import {css, html, LitElement} from 'lit'
-import {mdiAlertOutline, mdiArrowRight} from '@mdi/js'
-
+import {ArrowRight, Warning} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import './GrampsjsIcon.js'
@@ -87,7 +86,7 @@ export class GrampsjsDeprecations extends GrampsjsAppStateMixin(LitElement) {
             <div class="deprecation-row">
               <p class="deprecation-heading">
                 <grampsjs-icon
-                  path="${mdiAlertOutline}"
+                  path="${Warning}"
                   color="var(--md-sys-color-tertiary)"
                   height="18"
                   width="18"
@@ -96,7 +95,7 @@ export class GrampsjsDeprecations extends GrampsjsAppStateMixin(LitElement) {
                 ${deprecation.replacement
                   ? html`
                       <grampsjs-icon
-                        path="${mdiArrowRight}"
+                        path="${ArrowRight}"
                         color="currentColor"
                         height="18"
                         width="18"

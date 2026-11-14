@@ -5,8 +5,7 @@ button
 
 import {LitElement, html, css} from 'lit'
 
-import {mdiLockOpenVariantOutline, mdiLock} from '@mdi/js'
-
+import {Lock, LockOpen} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {fireEvent, clickKeyHandler} from '../util.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -99,7 +98,7 @@ export class GrampsjsObjectActions extends GrampsjsAppStateMixin(LitElement) {
     const label = this.data.private
       ? this._('Record is private')
       : this._('Record is public')
-    const path = this.data.private ? mdiLock : mdiLockOpenVariantOutline
+    const path = this.data.private ? Lock : LockOpen
     if (this.edit) {
       return html`
         <span id="wrap-btn-private">

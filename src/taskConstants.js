@@ -4,16 +4,15 @@ the attributes "Status" and "Priority"
 */
 
 import {
-  mdiAdjust,
-  mdiCheckCircle,
-  mdiChevronDoubleDown,
-  mdiChevronDoubleUp,
-  mdiHelp,
-  mdiMinusCircle,
-  mdiRadioboxBlank,
-  mdiTimelapse,
-} from '@mdi/js'
-
+  CaretDoubleDown,
+  CaretDoubleUp,
+  CheckCircle,
+  ClockCounterClockwise,
+  MinusCircle,
+  Question,
+  RadioButton,
+  SlidersHorizontal,
+} from './icons/phosphor.js'
 export const TASK_STATUSES = ['Open', 'In Progress', 'Blocked', 'Done']
 
 // the values the app sets; any number below 5 counts as high and any number
@@ -26,23 +25,26 @@ export const TASK_PRIORITIES = [
 
 // icons of the statuses and priority labels, as {path, color}
 export const STATUS_ICONS = {
-  Open: {path: mdiRadioboxBlank, color: 'var(--grampsjs-task-open)'},
-  'In Progress': {path: mdiTimelapse, color: 'var(--grampsjs-task-progress)'},
+  Open: {path: RadioButton, color: 'var(--grampsjs-task-open)'},
+  'In Progress': {
+    path: ClockCounterClockwise,
+    color: 'var(--grampsjs-task-progress)',
+  },
   Blocked: {
-    path: mdiMinusCircle,
+    path: MinusCircle,
     color: 'var(--grampsjs-alert-error-font-color)',
   },
-  Done: {path: mdiCheckCircle, color: 'var(--grampsjs-task-done)'},
+  Done: {path: CheckCircle, color: 'var(--grampsjs-task-done)'},
 }
 
 export const PRIORITY_ICONS = {
   High: {
-    path: mdiChevronDoubleUp,
+    path: CaretDoubleUp,
     color: 'var(--grampsjs-alert-error-font-color)',
   },
-  Medium: {path: mdiAdjust},
+  Medium: {path: SlidersHorizontal},
   Low: {
-    path: mdiChevronDoubleDown,
+    path: CaretDoubleDown,
     color: 'var(--grampsjs-alert-success-font-color)',
   },
 }
@@ -54,7 +56,7 @@ export function statusIcon(status, {solid = false} = {}) {
   if (status === 'Done' && solid) {
     return {...STATUS_ICONS.Done, color: 'var(--grampsjs-task-done-solid)'}
   }
-  return STATUS_ICONS[status] ?? {path: mdiHelp}
+  return STATUS_ICONS[status] ?? {path: Question}
 }
 
 export function taskAttribute(task, type) {

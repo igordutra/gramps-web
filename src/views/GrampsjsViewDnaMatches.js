@@ -1,7 +1,6 @@
 import {css, html} from 'lit'
-import {mdiPencil, mdiPlus} from '@mdi/js'
-
-import '@material/web/select/filled-select'
+import {PencilSimple, Plus} from '../icons/phosphor.js'
+import '@material/web/select/outlined-select'
 import '../components/GrampsjsIcon.js'
 
 import '../components/GrampsjsTasks.js'
@@ -9,6 +8,7 @@ import '../components/GrampsjsDnaMatches.js'
 import '../components/GrampsjsDnaMatch.js'
 import '../components/GrampsjsFormNewMatch.js'
 import '../components/GrampsjsChromosomeBrowser.js'
+import '../components/GrampsjsBreadcrumbs.js'
 import '../components/GrampsjsSvgDownloadButton.js'
 
 import {GrampsjsViewDnaBase} from './GrampsjsViewDnaBase.js'
@@ -28,8 +28,14 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
           --grampsjs-icon-button-color: var(--grampsjs-body-font-color-60);
         }
 
-        .select-row md-filled-select {
+        .select-row md-outlined-select {
           margin-bottom: 0;
+          /* The select is sized by the LONGEST option, and a person's
+             name is long, so it pushes the row past the edge of a
+             phone. min-width: 0 lets a flex item shrink below its
+             content. */
+          flex: 1 1 0;
+          min-width: 0;
         }
       `,
     ]
@@ -38,7 +44,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
   static get properties() {
     return {
       chromosome: {type: Boolean},
-      matches: {type: Boolean},
+      showMatches: {type: Boolean},
       grampsIdMatch: {type: String},
     }
   }
@@ -46,7 +52,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
   constructor() {
     super()
     this.chromosome = false
-    this.matches = false
+    this.showMatches = false
     this.grampsIdMatch = ''
   }
 
@@ -54,18 +60,26 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
 
   renderFab() {
     return this.grampsIdMatch
-      ? html`<md-fab variant="primary" @click=${this._handleClickEdit}>
+      ? html`<md-fab
+          variant="secondary"
+          @click=${this._handleClickEdit}
+          aria-label="${this._('Edit')}"
+        >
           <grampsjs-icon
             slot="icon"
-            .path="${mdiPencil}"
-            color="currentColor"
+            .path="${PencilSimple}"
+            color="var(--mdc-theme-on-secondary)"
           ></grampsjs-icon>
         </md-fab>`
-      : html`<md-fab variant="primary" @click=${this._handleClickAdd}>
+      : html`<md-fab
+          variant="secondary"
+          @click=${this._handleClickAdd}
+          aria-label="${this._('Add')}"
+        >
           <grampsjs-icon
             slot="icon"
-            .path="${mdiPlus}"
-            color="currentColor"
+            .path="${Plus}"
+            color="var(--mdc-theme-on-secondary)"
           ></grampsjs-icon>
         </md-fab>`
   }
@@ -79,7 +93,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
     if (this._selectDataLoading || this._dnaDataLoading) {
       return this.renderLoading()
     }
-    if (this.matches) {
+    if (this.showMatches) {
       return this._renderMatches()
     }
     if (this.chromosome) {
@@ -98,18 +112,21 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
   }
 
   get page() {
-    return this.matches ? 'dna-matches' : 'dna-chromosome'
+    return this.showMatches ? 'dna-matches' : 'dna-chromosome'
   }
 
   _renderSelect() {
     if (this._selectDataLoading) {
-      return html`<md-filled-select disabled id="placeholder"
-        >${this._('Loading items...')}</md-filled-select
+      return html`<md-outlined-select disabled id="placeholder"
+        >${this._('Loading items...')}</md-outlined-select
       >`
     }
     return html`
       <div class="select-row">
-        <md-filled-select @change="${this._handleSelectChange}">
+        <md-outlined-select
+          aria-label="${this._('Select a person')}"
+          @change="${this._handleSelectChange}"
+        >
           ${this._data.map(
             person => html`
               <md-select-option
@@ -119,7 +136,7 @@ export class GrampsjsViewDnaMatches extends GrampsjsViewDnaBase {
               >
             `
           )}
-        </md-filled-select>
+        </md-outlined-select>
         ${this.chromosome && !this._dnaDataLoading && this._dnaData.data?.length
           ? html`<grampsjs-svg-download-button
               filename="${this.grampsId}-chromosomes.svg"

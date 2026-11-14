@@ -1,5 +1,5 @@
 import {html, css} from 'lit'
-import {mdiFilter} from '@mdi/js'
+import {Funnel} from '../icons/phosphor.js'
 import '../components/GrampsjsFilterChip.js'
 import '../components/GrampsjsPillToggle.js'
 
@@ -395,7 +395,7 @@ export class GrampsjsViewTimeline extends GrampsjsStaleDataMixin(GrampsjsView) {
           slot="filter"
           label="${this._('filter')}"
           objectType="person,place"
-          .iconPath="${mdiFilter}"
+          .iconPath="${Funnel}"
           .appState="${this.appState}"
           @select-object:changed="${this._handleFilterChanged}"
         ></grampsjs-form-select-object>
