@@ -179,9 +179,10 @@ export class GrampsjsViewRevisions extends GrampsjsStaleDataMixin(
 
   render() {
     return html`
+      ${this.renderPageHeading()}
       ${groupByDay(this._data).map(
         group => html`
-          <h3 class="day">${this._formatDay(group.date)}</h3>
+          <h2 class="day">${this._formatDay(group.date)}</h2>
           <md-list role="list">
             ${group.transactions.map(txn => this._renderTransaction(txn))}
           </md-list>

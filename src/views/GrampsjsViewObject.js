@@ -117,7 +117,11 @@ export class GrampsjsViewObject extends GrampsjsView {
 
   renderFab() {
     return html`
-      <md-fab variant="primary" @click="${this._activateEditMode}">
+      <md-fab
+        variant="primary"
+        @click="${this._activateEditMode}"
+        aria-label="${this._('Edit')}"
+      >
         <grampsjs-icon
           slot="icon"
           .path="${PencilSimple}"

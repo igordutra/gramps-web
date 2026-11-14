@@ -70,7 +70,9 @@ export class GrampsjsTagsManager extends GrampsjsTableBase {
               <thead>
                 <tr>
                   <th>${this._('Tags')}</th>
-                  <th></th>
+                  <th>
+                    <span class="visually-hidden">${this._('Actions')}</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>

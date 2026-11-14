@@ -61,12 +61,19 @@ const normalised = new WeakSet()
  *
  * Material renders the item's content on an anchor or a button for a
  * link or a button item, and on an `li` for a text item. The two
- * need opposite treatment:
+ * need opposite treatment on the INNER element:
  *
  *   anchor / button   the anchor is a link, not a listitem, and may
  *                     not carry that role
  *
  *   li                an `li` is a listitem, and must keep the role
+ *
+ * The HOST carries the listitem role either way, because the host is
+ * the list's CHILD -- the inner element lives in the host's shadow
+ * root, so it is not a child of the list at all. A host left
+ * presentational (`role="none"`) makes the list expose NO listitem
+ * child, which is the `aria-required-children` finding: the role is
+ * right on the `li` and the list still says it has no items.
  *
  * @param {HTMLElement} host the md-list-item element
  * @return {boolean} whether the item was normalised
@@ -76,19 +83,14 @@ function normaliseListItem(host) {
   if (!inner) {
     return false
   }
-  if (inner.tagName.toLowerCase() === 'li') {
-    // An `li` must have a list parent, and its parent here is the
-    // host — so the host is presentational and lets the `li` be the
-    // list's item.
-    if (!normalised.has(host)) {
-      normalised.add(host)
-      host.setAttribute('role', 'none')
-    }
-    return true
-  }
   if (!normalised.has(host)) {
     normalised.add(host)
     host.setAttribute('role', ITEM_ROLE)
+  }
+  if (inner.tagName.toLowerCase() === 'li') {
+    // The `li` keeps its own listitem role -- it is a listitem, and
+    // removing the role would leave the text unlabelled.
+    return true
   }
   if (inner.getAttribute('role') === ITEM_ROLE) {
     inner.removeAttribute('role')

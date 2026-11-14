@@ -168,7 +168,7 @@ class GrampsjsNavDrawer extends GrampsjsAppStateMixin(LitElement) {
     const rail = this.mode === DRAWER_RAIL
     const treeName = getTreeName(this.appState) || 'Gramps Web'
     const content = html`
-      <div class="header">
+      <div class="header" role="banner">
         <md-icon-button
           aria-label="${this._('Menu')}"
           @click="${this._handleToggle}"

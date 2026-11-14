@@ -53,17 +53,19 @@ export class GrampsjsViewExport extends GrampsjsView {
 
   renderContent() {
     return html`
-      <h3>${this._('Export your family tree')}</h3>
+      <h2>${this._('Export your family tree')}</h2>
 
       ${this.data.length === 0
         ? html`<md-filled-select
             style="min-width:30em;"
             disabled
+            aria-label="${this._('Select a format')}"
           ></md-filled-select>`
         : html`
             <md-filled-select
               @change=${this._handleSelect}
               style="min-width:30em;"
+              aria-label="${this._('Select a format')}"
             >
               ${this.data.map(
                 obj => html`
@@ -99,7 +101,7 @@ export class GrampsjsViewExport extends GrampsjsView {
         warn
       ></grampsjs-import-export-report>
 
-      <h3>${this._('Export your media files')}</h3>
+      <h2>${this._('Export your media files')}</h2>
 
       <p>${this._('Generate a ZIP archive with all media files.')}</p>
 
