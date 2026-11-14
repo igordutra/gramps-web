@@ -4,10 +4,14 @@ import '@material/web/dialog/dialog.js'
 import '@material/web/button/text-button.js'
 import '@material/web/tabs/tabs.js'
 import '@material/web/tabs/primary-tab.js'
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 
-import {mdiHistory, mdiMagnify, mdiUpdate, mdiBookmarkMultiple} from '@mdi/js'
-
+import {
+  ArrowClockwise,
+  Bookmarks,
+  ClockCounterClockwise,
+  MagnifyingGlass,
+} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {
   debounce,
@@ -43,10 +47,10 @@ const endpointToType = Object.fromEntries(
 const SIDEBAR_MODES = ['search', ...QUICK_ACCESS_MODES]
 
 const modeIcon = {
-  search: mdiMagnify,
-  changed: mdiUpdate,
-  recent: mdiHistory,
-  bookmarks: mdiBookmarkMultiple,
+  search: MagnifyingGlass,
+  changed: ArrowClockwise,
+  recent: ClockCounterClockwise,
+  bookmarks: Bookmarks,
 }
 
 const modeLabel = {
@@ -65,14 +69,16 @@ class GrampsjsObjectPickerDialog extends GrampsjsAppStateMixin(LitElement) {
           min-width: min(860px, 95vw);
           max-height: 85vh;
           --md-list-container-color: var(--md-sys-color-surface-container-high);
-          --md-dialog-content-block-start-space: 12px;
+          --md-dialog-content-block-start-space: var(--grampsjs-space-12);
         }
 
-        md-filled-text-field {
-          --md-filled-text-field-container-shape: 12px;
-          --md-filled-text-field-active-indicator-color: transparent;
-          --md-filled-text-field-hover-active-indicator-color: transparent;
-          --md-filled-text-field-focus-active-indicator-color: transparent;
+        md-outlined-text-field {
+          --md-outlined-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
+          --md-outlined-text-field-active-indicator-color: transparent;
+          --md-outlined-text-field-hover-active-indicator-color: transparent;
+          --md-outlined-text-field-focus-active-indicator-color: transparent;
           width: 100%;
           margin-bottom: 8px;
         }
@@ -206,7 +212,7 @@ class GrampsjsObjectPickerDialog extends GrampsjsAppStateMixin(LitElement) {
     return html`
       <md-dialog>
         <div slot="content" class="content-wrapper">
-          <md-filled-text-field
+          <md-outlined-text-field
             id="textfield"
             type="search"
             label="${this._('Search')}"
@@ -214,10 +220,10 @@ class GrampsjsObjectPickerDialog extends GrampsjsAppStateMixin(LitElement) {
           >
             <grampsjs-icon
               slot="leading-icon"
-              path="${mdiMagnify}"
+              path="${MagnifyingGlass}"
               color="var(--md-sys-color-on-surface-variant)"
             ></grampsjs-icon>
-          </md-filled-text-field>
+          </md-outlined-text-field>
 
           ${this._renderTabBar()}
 

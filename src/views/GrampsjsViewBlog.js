@@ -1,6 +1,5 @@
 import {css, html} from 'lit'
-import {mdiPlus} from '@mdi/js'
-
+import {Plus} from '../icons/phosphor.js'
 import '@material/web/fab/fab.js'
 import '@material/web/button/filled-tonal-button.js'
 import {GrampsjsView} from './GrampsjsView.js'
@@ -96,10 +95,14 @@ export class GrampsjsViewBlog extends GrampsjsStaleDataMixin(GrampsjsView) {
 
   renderFab() {
     return html`
-      <md-fab variant="primary" @click=${this._handleClickAdd}>
+      <md-fab
+        variant="primary"
+        @click=${this._handleClickAdd}
+        aria-label="${this._('Add')}"
+      >
         <grampsjs-icon
           slot="icon"
-          .path="${mdiPlus}"
+          .path="${Plus}"
           color="currentColor"
         ></grampsjs-icon>
       </md-fab>
@@ -119,7 +122,7 @@ export class GrampsjsViewBlog extends GrampsjsStaleDataMixin(GrampsjsView) {
         <md-filled-tonal-button href="/new_blog_post">
           <grampsjs-icon
             slot="icon"
-            .path="${mdiPlus}"
+            .path="${Plus}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('New Blog Post')}

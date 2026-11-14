@@ -29,17 +29,26 @@ class GrampsjsTabBar extends GrampsjsAppStateMixin(LitElement) {
     return [
       sharedStyles,
       css`
-        /* right below the app bar, which names the page */
+        /*
+         * The category strip.
+         *
+         * The margin was 20px on all sides with a max-width of 100%. The
+         * max-width is a percentage of the CONTAINING BLOCK, so the strip
+         * was 100% wide plus 40px of margin — it overflowed the pane by
+         * 40px at every width and pushed the whole app sideways on a
+         * phone. Subtracting the margins from the max-width fixes it, and
+         * the margins come from the space scale so they stay on the same
+         * rhythm as the page gutter.
+         */
         md-tabs {
-          margin: 0 20px;
+          margin: var(--grampsjs-space-16) var(--grampsjs-space-20);
           width: max-content;
-          max-width: 100%;
+          max-width: calc(100% - (2 * var(--grampsjs-space-20)));
         }
 
         md-primary-tab {
           flex: 0 0 auto;
           width: auto;
-          --md-primary-tab-label-text-size: 14px;
         }
       `,
     ]

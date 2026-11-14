@@ -1,6 +1,5 @@
 import {css, html} from 'lit'
 
-import '@material/web/select/filled-select'
 import '@material/web/select/select-option'
 
 import {GrampsjsView} from './GrampsjsView.js'
@@ -17,16 +16,16 @@ export class GrampsjsViewUserManagement extends GrampsjsStaleDataMixin(
       super.styles,
       css`
         grampsjs-share-url {
-          --md-icon-button-icon-size: 18px;
-          --md-icon-button-state-layer-width: 32px;
-          --md-icon-button-state-layer-height: 32px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size);
+          --md-icon-button-state-layer-width: var(--grampsjs-space-32);
+          --md-icon-button-state-layer-height: var(--grampsjs-space-32);
           position: relative;
           top: -5px;
           color: var(--grampsjs-body-font-color-40);
         }
 
         span.url {
-          border-radius: 5px;
+          border-radius: var(--md-sys-shape-corner-small);
           border: 1px solid var(--grampsjs-body-font-color-15);
           font-size: 13px;
           padding: 6px 6px;

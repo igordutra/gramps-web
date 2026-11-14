@@ -5,12 +5,11 @@ import '@material/web/icon/icon.js'
 import '@material/web/iconbutton/filled-icon-button'
 import '@material/web/menu/menu'
 import {
-  mdiArrowDown,
-  mdiArrowUp,
-  mdiSort,
-  mdiSortAscending,
-  mdiSortDescending,
-} from '@mdi/js'
+  ArrowDown,
+  ArrowUp,
+  SortAscending,
+  SortDescending,
+} from '../icons/phosphor.js'
 import {classMap} from 'lit/directives/class-map.js'
 
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
@@ -27,9 +26,19 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           display: block;
         }
 
+        .table-container {
+          /* The table sat flush against the panel edge, so the first
+             column read as cramped. A gutter gives the whole table room.
+
+             The view now owns the page gutter (see GrampsjsView), so the
+             table must not add a second one — that is what put the first
+             cell 64px from the window edge. */
+          padding: 0;
+        }
+
         table {
           border-collapse: collapse;
-          font-weight: var(--grampsjs-font-weight-body);
+          font-weight: 350;
           color: var(--grampsjs-body-font-color-87);
           font-variant-numeric: tabular-nums;
         }
@@ -41,31 +50,50 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
         tbody tr {
           display: grid;
           gap: 0.75em;
-          border-top: 1px solid var(--grampsjs-divider-color);
+          border-top: 1px solid var(--grampsjs-body-font-color-10);
+          /*
+           * A grid item's default min-width is auto, which means it
+           * cannot be smaller than its longest unbreakable string — an
+           * e-mail address, a URL, a long identifier. The card then
+           * refuses to shrink below it and the whole content pane
+           * scrolls sideways: 211px of it on the Manage users page at
+           * 320px.
+           *
+           * A min-width of 0 lets the item shrink, and the content
+           * inside it wraps or is clipped by the line clamp.
+           */
+          grid-template-columns: minmax(0, 1fr);
           grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-          padding: 10px 0;
+          padding: 16px 0;
         }
 
-        tbody tr:first-child {
-          border-top: none;
+        tbody tr:last-child {
+          border-bottom: 1px solid var(--grampsjs-body-font-color-10);
         }
 
         tbody td {
           text-align: left;
           display: block;
-          padding: 0 10px;
+          padding: 0 14px;
           border: none;
           position: relative;
-          font-size: 16px;
+          font-size: var(--md-sys-typescale-body-medium-size);
+          line-height: 1.5;
         }
 
+        /* The narrow-viewport card layout repeats the column name above
+           every value. Set it as a small uppercase caption rather than a
+           second line of body text: it is a label, not data. */
         tbody td::before {
           content: attr(data-label);
           display: block;
-          margin-bottom: 5px;
-          font-size: 14px;
-          color: var(--grampsjs-text-secondary-color);
-          font-weight: 400;
+          margin-bottom: var(--grampsjs-space-2);
+          font-size: var(--md-sys-typescale-label-small-size);
+          line-height: 1.4;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: var(--grampsjs-body-font-color-50);
+          font-weight: 600;
         }
 
         table.linked tbody tr {
@@ -74,20 +102,6 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         table.linked tbody tr:hover {
           cursor: pointer;
-        }
-
-        a.row-link,
-        a.row-link:visited {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        /* The link covers its whole cell, not only the text, so that the
-           browser offers to open the row in a new tab anywhere in the cell */
-        a.row-link::after {
-          content: '';
-          position: absolute;
-          inset: 0;
         }
 
         table.linked tbody tr:not(.selected):hover {
@@ -107,10 +121,12 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         table.wide thead th {
           text-align: left;
-          padding: 14px 16px;
-          font-size: 14px;
-          color: var(--grampsjs-text-secondary-color);
-          font-weight: 500;
+          padding: var(--grampsjs-space-16) var(--grampsjs-space-20);
+          font-size: var(--md-sys-typescale-label-small-size);
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: var(--grampsjs-body-font-color-60);
+          font-weight: 600;
           vertical-align: middle;
           white-space: nowrap;
           position: sticky;
@@ -118,17 +134,18 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           z-index: 1;
           background-color: var(--md-sys-color-background);
           /* Collapsed borders don't move with stuck cells */
-          box-shadow: inset 0 -1px 0 var(--grampsjs-body-font-color-20);
+          box-shadow: var(--md-sys-elevation-level2);
         }
 
         th .sort-header {
           display: inline-flex;
           align-items: center;
-          gap: 4px;
-          margin: -4px -6px;
-          padding: 4px 6px;
+          gap: var(--grampsjs-space-4);
+          margin: calc(-1 * var(--grampsjs-space-4))
+            calc(-1 * var(--grampsjs-space-4));
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-4);
           border: none;
-          border-radius: 4px;
+          border-radius: var(--md-sys-shape-corner-small);
           background: none;
           color: inherit;
           font: inherit;
@@ -168,14 +185,24 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           padding: 0;
         }
 
+        table.wide tbody tr:first-child {
+          border-top: none;
+        }
+
         table.wide tbody td {
           display: table-cell;
-          padding: 12px 16px;
+          padding: var(--grampsjs-space-16) var(--grampsjs-space-20);
           border: none;
-          font-size: 15px;
+          font-size: var(--md-sys-typescale-body-medium-size);
+        }
+
+        tbody td {
+          min-width: 0;
+          overflow-wrap: break-word;
         }
 
         tbody td > .cell-content {
+          min-width: 0;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 3;
@@ -190,28 +217,20 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
           content: none;
         }
 
-        /* Narrow (card) mode: drop empty cells of columns marked hideWhenEmpty */
-        table:not(.wide) tbody td.empty {
-          display: none;
-        }
-
         .mobile-sort {
           position: relative;
-          margin-top: 5px;
-          margin-bottom: 15px;
+          margin-top: var(--grampsjs-space-4);
+          margin-bottom: var(--grampsjs-space-16);
         }
 
         .mobile-sort md-menu {
-          --md-menu-item-one-line-container-height: 48px;
-          --md-menu-item-selected-container-color: var(
-            --md-sys-color-secondary-container
-          );
+          --md-menu-item-one-line-container-height: var(--grampsjs-space-48);
         }
 
         /* Narrow (card) mode: pull checkbox out of grid flow, pin to left */
         table:not(.wide) tbody tr:has(td.col-select) {
           position: relative;
-          padding-left: 48px;
+          padding-left: var(--grampsjs-space-48);
         }
 
         table:not(.wide) tbody td.col-select {
@@ -240,7 +259,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
         table.wide td.col-select {
           width: 48px;
-          padding: 4px;
+          padding: var(--grampsjs-space-4);
           vertical-align: middle;
           text-align: center;
         }
@@ -248,14 +267,15 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
         .narrow-select-all {
           display: flex;
           align-items: center;
-          gap: 8px;
-          padding: 4px 4px 4px 8px;
-          font-size: 14px;
-          color: var(--grampsjs-text-secondary-color);
+          gap: var(--grampsjs-space-8);
+          padding: var(--grampsjs-space-4) var(--grampsjs-space-4)
+            var(--grampsjs-space-4) var(--grampsjs-space-8);
+          font-size: var(--md-sys-typescale-label-large-size);
+          color: var(--grampsjs-body-font-color-70);
         }
 
         .narrow-select-all + table {
-          margin-top: 12px;
+          margin-top: var(--grampsjs-space-12);
         }
 
         tbody tr.selected {
@@ -282,7 +302,6 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
       breakPoint: {type: Number},
       loading: {type: Boolean},
       linked: {type: Boolean},
-      rowHrefs: {attribute: false},
       sortable: {type: Boolean},
       sort: {type: Number},
       descending: {type: Boolean},
@@ -304,7 +323,6 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
     this.naturalWidth = false
     this.breakPoint = 600
     this.linked = false
-    this.rowHrefs = []
     this.sortable = false
     this.sort = -1
     this.descending = false
@@ -367,7 +385,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
               ({item, index}) => html`
                 <tr
                   class="${this._selectedIndices.has(index) ? 'selected' : ''}"
-                  @click="${e => this._handleRowClick(e, index)}"
+                  @click="${() => this._handleRowClick(index)}"
                   @keydown="${clickKeyHandler}"
                   tabindex="${this.linked ? '0' : '-1'}"
                 >
@@ -386,10 +404,6 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
                   ${item.map(
                     (value, colIndex) => html`
                       <td
-                        class="${this.columns[colIndex].hideWhenEmpty &&
-                        this._isEmpty(value)
-                          ? 'empty'
-                          : ''}"
                         data-label="${this._colLabel(
                           this.columns[colIndex].name
                         )}"
@@ -404,13 +418,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
                                   )}</span
                                 ></span
                               >`
-                            : this._renderCellValue(
-                                this._formatValue(
-                                  this.columns[colIndex],
-                                  value
-                                ),
-                                index
-                              )}
+                            : this._formatValue(this.columns[colIndex], value)}
                         </div>
                       </td>
                     `
@@ -433,7 +441,11 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
       : !this.descending
     return html`
       <div class="mobile-sort">
-        <md-icon-button @click="${this._toggleSortMenu}" id="btn-sort-menu">
+        <md-icon-button
+          @click="${this._toggleSortMenu}"
+          id="btn-sort-menu"
+          aria-label="${this._('Sort by')}"
+        >
           <md-icon>${this._renderSortIcon(hasActive, isAscending)}</md-icon>
         </md-icon-button>
         <md-menu id="sort-menu" anchor="btn-sort-menu">
@@ -465,25 +477,6 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
 
   _colLabel(name) {
     return this._(name).replace(/:$/, '')
-  }
-
-  // A link in each cell lets the browser open the row in a new tab, e.g. with
-  // Ctrl or the middle button, or from the context menu. The row stays the
-  // tab stop for the keyboard.
-  _renderCellValue(value, index) {
-    const href = this.linked && this.rowHrefs[index]
-    if (!href) return value
-    return html`<a class="row-link" href="${href}" tabindex="-1">${value}</a>`
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  _isEmpty(value) {
-    return (
-      value === null ||
-      value === undefined ||
-      value === '' ||
-      (Array.isArray(value) && value.length === 0)
-    )
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -521,7 +514,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
       >
         ${label}
         ${renderIconSvg(
-          isCurrent && isDescending ? mdiArrowDown : mdiArrowUp,
+          isCurrent && isDescending ? ArrowDown : ArrowUp,
           'currentColor'
         )}
       </button>
@@ -561,16 +554,13 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
     if (isCurrent) {
       if (isAscending) {
         return renderIconSvg(
-          mdiSortAscending,
+          SortAscending,
           'var(--grampsjs-body-font-color-60)'
         )
       }
-      return renderIconSvg(
-        mdiSortDescending,
-        'var(--grampsjs-body-font-color-60)'
-      )
+      return renderIconSvg(SortDescending, 'var(--grampsjs-body-font-color-60)')
     }
-    return renderIconSvg(mdiSort, 'var(--grampsjs-body-font-color-20)')
+    return renderIconSvg(SortAscending, 'var(--grampsjs-body-font-color-20)')
   }
 
   _renderNarrowSelectAll() {
@@ -619,12 +609,7 @@ export class GrampsjsTable extends GrampsjsAppStateMixin(LitElement) {
     return indexed
   }
 
-  // A click on the link of a row is left to the router, like any link, so
-  // that the browser can also open the row in a new tab
-  _handleRowClick(e, originalIndex) {
-    const path = e.composedPath()
-    const inRow = path.slice(0, path.indexOf(e.currentTarget))
-    if (inRow.some(node => node.tagName === 'A')) return
+  _handleRowClick(originalIndex) {
     fireEvent(this, 'table:row-click', {rowNumber: originalIndex})
   }
 

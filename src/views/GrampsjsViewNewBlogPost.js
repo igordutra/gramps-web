@@ -1,6 +1,6 @@
 import {html} from 'lit'
 
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 
 import '../components/GrampsjsEditor.js'
 import '../components/GrampsjsFormString.js'
@@ -40,19 +40,24 @@ export class GrampsjsViewNewBlogPost extends GrampsjsViewNewSource {
 
       <h3 class="label">${this._('Title')}</h3>
       <p>
-        <md-filled-text-field
+        <md-outlined-text-field
           required
           supporting-text="&nbsp;"
           style="width:100%;"
           @input="${this.handleName}"
           @blur="${this.handleName}"
           id="source-name"
-        ></md-filled-text-field>
+          aria-label="${this._('Title')}"
+        ></md-outlined-text-field>
       </p>
 
       <h3 class="label">${this._('Author')}</h3>
       <p>
-        <grampsjs-form-string fullwidth id="author"></grampsjs-form-string>
+        <grampsjs-form-string
+          fullwidth
+          id="author"
+          .ariaLabel="${this._('Author')}"
+        ></grampsjs-form-string>
       </p>
 
       <h3 class="label">${this._('Content')}</h3>

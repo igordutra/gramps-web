@@ -3,7 +3,7 @@ import {scaleBand, scaleLinear, scaleOrdinal} from 'd3-scale'
 import {axisLeft, axisTop} from 'd3-axis'
 import {schemeSet1} from 'd3-scale-chromatic'
 
-import {exportPalette} from './palette.js'
+import {resolveExportPalette, resolveFontFamily} from './palette.js'
 
 const chromosomeLength = {
   1: 249250621,
@@ -54,7 +54,7 @@ const defaultMargin = {top: 24, right: 10, bottom: 0, left: 35}
 export function ChromosomeBrowser(
   data,
   {
-    fontFamily = 'Inter var',
+    fontFamily = resolveFontFamily(),
     fontSize = 16,
     fontWeight = 350,
     fontColor = 'var(--grampsjs-body-font-color)',
@@ -230,9 +230,9 @@ export function chromosomeBrowserSvgDocument(data, legend, {width = 800} = {}) {
   const svg = select(
     ChromosomeBrowser(data, {
       width,
-      fontFamily: "'Inter var', sans-serif",
+      fontFamily: resolveFontFamily(),
       fontWeight: 400,
-      fontColor: exportPalette.text,
+      fontColor: resolveExportPalette().text,
     })
   )
   const chartWidth = Number(svg.attr('width'))
@@ -259,7 +259,7 @@ export function chromosomeBrowserSvgDocument(data, legend, {width = 800} = {}) {
     .insert('rect', ':first-child')
     .attr('width', fullWidth)
     .attr('height', height)
-    .attr('fill', exportPalette.background)
+    .attr('fill', resolveExportPalette().background)
   const rows = svg
     .append('g')
     .attr(
@@ -282,12 +282,12 @@ export function chromosomeBrowserSvgDocument(data, legend, {width = 800} = {}) {
     .append('text')
     .attr('x', 19)
     .attr('y', 14)
-    .attr('fill', exportPalette.legendText)
+    .attr('fill', resolveExportPalette().legendText)
   text.append('tspan').text(d => d.label)
   text
     .append('tspan')
     .attr('dx', 8)
-    .attr('fill', exportPalette.link)
+    .attr('fill', resolveExportPalette().link)
     .text(d => d.detail ?? '')
   const markup = new XMLSerializer().serializeToString(svg.node())
   return `<?xml version="1.0" encoding="UTF-8"?>\n${markup}\n`

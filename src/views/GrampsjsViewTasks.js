@@ -1,6 +1,5 @@
 import {css, html} from 'lit'
-import {mdiPlus} from '@mdi/js'
-
+import {Plus} from '../icons/phosphor.js'
 import '@material/web/fab/fab.js'
 import {GrampsjsView} from './GrampsjsView.js'
 import '../components/GrampsjsTasks.js'
@@ -55,10 +54,14 @@ export class GrampsjsViewTasks extends GrampsjsStaleDataMixin(GrampsjsView) {
 
   renderFab() {
     return html`
-      <md-fab variant="primary" @click=${this._handleClickAdd}>
+      <md-fab
+        variant="primary"
+        @click=${this._handleClickAdd}
+        aria-label="${this._('Add')}"
+      >
         <grampsjs-icon
           slot="icon"
-          .path="${mdiPlus}"
+          .path="${Plus}"
           color="currentColor"
         ></grampsjs-icon>
       </md-fab>

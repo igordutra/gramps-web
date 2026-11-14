@@ -4,8 +4,7 @@ The list of tasks with its filters and bulk actions
 
 import {html, css, LitElement, nothing} from 'lit'
 import {classMap} from 'lit/directives/class-map.js'
-import {mdiSort} from '@mdi/js'
-
+import {SortAscending} from '../icons/phosphor.js'
 import '@material/web/checkbox/checkbox'
 import '@material/web/iconbutton/icon-button'
 import '@material/web/button/outlined-button'
@@ -110,7 +109,7 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
         /* the icon stays where it is without the button, and the button
         doesn't make the row taller */
         .status-icon md-icon-button {
-          --md-icon-button-icon-size: 20px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
           margin: -10px 0 -10px -10px;
         }
 
@@ -283,7 +282,7 @@ class GrampsjsTasks extends GrampsjsAppStateMixin(LitElement) {
       >
         <grampsjs-icon
           slot="leading-icon"
-          path="${mdiSort}"
+          path="${SortAscending}"
           color="currentColor"
         ></grampsjs-icon>
         ${Object.entries(TASK_SORT_ORDERS).map(

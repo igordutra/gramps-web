@@ -2,7 +2,6 @@
 
 import {css, html} from 'lit'
 
-import '@material/web/select/filled-select'
 import '@material/web/fab/fab.js'
 
 import {GrampsjsView} from './GrampsjsView.js'
@@ -25,8 +24,23 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
       css`
         md-fab {
           position: fixed;
-          bottom: 32px;
-          right: 32px;
+          /* The button belongs to the content column, not to the window.
+             The column now reaches the viewport edge and the page scrollbar
+             sits outside it, so the button is inset by the page gutter plus
+             the scrollbar width — otherwise it hangs into the scrollbar. */
+          bottom: var(--grampsjs-space-24, 24px);
+          right: calc(
+            var(--grampsjs-page-gutter, 24px) +
+              var(--grampsjs-scrollbar-width, 0px)
+          );
+          /* Material's FAB is a large saturated disc with a heavy shadow.
+             A modern action button is smaller, softer and matches the
+             density of the rest of the toolbar. */
+          --md-fab-container-height: var(--grampsjs-space-48);
+          --md-fab-container-width: var(--grampsjs-space-48);
+          --md-fab-icon-size: var(--grampsjs-icon-size-medium);
+          --md-fab-container-elevation: var(--grampsjs-elevation-level-2);
+          --md-fab-container-shadow-color: var(--grampsjs-shadow-color);
         }
 
         md-tabs {
@@ -40,8 +54,23 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
           width: auto;
         }
 
-        md-filled-select {
-          --md-filled-select-text-field-input-text-font-size: 24px;
+        md-outlined-select {
+          /*
+           * The DNA selector is the largest control on the page, so its
+           * text is a headline step.
+           *
+           * The token this used to name,
+           * "--md-outlined-select-text-field-input-text-font-size", is not
+           * one Material reads, so the override did nothing at all and
+           * the select rendered at the default size. The token Material
+           * reads is "input-text-size".
+           */
+          --md-outlined-select-text-field-input-text-size: var(
+            --md-sys-typescale-headline-medium-size
+          );
+          --md-outlined-select-text-field-input-text-weight: var(
+            --md-sys-typescale-headline-medium-weight
+          );
           margin-bottom: 30px;
         }
       `,
@@ -82,7 +111,7 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
       !this._dnaDataLoading &&
       objectOrArrayIsEmpty(this._dnaData?.data ?? [])
     return html`
-      ${this._renderSelect()}
+      ${this.renderPageHeading()} ${this._renderSelect()}
       ${noSelectData || (this.grampsId && noDnaData)
         ? this._renderNoData()
         : this.renderContent()}
@@ -103,7 +132,7 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
   }
 
   _handleSelectChange() {
-    const grampsId = this.renderRoot.querySelector('md-filled-select').value
+    const grampsId = this.renderRoot.querySelector('md-outlined-select').value
     this._goTo(`${this.page}/${grampsId}`)
   }
 
@@ -185,7 +214,7 @@ export class GrampsjsViewDnaBase extends GrampsjsStaleDataMixin(GrampsjsView) {
   }
 
   _selectPersonByGrampsId() {
-    const select = this.shadowRoot.querySelector('md-filled-select')
+    const select = this.shadowRoot.querySelector('md-outlined-select')
     if (select) {
       select.select(this.grampsId)
     }

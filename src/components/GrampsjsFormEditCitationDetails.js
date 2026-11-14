@@ -4,7 +4,7 @@ Form for adding a new event reference
 
 import {html} from 'lit'
 
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 
 import './GrampsjsFormSelectDate.js'
@@ -67,7 +67,7 @@ class GrampsjsFormEditCitationDetails extends GrampsjsObjectForm {
       </p>
 
       <h4 class="label">${this._('Confidence')}</h4>
-      <md-filled-select
+      <md-outlined-select
         id="select-confidence"
         @change="${this.handleConfidence}"
       >
@@ -84,7 +84,7 @@ class GrampsjsFormEditCitationDetails extends GrampsjsObjectForm {
             </md-select-option>
           `
         )}
-      </md-filled-select>
+      </md-outlined-select>
     `
   }
 

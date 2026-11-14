@@ -9,14 +9,14 @@ import '@material/web/button/filled-button.js'
 import '@material/web/progress/circular-progress.js'
 import '@material/web/progress/linear-progress.js'
 import {
-  mdiArrowLeft,
-  mdiCheck,
-  mdiChevronRight,
-  mdiClose,
-  mdiDelete,
-  mdiMagnify,
-  mdiMenu,
-} from '@mdi/js'
+  ArrowLeft,
+  CaretRight,
+  Check,
+  List,
+  MagnifyingGlass,
+  Trash,
+  X,
+} from '../icons/phosphor.js'
 import './GrampsjsIcon.js'
 import '@material/web/dialog/dialog.js'
 import '@material/web/button/text-button.js'
@@ -315,7 +315,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
           @click="${this._closeSearch}"
         >
           <grampsjs-icon
-            path="${mdiArrowLeft}"
+            path="${ArrowLeft}"
             color="currentColor"
           ></grampsjs-icon>
         </md-icon-button>
@@ -371,7 +371,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
         return html`
           ${index > 0
             ? html`<grampsjs-icon
-                path="${mdiChevronRight}"
+                path="${CaretRight}"
                 color="currentColor"
                 height="18"
                 width="18"
@@ -393,7 +393,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
       aria-label="${this._('Menu')}"
       @click="${this._toggleDrawer}"
     >
-      <grampsjs-icon path="${mdiMenu}" color="currentColor"></grampsjs-icon>
+      <grampsjs-icon path="${List}" color="currentColor"></grampsjs-icon>
     </md-icon-button>`
   }
 
@@ -403,7 +403,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
         aria-label="${this._('Stop editing')}"
         @click="${this._handleCloseRequest}"
       >
-        <grampsjs-icon path="${mdiClose}" color="currentColor"></grampsjs-icon>
+        <grampsjs-icon path="${X}" color="currentColor"></grampsjs-icon>
       </md-icon-button>
       <grampsjs-tooltip for="button-close" .appState="${this.appState}"
         >${this._('Stop editing')}</grampsjs-tooltip
@@ -425,7 +425,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
           id="button-saved"
         >
           <grampsjs-icon
-            path="${mdiCheck}"
+            path="${Check}"
             color="currentColor"
             height="20"
             width="20"
@@ -448,7 +448,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
               @click="${this._handleDeleteIcon}"
             >
               <grampsjs-icon
-                path="${mdiDelete}"
+                path="${Trash}"
                 color="currentColor"
               ></grampsjs-icon>
             </md-icon-button>
@@ -506,7 +506,7 @@ class GrampsjsAppBar extends GrampsjsAppStateMixin(LitElement) {
         @click="${this._openSearch}"
       >
         <grampsjs-icon
-          path="${mdiMagnify}"
+          path="${MagnifyingGlass}"
           color="currentColor"
         ></grampsjs-icon>
       </md-icon-button>

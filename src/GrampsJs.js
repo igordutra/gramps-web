@@ -1,7 +1,7 @@
 import '@material/web/progress/linear-progress.js'
 import './dialogBackdrop.js'
 import '@material/web/button/filled-button.js'
-import {mdiLogout} from '@mdi/js'
+import {SignOut} from './icons/phosphor.js'
 import {LitElement, css, html} from 'lit'
 import {installMediaQueryWatcher} from 'pwa-helpers/media-query.js'
 import {installRouter} from 'pwa-helpers/router.js'
@@ -14,10 +14,9 @@ import {
   clearMediaCaches,
   cleanOldDrafts,
   getTreeName,
-  TREE_CONFIG_PRIMARY_COLOR,
-  TREE_CONFIG_SECONDARY_COLOR,
 } from './api.js'
 import './dayjs_locales.js'
+import {installListItemRoles} from './listRoles.js'
 import {
   frontendLanguages,
   getFrontendStrings,
@@ -68,10 +67,20 @@ import './components/GrampsjsObjectLink.js'
 import './components/GrampsjsObjectPreview.js'
 import '@material/web/dialog/dialog.js'
 import {sharedStyles} from './SharedStyles.js'
-import {applyScheme, DEFAULT_PRIMARY, DEFAULT_SECONDARY} from './theme.js'
+import {
+  applyScheme,
+  resolveTheme,
+  DEFAULT_PRIMARY,
+  DEFAULT_SECONDARY,
+  DEFAULT_THEME,
+} from './theme.js'
 import {handleOIDCCallback, handleOIDCComplete} from './oidc.js'
 
 const MINIMUM_API_VERSION = '3.17.0'
+
+// Material's list items carry the listitem role one level too deep;
+// this puts it where it belongs. See listRoles.js for why.
+installListItemRoles()
 
 export class GrampsJs extends LitElement {
   static get properties() {
@@ -474,7 +483,7 @@ export class GrampsJs extends LitElement {
         <md-filled-button @click=${() => this.appState.signout()}>
           <grampsjs-icon
             slot="icon"
-            .path="${mdiLogout}"
+            .path="${SignOut}"
             color="currentColor"
           ></grampsjs-icon>
           ${this._('Log out')}
@@ -700,17 +709,21 @@ export class GrampsJs extends LitElement {
 
   _applyColorScheme() {
     const treeConfig = getTreeConfig()
+    const style = this.appState.settings.style ?? DEFAULT_THEME
+    const resolved = resolveTheme(style, treeConfig)
     try {
       applyScheme(
-        treeConfig[TREE_CONFIG_PRIMARY_COLOR] || DEFAULT_PRIMARY,
-        treeConfig[TREE_CONFIG_SECONDARY_COLOR] || DEFAULT_SECONDARY,
-        this.appState.settings.theme
+        resolved.primary,
+        resolved.secondary,
+        this.appState.settings.theme,
+        resolved.name
       )
     } catch {
       applyScheme(
         DEFAULT_PRIMARY,
         DEFAULT_SECONDARY,
-        this.appState.settings.theme
+        this.appState.settings.theme,
+        DEFAULT_THEME
       )
     }
   }

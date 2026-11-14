@@ -1,19 +1,19 @@
 import {html, css} from 'lit'
-import '@material/web/button/filled-tonal-button.js'
+import '@material/web/button/outlined-button'
 import '@material/web/button/text-button.js'
-import '@material/web/iconbutton/filled-tonal-icon-button.js'
+import '@material/web/iconbutton/outlined-icon-button'
 import '@material/web/menu/menu.js'
 import '@material/web/menu/menu-item.js'
 import '@material/web/chips/chip-set'
 import '@material/web/chips/filter-chip'
 import {
-  mdiAccountPlus,
-  mdiFamilyTree,
-  mdiDna,
-  mdiSearchWeb,
-  mdiTimelineOutline,
-  mdiMap,
-} from '@mdi/js'
+  Dna,
+  Globe,
+  MapTrifold,
+  TreeStructure,
+  ChartLineUp,
+  UserPlus,
+} from '../icons/phosphor.js'
 import {GrampsjsObject} from './GrampsjsObject.js'
 import {buttonColorStyles} from '../SharedStyles.js'
 import {getSymbols} from '../symbols.js'
@@ -40,7 +40,7 @@ export class GrampsjsPerson extends GrampsjsObject {
           border-radius: 50%;
           background: transparent;
           color: var(--mdc-theme-secondary);
-          --md-text-button-container-shape: 50%;
+          --md-text-button-container-shape: var(--md-sys-shape-corner-full);
           --grampsjs-button-color: var(--mdc-theme-secondary);
           box-sizing: border-box;
         }
@@ -87,9 +87,9 @@ export class GrampsjsPerson extends GrampsjsObject {
           display: none;
         }
 
-        p.button-list.icon-only md-filled-tonal-icon-button {
-          --md-filled-tonal-icon-button-container-width: 48px;
-          --md-filled-tonal-icon-button-container-height: 48px;
+        p.button-list.icon-only md-outlined-icon-button {
+          --md-outlined-icon-button-container-width: var(--grampsjs-space-48);
+          --md-outlined-icon-button-container-height: var(--grampsjs-space-48);
         }
 
         @container (min-width: 600px) {
@@ -145,7 +145,7 @@ export class GrampsjsPerson extends GrampsjsObject {
         >
           <span class="profile-picture-content">
             <grampsjs-icon
-              path=${mdiAccountPlus}
+              path=${UserPlus}
               height="48"
               width="48"
               color="currentColor"
@@ -279,27 +279,31 @@ export class GrampsjsPerson extends GrampsjsObject {
     return [
       {
         label: 'Show in tree',
-        path: mdiFamilyTree,
+        path: TreeStructure,
         handler: this._handleTreeButtonClick,
       },
       {
         label: 'Show on timeline',
-        path: mdiTimelineOutline,
+        path: ChartLineUp,
         handler: this._handleTimelineButtonClick,
       },
-      {label: 'Open in map', path: mdiMap, handler: this._handleMapButtonClick},
+      {
+        label: 'Open in map',
+        path: MapTrifold,
+        handler: this._handleMapButtonClick,
+      },
       ...(hasDna
         ? [
             {
               label: 'DNA matches',
-              path: mdiDna,
+              path: Dna,
               handler: this._handleDnaButtonClick,
             },
           ]
         : []),
       {
         label: 'External Search',
-        path: mdiSearchWeb,
+        path: Globe,
         handler: this._handleExternalSearchClick,
       },
     ]
@@ -311,21 +315,21 @@ export class GrampsjsPerson extends GrampsjsObject {
       <p class="button-list labeled">
         ${buttons.map(
           btn => html`
-            <md-filled-tonal-button @click="${btn.handler}">
+            <md-outlined-button @click="${btn.handler}">
               ${this._(btn.label)}
               <grampsjs-icon
                 path="${btn.path}"
                 color="currentColor"
                 slot="icon"
               ></grampsjs-icon>
-            </md-filled-tonal-button>
+            </md-outlined-button>
           `
         )}
       </p>
       <p class="button-list icon-only">
         ${buttons.map(
           btn => html`
-            <md-filled-tonal-icon-button
+            <md-outlined-icon-button
               @click="${btn.handler}"
               aria-label="${this._(btn.label)}"
               title="${this._(btn.label)}"
@@ -334,7 +338,7 @@ export class GrampsjsPerson extends GrampsjsObject {
                 path="${btn.path}"
                 color="var(--mdc-theme-primary)"
               ></grampsjs-icon>
-            </md-filled-tonal-icon-button>
+            </md-outlined-icon-button>
           `
         )}
       </p>
@@ -556,7 +560,6 @@ export class GrampsjsPerson extends GrampsjsObject {
           .data=${this.data?.extended?.events}
           .profile=${this.data?.profile?.events}
           .eventRef=${this.data?.event_ref_list}
-          ownerHandle="${this.data?.handle || ''}"
         ></grampsjs-events>
       `
     }

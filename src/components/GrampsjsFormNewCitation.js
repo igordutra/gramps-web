@@ -3,7 +3,7 @@ Form for adding a new event reference
 */
 
 import {html} from 'lit'
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 
 import './GrampsjsFormSelectType.js'
@@ -39,7 +39,11 @@ class GrampsjsFormNewCitation extends GrampsjsObjectForm {
 
       <h3 class="label">${this._('Page')}</h3>
       <p>
-        <grampsjs-form-string fullwidth id="page"></grampsjs-form-string>
+        <grampsjs-form-string
+          fullwidth
+          id="page"
+          .ariaLabel="${this._('Page')}"
+        ></grampsjs-form-string>
       </p>
 
       <h3 class="label">${this._('Date')}</h3>
@@ -49,8 +53,9 @@ class GrampsjsFormNewCitation extends GrampsjsObjectForm {
       </p>
 
       <h3 class="label">${this._('Confidence')}</h3>
-      <md-filled-select
+      <md-outlined-select
         id="select-confidence"
+        aria-label="${this._('Confidence')}"
         @change="${this.handleConfidence}"
       >
         ${Object.keys(confidence).map(
@@ -66,7 +71,7 @@ class GrampsjsFormNewCitation extends GrampsjsObjectForm {
             </md-select-option>
           `
         )}
-      </md-filled-select>
+      </md-outlined-select>
 
       <h3 class="label">${this._('Media')}</h3>
       <grampsjs-form-select-object-list

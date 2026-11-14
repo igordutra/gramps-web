@@ -3,7 +3,7 @@ Element for selecting a Gramps type
 */
 
 import {html, css, LitElement} from 'lit'
-import '@material/web/select/filled-select.js'
+import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 
 import {sharedStyles} from '../SharedStyles.js'
@@ -102,7 +102,7 @@ class GrampsjsFormUser extends GrampsjsAppStateMixin(LitElement) {
         ></grampsjs-form-string>
       </p>
       <p>
-        <md-filled-select
+        <md-outlined-select
           @change="${this._handleRoleChange}"
           id="role"
           style="width: 100%;"
@@ -121,7 +121,7 @@ class GrampsjsFormUser extends GrampsjsAppStateMixin(LitElement) {
                 </md-select-option>
               `
             )}
-        </md-filled-select>
+        </md-outlined-select>
       </p>
     `
   }

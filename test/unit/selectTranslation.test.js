@@ -15,16 +15,15 @@ class StubSelect extends HTMLElement {
     this.displayText = option?.textContent.trim() ?? ''
   }
 }
-window.customElements.define('md-filled-select', StubSelect)
-window.customElements.define('md-outlined-select', class extends StubSelect {})
+window.customElements.define('md-outlined-select', StubSelect)
 
 class TestSelects extends GrampsjsAppStateMixin(LitElement) {
   render() {
     return html`
-      <md-filled-select>
+      <md-outlined-select>
         <div selected>${this._('Horizontal')}</div>
         <div>${this._('Vertical')}</div>
-      </md-filled-select>
+      </md-outlined-select>
       <md-outlined-select>
         <div selected>${this._('Surname, Given')}</div>
       </md-outlined-select>
@@ -49,11 +48,9 @@ async function makeElement() {
 }
 
 function displayTexts(element) {
-  return [
-    ...element.renderRoot.querySelectorAll(
-      'md-filled-select, md-outlined-select'
-    ),
-  ].map(select => select.displayText)
+  return [...element.renderRoot.querySelectorAll('md-outlined-select')].map(
+    select => select.displayText
+  )
 }
 
 describe('selects of translatable components', () => {
@@ -73,7 +70,7 @@ describe('selects of translatable components', () => {
 
   it('leave the selects alone when the strings stay the same', async () => {
     const element = await makeElement()
-    const select = element.renderRoot.querySelector('md-filled-select')
+    const select = element.renderRoot.querySelector('md-outlined-select')
     select.displayText = 'untouched'
 
     element.appState = {...element.appState, path: 'tree'}

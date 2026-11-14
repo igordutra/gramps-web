@@ -3,7 +3,7 @@ import '@material/web/textfield/outlined-text-field'
 import '@material/web/iconbutton/filled-icon-button'
 import '@material/web/icon/icon.js'
 
-import {mdiSend} from '@mdi/js'
+import {PaperPlaneTilt} from '../icons/phosphor.js'
 import {sharedStyles} from '../SharedStyles.js'
 import {GrampsjsAppStateMixin} from '../mixins/GrampsjsAppStateMixin.js'
 import {fireEvent} from '../util.js'
@@ -22,7 +22,9 @@ class GrampsjsChatPrompt extends GrampsjsAppStateMixin(LitElement) {
 
         md-outlined-text-field {
           flex: 1;
-          --md-outlined-text-field-container-shape: 28px;
+          --md-outlined-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
           --md-outlined-text-field-input-text-placeholder-color: var(
             --grampsjs-color-shade-120
           );
@@ -36,9 +38,9 @@ class GrampsjsChatPrompt extends GrampsjsAppStateMixin(LitElement) {
           margin-top: 9px;
           margin-bottom: 9px;
           margin-right: 0;
-          --md-filled-icon-button-icon-size: 22px;
-          --md-filled-icon-button-state-layer-height: 66px;
-          --md-filled-icon-button-state-layer-width: 66px;
+          --md-filled-icon-button-icon-size: var(--grampsjs-icon-size-medium);
+          --md-filled-icon-button-state-layer-height: var(--grampsjs-space-64);
+          --md-filled-icon-button-state-layer-width: var(--grampsjs-space-64);
         }
       `,
     ]
@@ -80,7 +82,7 @@ class GrampsjsChatPrompt extends GrampsjsAppStateMixin(LitElement) {
         >
           <md-icon
             >${renderIconSvg(
-              mdiSend,
+              PaperPlaneTilt,
               'var(--grampsjs-color-shade-255)'
             )}</md-icon
           >

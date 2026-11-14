@@ -12,7 +12,10 @@ export class GrampsjsPillToggle extends GrampsjsAppStateMixin(LitElement) {
       sharedStyles,
       css`
         :host {
-          --_label-color: var(--md-sys-color-primary, var(--mdc-theme-primary));
+          --_label-color: var(
+            --grampsjs-primary-text-color,
+            var(--md-sys-color-primary, var(--mdc-theme-primary))
+          );
           --_hover-color: var(--md-sys-color-primary, var(--mdc-theme-primary));
           --_selected-container-color: var(
             --md-sys-color-primary,
@@ -24,7 +27,10 @@ export class GrampsjsPillToggle extends GrampsjsAppStateMixin(LitElement) {
         /* Grey options, with a light tint of the primary colour for the
            selected one */
         :host([muted]) {
-          --_label-color: var(--grampsjs-body-font-color-50);
+          /* 60% black, not 50%: the muted label sits on the page surface,
+             where 50% measured 3.94:1 and failed WCAG AA. 60% measures
+             5.74:1 on white and on the light surface tints. */
+          --_label-color: var(--grampsjs-body-font-color-60);
           --_hover-color: var(--md-sys-color-primary);
           --_selected-container-color: color-mix(
             in srgb,
@@ -38,7 +44,7 @@ export class GrampsjsPillToggle extends GrampsjsAppStateMixin(LitElement) {
           display: inline-flex;
           border: 1px solid
             var(--md-sys-color-outline, var(--mdc-theme-primary));
-          border-radius: 999px;
+          border-radius: var(--grampsjs-pill-toggle-radius);
           margin: var(--grampsjs-pill-toggle-margin, 12px 0);
         }
 
@@ -65,10 +71,13 @@ export class GrampsjsPillToggle extends GrampsjsAppStateMixin(LitElement) {
           );
           font-size: var(
             --grampsjs-pill-toggle-font-size,
-            var(--md-sys-typescale-label-large-size, 14px)
+            var(--md-sys-typescale-label-large-size, 15px)
           );
-          font-weight: 500;
-          letter-spacing: 0.006em;
+          font-weight: var(
+            --grampsjs-pill-toggle-font-weight,
+            var(--md-sys-typescale-label-large-weight, 450)
+          );
+          letter-spacing: var(--grampsjs-pill-toggle-letter-spacing, normal);
           color: var(--_label-color);
           background: transparent;
           transition: background-color 150ms, color 150ms;
@@ -76,7 +85,7 @@ export class GrampsjsPillToggle extends GrampsjsAppStateMixin(LitElement) {
           -webkit-font-smoothing: antialiased;
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          gap: var(--grampsjs-pill-toggle-gap, 6px);
         }
 
         @container (max-width: 900px) {
@@ -91,21 +100,23 @@ export class GrampsjsPillToggle extends GrampsjsAppStateMixin(LitElement) {
         }
 
         button:first-child {
-          border-radius: 999px 0 0 999px;
+          border-radius: var(--grampsjs-pill-toggle-radius) 0 0
+            var(--grampsjs-pill-toggle-radius);
         }
 
         button:last-child {
-          border-radius: 0 999px 999px 0;
+          border-radius: 0 var(--grampsjs-pill-toggle-radius)
+            var(--grampsjs-pill-toggle-radius) 0;
         }
 
         button:only-child {
-          border-radius: 999px;
+          border-radius: var(--grampsjs-pill-toggle-radius);
         }
 
         button:hover {
           background-color: color-mix(
             in srgb,
-            var(--_hover-color) 8%,
+            var(--_hover-color) var(--grampsjs-pill-toggle-hover-opacity, 5%),
             transparent
           );
         }

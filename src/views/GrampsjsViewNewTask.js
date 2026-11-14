@@ -1,6 +1,6 @@
 import {html, nothing} from 'lit'
 
-import '@material/web/textfield/filled-text-field.js'
+import '@material/web/textfield/outlined-text-field.js'
 import '@material/web/select/outlined-select.js'
 import '@material/web/select/select-option.js'
 
@@ -47,14 +47,15 @@ export class GrampsjsViewNewTask extends GrampsjsViewNewSource {
 
       <h3 class="label">${this._('Title')}</h3>
       <p>
-        <md-filled-text-field
+        <md-outlined-text-field
           required
           supporting-text="&nbsp;"
           style="width:100%;"
           @input="${this.handleName}"
           @blur="${this.handleName}"
           id="source-name"
-        ></md-filled-text-field>
+          aria-label="${this._('Title')}"
+        ></md-outlined-text-field>
       </p>
 
       <p>

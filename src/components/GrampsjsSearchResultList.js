@@ -24,7 +24,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
       listAvatarStyles,
       css`
         md-icon-button {
-          --md-icon-button-icon-size: 20px;
+          --md-icon-button-icon-size: var(--grampsjs-icon-size-medium);
         }
 
         /* Shared styles hide trailing supporting text on narrow screens;
@@ -59,6 +59,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
       selectable: {type: Boolean},
       linked: {type: Boolean},
       metaIcon: {type: String},
+      metaLabel: {type: String},
       date: {type: Boolean},
       noSep: {type: Boolean},
       loading: {type: Boolean},
@@ -145,11 +146,12 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
     return html`
       <md-list
         id="search-results"
+        role="list"
         class="${classMap({activatable: this.activatable, large: this.large})}"
       >
         ${this.data.length === 0 && this.textEmpty
           ? html`
-              <md-list-item type="text">
+              <md-list-item type="text" role="presentation">
                 <span>${this.textEmpty}</span>
               </md-list-item>
             `
@@ -174,9 +176,13 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
               ${renderIcon(obj, 'start')}
               ${this.metaIcon
                 ? html`
+                    <!-- A button inside a button. Only use this when the
+                         item is NOT itself interactive (a text item), or
+                         the item will be a button with a button in it. -->
                     <md-icon-button
                       @click="${e => this._handleMetaClick(e, obj)}"
                       slot="end"
+                      aria-label="${this.metaLabel ?? this._('Edit')}"
                     >
                       <grampsjs-icon path="${this.metaIcon}"></grampsjs-icon>
                     </md-icon-button>
@@ -207,7 +213,7 @@ export class GrampsjsSearchResultList extends GrampsjsAppStateMixin(
 
   renderLoading() {
     return html`
-      <md-list>
+      <md-list role="list">
         ${Array(this.numberLoading).fill(
           html`
             <md-list-item type="${this._itemType}">

@@ -3,8 +3,7 @@ Base view for lists of Gramps objects, e.g. people, events, ...
 */
 
 import {html, css} from 'lit'
-import {mdiPlus, mdiCog, mdiCheckboxMultipleOutline} from '@mdi/js'
-
+import {Checks, Gear, Plus} from '../icons/phosphor.js'
 import '@material/web/fab/fab.js'
 import '@material/web/iconbutton/icon-button.js'
 import '@material/web/button/outlined-button.js'
@@ -293,7 +292,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
   _renderSelectButton() {
     const icon = html`<grampsjs-icon
       slot="icon"
-      .path="${mdiCheckboxMultipleOutline}"
+      .path="${Checks}"
       height="20"
       color="currentColor"
     ></grampsjs-icon>`
@@ -323,7 +322,7 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
           this._showColumnPicker = true
         }}"
       >
-        <grampsjs-icon .path="${mdiCog}" height="22"></grampsjs-icon>
+        <grampsjs-icon .path="${Gear}" height="22"></grampsjs-icon>
       </md-icon-button>
     `
   }
@@ -592,10 +591,14 @@ export class GrampsjsViewObjectsBase extends GrampsjsStaleDataMixin(
 
   renderFab() {
     return html`
-      <md-fab variant="primary" @click=${this._handleClickAdd}>
+      <md-fab
+        variant="primary"
+        @click=${this._handleClickAdd}
+        aria-label="${this._('Add')}"
+      >
         <grampsjs-icon
           slot="icon"
-          .path="${mdiPlus}"
+          .path="${Plus}"
           color="currentColor"
         ></grampsjs-icon>
       </md-fab>

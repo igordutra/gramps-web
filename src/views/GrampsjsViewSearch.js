@@ -14,7 +14,7 @@ import {
 } from '../util.js'
 import '@material/web/textfield/outlined-text-field'
 import '@material/web/iconbutton/icon-button.js'
-import {mdiClose, mdiMagnify} from '@mdi/js'
+import {MagnifyingGlass, X} from '../icons/phosphor.js'
 import '../components/GrampsjsIcon.js'
 
 function capitalize(string) {
@@ -33,11 +33,41 @@ export class GrampsjsViewSearch extends GrampsjsView {
     return [
       super.styles,
       css`
+        /*
+         * The search field.
+         *
+         * It is the one field on a page of its own, so it is allowed to
+         * be bigger than the rest — but it takes its size and its shape
+         * from the same scales as every other field, rather than
+         * writing its own values down.
+         *
+         * The four CORNER tokens are named separately because their
+         * fallback chains disagree: the start corners fall back to
+         * corner-extra-small and the end corners to corner-none, so
+         * setting only the container-shape token leaves the bottom
+         * corners square.
+         */
         md-outlined-text-field#search-field {
-          --md-outlined-text-field-container-shape: 28px;
-          --md-outlined-text-field-input-text-size: 22px;
+          --md-outlined-text-field-container-shape: var(
+            --md-sys-shape-corner-small
+          );
+          --md-outlined-text-field-container-shape-start-start: var(
+            --md-sys-shape-corner-small
+          );
+          --md-outlined-text-field-container-shape-start-end: var(
+            --md-sys-shape-corner-small
+          );
+          --md-outlined-text-field-container-shape-end-end: var(
+            --md-sys-shape-corner-small
+          );
+          --md-outlined-text-field-container-shape-end-start: var(
+            --md-sys-shape-corner-small
+          );
+          --md-outlined-text-field-input-text-size: var(
+            --md-sys-typescale-headline-small-size
+          );
           --md-outlined-text-field-input-text-weight: var(
-            --grampsjs-body-font-weight
+            --md-sys-typescale-headline-small-weight
           );
           --md-outlined-text-field-outline-color: var(
             --grampsjs-body-font-color-20
@@ -45,9 +75,9 @@ export class GrampsjsViewSearch extends GrampsjsView {
           --md-outlined-text-field-leading-icon-color: var(
             --grampsjs-body-font-color-50
           );
-          --md-outlined-text-field-top-space: 12px;
-          --md-outlined-text-field-bottom-space: 12px;
-          --md-outlined-text-field-leading-space: 24px;
+          --md-outlined-text-field-top-space: var(--grampsjs-space-16);
+          --md-outlined-text-field-bottom-space: var(--grampsjs-space-16);
+          --md-outlined-text-field-leading-space: var(--grampsjs-space-24);
           display: block;
           width: 100%;
           margin: 30px auto;
@@ -125,7 +155,7 @@ export class GrampsjsViewSearch extends GrampsjsView {
       >
         <grampsjs-icon
           slot="leading-icon"
-          path="${mdiMagnify}"
+          path="${MagnifyingGlass}"
           color="var(--grampsjs-body-font-color-50)"
         ></grampsjs-icon>
         ${this._query
@@ -135,7 +165,7 @@ export class GrampsjsViewSearch extends GrampsjsView {
               @click="${this._handleClear}"
             >
               <grampsjs-icon
-                path="${mdiClose}"
+                path="${X}"
                 color="var(--grampsjs-body-font-color-50)"
               ></grampsjs-icon>
             </md-icon-button>`
