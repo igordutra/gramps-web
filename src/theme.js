@@ -180,6 +180,43 @@ export const THEMES = {
       '--md-sys-elevation-level4': '5px 5px 0 0 rgba(15, 23, 42, 0.18)',
       '--md-sys-elevation-level5': '6px 6px 0 0 rgba(15, 23, 42, 0.2)',
     },
+    // The paper. Blueprint had type, shape, density, gutter and a hard
+    // elevation, but no surfaces of its own — so it shared Archive's
+    // neutral paper, and since the accent appears on almost nothing,
+    // the two styles were nearly indistinguishable on screen: 13% of
+    // pixels differed, all of them geometry. A style is a product, and
+    // the paper is the largest surface it paints.
+    //
+    // Cool rather than warm, to sit under the indigo ink: a drafting
+    // sheet rather than an aged page.
+    surface: {
+      light: {
+        '--md-sys-color-background': '#eef1f6',
+        '--md-sys-color-surface': '#fbfcfe',
+        '--md-sys-color-surface-container-lowest': '#ffffff',
+        '--md-sys-color-surface-container-low': '#f5f7fb',
+        '--md-sys-color-surface-container': '#e9edf4',
+        '--md-sys-color-surface-container-high': '#f8fafc',
+        '--md-sys-color-surface-container-highest': '#dfe5ee',
+        '--md-sys-color-outline': '#9aa5b8',
+        '--md-sys-color-outline-variant': '#cbd3e0',
+        '--md-sys-color-on-surface': '#141821',
+        '--md-sys-color-on-surface-variant': '#39424f',
+      },
+      dark: {
+        '--md-sys-color-background': '#0c1017',
+        '--md-sys-color-surface': '#121823',
+        '--md-sys-color-surface-container-lowest': '#090d13',
+        '--md-sys-color-surface-container-low': '#161d29',
+        '--md-sys-color-surface-container': '#1c2534',
+        '--md-sys-color-surface-container-high': '#232d3e',
+        '--md-sys-color-surface-container-highest': '#2c3749',
+        '--md-sys-color-outline': '#5b6779',
+        '--md-sys-color-outline-variant': '#333d4d',
+        '--md-sys-color-on-surface': '#e2e7f0',
+        '--md-sys-color-on-surface-variant': '#aeb8c7',
+      },
+    },
   },
 
   /**
@@ -1876,20 +1913,38 @@ export function applyColors(
 /**
  * Resolve a theme name to the seed pair and colour scheme to apply.
  *
- * A tree may override the seed colours through the tree config; a named
- * theme supplies its own. The tree's colours win, because an administrator
- * who picked a colour for their tree means it.
+ * The tree's configured colours are the tree's DEFAULT, and they apply
+ * to the default style. They do not override a style the user has
+ * explicitly chosen: a style called "Blueprint" that declares a blue
+ * seed and then paints the tree's teal is not the style, and choosing
+ * it would silently do nothing.
+ *
+ * That was the behaviour, and it made all three styles look identical
+ * on any tree with a colour configured -- which is most real trees.
+ * The per-style palette only survived on a tree that had never set a
+ * colour, so the token layer looked like it did far less than it does.
+ *
+ * A style that declares no seed of its own still falls back to the
+ * tree's colour, so an administrator's branding is never lost where
+ * there is nothing to override it.
  */
 export function resolveTheme(themeName, treeConfig = {}) {
   const theme = THEMES[themeName] ?? THEMES[DEFAULT_THEME]
+  const known = themeName in THEMES
+  // the default style is the tree's own look, so the tree's colours own it
+  const named = known && themeName !== DEFAULT_THEME
   return {
-    name: themeName in THEMES ? themeName : DEFAULT_THEME,
-    primary:
-      treeConfig[TREE_CONFIG_PRIMARY_COLOR] || theme.primary || DEFAULT_PRIMARY,
-    secondary:
-      treeConfig[TREE_CONFIG_SECONDARY_COLOR] ||
-      theme.secondary ||
-      DEFAULT_SECONDARY,
+    name: known ? themeName : DEFAULT_THEME,
+    primary: named
+      ? theme.primary
+      : treeConfig[TREE_CONFIG_PRIMARY_COLOR] ||
+        theme.primary ||
+        DEFAULT_PRIMARY,
+    secondary: named
+      ? theme.secondary
+      : treeConfig[TREE_CONFIG_SECONDARY_COLOR] ||
+        theme.secondary ||
+        DEFAULT_SECONDARY,
   }
 }
 
